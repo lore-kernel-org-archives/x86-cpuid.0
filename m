@@ -1,61 +1,131 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA88B1A5A2
-	for <x86-cpuid@lists.linux.dev>; Mon,  4 Dec 2023 09:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=contractor.linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=contractor.linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC11B1B86FB
+	for <x86-cpuid@lists.linux.dev>; Thu, 18 Jul 2024 13:45:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721310358; cv=none; b=qoCw4osArw7aq+LXgf1qGuk+WhCSYNLGJjsWmb3V57ZXCe6sP20h4Vu/L9mBpeY1Z9ICu+lHRezEu8Ngv/PnXSDEkIcIJ5xGzL54NdNtI8DqPaVqusb/NYRxfvtgHakMJAupljZJTl11aBLyNMCdX/uxuaqBCQaNbZRlvhvxC6I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721310358; c=relaxed/simple;
+	bh=SCB/PolNo/C/ma+eopNRWQKP0XgbMNjsDfBluZb8jJM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=hJik7B9SvDJY+4oIoKo86P8uGGNha1zTbjz5C7io1mEk0wRf5zTru4hPf1tCs4VtuiZ8olQonDVehrUxWgqeZgU4SyWjOKUlKD3DWXtitRizcN0eNWgvmI68Cpb2bQAZNx8nCJlD79CoTiC99w7yQZrv8EbCpx3vISvvHJikCio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=xAG9zuEh; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=VXYvagEp; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=contractor.linuxfoundation.org header.i=@contractor.linuxfoundation.org header.b="FZIhwogT"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50bc22c836bso5625742e87.0
-        for <x86-cpuid@lists.linux.dev>; Mon, 04 Dec 2023 01:31:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=contractor.linuxfoundation.org; s=google; t=1701682273; x=1702287073; darn=lists.linux.dev;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/Onvocl7z9tTV39RCCW1Yld6Uw1oloVdWrBn7K39z6I=;
-        b=FZIhwogTLlJY1zfETSBsttTVyZwedEa/SpayhiP3boXW+O4r6oXkWk+9x3KU5KdL2T
-         Zm3TXcVF4vdGXn0PTj+HnTmRK48RO1BrG4Ha0h5OjBZxQwDzc0LkY6RJY/2FtUdVavLv
-         DpwJgNtD0xOGRCF4Tpy+t0K2JiD9oMwMFQti72f814Azkopsz3yTmOEaeM6+NHt9sK7L
-         +M7tEMSQcOFTKc50ZKO/PfxTc8ruBjlENrQSyrhkhnE7hXBwHRDf+vZyvPURu+CeWKEJ
-         3LpO2PQWrTlJdAHEw2/rKo5hdqawIqIdzeGXctPErTTvnYW8GjoehzbqDS3VfV6Zuf3I
-         Ya1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701682273; x=1702287073;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/Onvocl7z9tTV39RCCW1Yld6Uw1oloVdWrBn7K39z6I=;
-        b=OWgKQADvsDCyhnF/Pkilpw8bqKkPDOn7p5g9OT3cdT6wQxxI3IXRMOOGKPDIS3UCTL
-         EiMj2dqdU5/f2svl6kWPt0vjT2mT5byWAXAqRm+0LnsnGcvR1U3NvzzwtDvYMHxMuyN6
-         vq4KJg5wQOVXO3Saxx//3WdgyraL6if7hOoTdnCQOn6anYDAMtqyrPGn0VijCoHMZ2Zx
-         nYHNI/OyiivMXEJArndxn8d3vVtAOukK+yrNgxLKmErT3D3grCx6oJlTtkBgvE6AarLx
-         5Cl4RKhsqguMvbPjCUEojoB4+Sm+d/Wpe8AviksUhXbJjerUu5ZqmEBk19CZ/nVjqYuJ
-         2c9w==
-X-Gm-Message-State: AOJu0YybTPbNXBWPYX73hdEx9Yft2OddD9C0RrriAOrLHwvJQs5DlVb/
-	atxTh3/UY2XdSjo4MCwfBHGE8hk2hCWAHexjuAJQHGV/hRRfEntyRyY=
-X-Google-Smtp-Source: AGHT+IFra66Ri3w5L5Djc/RuYnwb06z9CWvSkUTLtIxlsLazILTSGcE3bjHxlnHMqFlR0M4imrpp0NMlmWCrHHLgLeQ=
-X-Received: by 2002:a05:6512:6c3:b0:50b:d764:6e99 with SMTP id
- u3-20020a05651206c300b0050bd7646e99mr3690564lff.73.1701682273191; Mon, 04 Dec
- 2023 01:31:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="xAG9zuEh";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="VXYvagEp"
+Date: Thu, 18 Jul 2024 15:45:52 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1721310353;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=0OOltyhkR/M6InnbHS9JUDyLIT88qYJF+hevCB6BgZM=;
+	b=xAG9zuEhvUofKitWw7ISkAN7S1IRLEPXKQvsg1mV8MU4C1pKyQkwvenVvsHHCZyArSbAeE
+	gSjQ47gOZHDt48aHrrl7hbxCClIXoO4r55Mg7642jQQ+DEcTgGpIbxCbC4R9GMOuipBS8P
+	aIykU51XXYJuPcHtJR7uYZVJLYQ1y+S9m/UWX2f6HYKq1dsye/jy0FLu/Qr4JqZb2nngu+
+	hO3oz3vVmItmSxgYvnrYkPKOxgMJTEF6Hklqa/WtSbFn4M/6moHcyGUqu7zEppHS3R4NPp
+	YQ75B0+rEUj1a1V/vwonumOlR+fZG5M8FiB9ydxr4+KifQKWqFC7OVTqdTB23g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1721310353;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=0OOltyhkR/M6InnbHS9JUDyLIT88qYJF+hevCB6BgZM=;
+	b=VXYvagEpxx6Fa8i0WbbxjWambBjYhynt90dDCAe8Z/EGMEh0I8yzvUk99GetsCfOJ3igNs
+	Zs3Ae+paOJ3HgXAg==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Borislav Petkov <bp@alien8.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-kernel@vger.kernel.org
+Subject: [ANNOUNCE] x86-cpuid.org: A machine-readable CPUID repository
+Message-ID: <ZpkckA2SHa1r3Bor@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Shyam Kumar <skachukattu@contractor.linuxfoundation.org>
-Date: Mon, 4 Dec 2023 15:01:02 +0530
-Message-ID: <CAH=dH98Qy8uwRDrrqadvPMwTe7h5=49-YzScpr6ud0YsHBPC5w@mail.gmail.com>
-Subject: Test Mail
-To: x86-cpuid@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hello:
+On x86 CPUs, the "CPUID" instruction is used for runtime identification
+of CPU features.  It takes as input a leaf number in the EAX register
+and an optional subleaf number in the ECX register.  According to the
+leaf and subleaf, certain information regarding CPU identification and
+supported features will be returned as output through the EAX, EBX, ECX,
+and EDX registers.
 
- This is a test message to test successful delivery and start the
- archive for the list. Please ignore.
+Due to the extensiveness and long history of the x86 architecture, the
+amount of information that can be queried through CPUID is huge: now up
+to 800+ bitfields, scattered over 52 CPUID leaves.  The returned
+bitfield descriptions can also differ according to the x86 CPU vendor.
 
--- 
-Regards
-Shyam Kumar
-The Linux Foundation Core Projects
+We would like to announce the x86-cpuid.org project, which aims to:
+
+  1. Standardize a machine-readable language/syntax for describing the
+     CPUID instruction output.
+
+  2. Build an extensive database, in that machine-readable syntax,
+     describing all the publicly-known CPUID bitfields output.
+
+     Such a database will be properly maintained and act as the standard
+     information source for multiple open-source projects downstream.
+
+  3. Augment the CPUID database with usage hints for significant open
+     source projects like the Linux Kernel and the Xen hypervisor.
+     Usage hints for other projects can be easily added later.
+
+  4. Provide code and data generators utilizing that CPUID database.
+
+In the project's machine-readable repository, we have covered:
+
+   - 52  CPUID leaves (and all their known subleaves.)
+   - 835 CPUID bitfields description, filtered by x86 CPU vendor.
+
+Attached to the above CPUID bitfield descriptions are:
+
+   - 274 Linux kernel x86 feature flags (X86_FEATURE_* definitions)
+   - 230 Linux kernel /proc/cpuinfo flags
+   - 198 Xen hypervisor feature and attribute flags
+
+We have developed multiple "code/data generators" utilizing the above
+information for downstream projects.
+
+The first generator produces a complete CSV bitfield file for the Linux
+kernel's kcpuid utility under tools/arch/x86/kcpuid.  This upgrades the
+tool to complete CPUID coverage, and a kcpuid series will be sent as a
+threaded reply to this announcement.
+
+The second generator produces C data structures for all CPUID leaves,
+with detailed C99 bitfield members included.  We expect to use it to
+standardize the CPUID registers representation across the Linux kernel's
+x86 subsystem among other goals that are to be outlined in future
+series, such as a dependency data model for the kernel's X86_FEATURE
+flags.
+
+The project's documentation is extensive, and can be found at:
+
+  - https://gitlab.com/x86-cpuid.org/x86-cpuid-db
+
+At plumbers last year, I've discussed the origin story of this effort:
+
+  - https://lpc.events/event/17/contributions/1511/
+
+At the x86 microconference this year, I should also provide an update on
+future steps:
+
+  - https://lpc.events/event/18/contributions/1762/
+
+Thanks a lot,
+Ahmed
+
+--
+Linutronix GmbH
