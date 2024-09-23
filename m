@@ -1,59 +1,58 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339671411D7
-	for <x86-cpuid@lists.linux.dev>; Thu, 18 Jul 2024 13:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99CB1474A7
+	for <x86-cpuid@lists.linux.dev>; Mon, 23 Sep 2024 22:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721310513; cv=none; b=oh7OtTsG48gu47G4/Jo8g2J2qZybHLaAR1jwsDmbMu8XlPDYHOhTh/4qyiZMCQO4q1JalZVNYMlHMODtSIN1D1ojji4ReLosHTckuMK3evs3LPH86gy+V0478pY2OzNSkaOUAPC+nal70nEcY4TOQSsQi2QdJmE+LvPwfz6zUb4=
+	t=1727130854; cv=none; b=jluaDANBb3EZcbZvnLPZY6j8m6l3T15VeX9jc0R2EIQ08mjDLi7gOIVVURQ69xWmP1zj8hq5g2ytHXM+aBN5Oz5pHTAKGSlb4zKCDiD/xsYKamrtBd8Ip93uFC78KM8gaAnDCbejf43AjxYaCd6AzB1w6mfSl7vtkGdNjAGa5LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721310513; c=relaxed/simple;
-	bh=9dfQvdrxt9AWMuvAsT6TiqZWdHjLj76anKG2MybVxF4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLU4xYTT+zhnznHVhbPV+5EXchlOBB7zFAMlElbiwBuQAGXryZaVxi3LjziVRu8RL+2Hw9FiS1ybdoh8T+wkFuuGEQVNJncS0OwCrVm2JdIZhxMbrfJkZx+mIqWdTqDzUt5f0M0Q9H/viL7HKf0/JMuy+Op1hoGbK7WBCtHZjYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=h4d+j8JR; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=aI+1grjG; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1727130854; c=relaxed/simple;
+	bh=kR76fG6PRQw/l1hQUKPkQ7w23QZe4M6XmSpRionuwiM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gznCqrJcFZfr9KuxsYLertdjMFmVia0yP1AmMFvirUKajbwPBwb3gc2nIzYi4LwEB0BGKkCWAkPwvGMsxMitV4trWRAiEfUoLUUvm4cpT8Z0aNBHPcqYlo2PR6V4lDwfCqS1FLZWUPk0oRWE0982eVZp33yneUH5jz+cEtD6JFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GYxi+qyY; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="h4d+j8JR";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="aI+1grjG"
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1721310509;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M0IE5GYwEyXTF1wT/SvpMPXeXglNDdssNBGW9kCeBSM=;
-	b=h4d+j8JRRPx/0B9ztINOng8/8W9AKhjXh2axvwtbul7SapzwZDbp7E8QdqzLMBFTkqZJK6
-	5VdeH2GF1n7ElLXjX8VSC5vCXQINYsU5YfDsfbTYJEIWjrAj8aZDWyZvXWfP4enQnfTFB4
-	I1ESokkwg89fD5V/8SfjqOnkPMXwuHLUcC5yEInbbgIt7cO4CCjHKJixyW8J0MShtz43BQ
-	AYuoL7Ilq4eSBJiESQdw6zTMNf+uwxa5Eu4R1EDlu0JGHw9eqKZTPCaWBx/QSpzwiAR1GO
-	zhYcKnX576JNvqh5wev9eyd9WzzGjrkrQUKM9oNH8a63l/8+mbQsDJDZSB2mgQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1721310509;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M0IE5GYwEyXTF1wT/SvpMPXeXglNDdssNBGW9kCeBSM=;
-	b=aI+1grjGPx8vJWpjz35uzjDhbMH7dBJaAIneo7AJp9byYvaCdRUBBVQfoiNhrdZckENo7u
-	cibhTjgusNnHcmCQ==
-To: Borislav Petkov <bp@alien8.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	x86@kernel.org,
-	x86-cpuid@lists.linux.dev
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GYxi+qyY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1727130853; x=1758666853;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=kR76fG6PRQw/l1hQUKPkQ7w23QZe4M6XmSpRionuwiM=;
+  b=GYxi+qyYp4LgXU0/ZUM/+UCCq5jH2NZ5CpKuKV6FjaEiaMNNS0tKlQEx
+   4x1cday6MA8gFRjGMRhJqR3tzzl7UVLXSwUxyc+Ms0DoecznnCUKES54e
+   nCMy0vM+a5F4cTIEV79MywhNF5YtNWfca1w61aMb/WhZUN+drNcFISgPt
+   PXE0C7ivVjY/nB5BWsLEjCe6p3gz6xWj0JLqAtmEwLusrVHIAovPFsRA8
+   GpgjR7kSGWS4LGgVvZYDXUSCaTuyYR+PUU/iex15RPqUP4KlFhAmMwddv
+   JNlnR1tUa8a772K4wg+ZC4E+Zfl2ZgMTrMuaTBf5m54P1K3CTsbXJ5/id
+   w==;
+X-CSE-ConnectionGUID: lQAnWt8TQf6D+Jxdo0W9Jg==
+X-CSE-MsgGUID: jBZNy7qxSwaewNJqEkEnDg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11204"; a="29818828"
+X-IronPort-AV: E=Sophos;i="6.10,252,1719903600"; 
+   d="scan'208";a="29818828"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2024 15:34:12 -0700
+X-CSE-ConnectionGUID: cg+3qwGJSr2wcN6fy0BFlA==
+X-CSE-MsgGUID: kHwGLT72TSiPHJj9+ApoYA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,252,1719903600"; 
+   d="scan'208";a="76133045"
+Received: from sohilmeh.sc.intel.com ([172.25.103.65])
+  by orviesa004.jf.intel.com with ESMTP; 23 Sep 2024 15:34:12 -0700
+From: Sohil Mehta <sohil.mehta@intel.com>
+To: x86-cpuid@lists.linux.dev,
+	"Ahmed S . Darwish" <darwi@linutronix.de>
 Cc: Thomas Gleixner <tglx@linutronix.de>,
-	linux-kernel@vger.kernel.org,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v1 9/9] MAINTAINERS: Add x86 cpuid database entry
-Date: Thu, 18 Jul 2024 15:47:49 +0200
-Message-ID: <20240718134755.378115-10-darwi@linutronix.de>
-In-Reply-To: <20240718134755.378115-1-darwi@linutronix.de>
-References: <ZpkckA2SHa1r3Bor@lx-t490>
- <20240718134755.378115-1-darwi@linutronix.de>
+	Xin Li <xin@zytor.com>,
+	"H . Peter Anvin" <hpa@zytor.com>,
+	Sohil Mehta <sohil.mehta@intel.com>
+Subject: [PATCH] db: Add Intel NMI-source reporting feature flag
+Date: Mon, 23 Sep 2024 22:32:13 +0000
+Message-Id: <20240923223213.852758-1-sohil.mehta@intel.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -62,45 +61,29 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a specific entry for the x86 architecture cpuid database.
+NMI-source is documented starting with FRED specification v6. It is
+enumerated with the feature flag:
+CPUID.(EAX=7,ECX=1):EAX.NMI_SRC[bit20]
 
-Reference the x86-cpuid.org development mailing list to facilitate easy
-tracking by external stakeholders such as the Xen developers.
+Link: https://www.intel.com/content/www/us/en/content-details/819481/flexible-return-and-event-delivery-fred-specification.html
 
-Include myself as a reviewer.
-
-Note, this MAINTAINERS entry will also cover the auto-generated C cpuid
-bitfields header files to be submitted in a future series.
-
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Link: https://gitlab.com/x86-cpuid.org/x86-cpuid-db
-Link: https://lore.kernel.org/x86-cpuid
-Link: https://x86-cpuid.org
+Signed-off-by: Sohil Mehta <sohil.mehta@intel.com>
 ---
- MAINTAINERS | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ db/xml/leaf_07.xml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 958e935449e5..744962547049 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -24340,6 +24340,16 @@ F:	Documentation/arch/x86/
- F:	Documentation/devicetree/bindings/x86/
- F:	arch/x86/
- 
-+X86 CPUID DATABASE
-+M:	Thomas Gleixner <tglx@linutronix.de>
-+M:	Borislav Petkov <bp@alien8.de>
-+M:	x86@kernel.org
-+R:	Ahmed S. Darwish <darwi@linutronix.de>
-+L:	x86-cpuid@lists.linux.dev
-+S:	Maintained
-+W:	https://x86-cpuid.org
-+F:	tools/arch/x86/kcpuid/cpuid.csv
-+
- X86 ENTRY CODE
- M:	Andy Lutomirski <luto@kernel.org>
- L:	linux-kernel@vger.kernel.org
+diff --git a/db/xml/leaf_07.xml b/db/xml/leaf_07.xml
+index 415524e..5d15015 100644
+--- a/db/xml/leaf_07.xml
++++ b/db/xml/leaf_07.xml
+@@ -566,6 +566,7 @@
+       <bit19 len="1"  id="wrmsrns"                 desc="WRMSRNS instr (WRMSR-non-serializing)">
+         <xen          feature="true"               attrs="S" />
+       </bit19>
++      <bit20 len="1"  id="nmi_src"                 desc="NMI-source reporting with FRED event data" />
+       <bit21 len="1"  id="amx_fp16"                desc="AMX-FP16: FP16 tile operations">
+         <linux        feature="true"               proc="false" />
+       </bit21>
 -- 
-2.45.2
+2.34.1
 
