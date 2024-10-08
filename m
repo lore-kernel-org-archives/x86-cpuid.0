@@ -1,107 +1,154 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A587426ADD
-	for <x86-cpuid@lists.linux.dev>; Tue,  8 Oct 2024 13:52:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF8F1E0493
+	for <x86-cpuid@lists.linux.dev>; Tue,  8 Oct 2024 15:44:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728395535; cv=none; b=A3UJ5A5VemaKx3aQAkboAMEDvGY0xxcnieTCjb2aagPqa75umNJPfGiC+fBbHCVO+NQ5gfN6XZhK8euXBzDxmdCVDtgR8EiNrGBuqpT+t3WiZUIb/nPXAiAPrcnz1Jtl3nQeozK0V669UVokYEv3PGodBje/UAXJZRlkPxziWz4=
+	t=1728402268; cv=none; b=gf/AsBw5xenmX9xzSRRDmJ11VySXXv6wnoXSEYXEDVTWfvdoNVOV6rd4I6Zt88QU9fameh4/JvX3Sctdt+J+31OeAm4ozAlewIHu0PFP2wI5KtRC3bBXGYN8kJxYVQGDzxa6FJgzw3DxJ65oC45wvzZPE/IQnNYPrsHGI2MQzw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728395535; c=relaxed/simple;
-	bh=NFMIMEJ5FDjPn+fUYAN9R1yRpjM8hb5ejBLgzRRB9IM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nW2eo2hV4gU/nPKbrmPlSKSRxjjfCjYPP8kHqP6ElVciE8KTd81viduaEq+L0a/S6VCLhZaxTu9OS1y5wdHA33aV5+1GP55Q8hjnPFz6+CZG68ERgZXORo+dYAzNvIIA9o2W5rxd7+rYWpKouMGbKFRYVpEm+uJb+QPJ9QM7lKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com; spf=pass smtp.mailfrom=cloud.com; dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b=qJdGAI6i; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloud.com
+	s=arc-20240116; t=1728402268; c=relaxed/simple;
+	bh=6WHc8l5PXiXyl+BCglLihi2gw5Q/FBDZdw0prfcRlck=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VoykqxoaXmauSQOQ81YeXomrJ6lukk9Yo9+xnb7J0H69NtrJDiOTcg/+wELU2YMHPYqoYV8PuJ6pHi4/eS0vxS/3kKLOEe4pf9KA6j+PZO4gfOtX6pTfO6CiH+Pj6xEok38On5SNBgOoT7x0bA2Rq2NcJ+CL7jwBULD/+Gcxo/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=mULsRLzl; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=BW7f9OAl; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="qJdGAI6i"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a9939f20ca0so502836366b.1
-        for <x86-cpuid@lists.linux.dev>; Tue, 08 Oct 2024 06:52:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=citrix.com; s=google; t=1728395531; x=1729000331; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+YR/AcfqAwHe7hZLcMhmt2GSYNuGDae390HFbntRbo4=;
-        b=qJdGAI6iMwy0ra9Vs1KHpaNnpqkBserLm6ydMc+3HT+GlsJ5OszU9aZbaGH5yrj4RR
-         4hlB6biroACy99IgBloYn35+q37pgr4QtuCMZONsgdoHp3/BXJutvkoL6icoygPFLhNr
-         Z8We4lQJhMQ4JRhObiZJosWCXWqYWOIe8eVNQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728395531; x=1729000331;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+YR/AcfqAwHe7hZLcMhmt2GSYNuGDae390HFbntRbo4=;
-        b=dQYfzjkXZ5wvriFa0daTiN76iueHp/FPc85ughbBxuJ2COuCTv5+c8MdhhzsUUz/HQ
-         +nWxriVcZYIikWi2GwWdrQcjCmBhtpQZBSOthk03SViAeA7TLk/A/ZsMkCAEt34zoBK5
-         XyescnYklAhDrLbvzw7FyyY82AhzDk2cpWXU2yJkVxdXlUrmU+O4KG3Hcs7RRg0SvrZu
-         OyiHLTjjv72uTfzVC2Ggl/DtCTNUaAvTSgcdUj0Inp7VGRzIghHfQ1OCfVwDsEJ1KhTv
-         pvtT11jUSMNI6s8nx3tSfZ7GpkAqwqAqVPAx//MxXpxkh4miWz43JIWmcZF0daIYHsov
-         YhQA==
-X-Gm-Message-State: AOJu0YxTEgex2fdb9wAFuq01f40DEc9nbBRt5k25AEZxVqIGY9lqX/48
-	buL40a3MipL2p/bx4MjJ0tOU2hxajwmQLk4j7B4DEtOxPe3dzprCN7k0u9EGnuMKOb0KCsuf+5I
-	RfsA=
-X-Google-Smtp-Source: AGHT+IFawg/UYfUFfeEx8b3YaFhD4T1ikWEiUaB6tX6LsAPKmZSPUq94+vxWYomTVI5St/O9VpfX7A==
-X-Received: by 2002:a17:907:1c05:b0:a8d:439d:5c3c with SMTP id a640c23a62f3a-a991bce4fe2mr1733209666b.8.1728395531475;
-        Tue, 08 Oct 2024 06:52:11 -0700 (PDT)
-Received: from andrewcoop.eng.citrite.net ([185.25.67.249])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a995350d522sm281131166b.32.2024.10.08.06.52.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 06:52:10 -0700 (PDT)
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-To: x86-cpuid@lists.linux.dev
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Subject: [PATCH] db/leaf_1d: Correct XCR0_CET_{U,S} information
-Date: Tue,  8 Oct 2024 14:52:08 +0100
-Message-Id: <20241008135208.2567502-1-andrew.cooper3@citrix.com>
-X-Mailer: git-send-email 2.39.5
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="mULsRLzl";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="BW7f9OAl"
+Date: Tue, 8 Oct 2024 17:44:20 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1728402263;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ki/Pm8DAl/VsGvfQevprKrdSizkHUE7BtC51sJT0UL0=;
+	b=mULsRLzlVO/2gPKHcHPooEqXsvCde8R0N9EnuYHEUVv1l0UlR5mvUezWfQT8eFhwdhmHuq
+	Yf2BpSbob1iTkJImsoETiuGGMR6zMMh+SNpOTAwRX7Jdy/qU3wOMOHm1pydvMjt0YnWJl5
+	TzzEaHRgjTOnJL00GSOzQsTR8ZvqHsn9TgjMjywARetkA7Yl990Zo2HYAQ3YdB+LypU/09
+	BECaAsMLmvhc80/W7uO/vlU6NyDy3zeapyz2EcUFQBUO/zxdhfXHemdaprjDKii5nlicOp
+	mhvQuxZzdk05Ihf8mupXhD3f7n6zDx2ddO3MdAdGMdmG35HB+4nW3KjmOvGezQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1728402263;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ki/Pm8DAl/VsGvfQevprKrdSizkHUE7BtC51sJT0UL0=;
+	b=BW7f9OAlqLl2hIfIk03b6exdcPSoCF9PWwNuMwqokDL2fu61XWQYjDaGjBcMQZhjcpvUjY
+	eLsRi6UgwPr/feCw==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: x86-cpuid@lists.linux.dev, Borislav Petkov <bp@alien8.de>,
+	"H. Peter Anvin" <hpa@zytor.com>, x86@kernel.org,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [ANNOUNCE] x86-cpuid-db: Release v2.0
+Message-ID: <ZwVTVO2FcH95WFBp@lx-t490>
+References: <ZwU0HtmCTj2rF2T8@lx-t490>
+ <55f755e9-2712-47d5-82d5-d6e685969461@citrix.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <55f755e9-2712-47d5-82d5-d6e685969461@citrix.com>
 
-The description text itself mixed user and supervisor state.
+Hi Andrew,
 
-Furthermore, CET is not an AMD-exclusive feature, nor even AMD's feature; it's
-Intel's feature, which AMD implement a subset of.
+On Tue, 08 Oct 2024, Andrew Cooper wrote:
+>
+> On 08/10/2024 2:31 pm, Ahmed S. Darwish wrote:
+> > to:
+> >
+> >     /*
+> >      * Leaf 0x0
+> >      * Maximum standard leaf number + CPU vendor string
+> >      */
+> >
+> >     struct leaf_0x0_0 {
+> >         ...;
+> >     };
+> >
+> >     /*
+> >      * Leaf 0x7
+> >      * Extended CPU features enumeration
+> >      */
+> >
+> >     struct leaf_0x7_0 {
+> >         ...;
+> >     };
+> >
+> >     struct leaf_0x7_1 {
+> >         ...;
+> >     };
+> >
+> > Overall, this removes ambiguity for IDs like 0x16, and improves kernel
+> > code greppability (x86 PQ pending).
+>
+> So what does leaf 0xd with 62 subleaves look like.  Do we really have
+> one number in hex, and one in decimal?
 
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
----
-CC: x86-cpuid@lists.linux.dev
+Hmmm, good point...
 
-I have to admit that I'm very confused as to why we have the <vendors> block.
-Any vendor can implement a feature, so this block feels like it can only ever
-be stale.
----
- db/xml/leaf_0d.xml | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+For now, if we grep the generated C linux header for all the structures
+that are not subleaf 0, we get:
 
-diff --git a/db/xml/leaf_0d.xml b/db/xml/leaf_0d.xml
-index d36b36b01198..be34588903fb 100644
---- a/db/xml/leaf_0d.xml
-+++ b/db/xml/leaf_0d.xml
-@@ -60,13 +60,15 @@
- 	  <vendor>AMD</vendor>
- 	</vendors>
-       </bit9>
--      <bit11 len="1"  id="xcr0_cet_u"              desc="AMD XCR0.CET_U (bit 11) supported (CET supervisor state)">
-+      <bit11 len="1"  id="xcr0_cet_u"              desc="XCR0.CET_U (bit 11) supported (CET user state)">
- 	<vendors>
-+	  <vendor>Intel</vendor>
- 	  <vendor>AMD</vendor>
- 	</vendors>
-       </bit11>
--      <bit12 len="1"  id="xcr0_cet_s"              desc="AMD XCR0.CET_S (bit 12) support (CET user state)">
-+      <bit12 len="1"  id="xcr0_cet_s"              desc="XCR0.CET_S (bit 12) supported (CET supervisor state)">
- 	<vendors>
-+	  <vendor>Intel</vendor>
- 	  <vendor>AMD</vendor>
- 	</vendors>
-       </bit12>
+    $ grep -E 'struct leaf_0x[0-9a-f]+_[^0]' cpuid-bitfields.h
 
-base-commit: ca8056ee7291370e691d04a24d0a045f688f8573
--- 
-2.39.5
+    struct leaf_0x7_1 {
+    struct leaf_0x7_2 {
+    struct leaf_0xd_1 {
+    struct leaf_0xd_2 {
+    struct leaf_0xf_1 {
+    struct leaf_0x10_1 {
+    struct leaf_0x10_3 {
+    struct leaf_0x12_1 {
+    struct leaf_0x12_2 {
+    struct leaf_0x14_1 {
+    struct leaf_0x17_1 {
+    struct leaf_0x1d_1 {
+    struct leaf_0x23_1 {
+    struct leaf_0x23_3 {
+    struct leaf_0x80000020_1 {
+    struct leaf_0x80000020_2 {
+    struct leaf_0x80000020_3 {
 
+We do indeed have an encodings for leaves with large dynamic number of
+valid subleaves, through "array=":
+
+    darwi@lx ~/x86-cpuid-db (main)> git grep array=
+
+    db/xml/leaf_04.xml:  <subleaf id="0" array="32">
+    db/xml/leaf_0b.xml:  <subleaf id="0" array="2">
+    db/xml/leaf_0d.xml:  <subleaf id="2" array="62">
+    db/xml/leaf_10.xml:  <subleaf id="1" array="2">
+    db/xml/leaf_12.xml:  <subleaf id="2" array="30">
+    db/xml/leaf_17.xml:  <subleaf id="1" array="3">
+    db/xml/leaf_18.xml:  <subleaf id="0" array="32">
+    db/xml/leaf_1b.xml:  <subleaf id="0" array="32">
+    db/xml/leaf_1f.xml:  <subleaf id="0" array="6">
+    db/xml/leaf_8000001d.xml:  <subleaf id="0" array="32">
+    db/xml/leaf_80000026.xml:  <subleaf id="0" array="4">
+
+But the generators don't deal with that (yet), and that's why they're
+also not in the generated CSV/header files.
+
+I'm going through the Linux x86 PQ now, so it's a nice opportunity to
+see how something like "struct leaf_0x0_0x0" looks within the rest of
+the kernel code...  I'll also ping Thomas to see if he has any feedback
+on the topic.
+
+Thanks!
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
