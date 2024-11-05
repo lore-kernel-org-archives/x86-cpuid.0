@@ -1,97 +1,71 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A36192B75
-	for <x86-cpuid@lists.linux.dev>; Wed,  9 Oct 2024 11:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+Received: from cmccmta1.chinamobile.com (cmccmta6.chinamobile.com [111.22.67.139])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D853818028
+	for <x86-cpuid@lists.linux.dev>; Tue,  5 Nov 2024 01:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=111.22.67.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728472970; cv=none; b=YezOv6/hD2isoIxoeiG2aX/d42uj1EeWUr9O7KxZr16+Zkr/Wdx3SSypGs20A9a8WxqVeqeKGi9j7GgJZh7SFOf5imDU9LsjYXrCQtr1X5yc60iaH9Fkd33Zeej54ubeb3/AGkNp4nbfERhEOxnUteZcX72HwiAHlK8Cg6YRhyA=
+	t=1730770034; cv=none; b=VDw+zpd3VaRFw5yCzHwuUXvG7e5KHecGusndXH278Q5wOrthOqFsVWH43radFj6V6UFXWWtACYnGwG3wCbTQOMw0eRvLpxtb7+enqadDYveRO0ePwRErE4LFKpVsSV3jDdZtEsLlc63I9OQcwmfgY+aJ+XqfQgkAwic1XJ88RNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728472970; c=relaxed/simple;
-	bh=uT9LCY1MCBZrnW8l0+Mwci20AhBTdNYHv1VlrihsuyM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S96pEziUzSmWa3Eo2qHDDTRVlPH44ivxkTCHefPhq+qwnQVZn6tgNBYrDbatKEy9A7PqqQVCiCSFFUzyUkY/MZi8Os5PypL+mo6rn7yhuLKFavaMWUF/Kb3rrj6n0Cci2hWWl1H9EJJG8AwL9/cgkGD43wa4VnDMZ2ZPJsAqjPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=xKgYsMYK; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=z8fcl5dO; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="xKgYsMYK";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="z8fcl5dO"
-Date: Wed, 9 Oct 2024 13:22:44 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1728472967;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=12VVtfi34hoIaDNJicNzt4xDRSn0X1vaAvqnNORMOKg=;
-	b=xKgYsMYKKINC+ImwRaPbf59Yzx2cBYXk9e1rPXhWSzcl6EOh8Bp1n1ykNXQUK2BGCUc8yN
-	2BhHq49BLHQrfGH11yFCQb8Fxvihk2gBoW+1cjCIJC0IbUyc7iD8Y4ZEts2lCnJpCcJgNz
-	sJwPqp0Vz+60595aGEhi+vWVtIE7iJOsztsxOu9Wrch/RKfsjx/X2yaYJAfWm9ExIhbhFG
-	fJFLeHa8H0IjSyFqtuxal4NQFD8J1Yir1EJqDFsyQ/A4soGL0E5qsa1c97CYlAYYIOJ0HL
-	wXeCVhOu2aRXGcokIKezG91oOHz9CZLCZn42H2BpcC3M9DFHahTQBJ2oDLd3Mg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1728472967;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=12VVtfi34hoIaDNJicNzt4xDRSn0X1vaAvqnNORMOKg=;
-	b=z8fcl5dOfd/juBBCJS+RqIdXHGN2bRLsd8PRuMidEd4Xz51WUIJDthXgp6HrA7NvHKrsC0
-	yFZ3wzW1wwMxWxBg==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>, x86-cpuid@lists.linux.dev
-Cc: terry.bowman@amd.com, bp@alien8.de, feng.tang@intel.com,
-	linux-kernel@vger.kernel.org, CobeChen@zhaoxin.com,
-	TimGuo@zhaoxin.com, LeoLiu-oc@zhaoxin.com
-Subject: Re: [PATCH] tools/x86/kcpuid: Add extended CPUID leaf 0xc0000001
- support
-Message-ID: <ZwZnhGfSPHTz64dm@lx-t490>
-References: <20230530025922.4801-1-TonyWWang-oc@zhaoxin.com>
+	s=arc-20240116; t=1730770034; c=relaxed/simple;
+	bh=lN2uE1K9qAc18/gduVxEJq69tYljSyoL2t5EPfd36XM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ZzrhCw7ylO3kqcQEtXKL9uxUydUX30JCoJt2aFkJhH9BRfB/DTLf1VsORi/Tmm27oFfvEwTR1/ejz71OVLXi2YCVPWQTqwYcwHGMDtUgaOGLrM9wWfa6XHBZMaErb8s9ToDRe14gML27+UIY+FctrkVXLv/I6WA9Z/xCVDCnWmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cmss.chinamobile.com; spf=pass smtp.mailfrom=cmss.chinamobile.com; arc=none smtp.client-ip=111.22.67.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cmss.chinamobile.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cmss.chinamobile.com
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM-FLAG:00000000
+Received:from spf.mail.chinamobile.com (unknown[10.188.0.87])
+	by rmmx-syy-dmz-app01-12001 (RichMail) with SMTP id 2ee1672973b085e-a0170;
+	Tue, 05 Nov 2024 09:24:01 +0800 (CST)
+X-RM-TRANSID:2ee1672973b085e-a0170
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM-FLAG:00000000
+Received:from localhost.localdomain (unknown[223.108.79.103])
+	by rmsmtp-syy-appsvr09-12009 (RichMail) with SMTP id 2ee9672973b0c69-c9c3b;
+	Tue, 05 Nov 2024 09:24:01 +0800 (CST)
+X-RM-TRANSID:2ee9672973b0c69-c9c3b
+From: Luo Yifan <luoyifan@cmss.chinamobile.com>
+To: bp@alien8.de,
+	tglx@linutronix.de,
+	x86@kernel.org,
+	darwi@linutronix.de
+Cc: x86-cpuid@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	trivial@kernel.org,
+	Luo Yifan <luoyifan@cmss.chinamobile.com>
+Subject: [PATCH] tools/x86/kcpuid: Fix the wrong format specifier
+Date: Tue,  5 Nov 2024 09:23:47 +0800
+Message-Id: <20241105012347.201782-1-luoyifan@cmss.chinamobile.com>
+X-Mailer: git-send-email 2.27.0
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230530025922.4801-1-TonyWWang-oc@zhaoxin.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+Use '%u' instead of '%d' for unsigned int.
 
-On Tue, 30 May 2023, Tony W Wang-oc wrote:
->
-> CPUID leaf 0xc0000001 EDX bit2/3/6-13 are used by VIA/Cyrix/
-> Centaur to defined CPU features.
->
-> Zhaoxin use CPUID leaf 0xc0000001 EDX as:
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 0]  SM2
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 1]  SM2_EN
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 4]  SM3 SM4
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 5]  SM3_EN SM4_EN
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 16] PARALLAX
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 17] PARALLAX_EN
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 20] TM3
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 21] TM3_EN
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 22] RNG2
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 23] RNG2_EN
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 25] PHE2
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 26] PHE2_EN
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 27] RSA
-> CPUID.(EAX=0xc0000001,ECX=0):EDX[bit 28] RSA_EN
->
+Signed-off-by: Luo Yifan <luoyifan@cmss.chinamobile.com>
+---
+ tools/arch/x86/kcpuid/kcpuid.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Just a short note.  I've added these bits to the x86-cpuid-db database:
+diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
+index 1b25c0a95..b94071ec0 100644
+--- a/tools/arch/x86/kcpuid/kcpuid.c
++++ b/tools/arch/x86/kcpuid/kcpuid.c
+@@ -117,7 +117,7 @@ static void leaf_print_raw(struct subleaf *leaf)
+ 		if (leaf->sub == 0)
+ 			printf("0x%08x: subleafs:\n", leaf->index);
+ 
+-		printf(" %2d: EAX=0x%08x, EBX=0x%08x, ECX=0x%08x, EDX=0x%08x\n",
++		printf(" %2u: EAX=0x%08x, EBX=0x%08x, ECX=0x%08x, EDX=0x%08x\n",
+ 			leaf->sub, leaf->eax, leaf->ebx, leaf->ecx, leaf->edx);
+ 	} else {
+ 		printf("0x%08x: EAX=0x%08x, EBX=0x%08x, ECX=0x%08x, EDX=0x%08x\n",
+-- 
+2.27.0
 
-    https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/blob/tip/db/xml/leaf_c0000001.xml
 
-And they're now part of the project's v2.0 release:
 
-    https://lore.kernel.org/x86-cpuid/ZwU0HtmCTj2rF2T8@lx-t490
-
-I shall send a kcpuid PQ with the updated CSV at a later step.
-
-Thanks,
-
---
-Ahmed S. Darwish
-Linutronix GmbH
