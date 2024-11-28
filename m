@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE9C1CB528
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 Nov 2024 22:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD961CBE8A
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 Nov 2024 22:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732833049; cv=none; b=BCqWAY9VgudXtC+lfO/32EGMaehXdIy5DHQXeDj2F05Y9OTLjV8c9jY2T/Wqpw7ElBdLbiOgjR2kcLJvDAf+aUmJ8NGg4HUk4/JdOfWkozuEHKQVeP7+Xus6DVzAngPjagMHDidpYYf4Uv5bKJ3wGqVt3s/DRQmAgLG04yUQZ/E=
+	t=1732833053; cv=none; b=rdWMiGDaTom70E9Gkopk9M+CP/SGTrjhZbaAQfUMcLr7kII69Ez9W2zmrHYK1RK1HouEtRksiSJfiL4YAkqdqT/4eZJIdgX/wEUuh2uR0Q9vIBd4hVOyo5KzGGpNxaSeti3rqg4zZmes7ccFutEe65Abtm/tq/GTrPW7Sxhr/xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732833049; c=relaxed/simple;
-	bh=hwGAJMLIEMvhV5pONSw35zuE2YThvMX9dCmE6oHPmiw=;
+	s=arc-20240116; t=1732833053; c=relaxed/simple;
+	bh=2PInAe0s2nXQvmCvznhiKMoMdy+J1+CUdqPCCSLw2m0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+4Vn10izW9E4Jsud7eczLQwpwZ/tWohGPUd8M9Ft0YW9i1RupH1/6bb/4NYPIBYAsL284ENxXGMo38fnXWcAbb7PoBd83H5GrDrl6DpudtblWBh/fJd8zWSp0xe84ZXmnngemAy4XPJ+/VfSUGq5gGfHfq5xJpcVsJhd6RlGQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=BZm6Mnww; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=G0yjPTMs; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=Z8ZPsQkieJauWrARbOyEtjMZ4QqHzDwzOWbk2xnFbujT16MlNrF1Cbsw6VVyeXCyhdSEJqDkqtm9tBGlVUTgl8zJYDLuth0cNc7KQW4woOgnDe9cjuTzEXq3/ZlpXQSWEH0wNCFoaTvp8PFBbN6B6W6SQL2+l4pCwYVLNC2XL+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=jx87NKgh; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=cA2ImbZE; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="BZm6Mnww";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="G0yjPTMs"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="jx87NKgh";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="cA2ImbZE"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1732833045;
+	s=2020; t=1732833048;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=qjNTHolP58a0KrsdLGdWmYpxO/AhmCfcO4oFNjtSLVU=;
-	b=BZm6MnwwdYq7Gt54czS3v4JIP2iAXdkdPLxsYHFUKSlrANTEtIteC34v8TvEsoW0o3WdmN
-	yFvd8sxgUxIMe2rcxEtpZL5J/1X/tABbn4hXeeOw4clOyrqVIpFrn7Rn7xtXX3V7hHnu6y
-	IQk6V7Rrj0X4/UaXLNqjk7Sh2fZv5ymCCaHKnrXAkI3Ect/E9xbASDLwGzEpluMRBXw3au
-	LSVoUUJx3dr1SppL7mHZhATAxBrSfxODSUsgH12lQeem89EbYOGWJHwbJvjXO1XmmCgd6G
-	W9pu44NhOrum/dvblTnqK9D3Z1JtZ4JWnBDLoymK6+enmPAfVLfIDmaV3J6Oqg==
+	bh=tvpZknr9BPOwYD8XZjsn0WZm5TwM0F8t2Y6GRW2245A=;
+	b=jx87NKghxQBAXBiLc/Nfq+JvCKr9QHs/MPH5SWhhswunPve6afuD6S7CYsACfwRdp9Ce4s
+	gwDb7D2Fv5hB1IOA87y8VufaEU0s802iiXChnZ4wn250cFuo0faNYFTNroHJyG+hiFLK5D
+	NffN8EUgqOrWlnOUBgOkFG+X7XsKQZK/2ffHCcphRvocABjwLrUazyEiEOvq+OgefxYhed
+	O6491F0yEJnAy51B52awLr2eDJuGi0a/WOOWGgezqj9kCVPrVmLXekMcoOT8ar+6HIuB7q
+	n1KfBOM0ZfCzO8YhIzEYBnWbRNCU92lB8kxDktYeRazAsUdiLzAD8jXOp8N89Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1732833045;
+	s=2020e; t=1732833048;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=qjNTHolP58a0KrsdLGdWmYpxO/AhmCfcO4oFNjtSLVU=;
-	b=G0yjPTMsBROFGgLh3ctXtNQmsovETZiI130rwsmhFkXXYQUiQyKz4OCCQebza2OpNUhJcO
-	/088PW+JgnB/lfDQ==
+	bh=tvpZknr9BPOwYD8XZjsn0WZm5TwM0F8t2Y6GRW2245A=;
+	b=cA2ImbZEx1KxOKV0FwjhgmWxOutHCI9pRn5LXwL23Gg08jvQcmMRgBePpagp0Tq7DhIBUv
+	MB4/lHoTfeT6MXAQ==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	"H. Peter Anvin" <hpa@zytor.com>
@@ -48,9 +48,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86@kernel.org,
 	x86-cpuid@lists.linux.dev,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v1 06/13] tools/x86/kcpuid: Simplify usage() handling
-Date: Thu, 28 Nov 2024 23:29:41 +0100
-Message-ID: <20241128222948.579920-7-darwi@linutronix.de>
+Subject: [PATCH v1 07/13] tools/x86/kcpuid: Prepare for more index ranges
+Date: Thu, 28 Nov 2024 23:29:42 +0100
+Message-ID: <20241128222948.579920-8-darwi@linutronix.de>
 In-Reply-To: <20241128222948.579920-1-darwi@linutronix.de>
 References: <20241128222948.579920-1-darwi@linutronix.de>
 Precedence: bulk
@@ -61,86 +61,220 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Modify usage() to take a process exit_code parameter and directly call
-exit() after printing the usage string.  This simplifies the callers'
-code paths.
+The kcpuid code assumes only two CPUID index ranges: standard functions
+(0x0...), and extended ones (0x80000000...).
 
-Remove the manual "Invalid option" error message at option parsing,
-since getopt_long(3) already prints sensible error messages by default.
+Since more cpuid index ranges will be added in the future, promote
+ranges selection from an "is_ext" boolean to enum-based classification.
+
+Collect all cpuid ranges in an array, now only two ranges, and introduce
+helpers to traverse that array or find a specific range withint it.  Use
+such helpers throughout the kcpuid code.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- tools/arch/x86/kcpuid/kcpuid.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ tools/arch/x86/kcpuid/kcpuid.c | 103 ++++++++++++++++++++-------------
+ 1 file changed, 62 insertions(+), 41 deletions(-)
 
 diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
-index ac8fdfdc4844..c0f2eae0d694 100644
+index c0f2eae0d694..245f55aa3170 100644
 --- a/tools/arch/x86/kcpuid/kcpuid.c
 +++ b/tools/arch/x86/kcpuid/kcpuid.c
-@@ -11,6 +11,7 @@
- 
- #define ARRAY_SIZE(x)	(sizeof(x) / sizeof((x)[0]))
- #define min(a, b)	(((a) < (b)) ? (a) : (b))
-+#define __noreturn	__attribute__((__noreturn__))
- 
- typedef unsigned int u32;
- typedef unsigned long long u64;
-@@ -608,9 +609,9 @@ static void setup_platform_cpuid(void)
- 	leafs_ext = setup_cpuid_range(0x80000000);
- }
- 
--static void usage(void)
-+static void __noreturn usage(int exit_code)
- {
--	pr_err("kcpuid [-abdfhr] [-l leaf] [-s subleaf]\n"
-+	pr_err_exit(exit_code, "kcpuid [-abdfhr] [-l leaf] [-s subleaf]\n"
- 		"\t-a|--all             Show both bit flags and complex bit fields info\n"
- 		"\t-b|--bitflags        Show boolean flags only\n"
- 		"\t-d|--detail          Show details of the flag/fields (default)\n"
-@@ -634,7 +635,7 @@ static struct option opts[] = {
- 	{ NULL, 0, NULL, 0 }
+@@ -66,19 +66,52 @@ struct cpuid_func {
+ 	int nr;
  };
  
--static int parse_options(int argc, char *argv[])
-+static void parse_options(int argc, char *argv[])
- {
- 	int c;
++enum range_index {
++	RANGE_STD = 0,			/* Standard */
++	RANGE_EXT = 0x80000000,		/* Extended */
++};
++
++#define CPUID_INDEX_MASK		0x80000000
++#define CPUID_FUNCTION_MASK		(~CPUID_INDEX_MASK)
++
+ struct cpuid_range {
+ 	/* array of main leafs */
+ 	struct cpuid_func *funcs;
+ 	/* number of valid leafs */
+ 	int nr;
+-	bool is_ext;
++	enum range_index index;
+ };
  
-@@ -654,9 +655,7 @@ static int parse_options(int argc, char *argv[])
- 			user_csv = optarg;
- 			break;
- 		case 'h':
--			usage();
--			exit(1);
--			break;
-+			usage(EXIT_SUCCESS);
- 		case 'l':
- 			/* main leaf */
- 			user_index = strtoul(optarg, NULL, 0);
-@@ -669,11 +668,8 @@ static int parse_options(int argc, char *argv[])
- 			user_sub = strtoul(optarg, NULL, 0);
- 			break;
- 		default:
--			pr_err("%s: Invalid option '%c'\n", argv[0], optopt);
--			return -1;
--	}
+-/*
+- * basic:  basic functions range: [0... ]
+- * ext:    extended functions range: [0x80000000... ]
+- */
+-struct cpuid_range *leafs_basic, *leafs_ext;
++static struct cpuid_range ranges[] = {
++	{	.index		= RANGE_STD,	},
++	{	.index		= RANGE_EXT,	},
++};
++
++static char *range_to_str(struct cpuid_range *range)
++{
++	switch (range->index) {
++	case RANGE_STD:		return "Standard";
++	case RANGE_EXT:		return "Extended";
++	default:		return NULL;
++	}
++}
++
++#define for_each_cpuid_range(range)				\
++	for (unsigned int i = 0;				\
++	     i < ARRAY_SIZE(ranges) && ((range) = &ranges[i]);	\
++	     i++)
++
++struct cpuid_range *index_to_cpuid_range(u32 index)
++{
++	struct cpuid_range *range;
++
++	for_each_cpuid_range(range) {
++		if (range->index == (index & CPUID_INDEX_MASK))
++			return range;
++	}
++
++	return NULL;
++}
+ 
+ static bool show_details;
+ static bool show_raw;
+@@ -206,7 +239,7 @@ static void raw_dump_range(struct cpuid_range *range)
+ 	u32 f;
+ 	int i;
+ 
+-	printf("%s Leafs :\n", range->is_ext ? "Extended" : "Basic");
++	printf("%s Leafs :\n", range_to_str(range));
+ 	printf("================\n");
+ 
+ 	for (f = 0; (int)f < range->nr; f++) {
+@@ -223,29 +256,19 @@ static void raw_dump_range(struct cpuid_range *range)
+ }
+ 
+ #define MAX_SUBLEAF_NUM		64
+-struct cpuid_range *setup_cpuid_range(u32 input_eax)
++void setup_cpuid_range(struct cpuid_range *range)
+ {
+ 	u32 max_func, idx_func, subleaf, max_subleaf;
+-	u32 eax, ebx, ecx, edx, f = input_eax;
+-	struct cpuid_range *range;
++	u32 eax, ebx, ecx, edx, f;
+ 	bool allzero;
+ 
+-	eax = input_eax;
++	eax = f = range->index;
+ 	ebx = ecx = edx = 0;
+ 
+ 	cpuid(&eax, &ebx, &ecx, &edx);
+ 	max_func = eax;
+ 	idx_func = (max_func & 0xffff) + 1;
+ 
+-	range = malloc(sizeof(struct cpuid_range));
+-	if (!range)
+-		pr_err_exit(errno, "malloc range");
 -
--	return 0;
-+			usage(EXIT_FAILURE);
-+		}
+-	if (input_eax & 0x80000000)
+-		range->is_ext = true;
+-	else
+-		range->is_ext = false;
+-
+ 	range->funcs = malloc(sizeof(struct cpuid_func) * idx_func);
+ 	if (!range->funcs)
+ 		pr_err_exit(errno, "malloc range->funcs");
+@@ -296,8 +319,6 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ 		}
+ 
+ 	}
+-
+-	return range;
  }
  
  /*
-@@ -686,8 +682,7 @@ static int parse_options(int argc, char *argv[])
+@@ -356,13 +377,13 @@ static int parse_line(char *line)
+ 	/* index/main-leaf */
+ 	index = strtoull(tokens[0], NULL, 0);
+ 
+-	if (index & 0x80000000)
+-		range = leafs_ext;
+-	else
+-		range = leafs_basic;
++	/* Skip line parsing if it's not covered by known ranges */
++	range = index_to_cpuid_range(index);
++	if (!range)
++		return -1;
+ 
+-	index &= 0x7FFFFFFF;
+ 	/* Skip line parsing for non-existing indexes */
++	index &= CPUID_FUNCTION_MASK;
+ 	if ((int)index >= range->nr)
+ 		return -1;
+ 
+@@ -554,24 +575,28 @@ static inline struct cpuid_func *index_to_func(u32 index)
+ 	struct cpuid_range *range;
+ 	u32 func_idx;
+ 
+-	range = (index & 0x80000000) ? leafs_ext : leafs_basic;
+-	func_idx = index & 0xffff;
++	range = index_to_cpuid_range(index);
++	if (!range)
++		return NULL;
+ 
++	func_idx = index & 0xffff;
+ 	if ((func_idx + 1) > (u32)range->nr) {
+ 		pr_err("ERR: invalid input index (0x%x)\n", index);
+ 		return NULL;
+ 	}
++
+ 	return &range->funcs[func_idx];
+ }
+ 
+ static void show_info(void)
+ {
++	struct cpuid_range *range;
+ 	struct cpuid_func *func;
+ 
+ 	if (show_raw) {
+ 		/* Show all of the raw output of 'cpuid' instr */
+-		raw_dump_range(leafs_basic);
+-		raw_dump_range(leafs_ext);
++		for_each_cpuid_range(range)
++			raw_dump_range(range);
+ 		return;
+ 	}
+ 
+@@ -598,15 +623,8 @@ static void show_info(void)
+ 	}
+ 
+ 	printf("CPU features:\n=============\n\n");
+-	show_range(leafs_basic);
+-	show_range(leafs_ext);
+-}
+-
+-static void setup_platform_cpuid(void)
+-{
+-	/* Setup leafs for the basic and extended range */
+-	leafs_basic = setup_cpuid_range(0x0);
+-	leafs_ext = setup_cpuid_range(0x80000000);
++	for_each_cpuid_range(range)
++		show_range(range);
+ }
+ 
+ static void __noreturn usage(int exit_code)
+@@ -682,10 +700,13 @@ static void parse_options(int argc, char *argv[])
   */
  int main(int argc, char *argv[])
  {
--	if (parse_options(argc, argv))
--		return -1;
-+	parse_options(argc, argv);
++	struct cpuid_range *range;
++
+ 	parse_options(argc, argv);
  
  	/* Setup the cpuid leafs of current platform */
- 	setup_platform_cpuid();
+-	setup_platform_cpuid();
++	for_each_cpuid_range(range)
++		setup_cpuid_range(range);
+ 
+ 	/* Read and parse the 'cpuid.csv' */
+ 	parse_text();
 -- 
 2.46.2
 
