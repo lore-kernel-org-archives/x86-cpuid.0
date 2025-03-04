@@ -1,46 +1,34 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6BD1FC7F7
-	for <x86-cpuid@lists.linux.dev>; Tue,  4 Mar 2025 09:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808B01FC7C2;
+	Tue,  4 Mar 2025 09:33:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741080531; cv=none; b=Bp9edrzmtKB/kvhqj1qPOr3kaplMVB01d6ooFxZDYLW9+pDsBfnz/DZOjmX5UhNfDo5i5jBdJOVOW+OI6HR9NaP3me9U6JU9fc+zUnAhr0UnqsYXKdnyWN2uYaHXSC3AWb1NJ/6RAqjZjQZsTCPLYqVdfmgJaS68H/N1LKdQC7o=
+	t=1741080793; cv=none; b=PoAZGndSiL2EHoJqRASna2eEEi49QvW61fN96GJUvU9/ltj2JMeP5/4AEr2EHms1krIt2jysViF85Dtczikxj9F9AIdgINbN06Rfd3TiLkJz6pH8i+Qj2p/ymhCTsAJ3rEVSRmpEh2A6AzS0DbwKruBXEBE3wi0a6vRJKk89fo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741080531; c=relaxed/simple;
-	bh=NN/jF2K71fBQKoNartJZu5Q1DPuRsEOcnXVTdidkoWc=;
+	s=arc-20240116; t=1741080793; c=relaxed/simple;
+	bh=qdRvwp2jiMda3Te2OCgP160WD3D/MfERmLF+KG8hFK0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dqDj3WoOfGLib3J0wjhk6zjN5kL9clV4iEGev3mt4FfSpfeM0EHdIZ3n4AwLIf2r/Dchz9caDsXETruwK30UE/uD6kxIyfsChc+j3G1R72bxWs4v4ewKAIOvg8LPVBNl5R01ahnbUboMlwSq8S5ALM9FFbprg4mA0lrCZlUoe8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=QSRXsKon; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=cD4mHs95; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=ROz5uNq8r2WVsfbZbqueRzgd1fSBW5ItM5Wy7KN+pgwVRGPsZn9MXrcTWYPu10+ZxxcChlbCZ0Lw2T500gUDvIfT76iqO8u/Rr3anlKtNwLaD9v7UkmkL6xW2UqcW5okWkzEuYZY93pSz0gI8lEigIacoUj1UvK9lO7giGuipG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPjPO728; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="QSRXsKon";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="cD4mHs95"
-Date: Tue, 4 Mar 2025 10:28:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1741080527;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CDIQ41H8uq3SlJZIpmnYfmJNWfvZdJsc7pN3IQwF/JE=;
-	b=QSRXsKonapLYEA0jCtYenQAiI3ECQ+IZ0+LuoGxVSEGYnbI6MoQZkDVzU2edRk+NdYA3nc
-	D6r+smrk8dWNHyk/vmSme7Wo5TRR+5KGtUXddlGfcDTXBXzE+X9Ow4rj3YTCfteOm7NeRT
-	vqhdhh7oHmD8SxtKpXHAvl/gxlsvrDn72o9ZJdd8qBjDZi2NcwEma5RGXqixV+/S8LEkOb
-	++t5ValeRLysfmPTOHK9q+20CKPiwhlfKhccbrsbAdt84Jfv+B7BZMpsTw/XTyADtLPm4L
-	aX9Offmm6ME2AYdXcJlpV7Eg4eEtFDPpqyu9Gto18Ij6/lLGBs2W0Tsqr4/wfg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1741080527;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CDIQ41H8uq3SlJZIpmnYfmJNWfvZdJsc7pN3IQwF/JE=;
-	b=cD4mHs95p5GK253fsRt6hU47Vx0ENata0S2Nw77EzbHn73tg2e8xjFIZXy5eg6RGXln21s
-	PenYsU6YjK/OnsCw==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Ingo Molnar <mingo@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPjPO728"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E54DC4CEE8;
+	Tue,  4 Mar 2025 09:33:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741080793;
+	bh=qdRvwp2jiMda3Te2OCgP160WD3D/MfERmLF+KG8hFK0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cPjPO728RC8LQvA6Wiyf4TegFs2+e2krYP7wmVWZqgvl1Q449m2PfkYEU7PjvioN/
+	 BrXWaoZ/e4meAM/vO2iavpQ7QMK2IeUS/ATI+wPNBqmQAH6t9WMUPLMy9cQUPtpBZB
+	 rQ3aUnXID96RoI4/m8Hjfocq5bsyXe4/7ZCJn55Gg5MNRLWYKEFt9GqQUFd73zc9Z3
+	 RO+kGsWtez8YGVIJrZBEMTYIYC0JShaT0FVFJYaI71VUL8i4luasT7vbqBSlbAUIOO
+	 Bnepf7NkX7TYRg6SOD01YKc3yE2p725KPKsRfBaB5ZJ1gMuM/l/jl3LkZzUba3xhFn
+	 csl+U8ZzFriKg==
+Date: Tue, 4 Mar 2025 10:33:08 +0100
+From: Ingo Molnar <mingo@kernel.org>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
 Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -48,35 +36,74 @@ Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Andrew Cooper <andrew.cooper3@citrix.com>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 05/40] x86/cpu: Remove unnecessary headers and reorder
- the rest
-Message-ID: <Z8bHzaFjfRcZOKer@lx-t490>
+Subject: Re: [PATCH v1 00/40] x86: Leaf 0x2 and leaf 0x4 refactorings
+Message-ID: <Z8bI1JwDDI3JhpxP@gmail.com>
 References: <20250304085152.51092-1-darwi@linutronix.de>
- <20250304085152.51092-6-darwi@linutronix.de>
- <Z8bEiWu-Vvu5844p@gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z8bEiWu-Vvu5844p@gmail.com>
+In-Reply-To: <20250304085152.51092-1-darwi@linutronix.de>
 
-On Tue, 04 Mar 2025, Ingo Molnar wrote:
->
-> This patch has an unexpected side-effect on i386 allmodconfig builds:
->
->   arch/x86/kernel/cpu/intel.c: In function ‘intel_workarounds’:
->   arch/x86/kernel/cpu/intel.c:452:17: error: ‘movsl_mask’ undeclared (first use in this function)
->   arch/x86/kernel/cpu/intel.c:452:17: note: each undeclared identifier is reported only once for each function it appears in
->   make[5]: *** [scripts/Makefile.build:207: arch/x86/kernel/cpu/intel.o] Error 1
->
-> Due to the removal of the <asm/uaccess.h> header.
->
-> The attached patch fixes it.
->
 
-Thanks a lot, will do.
+* Ahmed S. Darwish <darwi@linutronix.de> wrote:
+
+> Ahmed S. Darwish (33):
+>   x86/cacheinfo: Validate cpuid leaf 0x2 EDX output
+>   x86/cpu: Validate cpuid leaf 0x2 EDX output
+>   x86/cpu: Properly parse leaf 0x2 TLB descriptor 0x63
+>   x86/cpuid: Include linux/build_bug.h
+>   x86/cpu: Remove unnecessary headers and reorder the rest
+>   x86/cpu: Use max() for leaf 0x2 TLB descriptors parsing
+>   x86/cpu: Simplify TLB entry count storage
+>   x86/cpu: Remove leaf 0x2 parsing loop and add helpers
+>   x86/cacheinfo: Remove unnecessary headers and reorder the rest
+>   x86/cacheinfo: Use cpuid leaf 0x2 parsing helpers
+>   x86/cacheinfo: Constify _cpuid4_info_regs instances
+>   x86/cacheinfo: Align ci_info_init() assignment expressions
+>   x86/cacheinfo: Standardize _cpuid4_info_regs instance naming
+>   x86: treewide: Introduce x86_vendor_amd_or_hygon()
+>   x86/cacheinfo: Consolidate AMD/Hygon leaf 0x8000001d calls
+>   x86/cacheinfo: Separate amd_northbridge from _cpuid4_info_regs
+>   x86/cacheinfo: Move AMD cache_disable_0/1 handling to separate file
+>   x86/cacheinfo: Use sysfs_emit() for sysfs attributes show()
+>   x86/cacheinfo: Separate Intel and AMD leaf 0x4 code paths
+>   x86/cacheinfo: Rename _cpuid4_info_regs to _cpuid4_info
+>   x86/cacheinfo: Clarify type markers for leaf 0x2 cache descriptors
+>   x86/cacheinfo: Use enums for cache descriptor types
+>   x86/cpu: Use enums for TLB descriptor types
+>   sizes.h: Cover all possible x86 cpu cache sizes
+>   x86/cacheinfo: Use consolidated leaf 0x2 descriptor table
+>   x86/cpu: Use consolidated leaf 0x2 descriptor table
+>   x86/cacheinfo: Separate leaf 0x2 handling and post-processing logic
+>   x86/cacheinfo: Separate intel leaf 0x4 handling
+>   x86/cacheinfo: Extract out cache level topology ID calculation
+>   x86/cacheinfo: Extract out cache self-snoop checks
+>   x86/cacheinfo: Relocate leaf 0x4 cache_type mapping
+>   x86/cacheinfo: Introduce amd_hygon_cpu_has_l3_cache()
+>   x86/cacheinfo: Apply maintainer-tip coding style fixes
+
+Meta spelling comments for the entire series:
+
+Please capitalize acronyms and names consistently in titles, changelogs 
+and comments alike:
+
+ s/cpu
+  /CPU
+
+ s/intel
+  /Intel
+
+When referring to headers, please write out their canonical names where 
+appropriate - for example:
+
+   - x86/cpuid: Include linux/build_bug.h
+   + x86/cpuid: Include <linux/build_bug.h>
+
+Thanks,
+
+	Ingo
