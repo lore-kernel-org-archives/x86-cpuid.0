@@ -1,112 +1,147 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D6F2441A3
-	for <x86-cpuid@lists.linux.dev>; Wed,  5 Mar 2025 12:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3B71FC7D0
+	for <x86-cpuid@lists.linux.dev>; Wed,  5 Mar 2025 16:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741179275; cv=none; b=Ht5T406us9zmtDCZKZvB4PpLjGfY0kgiFAYAUHHE9TWQnldzU0u4ydsGdooUeaAfoibPgygnAbRDJUEfifiHQ8gw2GAYwkauS6F2U7grUUCMy1hp5X3s57RNYgIN7lrEtjrVgjD5UMqThcJ7BSEKCMrfrh5Q4XIxTHNapeWAYY8=
+	t=1741190484; cv=none; b=VzXJL3wXiQQRJAOkjX/M53bzvs8Q/KRtgjqAYZwMzbaqSFFjjj2cI7RUOri7HpJD3Flq/xafoThayiPGIpAkhDUM7PEUVELo+ou7nZcU018vzI56x5XUdXlAqsAMFMLPank+04fc5COCZmBAYpS1mZTvS9DdpkZux6fErpqVeJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741179275; c=relaxed/simple;
-	bh=1uHOtA+1x+X2/3JsOt1A7fS7NTRJcAIpEia1iDZCyII=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=hevb9Ug8o6XZPH+yM0K22E6y8fqC/eP0al1fjbQ5hDe1WGEtvOLOuTXnd0lvsYjgHoEHOHGKGRlIuCuOQSsZWNpg3CbfWVSXIjQpwsFtfM0MOmLP9l5CS9tBD2op7rri3krXRTVWuSTm58u1/VrdDXKnRdXGTP6kh2gZzdDXl4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=3qGgYXS6; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=qRd22s+T; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1741190484; c=relaxed/simple;
+	bh=EJ/5DAxnmS6dAoCnK6vcVRM+5FjKQqXjnncObO0qBjw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ui0IQk2g9Dv3yXaWBQ+YUtifUHJjI2CgSqXN/I+XBymkXwaoIayK3n3j8yzjzS9pqP+ipduDPR0+TMAHvnnfEWpzfa7tGCfYSRg8qcFPeFoC63gsmDvWQPB4qztjnb77meTJc8r/5Vwz+DcRVNQMasjCZ8raT0c0lePG/TSgf/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=TxlrXW4v; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=VV2+R5TF; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="3qGgYXS6";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="qRd22s+T"
-Date: Wed, 5 Mar 2025 13:54:30 +0100
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="TxlrXW4v";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="VV2+R5TF"
+Date: Wed, 5 Mar 2025 17:01:18 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1741179271;
+	s=2020; t=1741190481;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=NPyfm8At3FUwyGKhvUJnUfZWkt79ldnXvvjC3pefZf8=;
-	b=3qGgYXS6ytQPd3y7JpSVzDj1HoyB8OxBFtuP6d3hoHLOo5zzks0hrEO8xu1fHRFsmWPkqq
-	4t9+anFT7/zFGzQq1nRrfQoHwHR4/FsOKWeExMCm7RMs3AnS60pGb1oDGHfOMB+r4IxFeK
-	XobigABNlurVzgkHpXzLOAwddxfmdLLk0mlHR613OcA1DEY4yegGTdN/V0ZN7r//Mu+Esq
-	flDdiZrPYDuHCg0BkgANJ7Ym/oOBG/6kTcHeUC/rzWf0uziOvB56Ft3+cEvI7vs//QRMQU
-	mzZrrzKbS5CAn4djY0mkJg6E+iA2syMUpoAwxtIokqMuJno3K+n9vujLtVsAFg==
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qlENoghyyvlG4Rh4mv4RHpUCHsgMjx2Ty9fbpCg0AdE=;
+	b=TxlrXW4viVU97jLqLPNPCAtAfZ0MU6IaZ+Ktty1ZjEgp75fGNaCbsvIWA2G3W9mz6b13xf
+	tm/TLAUGgInCa7UWFYcG5eTU4+gt8n2wwoemzeiVYovuZ5BKz1Tm9x6DE7Xfs5CA51cZvH
+	s2g2VMBOnGcVudTp9j2R/KVHEG98KovvsdXtoUvzciCefdq2n+bW45CNZlDlDpHubib6hV
+	E4Ko12RSS/mmlr9hvt0IYcVXhhgi0mF6m7OKU4r6yLNkzvDYgXwD9KEGN/JAWPyolKivPl
+	k2r59gJXGR/E2M+yQ6kMbskFogrnE3dbinWjlLYGXej87cvNgOdD7zqOrtax4Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1741179271;
+	s=2020e; t=1741190481;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=NPyfm8At3FUwyGKhvUJnUfZWkt79ldnXvvjC3pefZf8=;
-	b=qRd22s+TdLo3Gtt0fAH+gF1q97osj9G5T0hk41hlxA8RCa/rBpm4em1uXeHF6GoLR9wn+k
-	IiPnT2/5sJ5yRQAw==
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qlENoghyyvlG4Rh4mv4RHpUCHsgMjx2Ty9fbpCg0AdE=;
+	b=VV2+R5TFxshTWxrXN8lx4oSdbUDGcfHLX/doA8oeJu5lHKUJj7okPT4rl+tE4/FfP9Q0lH
+	LIfjCURZGbwE74CA==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: x86-cpuid@lists.linux.dev, Borislav Petkov <bp@alien8.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Ingo Molnar <mingo@redhat.com>, "H. Peter Anvin" <hpa@zytor.com>,
-	x86@kernel.org
-Cc: Thomas Gleixner <tglx@linutronix.de>,
+To: Ingo Molnar <mingo@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	John Ogness <john.ogness@linutronix.de>,
-	Avadhut Naik <avadhut.naik@amd.com>, linux-kernel@vger.kernel.org
-Subject: [ANNOUNCE] x86-cpuid-db: Release v2.1
-Message-ID: <Z8hJhgGVduJWFqRE@lx-t490>
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 10/40] x86/cpu: Remove leaf 0x2 parsing loop and add
+ helpers
+Message-ID: <Z8h1Tl3es-PfxrF1@lx-t490>
+References: <20250304085152.51092-1-darwi@linutronix.de>
+ <20250304085152.51092-11-darwi@linutronix.de>
+ <Z8bHK391zKE4gUEW@gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z8bHK391zKE4gUEW@gmail.com>
 
-Hi,
+Hi Ingo,
 
-I'm happy to announce release 2.1 of the x86-cpuid-db project:
+On Tue, 04 Mar 2025, Ingo Molnar wrote:
+> ...
+> * Ahmed S. Darwish <darwi@linutronix.de> wrote:
+> > +
+> > +#include <linux/types.h>
+> > +
+> > +#include <asm/cpuid.h>
+>
+> So that header organization is a bit messy: if <asm/cpuid.h> is
+> supposed to be the main header, why is there a <asm/cpuid/types.h>?
+>
+> I'd suggest we follow the FPU header structure:
+>
+>   starship:~/tip/arch/x86/include/asm/fpu> ls -l
+>   total 48
+>   -rw-rw-r-- 1 mingo mingo  5732 Feb 27 19:24 api.h
+>   -rw-rw-r-- 1 mingo mingo   671 Feb 26 16:13 regset.h
+>   -rw-rw-r-- 1 mingo mingo  2203 Feb 27 13:52 sched.h
+>   -rw-rw-r-- 1 mingo mingo  1110 Feb 27 19:24 signal.h
+>   -rw-rw-r-- 1 mingo mingo 14741 Feb 27 19:24 types.h
+>   -rw-rw-r-- 1 mingo mingo   811 Feb 26 16:13 xcr.h
+>   -rw-rw-r-- 1 mingo mingo  4401 Feb 27 23:01 xstate.h
+>
+> With <asm/cpuid/api.h> being the main header - established via a
+> separate preparatory patch.
+>
+> This followup patch can then add <asm/cpuid/types.h> which will also be
+> included in <asm/cpuid/api.h>.
+>
 
-  https://gitlab.com/x86-cpuid.org/x86-cpuid-db
-  https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/releases/v2.1
+Sounds sensible.  Thanks!
 
-Changelog v2.1
---------------
+FYI, in our CPUID-model patch queue (the one after this), we have
+something like:
 
-- Add spellchecking and x86 terminology style enforcement for all CPUID
-  bitfield descriptions in the XML database.  Build multiple x86
-  specific hunspell(5) dictionary and affix files for such enforcement.
+    <asm/cpuid/>
+    │
+    ├── leaves.h   CPUID bitfields; auto-generated by x86-cpuid-db
+    ├── data.h     Internal data structures for the model
+    ├── api.h      The new CPUID-model API
+    └── ops.h      The raw CPUID ops [Formerly <asm/cpuid.h>]
 
-- Use such logic to standardize the style for x86 trademarks, registers,
-  opcodes, byte units, hexadecimal digits, and x86 abbreviated and
-  non-abbreviated technical terms.
+So doing this from within this PQ should fit nicely.
 
-- Similarly, refuse abbreviated terms that might be OK in code but not
-  in official listings (e.g., "addr", "instr", "reg", "virt", etc.)
+> > +
+> > +/**
+> > + * get_leaf_0x2_regs() - Return sanitized leaf 0x2 register output
+> > + * @regs:	Output parameter
+> > + *
+> > + * Get leaf 0x2 register output and store it in @regs.  Invalid byte
+> > + * descriptors returned by the hardware will be force set to zero (the
+> > + * NULL cache/TLB descriptor) before returning them to the caller.
+> > + */
+> > +static inline void get_leaf_0x2_regs(union leaf_0x2_regs *regs)
+>
+> Please prefix all new cpuid API functions and types with cpuid_.
+>
 
-- Introduce scripts/spellcheck_xml.sh to automate the hunspell
-  invocation, and add it to the project's CI pipeline.
+ACK.
 
-- Update the CPUID database:
+> > +#define for_each_leaf_0x2_desc(regs, desc)				\
+> > +	/* Skip the first byte as it is not a descriptor */		\
+> > +	for (desc = &(regs).desc[1]; desc < &(regs).desc[16]; desc++)
+>
+> The comment line can come before the macro.
+>
 
-  - Leaf 0xd: Apply vendor fixes from Andrew Cooper (Xen / Citrix)
+ACK.
 
-  - Leaf 0x80000020/0x80000021: Add new Zen5 SoC bits.  Thanks to
-    Avadhut Naik (AMD).
+> > +	get_leaf_0x2_regs(&regs);
+> > +	for_each_leaf_0x2_desc(regs, desc)
+> > +		intel_tlb_lookup(*desc);
+>
+> Nice interface otherwise.
+>
 
-  - Leaf 0x7: Add new NMI source reporting bit.  Thanks to Sohil
-    Mehta (Intel).
-
-  - All leaves: Fix all issues identified by the new hunspell(5)
-    pipeline.
-
-Release coverage
-----------------
-
-  CPUID leaves:        63 leaves
-  CPUID bitfields:     918 entries
-
-Artifacts
----------
-
-The generated CSV and C header files can be quickly checked in full from
-the release artifacts at:
-
-  https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/releases/v2.1
-
-Thanks,
-
---
-Ahmed S. Darwish
-Linutronix GmbH
+Thanks!
+Ahmed
