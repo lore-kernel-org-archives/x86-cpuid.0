@@ -1,51 +1,50 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA5D2BE7D4
-	for <x86-cpuid@lists.linux.dev>; Tue,  4 Mar 2025 16:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D6F2441A3
+	for <x86-cpuid@lists.linux.dev>; Wed,  5 Mar 2025 12:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741107206; cv=none; b=kzDLcxOwmFBZ8+2nMFeTO5ADhXIeuoLIUEmC2Xwufvu0ESReEqrYkFD2Hndin6uZr5EQd4LYwWlnI78mFhMmfhxhZrHB1+u+G0o4jODoFUanekvcbMib+qojH6lvmNxfAQtLeDH5x5Op0ij6Kuv6qQPhoWJxIJZfiZ5/GbBLFRM=
+	t=1741179275; cv=none; b=Ht5T406us9zmtDCZKZvB4PpLjGfY0kgiFAYAUHHE9TWQnldzU0u4ydsGdooUeaAfoibPgygnAbRDJUEfifiHQ8gw2GAYwkauS6F2U7grUUCMy1hp5X3s57RNYgIN7lrEtjrVgjD5UMqThcJ7BSEKCMrfrh5Q4XIxTHNapeWAYY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741107206; c=relaxed/simple;
-	bh=V5g77Nc7uZ8QqlN0FWqZH0GKc1zME+tFKHwd7vBzHgc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PbncgylQ7BhRd9T4mVYhAYKjRLtumOgvHZmd7Du/bJqAt2zSEE4eJz7roVmWlnLEwnxI+iMXeVUxLQ7rPzWPL33gnG05sSMaR1J3Ne8ZmwnCp3DJ5iMJHsD6k6DttN1zIIT4E42+Mil6fj4m9gdmyvPrxbTBVID8+J8YMXxdq+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=0TYL2xWP; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=EBh435Xc; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1741179275; c=relaxed/simple;
+	bh=1uHOtA+1x+X2/3JsOt1A7fS7NTRJcAIpEia1iDZCyII=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=hevb9Ug8o6XZPH+yM0K22E6y8fqC/eP0al1fjbQ5hDe1WGEtvOLOuTXnd0lvsYjgHoEHOHGKGRlIuCuOQSsZWNpg3CbfWVSXIjQpwsFtfM0MOmLP9l5CS9tBD2op7rri3krXRTVWuSTm58u1/VrdDXKnRdXGTP6kh2gZzdDXl4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=3qGgYXS6; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=qRd22s+T; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="0TYL2xWP";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="EBh435Xc"
-Date: Tue, 4 Mar 2025 17:53:21 +0100
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="3qGgYXS6";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="qRd22s+T"
+Date: Wed, 5 Mar 2025 13:54:30 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1741107203;
+	s=2020; t=1741179271;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V5g77Nc7uZ8QqlN0FWqZH0GKc1zME+tFKHwd7vBzHgc=;
-	b=0TYL2xWPcYP21snrtCsciGVspMQw5sqrrtJlvQXLAgRYlDp2DQ/fwhYokxCEl+6zOROAxQ
-	UChhN+naVyXUaxyFV5QMTITsbTl+juOZZWCvUNS+DQtw5KWk9ifc/U/XFluOFl+PGgAWYu
-	zQJnch5v+hu/ht/XSYk/pc5lpKm4iLEmvRPe5oTMiCvIYFSfXMgFteKyv7cnfoBmXu4Bm6
-	RPWQz9EHId13niC7E/j2A/1tZREzXumZzEjVKbSIIMuv5yGnIQRevD0KTDtXtREc48HRzc
-	rJALR6tuIVmCzde5dWJgEiibqOScO1Ngw14X0wZoGGGeD1kOSaw27Sr4eL43FQ==
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=NPyfm8At3FUwyGKhvUJnUfZWkt79ldnXvvjC3pefZf8=;
+	b=3qGgYXS6ytQPd3y7JpSVzDj1HoyB8OxBFtuP6d3hoHLOo5zzks0hrEO8xu1fHRFsmWPkqq
+	4t9+anFT7/zFGzQq1nRrfQoHwHR4/FsOKWeExMCm7RMs3AnS60pGb1oDGHfOMB+r4IxFeK
+	XobigABNlurVzgkHpXzLOAwddxfmdLLk0mlHR613OcA1DEY4yegGTdN/V0ZN7r//Mu+Esq
+	flDdiZrPYDuHCg0BkgANJ7Ym/oOBG/6kTcHeUC/rzWf0uziOvB56Ft3+cEvI7vs//QRMQU
+	mzZrrzKbS5CAn4djY0mkJg6E+iA2syMUpoAwxtIokqMuJno3K+n9vujLtVsAFg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1741107203;
+	s=2020e; t=1741179271;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V5g77Nc7uZ8QqlN0FWqZH0GKc1zME+tFKHwd7vBzHgc=;
-	b=EBh435Xc6DaL/+NPydBp4dIT8FxuFvO8UzjFQnVV7kHwmeJ0k0OJdrYfHh+LMkZNWdNEX6
-	qFcQhljUl1eEbgBw==
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=NPyfm8At3FUwyGKhvUJnUfZWkt79ldnXvvjC3pefZf8=;
+	b=qRd22s+TdLo3Gtt0fAH+gF1q97osj9G5T0hk41hlxA8RCa/rBpm4em1uXeHF6GoLR9wn+k
+	IiPnT2/5sJ5yRQAw==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: "Naik, Avadhut" <avadnaik@amd.com>
-Cc: x86-cpuid@lists.linux.dev, Babu.Moger@amd.com,
-	Avadhut Naik <avadhut.naik@amd.com>
-Subject: Re: [PATCH 0/3] Add missing CPUIDs to the CPUID database
-Message-ID: <Z8cwAT6N_T0oomkL@lx-t490>
-References: <20241115181345.262296-1-avadhut.naik@amd.com>
- <Z8crqWioDw7Y_cgG@lx-t490>
- <c63d4cda-b583-40a0-8dda-c5786f1f56f3@amd.com>
+To: x86-cpuid@lists.linux.dev, Borislav Petkov <bp@alien8.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Ingo Molnar <mingo@redhat.com>, "H. Peter Anvin" <hpa@zytor.com>,
+	x86@kernel.org
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	John Ogness <john.ogness@linutronix.de>,
+	Avadhut Naik <avadhut.naik@amd.com>, linux-kernel@vger.kernel.org
+Subject: [ANNOUNCE] x86-cpuid-db: Release v2.1
+Message-ID: <Z8hJhgGVduJWFqRE@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -54,11 +53,60 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c63d4cda-b583-40a0-8dda-c5786f1f56f3@amd.com>
 
-On Tue, 04 Mar 2025, Naik, Avadhut wrote:
->
-> Thank you so much!
->
+Hi,
 
-Welcome :)
+I'm happy to announce release 2.1 of the x86-cpuid-db project:
+
+  https://gitlab.com/x86-cpuid.org/x86-cpuid-db
+  https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/releases/v2.1
+
+Changelog v2.1
+--------------
+
+- Add spellchecking and x86 terminology style enforcement for all CPUID
+  bitfield descriptions in the XML database.  Build multiple x86
+  specific hunspell(5) dictionary and affix files for such enforcement.
+
+- Use such logic to standardize the style for x86 trademarks, registers,
+  opcodes, byte units, hexadecimal digits, and x86 abbreviated and
+  non-abbreviated technical terms.
+
+- Similarly, refuse abbreviated terms that might be OK in code but not
+  in official listings (e.g., "addr", "instr", "reg", "virt", etc.)
+
+- Introduce scripts/spellcheck_xml.sh to automate the hunspell
+  invocation, and add it to the project's CI pipeline.
+
+- Update the CPUID database:
+
+  - Leaf 0xd: Apply vendor fixes from Andrew Cooper (Xen / Citrix)
+
+  - Leaf 0x80000020/0x80000021: Add new Zen5 SoC bits.  Thanks to
+    Avadhut Naik (AMD).
+
+  - Leaf 0x7: Add new NMI source reporting bit.  Thanks to Sohil
+    Mehta (Intel).
+
+  - All leaves: Fix all issues identified by the new hunspell(5)
+    pipeline.
+
+Release coverage
+----------------
+
+  CPUID leaves:        63 leaves
+  CPUID bitfields:     918 entries
+
+Artifacts
+---------
+
+The generated CSV and C header files can be quickly checked in full from
+the release artifacts at:
+
+  https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/releases/v2.1
+
+Thanks,
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
