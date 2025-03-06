@@ -1,63 +1,50 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF50D207A03
-	for <x86-cpuid@lists.linux.dev>; Thu,  6 Mar 2025 21:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CDE27605B
+	for <x86-cpuid@lists.linux.dev>; Thu,  6 Mar 2025 22:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741295273; cv=none; b=R0w5sQJuKOvLfxbv1zeu+MZpEkLLkGIdvRDEiyKqzF0ebCYGh8vqaodfMUecXYUk5RNXpzhB+akqOmFQWlS0+m2/u1pQzfOiSg8XnYSsOLI1y3zO3b6uiups3RMz1h02wz/JVQCSbXy9AESTM2g+rPx/UXs9pSVbnneK0AleJYc=
+	t=1741298432; cv=none; b=klF87GMpfHpWMvSOWbJlg5CYM4unHw8su6r+u+wAWV3idkk5MCnKqSS6fN1CKEAwUqNGvgoY9xit7xmjQ+1yFEKUcqCYj2mD+XXg1aBrWWmUaAmIUbvVWU+G0IgOkZFuVk5BpwG20rGMNyzlfStYwChcqRgEgM/d7GcZqlb1f4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741295273; c=relaxed/simple;
-	bh=Vlo0AiwzGRy66OHyDYS0KriNF7fYNWF2EEn2K+6ZGkM=;
+	s=arc-20240116; t=1741298432; c=relaxed/simple;
+	bh=h9M//6a54qcUwRZ9pPr7/OWIx8Cbbr/ZQonhNJvLioI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sSYsoRgBvl5SEiBTo6LHNNH/VPPBMAtMlJlp2l9w2Tg4febvnTI0FgKxQh3UD1tuGOi6yvku3A5WxzLJO9hZSaw77DQoAzjpGRp1sdKtaV/TtNnb3afblU0QD/es5iB8jLh6hytL5Q/6wButODjUuxHw09Bjy6Mt/4xD84U+GlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com; spf=pass smtp.mailfrom=cloud.com; dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b=BTUSa9ww; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloud.com
+	 In-Reply-To:Content-Type; b=LiwDhzfWbdBSxsvZ1vNpw9pXdda6DFKKD//XT7G+znMNouyVZjv6OMYPwW81PVrAKusOduJDwb7uIW8CTWt7bSY3HJIWteaEN4SvUenLTan7HPbminM0HvHHTz+loRyBZZ/5mzJph0DUO2SRzwCGz2KFgNsiItay86t2lzN3XH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RMoLlFNa; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="BTUSa9ww"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-390e6ac844fso1005212f8f.3
-        for <x86-cpuid@lists.linux.dev>; Thu, 06 Mar 2025 13:07:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=citrix.com; s=google; t=1741295270; x=1741900070; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=c2kNo1245tP1bETmArOySHs5HV6f6m4/M5qZ39i0p8Y=;
-        b=BTUSa9ww0tq2UJrAzN4k9n4DFYBVMfNBV8m0D5Pqact4H+TfshPPDVd0GFyQkqw2jB
-         vWajaTAOqwoo1uGIqUSAcr4BOzQp6l4aTLPZgLuAmx11qdW4/QlYKvAYpIOJnkiE9PMO
-         kGl4ywEnHKe8Dry5nWmSMFy5SQ4fuIBmwM1jU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741295270; x=1741900070;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c2kNo1245tP1bETmArOySHs5HV6f6m4/M5qZ39i0p8Y=;
-        b=UoX+iEtTkPEmLpkZld0yjidytMZA1Nu/DmBhrISk+0Bfo4s3wzYX35/js5WHhKLWae
-         b7d50EHHUQbB5+0Y+69gyBv43pCoxWgQ5OvnTQDkvihZBWKHAmeZ5Iov6RM0p5vBYTP8
-         tN801HiYZdjIm2Xb6E2doeeY9cXPbWnBrUGn61zM4LIlsoruYYneXM4RT8xX022r+z4k
-         54qQ/w4S7n3hP9pecyEqCMb/z5BqePv4iR8gdacQgcv9xga7Q8spZtT/Jsrtnl9NvVRA
-         W+Z0YlS4U1hOHwztDnEQCaMubZ4gbeS524+aFmTxFGnOvb3xlRGHWHkY0bsmRUXDKt3S
-         vJjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXzRADvYPoBNqqwdIOTeW+ZEFEgBjJnAerHRWqbZwVDHX0+iWi3gyzm+5gNm29PjsV09EJvF/wrcAU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyQzGlv8Ji0HUix0kjMoDLqr5UtjN4azBn+Yz9i9NUSdUBOQpXe
-	rjzHu+Nw+CAr6rjQY45E1ke69AbSDtIvokrRA+zBBklA7+FR693Bq9OGn2ecsYY=
-X-Gm-Gg: ASbGncsNQ1MdB1lakcc8qRV0gPEB45b6GzIwoKvbC+if/edRA68sfCbaGmUdzKc4tPE
-	3w2x7Fr50gQY+dkv8JABfbCcwKphdepIfshMSxlym7I95OD0CXby7q8NIm8KV2eUCQwt5YsXHvW
-	i9P8tiboTbnT/8PGZX6VbtXLZhGLcMx48SQT6LixRK9YHoWy3et4QsRlLR8nPUNEA8j1Ew4DACd
-	85A6XKjyix0tx2etytPslEhX1jPEdUbgPHXdRlpRJyorq8DiYu5QUYg6wuHD+h7oiP4K08tjQ4L
-	YRCGZm/p3DSazNIhQnaewFoKezyrjvVMGrXyaUZN9ukNQwrPNo2sAffVpjQSRAh9sQFKbYn+IEf
-	V3/fNzAHx
-X-Google-Smtp-Source: AGHT+IF/KwqCUWrwwOkk1hrlYGnd0QVj1q31c1PeWodBjakcgGYj3qpqhStA5n9FqEUIUxVMbzT3Ag==
-X-Received: by 2002:a5d:5f93:0:b0:38a:88ac:f115 with SMTP id ffacd0b85a97d-39132d98703mr395285f8f.34.1741295270025;
-        Thu, 06 Mar 2025 13:07:50 -0800 (PST)
-Received: from [192.168.1.10] (host-92-26-98-202.as13285.net. [92.26.98.202])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bdd8daadbsm30459385e9.21.2025.03.06.13.07.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Mar 2025 13:07:49 -0800 (PST)
-Message-ID: <01a2a955-98a5-47f6-aeb2-275ba840a9fa@citrix.com>
-Date: Thu, 6 Mar 2025 21:07:48 +0000
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RMoLlFNa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1741298431; x=1772834431;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=h9M//6a54qcUwRZ9pPr7/OWIx8Cbbr/ZQonhNJvLioI=;
+  b=RMoLlFNaTDykroOFU9RgZkwSx6bZ5H09AcChN/g42KLcUl7CvkjAae+p
+   yFZATxSbSKr50HlGl6ghl4B1HmskifbIRuDliozLZNRAw8b3YMlVftFZS
+   BJqFmhLnkMwelKKnY9SOrGPbsFHbONKSm44rq1KwHDj5DRNNHdPb6+Ght
+   wHFkHmIyh4idAZv/BIY8p04vEAcKW9akIMCeJNDmtlTAhJ1cFxc1Dzvsz
+   UeVjrckLLVkqo/rthm1GM4oO3cSd+6yrc1HlvSEPD3/LY96/U2oMJRS19
+   Yb6j2wzN6ay0XD66XKfkioY1gzhz+1fvTLZHfZlbOwTNzDKrcf77tvBXo
+   Q==;
+X-CSE-ConnectionGUID: roRUH8gMQzSLtg5UrGwAsw==
+X-CSE-MsgGUID: XY4FGe4sRQyyXV1aTIVC6A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="52974390"
+X-IronPort-AV: E=Sophos;i="6.14,227,1736841600"; 
+   d="scan'208";a="52974390"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2025 14:00:30 -0800
+X-CSE-ConnectionGUID: ochOd0YvQ5e1u5hCabolMg==
+X-CSE-MsgGUID: w7Xsev9MQoOpoR8PhhxYMQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="124347486"
+Received: from kinlongk-mobl1.amr.corp.intel.com (HELO [10.125.110.90]) ([10.125.110.90])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2025 14:00:30 -0800
+Message-ID: <0ada12f8-4fdb-4dad-90f7-b044993e829c@intel.com>
+Date: Thu, 6 Mar 2025 14:00:52 -0800
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -69,65 +56,62 @@ Subject: Re: [PATCH v1 07/12] tools/x86/kcpuid: Add rudimentary CPU vendor
  detection
 To: "Ahmed S. Darwish" <darwi@linutronix.de>, Borislav Petkov <bp@alien8.de>,
  Ingo Molnar <mingo@redhat.com>, Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, "H. Peter Anvin" <hpa@zytor.com>,
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+ Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
  x86@kernel.org, John Ogness <john.ogness@linutronix.de>,
  x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 References: <20250306205000.227399-1-darwi@linutronix.de>
  <20250306205000.227399-8-darwi@linutronix.de>
-Content-Language: en-GB
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
- 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
- 6+ahAA==
+From: Dave Hansen <dave.hansen@intel.com>
+Content-Language: en-US
+Autocrypt: addr=dave.hansen@intel.com; keydata=
+ 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
 In-Reply-To: <20250306205000.227399-8-darwi@linutronix.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 06/03/2025 8:49 pm, Ahmed S. Darwish wrote:
-> @@ -145,6 +166,40 @@ static inline bool has_subleafs(u32 f)
->  	return false;
->  }
->  
+On 3/6/25 12:49, Ahmed S. Darwish wrote:
 > +/*
 > + * Leaf 0x0 EDX output, CPU vendor ID string bytes 4 - 7.
 > + */
@@ -139,32 +123,16 @@ On 06/03/2025 8:49 pm, Ahmed S. Darwish wrote:
 > +	EDX_CENTAUR	= fourcc('a', 'u', 'r', 'H'),	/* Cent_aurH_auls */
 > +	EDX_ZHAOXIN	= fourcc('a', 'n', 'g', 'h'),	/*   Sh_angh_ai	  */
 > +};
-> +
-> +static enum cpu_vendor identify_cpu_vendor(void)
-> +{
-> +	u32 eax = 0, ebx, ecx = 0, edx;
-> +
-> +	cpuid(&eax, &ebx, &ecx, &edx);
-> +
-> +	switch (edx) {
-> +	case EDX_INTEL:
-> +		return VENDOR_INTEL;
-> +	case EDX_AMD:
-> +	case EDX_HYGON:
-> +		return VENDOR_AMD;
-> +	case EDX_TRANSMETA:
-> +		return VENDOR_TRANSMETA;
-> +	case EDX_CENTAUR:
-> +	case EDX_ZHAOXIN:
-> +		return VENDOR_CENTAUR;
-> +	default:
-> +		return VENDOR_UNKNOWN;
-> +	}
 
-Many CPUs have ways of overriding the vendor string, thanks to
-GenuineIntel being hardcoded in too many pieces of software.
+So, this is cute and all. But isn't it a _wee_ bit too clever for its
+own good?
 
-I suggest you check all registers, lest you find yourself on a CPU
-claiming EBX=0x68747541, ECX=0x6C65746E, EDX=0x6E65476E
+Why not just have a dumb array:
 
-~Andrew
+	{ INTEL, "GenuineIntel" },
+	{ AMD,   "AuthenticAMD" ],
+	...
+
+Are we really looking to save a few dozen CPU cycles in this thing? It
+took me at least a minute or two of staring at this thing to figure out
+what the heck it was doing.
