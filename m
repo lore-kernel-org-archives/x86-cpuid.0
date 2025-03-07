@@ -1,767 +1,92 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E082190482
-	for <x86-cpuid@lists.linux.dev>; Fri,  7 Mar 2025 03:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D27A21ABD8
+	for <x86-cpuid@lists.linux.dev>; Fri,  7 Mar 2025 13:48:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741317564; cv=none; b=IFT9KnDF/ZzXby2pG0gqxeNu383h3kh0UQLB0lIl0fOu9pcffEl+2dnR0p1jR8b4FYQ8oh08m5U//3tCQTHM5FrKKwK8puN/J8xOzn2E2GRy6KDLd4sSwKe+xtA5I79tlolPLkP/CFqd5SNfuWqp00vJu/nZ2pv6zAAgDpz0TBc=
+	t=1741355289; cv=none; b=O6oxHb/uf5lsBuzP3rrky8Myd53Yb/9ERq0DxKnvIbK8rD1t+cixkanZbmbV/OHvvCJapofyThnQffgGRKrB0KM6q+zq8yk6ddcyPrE4vlqY0A/KKmBsrIzZ19vjqhuGE7S3qnv6Q3xSeyyizVfimxnGkKyDGnXfJiMVF+33ncE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741317564; c=relaxed/simple;
-	bh=bXKr57SteHcNpVNSdYmJUIbxOxF2utpJUa80thf6Zbk=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=axEB/sWgRgJ+wONVMqeLBFTE+uchV7r224CBEKJQS75hSFhoNv6Nu7FPFgTXo2Xt0helBNapvsTVvu6EAmrc6H56/GyiaXxY7u5/cwDe4CrPoNExXJ6ApmqZAtHRa0CHndzHrRQ2WA1JloAP2PtaVLXbk4/Oko5JwDCDYedyvTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=VXXZ+32s; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	s=arc-20240116; t=1741355289; c=relaxed/simple;
+	bh=XcqIEEJGSi8aUmJHCEIcXsVJ/HfjYYX9FY26+bSCQMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iQeAjgp/tgaFhmI5y/ioTvFUB9qxTVRUo/bPLau3nUFoPCFdAKEwB5Rl+DMvEAbN1y4TIJTNfLCQqboWyJ3bT4aZnifReyfpaalUaMOC97KPUR3C9U++3K3ib5Lo0V4uHix9y+S1/K7IGMXmwtADZhZFmI4t8OySaC+vtsmOx/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=z0++ta11; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=tc1LYX4G; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="VXXZ+32s"
-Received: from [127.0.0.1] ([76.133.66.138])
-	(authenticated bits=0)
-	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 5273IwC1030111
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Thu, 6 Mar 2025 19:18:58 -0800
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 5273IwC1030111
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2025021701; t=1741317539;
-	bh=1sZ9OYff2cxZBMpi8wimvyJQpRqLyG1DIbb44CginXs=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=VXXZ+32sLJ+z70RjmIRWlem+uZKsfRrl5KeKwAfpsnL1WkrYSMv86XGDLqbfH95jV
-	 SMP/w0Oj/ZXpkjr++CIjMitkGr+W+E3QiUrPE8Bx70p62oA7lWcoXgG48j6WksVwP5
-	 34Zx7TNHb+UJOqRj5gUv4bOjOKQ9JCPA2t4zx2KN4Is/CN9vQbFDvMx2uAkGArwglf
-	 AnDn04yySJ6HDnYi/w2wK3GML7F8kx/hRWtRa2PI98vPYsbF/O0M55iNngO/T7/pn+
-	 +tw+8rcXtwp38jGEqor6iL0RM4B+wInur4N6fX/34aCAWZ1QT7n1e/hwWST2LqTb5P
-	 lfPSFByn5tbSQ==
-Date: Thu, 06 Mar 2025 19:18:56 -0800
-From: "H. Peter Anvin" <hpa@zytor.com>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>, Borislav Petkov <bp@alien8.de>,
-        Ingo Molnar <mingo@redhat.com>,
-        Dave Hansen <dave.hansen@linux.intel.com>
-CC: Thomas Gleixner <tglx@linutronix.de>,
-        Andrew Cooper <andrew.cooper3@citrix.com>, x86@kernel.org,
-        John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v1_10/12=5D_tools/x86/kcpuid=3A?=
- =?US-ASCII?Q?_Update_bitfields_to_x86-cpuid-db_v2=2E0?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20250306205000.227399-11-darwi@linutronix.de>
-References: <20250306205000.227399-1-darwi@linutronix.de> <20250306205000.227399-11-darwi@linutronix.de>
-Message-ID: <C7684E03-36E0-4D58-B6F0-78F4DB82D737@zytor.com>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="z0++ta11";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="tc1LYX4G"
+Date: Fri, 7 Mar 2025 14:48:03 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1741355285;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=C+ps/GbNo7Lb+DsAaK0x7WRuor9Nl46Th5feabU2ueI=;
+	b=z0++ta114LNxIj8y+Nr0co7/X/d1U5JZ07d0TIMKvta4eGiHPtDrN9T7hpt5kVLvpaQce2
+	hyErXMBmIuP+ucOpDBir+uxTsgYur79sanDS/a25ldd8/d/ssHc6O1cW3WS+qixg821HbS
+	NDg0efLA/Qd5g7CUZTPq4bYsToNWwcayGX+gfsulB3b1qMFj3Lp4dDuQWG9J1IqAjIbWhe
+	8Bm83qYUmg5ZitI6fw6Bo0jdh8qQ4llRZmdTCCFvGJZwMtGaau5GeLLuyyKDiGLZET5T16
+	HtLzfgvEFwBDnUc99dsFvTCN+/iLQtoziSrQUe+OA6lgQEQj9RD0yCsNiuHjcQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1741355285;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=C+ps/GbNo7Lb+DsAaK0x7WRuor9Nl46Th5feabU2ueI=;
+	b=tc1LYX4GDRhM58yU73WCurUCAWkIaIA7iQw1OjgiGXpuxk6DQPUveLUstXak3ytrbdfPNh
+	Lkl8GwbUp1Cg4pAg==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Dave Hansen <dave.hansen@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>, x86@kernel.org,
+	John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
+	LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 07/12] tools/x86/kcpuid: Add rudimentary CPU vendor
+ detection
+Message-ID: <Z8r5E3wfFyv-n8XK@lx-t490>
+References: <20250306205000.227399-1-darwi@linutronix.de>
+ <20250306205000.227399-8-darwi@linutronix.de>
+ <0ada12f8-4fdb-4dad-90f7-b044993e829c@intel.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0ada12f8-4fdb-4dad-90f7-b044993e829c@intel.com>
 
-On March 6, 2025 12:49:58 PM PST, "Ahmed S=2E Darwish" <darwi@linutronix=2E=
-de> wrote:
->Update kcpuid's CSV file to version v2=2E0, as generated by the
->x86-cpuid-db project=2E
+On Thu, 06 Mar 2025, Dave Hansen wrote:
 >
->Summary of the v2=2E0 changes:
+> So, this is cute and all. But isn't it a _wee_ bit too clever for its
+> own good?
 >
->- Introduce the leaves:
+
+That was funny, thanks for the laugh :)
+
+> Why not just have a dumb array:
 >
->  - Leaf 0x00000003, Transmeta Processor serial number
->  - Leaf 0x80860000, Transmeta max leaf number + CPU vendor ID
->  - Leaf 0x80860001, Transmeta extended CPU information
->  - Leaf 0x80860002, Transmeta Code Morphing Software (CMS) enumeration
->  - Leaf 0x80860003 =3D> 0x80860006, Transmeta CPU information string
->  - Leaf 0x80860007, Transmeta "live" CPU information
->  - Leaf 0xc0000000, Centaur/Zhaoxin's max leaf number
->  - Leaf 0xc0000001, Centaur/Zhaoxin's extended CPU features
+> 	{ INTEL, "GenuineIntel" },
+> 	{ AMD,   "AuthenticAMD" ],
+> 	...
 >
->- Add a 0x prefix for leaves 0x0 to 0x9=2E  This maintains consistency wi=
-th
->  the rest of the CSV entries=2E
+> Are we really looking to save a few dozen CPU cycles in this thing? It
+> took me at least a minute or two of staring at this thing to figure out
+> what the heck it was doing.
 >
->- Add new bitfields:
->
->  - Leaf 0x7: nmi_src, NMI-source reporting with FRED event data
->  - Leaf 0x80000001: e_base_type and e_mmx (Transmeta)
->
->- Update the section headers for leaves 0x80000000 and 0x80000005 to
->  indicate that they are also valid for Transmeta CPUs=2E
->
->Signed-off-by: Ahmed S=2E Darwish <darwi@linutronix=2Ede>
->Link: https://lkml=2Ekernel=2Eorg/r/ZwU0HtmCTj2rF2T8@lx-t490
->---
-> tools/arch/x86/kcpuid/cpuid=2Ecsv | 648 +++++++++++++++++++-------------
-> 1 file changed, 382 insertions(+), 266 deletions(-)
->
->diff --git a/tools/arch/x86/kcpuid/cpuid=2Ecsv b/tools/arch/x86/kcpuid/cp=
-uid=2Ecsv
->index d751eb8585d0=2E=2Ed0f7159f99ba 100644
->--- a/tools/arch/x86/kcpuid/cpuid=2Ecsv
->+++ b/tools/arch/x86/kcpuid/cpuid=2Ecsv
->@@ -1,5 +1,5 @@
-> # SPDX-License-Identifier: CC0-1=2E0
->-# Generator: x86-cpuid-db v1=2E0
->+# Generator: x86-cpuid-db v2=2E0
->=20
-> #
-> # Auto-generated file=2E
->@@ -12,297 +12,306 @@
-> # Leaf 0H
-> # Maximum standard leaf number + CPU vendor string
->=20
->-         0,         0,  eax,    31:0,    max_std_leaf           , Highes=
-t cpuid standard leaf supported
->-         0,         0,  ebx,    31:0,    cpu_vendorid_0         , CPU ve=
-ndor ID string bytes 0 - 3
->-         0,         0,  ecx,    31:0,    cpu_vendorid_2         , CPU ve=
-ndor ID string bytes 8 - 11
->-         0,         0,  edx,    31:0,    cpu_vendorid_1         , CPU ve=
-ndor ID string bytes 4 - 7
->+       0x0,         0,  eax,    31:0,    max_std_leaf           , Highes=
-t cpuid standard leaf supported
->+       0x0,         0,  ebx,    31:0,    cpu_vendorid_0         , CPU ve=
-ndor ID string bytes 0 - 3
->+       0x0,         0,  ecx,    31:0,    cpu_vendorid_2         , CPU ve=
-ndor ID string bytes 8 - 11
->+       0x0,         0,  edx,    31:0,    cpu_vendorid_1         , CPU ve=
-ndor ID string bytes 4 - 7
->=20
-> # Leaf 1H
-> # CPU FMS (Family/Model/Stepping) + standard feature flags
->=20
->-         1,         0,  eax,     3:0,    stepping               , Steppi=
-ng ID
->-         1,         0,  eax,     7:4,    base_model             , Base C=
-PU model ID
->-         1,         0,  eax,    11:8,    base_family_id         , Base C=
-PU family ID
->-         1,         0,  eax,   13:12,    cpu_type               , CPU ty=
-pe
->-         1,         0,  eax,   19:16,    ext_model              , Extend=
-ed CPU model ID
->-         1,         0,  eax,   27:20,    ext_family             , Extend=
-ed CPU family ID
->-         1,         0,  ebx,     7:0,    brand_id               , Brand =
-index
->-         1,         0,  ebx,    15:8,    clflush_size           , CLFLUS=
-H instruction cache line size
->-         1,         0,  ebx,   23:16,    n_logical_cpu          , Logica=
-l CPU (HW threads) count
->-         1,         0,  ebx,   31:24,    local_apic_id          , Initia=
-l local APIC physical ID
->-         1,         0,  ecx,       0,    pni                    , Stream=
-ing SIMD Extensions 3 (SSE3)
->-         1,         0,  ecx,       1,    pclmulqdq              , PCLMUL=
-QDQ instruction support
->-         1,         0,  ecx,       2,    dtes64                 , 64-bit=
- DS save area
->-         1,         0,  ecx,       3,    monitor                , MONITO=
-R/MWAIT support
->-         1,         0,  ecx,       4,    ds_cpl                 , CPL Qu=
-alified Debug Store
->-         1,         0,  ecx,       5,    vmx                    , Virtua=
-l Machine Extensions
->-         1,         0,  ecx,       6,    smx                    , Safer =
-Mode Extensions
->-         1,         0,  ecx,       7,    est                    , Enhanc=
-ed Intel SpeedStep
->-         1,         0,  ecx,       8,    tm2                    , Therma=
-l Monitor 2
->-         1,         0,  ecx,       9,    ssse3                  , Supple=
-mental SSE3
->-         1,         0,  ecx,      10,    cid                    , L1 Con=
-text ID
->-         1,         0,  ecx,      11,    sdbg                   , Sillic=
-on Debug
->-         1,         0,  ecx,      12,    fma                    , FMA ex=
-tensions using YMM state
->-         1,         0,  ecx,      13,    cx16                   , CMPXCH=
-G16B instruction support
->-         1,         0,  ecx,      14,    xtpr                   , xTPR U=
-pdate Control
->-         1,         0,  ecx,      15,    pdcm                   , Perfmo=
-n and Debug Capability
->-         1,         0,  ecx,      17,    pcid                   , Proces=
-s-context identifiers
->-         1,         0,  ecx,      18,    dca                    , Direct=
- Cache Access
->-         1,         0,  ecx,      19,    sse4_1                 , SSE4=
-=2E1
->-         1,         0,  ecx,      20,    sse4_2                 , SSE4=
-=2E2
->-         1,         0,  ecx,      21,    x2apic                 , X2APIC=
- support
->-         1,         0,  ecx,      22,    movbe                  , MOVBE =
-instruction support
->-         1,         0,  ecx,      23,    popcnt                 , POPCNT=
- instruction support
->-         1,         0,  ecx,      24,    tsc_deadline_timer     , APIC t=
-imer one-shot operation
->-         1,         0,  ecx,      25,    aes                    , AES in=
-structions
->-         1,         0,  ecx,      26,    xsave                  , XSAVE =
-(and related instructions) support
->-         1,         0,  ecx,      27,    osxsave                , XSAVE =
-(and related instructions) are enabled by OS
->-         1,         0,  ecx,      28,    avx                    , AVX in=
-structions support
->-         1,         0,  ecx,      29,    f16c                   , Half-p=
-recision floating-point conversion support
->-         1,         0,  ecx,      30,    rdrand                 , RDRAND=
- instruction support
->-         1,         0,  ecx,      31,    guest_status           , System=
- is running as guest; (para-)virtualized system
->-         1,         0,  edx,       0,    fpu                    , Floati=
-ng-Point Unit on-chip (x87)
->-         1,         0,  edx,       1,    vme                    , Virtua=
-l-8086 Mode Extensions
->-         1,         0,  edx,       2,    de                     , Debugg=
-ing Extensions
->-         1,         0,  edx,       3,    pse                    , Page S=
-ize Extension
->-         1,         0,  edx,       4,    tsc                    , Time S=
-tamp Counter
->-         1,         0,  edx,       5,    msr                    , Model-=
-Specific Registers (RDMSR and WRMSR support)
->-         1,         0,  edx,       6,    pae                    , Physic=
-al Address Extensions
->-         1,         0,  edx,       7,    mce                    , Machin=
-e Check Exception
->-         1,         0,  edx,       8,    cx8                    , CMPXCH=
-G8B instruction
->-         1,         0,  edx,       9,    apic                   , APIC o=
-n-chip
->-         1,         0,  edx,      11,    sep                    , SYSENT=
-ER, SYSEXIT, and associated MSRs
->-         1,         0,  edx,      12,    mtrr                   , Memory=
- Type Range Registers
->-         1,         0,  edx,      13,    pge                    , Page G=
-lobal Extensions
->-         1,         0,  edx,      14,    mca                    , Machin=
-e Check Architecture
->-         1,         0,  edx,      15,    cmov                   , Condit=
-ional Move Instruction
->-         1,         0,  edx,      16,    pat                    , Page A=
-ttribute Table
->-         1,         0,  edx,      17,    pse36                  , Page S=
-ize Extension (36-bit)
->-         1,         0,  edx,      18,    pn                     , Proces=
-sor Serial Number
->-         1,         0,  edx,      19,    clflush                , CLFLUS=
-H instruction
->-         1,         0,  edx,      21,    dts                    , Debug =
-Store
->-         1,         0,  edx,      22,    acpi                   , Therma=
-l monitor and clock control
->-         1,         0,  edx,      23,    mmx                    , MMX in=
-structions
->-         1,         0,  edx,      24,    fxsr                   , FXSAVE=
- and FXRSTOR instructions
->-         1,         0,  edx,      25,    sse                    , SSE in=
-structions
->-         1,         0,  edx,      26,    sse2                   , SSE2 i=
-nstructions
->-         1,         0,  edx,      27,    ss                     , Self S=
-noop
->-         1,         0,  edx,      28,    ht                     , Hyper-=
-threading
->-         1,         0,  edx,      29,    tm                     , Therma=
-l Monitor
->-         1,         0,  edx,      30,    ia64                   , Legacy=
- IA-64 (Itanium) support bit, now resreved
->-         1,         0,  edx,      31,    pbe                    , Pendin=
-g Break Enable
->+       0x1,         0,  eax,     3:0,    stepping               , Steppi=
-ng ID
->+       0x1,         0,  eax,     7:4,    base_model             , Base C=
-PU model ID
->+       0x1,         0,  eax,    11:8,    base_family_id         , Base C=
-PU family ID
->+       0x1,         0,  eax,   13:12,    cpu_type               , CPU ty=
-pe
->+       0x1,         0,  eax,   19:16,    ext_model              , Extend=
-ed CPU model ID
->+       0x1,         0,  eax,   27:20,    ext_family             , Extend=
-ed CPU family ID
->+       0x1,         0,  ebx,     7:0,    brand_id               , Brand =
-index
->+       0x1,         0,  ebx,    15:8,    clflush_size           , CLFLUS=
-H instruction cache line size
->+       0x1,         0,  ebx,   23:16,    n_logical_cpu          , Logica=
-l CPU (HW threads) count
->+       0x1,         0,  ebx,   31:24,    local_apic_id          , Initia=
-l local APIC physical ID
->+       0x1,         0,  ecx,       0,    pni                    , Stream=
-ing SIMD Extensions 3 (SSE3)
->+       0x1,         0,  ecx,       1,    pclmulqdq              , PCLMUL=
-QDQ instruction support
->+       0x1,         0,  ecx,       2,    dtes64                 , 64-bit=
- DS save area
->+       0x1,         0,  ecx,       3,    monitor                , MONITO=
-R/MWAIT support
->+       0x1,         0,  ecx,       4,    ds_cpl                 , CPL Qu=
-alified Debug Store
->+       0x1,         0,  ecx,       5,    vmx                    , Virtua=
-l Machine Extensions
->+       0x1,         0,  ecx,       6,    smx                    , Safer =
-Mode Extensions
->+       0x1,         0,  ecx,       7,    est                    , Enhanc=
-ed Intel SpeedStep
->+       0x1,         0,  ecx,       8,    tm2                    , Therma=
-l Monitor 2
->+       0x1,         0,  ecx,       9,    ssse3                  , Supple=
-mental SSE3
->+       0x1,         0,  ecx,      10,    cid                    , L1 Con=
-text ID
->+       0x1,         0,  ecx,      11,    sdbg                   , Sillic=
-on Debug
->+       0x1,         0,  ecx,      12,    fma                    , FMA ex=
-tensions using YMM state
->+       0x1,         0,  ecx,      13,    cx16                   , CMPXCH=
-G16B instruction support
->+       0x1,         0,  ecx,      14,    xtpr                   , xTPR U=
-pdate Control
->+       0x1,         0,  ecx,      15,    pdcm                   , Perfmo=
-n and Debug Capability
->+       0x1,         0,  ecx,      17,    pcid                   , Proces=
-s-context identifiers
->+       0x1,         0,  ecx,      18,    dca                    , Direct=
- Cache Access
->+       0x1,         0,  ecx,      19,    sse4_1                 , SSE4=
-=2E1
->+       0x1,         0,  ecx,      20,    sse4_2                 , SSE4=
-=2E2
->+       0x1,         0,  ecx,      21,    x2apic                 , X2APIC=
- support
->+       0x1,         0,  ecx,      22,    movbe                  , MOVBE =
-instruction support
->+       0x1,         0,  ecx,      23,    popcnt                 , POPCNT=
- instruction support
->+       0x1,         0,  ecx,      24,    tsc_deadline_timer     , APIC t=
-imer one-shot operation
->+       0x1,         0,  ecx,      25,    aes                    , AES in=
-structions
->+       0x1,         0,  ecx,      26,    xsave                  , XSAVE =
-(and related instructions) support
->+       0x1,         0,  ecx,      27,    osxsave                , XSAVE =
-(and related instructions) are enabled by OS
->+       0x1,         0,  ecx,      28,    avx                    , AVX in=
-structions support
->+       0x1,         0,  ecx,      29,    f16c                   , Half-p=
-recision floating-point conversion support
->+       0x1,         0,  ecx,      30,    rdrand                 , RDRAND=
- instruction support
->+       0x1,         0,  ecx,      31,    guest_status           , System=
- is running as guest; (para-)virtualized system
->+       0x1,         0,  edx,       0,    fpu                    , Floati=
-ng-Point Unit on-chip (x87)
->+       0x1,         0,  edx,       1,    vme                    , Virtua=
-l-8086 Mode Extensions
->+       0x1,         0,  edx,       2,    de                     , Debugg=
-ing Extensions
->+       0x1,         0,  edx,       3,    pse                    , Page S=
-ize Extension
->+       0x1,         0,  edx,       4,    tsc                    , Time S=
-tamp Counter
->+       0x1,         0,  edx,       5,    msr                    , Model-=
-Specific Registers (RDMSR and WRMSR support)
->+       0x1,         0,  edx,       6,    pae                    , Physic=
-al Address Extensions
->+       0x1,         0,  edx,       7,    mce                    , Machin=
-e Check Exception
->+       0x1,         0,  edx,       8,    cx8                    , CMPXCH=
-G8B instruction
->+       0x1,         0,  edx,       9,    apic                   , APIC o=
-n-chip
->+       0x1,         0,  edx,      11,    sep                    , SYSENT=
-ER, SYSEXIT, and associated MSRs
->+       0x1,         0,  edx,      12,    mtrr                   , Memory=
- Type Range Registers
->+       0x1,         0,  edx,      13,    pge                    , Page G=
-lobal Extensions
->+       0x1,         0,  edx,      14,    mca                    , Machin=
-e Check Architecture
->+       0x1,         0,  edx,      15,    cmov                   , Condit=
-ional Move Instruction
->+       0x1,         0,  edx,      16,    pat                    , Page A=
-ttribute Table
->+       0x1,         0,  edx,      17,    pse36                  , Page S=
-ize Extension (36-bit)
->+       0x1,         0,  edx,      18,    pn                     , Proces=
-sor Serial Number
->+       0x1,         0,  edx,      19,    clflush                , CLFLUS=
-H instruction
->+       0x1,         0,  edx,      21,    dts                    , Debug =
-Store
->+       0x1,         0,  edx,      22,    acpi                   , Therma=
-l monitor and clock control
->+       0x1,         0,  edx,      23,    mmx                    , MMX in=
-structions
->+       0x1,         0,  edx,      24,    fxsr                   , FXSAVE=
- and FXRSTOR instructions
->+       0x1,         0,  edx,      25,    sse                    , SSE in=
-structions
->+       0x1,         0,  edx,      26,    sse2                   , SSE2 i=
-nstructions
->+       0x1,         0,  edx,      27,    ss                     , Self S=
-noop
->+       0x1,         0,  edx,      28,    ht                     , Hyper-=
-threading
->+       0x1,         0,  edx,      29,    tm                     , Therma=
-l Monitor
->+       0x1,         0,  edx,      30,    ia64                   , Legacy=
- IA-64 (Itanium) support bit, now resreved
->+       0x1,         0,  edx,      31,    pbe                    , Pendin=
-g Break Enable
->=20
-> # Leaf 2H
-> # Intel cache and TLB information one-byte descriptors
->=20
->-         2,         0,  eax,     7:0,    iteration_count        , Number=
- of times this CPUD leaf must be queried
->-         2,         0,  eax,    15:8,    desc1                  , Descri=
-ptor #1
->-         2,         0,  eax,   23:16,    desc2                  , Descri=
-ptor #2
->-         2,         0,  eax,   30:24,    desc3                  , Descri=
-ptor #3
->-         2,         0,  eax,      31,    eax_invalid            , Descri=
-ptors 1-3 are invalid if set
->-         2,         0,  ebx,     7:0,    desc4                  , Descri=
-ptor #4
->-         2,         0,  ebx,    15:8,    desc5                  , Descri=
-ptor #5
->-         2,         0,  ebx,   23:16,    desc6                  , Descri=
-ptor #6
->-         2,         0,  ebx,   30:24,    desc7                  , Descri=
-ptor #7
->-         2,         0,  ebx,      31,    ebx_invalid            , Descri=
-ptors 4-7 are invalid if set
->-         2,         0,  ecx,     7:0,    desc8                  , Descri=
-ptor #8
->-         2,         0,  ecx,    15:8,    desc9                  , Descri=
-ptor #9
->-         2,         0,  ecx,   23:16,    desc10                 , Descri=
-ptor #10
->-         2,         0,  ecx,   30:24,    desc11                 , Descri=
-ptor #11
->-         2,         0,  ecx,      31,    ecx_invalid            , Descri=
-ptors 8-11 are invalid if set
->-         2,         0,  edx,     7:0,    desc12                 , Descri=
-ptor #12
->-         2,         0,  edx,    15:8,    desc13                 , Descri=
-ptor #13
->-         2,         0,  edx,   23:16,    desc14                 , Descri=
-ptor #14
->-         2,         0,  edx,   30:24,    desc15                 , Descri=
-ptor #15
->-         2,         0,  edx,      31,    edx_invalid            , Descri=
-ptors 12-15 are invalid if set
->+       0x2,         0,  eax,     7:0,    iteration_count        , Number=
- of times this CPUD leaf must be queried
->+       0x2,         0,  eax,    15:8,    desc1                  , Descri=
-ptor #1
->+       0x2,         0,  eax,   23:16,    desc2                  , Descri=
-ptor #2
->+       0x2,         0,  eax,   30:24,    desc3                  , Descri=
-ptor #3
->+       0x2,         0,  eax,      31,    eax_invalid            , Descri=
-ptors 1-3 are invalid if set
->+       0x2,         0,  ebx,     7:0,    desc4                  , Descri=
-ptor #4
->+       0x2,         0,  ebx,    15:8,    desc5                  , Descri=
-ptor #5
->+       0x2,         0,  ebx,   23:16,    desc6                  , Descri=
-ptor #6
->+       0x2,         0,  ebx,   30:24,    desc7                  , Descri=
-ptor #7
->+       0x2,         0,  ebx,      31,    ebx_invalid            , Descri=
-ptors 4-7 are invalid if set
->+       0x2,         0,  ecx,     7:0,    desc8                  , Descri=
-ptor #8
->+       0x2,         0,  ecx,    15:8,    desc9                  , Descri=
-ptor #9
->+       0x2,         0,  ecx,   23:16,    desc10                 , Descri=
-ptor #10
->+       0x2,         0,  ecx,   30:24,    desc11                 , Descri=
-ptor #11
->+       0x2,         0,  ecx,      31,    ecx_invalid            , Descri=
-ptors 8-11 are invalid if set
->+       0x2,         0,  edx,     7:0,    desc12                 , Descri=
-ptor #12
->+       0x2,         0,  edx,    15:8,    desc13                 , Descri=
-ptor #13
->+       0x2,         0,  edx,   23:16,    desc14                 , Descri=
-ptor #14
->+       0x2,         0,  edx,   30:24,    desc15                 , Descri=
-ptor #15
->+       0x2,         0,  edx,      31,    edx_invalid            , Descri=
-ptors 12-15 are invalid if set
->+
->+# Leaf 3H
->+# Transmeta Processor Serial Number (PSN)
->+
->+       0x3,         0,  eax,    31:0,    cpu_psn_0              , Proces=
-sor Serial Number bytes 0 - 3
->+       0x3,         0,  ebx,    31:0,    cpu_psn_1              , Proces=
-sor Serial Number bytes 4 - 7
->+       0x3,         0,  ecx,    31:0,    cpu_psn_2              , Proces=
-sor Serial Number bytes 8 - 11
->+       0x3,         0,  edx,    31:0,    cpu_psn_3              , Proces=
-sor Serial Number bytes 12 - 15
->=20
-> # Leaf 4H
-> # Intel deterministic cache parameters
->=20
->-         4,      31:0,  eax,     4:0,    cache_type             , Cache =
-type field
->-         4,      31:0,  eax,     7:5,    cache_level            , Cache =
-level (1-based)
->-         4,      31:0,  eax,       8,    cache_self_init        , Self-i=
-nitialializing cache level
->-         4,      31:0,  eax,       9,    fully_associative      , Fully-=
-associative cache
->-         4,      31:0,  eax,   25:14,    num_threads_sharing    , Number=
- logical CPUs sharing this cache
->-         4,      31:0,  eax,   31:26,    num_cores_on_die       , Number=
- of cores in the physical package
->-         4,      31:0,  ebx,    11:0,    cache_linesize         , System=
- coherency line size (0-based)
->-         4,      31:0,  ebx,   21:12,    cache_npartitions      , Physic=
-al line partitions (0-based)
->-         4,      31:0,  ebx,   31:22,    cache_nways            , Ways o=
-f associativity (0-based)
->-         4,      31:0,  ecx,    30:0,    cache_nsets            , Cache =
-number of sets (0-based)
->-         4,      31:0,  edx,       0,    wbinvd_rll_no_guarantee, WBINVD=
-/INVD not guaranteed for Remote Lower-Level caches
->-         4,      31:0,  edx,       1,    ll_inclusive           , Cache =
-is inclusive of Lower-Level caches
->-         4,      31:0,  edx,       2,    complex_indexing       , Not a =
-direct-mapped cache (complex function)
->+       0x4,      31:0,  eax,     4:0,    cache_type             , Cache =
-type field
->+       0x4,      31:0,  eax,     7:5,    cache_level            , Cache =
-level (1-based)
->+       0x4,      31:0,  eax,       8,    cache_self_init        , Self-i=
-nitialializing cache level
->+       0x4,      31:0,  eax,       9,    fully_associative      , Fully-=
-associative cache
->+       0x4,      31:0,  eax,   25:14,    num_threads_sharing    , Number=
- logical CPUs sharing this cache
->+       0x4,      31:0,  eax,   31:26,    num_cores_on_die       , Number=
- of cores in the physical package
->+       0x4,      31:0,  ebx,    11:0,    cache_linesize         , System=
- coherency line size (0-based)
->+       0x4,      31:0,  ebx,   21:12,    cache_npartitions      , Physic=
-al line partitions (0-based)
->+       0x4,      31:0,  ebx,   31:22,    cache_nways            , Ways o=
-f associativity (0-based)
->+       0x4,      31:0,  ecx,    30:0,    cache_nsets            , Cache =
-number of sets (0-based)
->+       0x4,      31:0,  edx,       0,    wbinvd_rll_no_guarantee, WBINVD=
-/INVD not guaranteed for Remote Lower-Level caches
->+       0x4,      31:0,  edx,       1,    ll_inclusive           , Cache =
-is inclusive of Lower-Level caches
->+       0x4,      31:0,  edx,       2,    complex_indexing       , Not a =
-direct-mapped cache (complex function)
->=20
-> # Leaf 5H
-> # MONITOR/MWAIT instructions enumeration
->=20
->-         5,         0,  eax,    15:0,    min_mon_size           , Smalle=
-st monitor-line size, in bytes
->-         5,         0,  ebx,    15:0,    max_mon_size           , Larges=
-t monitor-line size, in bytes
->-         5,         0,  ecx,       0,    mwait_ext              , Enumer=
-ation of MONITOR/MWAIT extensions is supported
->-         5,         0,  ecx,       1,    mwait_irq_break        , Interr=
-upts as a break-event for MWAIT is supported
->-         5,         0,  edx,     3:0,    n_c0_substates         , Number=
- of C0 sub C-states supported using MWAIT
->-         5,         0,  edx,     7:4,    n_c1_substates         , Number=
- of C1 sub C-states supported using MWAIT
->-         5,         0,  edx,    11:8,    n_c2_substates         , Number=
- of C2 sub C-states supported using MWAIT
->-         5,         0,  edx,   15:12,    n_c3_substates         , Number=
- of C3 sub C-states supported using MWAIT
->-         5,         0,  edx,   19:16,    n_c4_substates         , Number=
- of C4 sub C-states supported using MWAIT
->-         5,         0,  edx,   23:20,    n_c5_substates         , Number=
- of C5 sub C-states supported using MWAIT
->-         5,         0,  edx,   27:24,    n_c6_substates         , Number=
- of C6 sub C-states supported using MWAIT
->-         5,         0,  edx,   31:28,    n_c7_substates         , Number=
- of C7 sub C-states supported using MWAIT
->+       0x5,         0,  eax,    15:0,    min_mon_size           , Smalle=
-st monitor-line size, in bytes
->+       0x5,         0,  ebx,    15:0,    max_mon_size           , Larges=
-t monitor-line size, in bytes
->+       0x5,         0,  ecx,       0,    mwait_ext              , Enumer=
-ation of MONITOR/MWAIT extensions is supported
->+       0x5,         0,  ecx,       1,    mwait_irq_break        , Interr=
-upts as a break-event for MWAIT is supported
->+       0x5,         0,  edx,     3:0,    n_c0_substates         , Number=
- of C0 sub C-states supported using MWAIT
->+       0x5,         0,  edx,     7:4,    n_c1_substates         , Number=
- of C1 sub C-states supported using MWAIT
->+       0x5,         0,  edx,    11:8,    n_c2_substates         , Number=
- of C2 sub C-states supported using MWAIT
->+       0x5,         0,  edx,   15:12,    n_c3_substates         , Number=
- of C3 sub C-states supported using MWAIT
->+       0x5,         0,  edx,   19:16,    n_c4_substates         , Number=
- of C4 sub C-states supported using MWAIT
->+       0x5,         0,  edx,   23:20,    n_c5_substates         , Number=
- of C5 sub C-states supported using MWAIT
->+       0x5,         0,  edx,   27:24,    n_c6_substates         , Number=
- of C6 sub C-states supported using MWAIT
->+       0x5,         0,  edx,   31:28,    n_c7_substates         , Number=
- of C7 sub C-states supported using MWAIT
->=20
-> # Leaf 6H
-> # Thermal and Power Management enumeration
->=20
->-         6,         0,  eax,       0,    dtherm                 , Digita=
-l temprature sensor
->-         6,         0,  eax,       1,    turbo_boost            , Intel =
-Turbo Boost
->-         6,         0,  eax,       2,    arat                   , Always=
--Running APIC Timer (not affected by p-state)
->-         6,         0,  eax,       4,    pln                    , Power =
-Limit Notification (PLN) event
->-         6,         0,  eax,       5,    ecmd                   , Clock =
-modulation duty cycle extension
->-         6,         0,  eax,       6,    pts                    , Packag=
-e thermal management
->-         6,         0,  eax,       7,    hwp                    , HWP (H=
-ardware P-states) base registers are supported
->-         6,         0,  eax,       8,    hwp_notify             , HWP no=
-tification (IA32_HWP_INTERRUPT MSR)
->-         6,         0,  eax,       9,    hwp_act_window         , HWP ac=
-tivity window (IA32_HWP_REQUEST[bits 41:32]) supported
->-         6,         0,  eax,      10,    hwp_epp                , HWP En=
-ergy Performance Preference
->-         6,         0,  eax,      11,    hwp_pkg_req            , HWP Pa=
-ckage Level Request
->-         6,         0,  eax,      13,    hdc_base_regs          , HDC ba=
-se registers are supported
->-         6,         0,  eax,      14,    turbo_boost_3_0        , Intel =
-Turbo Boost Max 3=2E0
->-         6,         0,  eax,      15,    hwp_capabilities       , HWP Hi=
-ghest Performance change
->-         6,         0,  eax,      16,    hwp_peci_override      , HWP PE=
-CI override
->-         6,         0,  eax,      17,    hwp_flexible           , Flexib=
-le HWP
->-         6,         0,  eax,      18,    hwp_fast               , IA32_H=
-WP_REQUEST MSR fast access mode
->-         6,         0,  eax,      19,    hfi                    , HW_FEE=
-DBACK MSRs supported
->-         6,         0,  eax,      20,    hwp_ignore_idle        , Ignori=
-ng idle logical CPU HWP req is supported
->-         6,         0,  eax,      23,    thread_director        , Intel =
-thread director support
->-         6,         0,  eax,      24,    therm_interrupt_bit25  , IA32_T=
-HERM_INTERRUPT MSR bit 25 is supported
->-         6,         0,  ebx,     3:0,    n_therm_thresholds     , Digita=
-l thermometer thresholds
->-         6,         0,  ecx,       0,    aperfmperf             , MPERF/=
-APERF MSRs (effective frequency interface)
->-         6,         0,  ecx,       3,    epb                    , IA32_E=
-NERGY_PERF_BIAS MSR support
->-         6,         0,  ecx,    15:8,    thrd_director_nclasses , Number=
- of classes, Intel thread director
->-         6,         0,  edx,       0,    perfcap_reporting      , Perfor=
-mance capability reporting
->-         6,         0,  edx,       1,    encap_reporting        , Energy=
- efficiency capability reporting
->-         6,         0,  edx,    11:8,    feedback_sz            , HW fee=
-dback interface struct size, in 4K pages
->-         6,         0,  edx,   31:16,    this_lcpu_hwfdbk_idx   , This l=
-ogical CPU index @ HW feedback struct, 0-based
->+       0x6,         0,  eax,       0,    dtherm                 , Digita=
-l temprature sensor
->+       0x6,         0,  eax,       1,    turbo_boost            , Intel =
-Turbo Boost
->+       0x6,         0,  eax,       2,    arat                   , Always=
--Running APIC Timer (not affected by p-state)
->+       0x6,         0,  eax,       4,    pln                    , Power =
-Limit Notification (PLN) event
->+       0x6,         0,  eax,       5,    ecmd                   , Clock =
-modulation duty cycle extension
->+       0x6,         0,  eax,       6,    pts                    , Packag=
-e thermal management
->+       0x6,         0,  eax,       7,    hwp                    , HWP (H=
-ardware P-states) base registers are supported
->+       0x6,         0,  eax,       8,    hwp_notify             , HWP no=
-tification (IA32_HWP_INTERRUPT MSR)
->+       0x6,         0,  eax,       9,    hwp_act_window         , HWP ac=
-tivity window (IA32_HWP_REQUEST[bits 41:32]) supported
->+       0x6,         0,  eax,      10,    hwp_epp                , HWP En=
-ergy Performance Preference
->+       0x6,         0,  eax,      11,    hwp_pkg_req            , HWP Pa=
-ckage Level Request
->+       0x6,         0,  eax,      13,    hdc_base_regs          , HDC ba=
-se registers are supported
->+       0x6,         0,  eax,      14,    turbo_boost_3_0        , Intel =
-Turbo Boost Max 3=2E0
->+       0x6,         0,  eax,      15,    hwp_capabilities       , HWP Hi=
-ghest Performance change
->+       0x6,         0,  eax,      16,    hwp_peci_override      , HWP PE=
-CI override
->+       0x6,         0,  eax,      17,    hwp_flexible           , Flexib=
-le HWP
->+       0x6,         0,  eax,      18,    hwp_fast               , IA32_H=
-WP_REQUEST MSR fast access mode
->+       0x6,         0,  eax,      19,    hfi                    , HW_FEE=
-DBACK MSRs supported
->+       0x6,         0,  eax,      20,    hwp_ignore_idle        , Ignori=
-ng idle logical CPU HWP req is supported
->+       0x6,         0,  eax,      23,    thread_director        , Intel =
-thread director support
->+       0x6,         0,  eax,      24,    therm_interrupt_bit25  , IA32_T=
-HERM_INTERRUPT MSR bit 25 is supported
->+       0x6,         0,  ebx,     3:0,    n_therm_thresholds     , Digita=
-l thermometer thresholds
->+       0x6,         0,  ecx,       0,    aperfmperf             , MPERF/=
-APERF MSRs (effective frequency interface)
->+       0x6,         0,  ecx,       3,    epb                    , IA32_E=
-NERGY_PERF_BIAS MSR support
->+       0x6,         0,  ecx,    15:8,    thrd_director_nclasses , Number=
- of classes, Intel thread director
->+       0x6,         0,  edx,       0,    perfcap_reporting      , Perfor=
-mance capability reporting
->+       0x6,         0,  edx,       1,    encap_reporting        , Energy=
- efficiency capability reporting
->+       0x6,         0,  edx,    11:8,    feedback_sz            , HW fee=
-dback interface struct size, in 4K pages
->+       0x6,         0,  edx,   31:16,    this_lcpu_hwfdbk_idx   , This l=
-ogical CPU index @ HW feedback struct, 0-based
->=20
-> # Leaf 7H
-> # Extended CPU features enumeration
->=20
->-         7,         0,  eax,    31:0,    leaf7_n_subleaves      , Number=
- of cpuid 0x7 subleaves
->-         7,         0,  ebx,       0,    fsgsbase               , FSBASE=
-/GSBASE read/write support
->-         7,         0,  ebx,       1,    tsc_adjust             , IA32_T=
-SC_ADJUST MSR supported
->-         7,         0,  ebx,       2,    sgx                    , Intel =
-SGX (Software Guard Extensions)
->-         7,         0,  ebx,       3,    bmi1                   , Bit ma=
-nipulation extensions group 1
->-         7,         0,  ebx,       4,    hle                    , Hardwa=
-re Lock Elision
->-         7,         0,  ebx,       5,    avx2                   , AVX2 i=
-nstruction set
->-         7,         0,  ebx,       6,    fdp_excptn_only        , FPU Da=
-ta Pointer updated only on x87 exceptions
->-         7,         0,  ebx,       7,    smep                   , Superv=
-isor Mode Execution Protection
->-         7,         0,  ebx,       8,    bmi2                   , Bit ma=
-nipulation extensions group 2
->-         7,         0,  ebx,       9,    erms                   , Enhanc=
-ed REP MOVSB/STOSB
->-         7,         0,  ebx,      10,    invpcid                , I
-Leaf 3h was not unique to Transmeta=2E
+
+Indeed.
+
+For some reason I forgot that this is all little-endian and a simple
+strcmp() like what the kernel does at get_cpu_vendor() would suffice.
+
+I'll fix it in v2.
+
+Thanks!
+Ahmed
