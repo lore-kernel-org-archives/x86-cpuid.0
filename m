@@ -1,126 +1,157 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5965622069A
-	for <x86-cpuid@lists.linux.dev>; Mon, 10 Mar 2025 14:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7EF22FE10
+	for <x86-cpuid@lists.linux.dev>; Wed, 12 Mar 2025 14:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741618040; cv=none; b=sbFIj/4gwlNjdP6OFblgGhhJ66MtosM1+IaB1FP86rwKN37iskFDlDZOiHTsQz4soCip20pPe9WV7xui/hZJKUKomqlfBst4PoNGIkgbjkIMGV8HuR8xo6qRS2+FUMAxAwblRdA1J3LnVM/vbD5nIrRfqsW0vwjH4S05SxB58GY=
+	t=1741790269; cv=none; b=KlMvis66VdxHVcyqJD8KX9hGQkwFLbiM/eBeVdbidonECoFboL/QfHSNKBi7IMgYHcZiwtyP8oBv3Men6NYo0xEYoTJlPAvHZzHmn6DC8JX76Zm4qdOAD+PyECiUrkseQU3TuFdegB8kwbeb2xP6AK8UsPm5ox+z/gSmUycyjFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741618040; c=relaxed/simple;
-	bh=3J4HPQC5Alvo5h1pDOlzk5eK0aUBfXtIT3thTrKUoC0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r0J9EbA+w+eEAjXR6HhPTYolDJj1IAeIB8MND8yPagZRPABlZ7ZuQT57gABX/ojwiazVAQiKiLRCJQLjcEb53syrodyuxkAzM48vaR0U7B1VPYO7iloFtJAD38GUkWUwzT9YFbSp2dvegF/dFOJpn+inIk3CbRZ62ECy5SROo4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=pVylE1H+; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=AMaTnbiZ; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1741790269; c=relaxed/simple;
+	bh=pWk1u6nktCDfsuDFB97iZv6hGxXdOmYdE5ZxIUKSv7s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e75W0WciPoAKqEGyJpwL/e5KoahLzQPpoYtspM/CFnGKO57c1qddqpWfKJrTwkXu0XZOgUKgJFxPDMVYrqq2ui3skBefRBYLwNtCyUIhSr09SgItiTDj5PcPtMRY5j5iU499fjQeGsMjBv9cB5M7o4GTg9gEbYuF2F/RM2kG9b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=AL8xrDbz; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=yZvOOULF; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="pVylE1H+";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="AMaTnbiZ"
-Date: Mon, 10 Mar 2025 15:47:15 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1741618037;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7b2ov5GBMC3MQq4xudbWOIYog0WKb2nVO/fY6omPp+E=;
-	b=pVylE1H+EnISaczOaMZ98Aqq/RoVZtyJecnpQdZsWnLvALtRuKEZSBb4HRKOOluz/QaynJ
-	4qodBqOI9PzKRNypl8rsCnMGOZIUOZeMSUaGe1mEXNb0doyobf8mCEHaxOOF01+C2fBC5M
-	J3uUrE6uQetvMw2lOXiOnXfnjwZcrqK+LUl4pxkYAzbqTz7AmZV8TKR89570E+A63Te2NR
-	pdlUpgiXVu+LAqe8hWU0JMAkiwjzpi7A0YSlZbB42m0kpiqiMlqjLw17KEqdZh0fLzQVSY
-	KkpDm9P6wfgo7igIzanTLHNh/sdJt8XCVCnm4K53+QIhiLIPT4a/j/VU6rZhHg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1741618037;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7b2ov5GBMC3MQq4xudbWOIYog0WKb2nVO/fY6omPp+E=;
-	b=AMaTnbiZQQual7HtaCqzHQXl14ih2f39xW1Nv+xX/ze2Mio85eexuchRc9T1cuByvLpMJf
-	oiWsQMrUREvhMnCQ==
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="AL8xrDbz";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="yZvOOULF"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1741790267;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Br1G521yciEAO+u4JXUqFmzPNSVapf2vSvFO6Zzazfc=;
+	b=AL8xrDbz9vji+yiS9C6ccFpA+RH0wKGUxYVlD7jv2JU0Q7qqyHtnhyw58BCkHQ/Bb1SlZe
+	br5blCR5LKuxng8O9g5Py4r634E9mnwg5wjSQsq+C2o5t8n9fS7nqJjRgDk+65ty35Fw2O
+	x3TNxuV5qxGiiKSm6iDlygj85RhS0KGD8ShHEFoGyA/AB6hgFEbBx0kb/SKm8f0q4pVN7F
+	7zyegpSc/aXGs0oDeD2Aj9NqTytVDBD8K7S5blLeiO+Fi9UZ0cnUfII8ijYWZ6YcwwrTP+
+	rgRjKux62lzHZgmW8C1A+gqZKUiHv45kzMGrUBLGHbBOtCQbYZHkeFmq36iETw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1741790267;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Br1G521yciEAO+u4JXUqFmzPNSVapf2vSvFO6Zzazfc=;
+	b=yZvOOULFmfoAIreFmhxTT/6YpR7o/SamJVZLc3MSYn9+SsysjANLD3tXsxTnQoKXlg+BB+
+	crrJ2bCyrA+J9yCw==
+To: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>, x86@kernel.org,
-	John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
-	LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 10/12] tools/x86/kcpuid: Update bitfields to
- x86-cpuid-db v2.0
-Message-ID: <Z877c2pAEYQ8SjCW@lx-t490>
-References: <20250306205000.227399-1-darwi@linutronix.de>
- <20250306205000.227399-11-darwi@linutronix.de>
- <C7684E03-36E0-4D58-B6F0-78F4DB82D737@zytor.com>
- <Z8sLmGf2L4mszUEp@lx-t490>
- <B5E71AD5-3AA3-4B2D-A832-D95F72454E0F@zytor.com>
+	Borislav Petkov <bp@alien8.de>
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	x86@kernel.org,
+	x86-cpuid@lists.linux.dev,
+	LKML <linux-kernel@vger.kernel.org>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>
+Subject: [PATCH v2 00/20] tools/x86/kcpuid: x86-cpuid-db v2.3 update
+Date: Wed, 12 Mar 2025 15:37:17 +0100
+Message-ID: <20250312143738.458507-1-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <B5E71AD5-3AA3-4B2D-A832-D95F72454E0F@zytor.com>
 
 Hi!
 
-On Fri, 07 Mar 2025, H. Peter Anvin wrote:
->
-> On Fri, 07 Mar 2025, Ahmed S. Darwish wrote
-> >
-> > Thanks, I missed that Pentium III can provide leaf 0x3 as well.
-> >
-> > It seems that leaf 0x3's format differs between Intel and Transmeta.
-> > On Intel, PSN is at ECX:EDX, while on Transmeta, the PSN is at
-> > EAX:EBX, and ECX:EDX on non-evaluation models provide the rest. [*]
-> >
-> > Unfortunately, so far, x86-cpuid-db does not support having a CPUID
-> > bitfield with different interpretations across vendors.
-> >
-> > Given that Linux force disables PSN at early boot, I'll just remove
-> > that leaf from the database — for now.  (Time wise, finishing the new
-> > linux/arch/x86/ CPUID data model for mainline submission is a much
-> > higher priority.)
-> >
->
-> You can simply output the 128 bits as is. Some vendors will have zeroes
-> in some of the fields, but it doesn't matter.
->
+Update kcpuid's CSV file to latest x86-cpuid-db release. [*]
 
-The x86-cpuid-db schema works on a register-by-register basis.  For
-example, here is db/xml/leaf_03.xml (with Intel added as a vendor):
+Changelog v2
+------------
 
-|  <leaf id="0x3">
-|    <desc>Processor Serial Number (PSN)</desc>
-|    <text>
-|      If PSN is disabled, the returned register values are zero.
-|    </text>
-|    <vendors>
-|      <vendor>Intel</vendor>
-|      <vendor>Transmeta</vendor>
-|    </vendors>
-|    <subleaf id="0">
-|      <eax>...</eax>
-|      <ebx>...</ebx>
-|      <ecx>...</ecx>
-|      <edx>...</edx>
-|    </subleaf>
-|  </leaf>
+* Patches 2, 4->5, 8->10, 13, 14, and 18->19 are new in v2.
 
-Adding support for a one-shot EAX-EBX-ECX-EDX 128-bit range is definitely
-doable, but it will require changes to the project's XML schema.  And
-given the output format change, the kcpuid CSV file generator and the C99
-bitfields header file generator will also need to be changed.
+* More bug fixes: patches 2, 4-5.
 
-It is doable of course: in no way I'd like to set the project "in stone."
-But it's more work than what meets the eye, for a very low-priority leaf.
+* More refactorings over what's already there at v1, to make the code
+  easier to work with.  Patches 8->10, 13.
+
+* Apply Dave Hansen review remark by avoiding explicit vendor detection
+  and just trying all CPUID ranges, and see if the CPU responds back with
+  something sensible.  Patch 14.
+
+* Apply H. Peter Anvin review remark regarding Leaf 0x3 not being unique
+  to Transmeta.  Patch 19 applies x86-cpuid-db v2.3 release, which has
+  this leaf removed and explains why.
+
+* Patches 16->19, apply x86-cpuid-db v2.0 -> v2.3 changes.  One release
+  per commit to make the kcpuid CSV diffs more sensible.
 
 Thanks!
 
+Changelog v1
+------------
+
+https://lkml.kernel.org/r/20250306205000.227399-1-darwi@linutronix.de
+
+This series updates kcpuid's CSV file from v1.0 to v2.2, as generated by
+the x86-cpuid-db project. [*]
+
+The new CSV adds multiple new leaves for Transmeta and Centaur/Zhaoxin.
+It also introduces new bitfields at leaves 0x7, 0x80000001, 0x80000020,
+and 0x80000021.  More details about the CSV changes are at the actual
+commit logs.
+
+PQ Summary:
+
+* Patch 1 is a generic kcpuid bugfix.
+
+* Patches 2-4 are preparatory cleanups.
+
+* Patches 5-9 add rudimentary x86 vendor detection and filtering to
+  kcpuid, as the CSV file is updated with indices that are exclusive to
+  certain CPU vendors.
+
+* Patch 10 updates the CSV file to x86-cpuid-db v2.0.
+
+* Patch 11 updates the CSV file to x86-cpuid-db v2.2.
+
+  Patch 10 and 11 are separated on purpose, to make the CSV commit log
+  diffs more sensible.
+
+* Patch 12 puts the whole kcpuid tool under MAINTAINERS' X86 CPUID entry,
+  since changes to the CSV file may require updates to the kcpuid code.
+  This will also make myself and the x86-cpuid mailing list CCed for all
+  future kcpuid patches.
+
+[*] https://gitlab.com/x86-cpuid.org/x86-cpuid-db
+    https://x86-cpuid.org
+
+8<-----
+
+Ahmed S. Darwish (20):
+  tools/x86/kcpuid: Fix error handling
+  tools/x86/kcpuid: Exit the program on invalid parameters
+  tools/x86/kcpuid: Simplify usage() handling
+  tools/x86/kcpuid: Save CPUID output in an array
+  tools/x86/kcpuid: Print correct CPUID output register names
+  tools/x86/kcpuid: Remove unused local variable
+  tools/x86/kcpuid: Remove unused global variable
+  tools/x86/kcpuid: Set function return type to void
+  tools/x86/kcpuid: Use C99-style for loops
+  tools/x86/kcpuid: Use <cpuid.h> intrinsics
+  tools/x86/kcpuid: Refactor CPUID range handling for future expansion
+  tools/x86/kcpuid: Extend CPUID index mask macro
+  tools/x86/kcpuid: Consolidate index validity checks
+  tools/x86/kcpuid: Filter valid CPUID ranges
+  tools/x86/kcpuid: Define Transmeta and Centaur index ranges
+  tools/x86/kcpuid: Update bitfields to x86-cpuid-db v2.0
+  tools/x86/kcpuid: Update bitfields to x86-cpuid-db v2.1
+  tools/x86/kcpuid: Update bitfields to x86-cpuid-db v2.2
+  tools/x86/kcpuid: Update bitfields to x86-cpuid-db v2.3
+  MAINTAINERS: Include kcpuid under X86 CPUID DATABASE
+
+ MAINTAINERS                     |   2 +-
+ tools/arch/x86/kcpuid/cpuid.csv | 791 ++++++++++++++++++--------------
+ tools/arch/x86/kcpuid/kcpuid.c  | 375 ++++++++-------
+ 3 files changed, 636 insertions(+), 532 deletions(-)
+
+base-commit: 80e54e84911a923c40d7bee33a34c1b4be148d7a
 --
-Ahmed S. Darwish
-Linutronix GmbH
+2.48.1
