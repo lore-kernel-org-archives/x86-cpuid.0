@@ -1,94 +1,84 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C11258CFE
-	for <x86-cpuid@lists.linux.dev>; Wed, 12 Mar 2025 14:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075D02459C3
+	for <x86-cpuid@lists.linux.dev>; Wed, 12 Mar 2025 15:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741790331; cv=none; b=VN1nB7ZdtmaI6HrUIuQDCeNmR1XB3ZDpdlAgbtMHk66Q+OxIwZ7aj/iGnRpEDZz3PYz2q34EXbSqcSNs8VVigkppR2BcmEkoz9hBnJMq1n5yh6/910j26LHzcU2s6UzQwlHvxg6Agq+8XHwi/WYBDljemVrtlC8Y/PRs1Utk4GQ=
+	t=1741792718; cv=none; b=g3Y9XFnPqgGJc8D9iVT6he2gk+pi5E2TlZmIDko4sK+xDfJuX1TR0kNQUq47Nggo5FvmAN6wkrAwbGa0JSpz+6NLN5p9eVpCGJt6h2zhZy3ZQsusegI5B34Qe6pTUAzMJKGHQGpNCqAIf9KKj58fYpHKFelbNvlxxQAs4lM01SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741790331; c=relaxed/simple;
-	bh=xTOWivkCXMgY14c9zwp2jU1KwaOJOtl94y2T11WtcFA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oexh6LcN0iRUviQUBQV6+l+4VWkq1i/9+ykoWc4PZ/i7MDZnUWYqSjVV0xTz0EGaY9RtdySSZ/mhd6yWLXVk/c8OcQgM87lsoiF5bBMqPe7Q+csRgh721E+bD4RODDQG6eI1UkOlIP3tC2niNvbY0ObMxtGKyJGeS+EzHUwHqDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UMv+aHim; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=hXYfpAA8; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1741792718; c=relaxed/simple;
+	bh=0WGj6/Avd/HW9QCLdm+3A/IoqJrQKSrIFja7C3uaLDw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U/QAD7QhZ/g8RICV2Ghp6gizHqeAFKR68f3dWprrerFQICwEBaK+ImfgNUDyZeD2MoNz3szFLkP9KpUbtST2KY/4aBMhHPCwSnCPozo5OQf9p2wDVIi/FAyVCMY+BceeyKFaQzse4DuabRxKc5Eq1JgQgxJHB/WibeHmf9kzgM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=sCbrzobx; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=dboEebtC; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UMv+aHim";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="hXYfpAA8"
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="sCbrzobx";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="dboEebtC"
+Date: Wed, 12 Mar 2025 16:18:33 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1741790328;
+	s=2020; t=1741792715;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=QCww5YReYhd+Fi4tfjXgYcXmj2RO0J1OQUfOjgeWiMg=;
-	b=UMv+aHim10TvO1eFpNWhdUtb2J8rrQez/KsE9aZ164VH+P/tVCSkRRNLdJ7sx5kTQwWAMd
-	lFdg1fZhow8AJ1FlXDzlKx+K0IobCwf5vcerMN1zbTmMHJQjyHuqmrb4Y/C2kvkGcPuz/z
-	3MU2k6mKeCOF6aXWM+Pu3yEM2ooXMhi3ZfOGVCl1VCWTmUnTMjPtqfQyCnGGpBXjOET8KW
-	khjkmL98mj+uoA2ISoSVFPSo1sPUuBLAaw879UW+1DyMjKCGdmZyg27rjJa3Tb9yMB56Dr
-	YZUnKf099kMuSCHwkZQWYe9UoWfMjVqFcC+MdSLs+d6w4gE7vyoO1IG9jhasGA==
+	bh=i7Oi0ejhX3+OkOvAUCrRQfusj0+GsV3Blg6cnIjRiS8=;
+	b=sCbrzobxs4D741pQK78A6FejYUYdLwUCGjfXJx/v/OM+YkzdW/rWbdGmvX4VYWtgNzymUn
+	LA0KQ/WiJZLurb/QmmQq/WAHsGN9av8mh0vYMp2MgBmoZNtqBnmAyxc1zx/1AkARqvDIH8
+	PFNJzV0vW1r5YXXrNHAKnejUc/HYRsTIaEDyxMSEuRmKTKO8wscEPT4QTSwj0+EkB+xlq4
+	CX2lVDjFHFI5zCiJy9AXwk+E/25gJxuxD0NZ7tyjfl1ALUpgE53ZVrxcP77fSoTO+El9Ud
+	EVGC23bOCCHq+9m5tUoJV31jUU27UzNpBKLH1Lrwab3vmLxUKgKn7GrwD6zEvA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1741790328;
+	s=2020e; t=1741792715;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=QCww5YReYhd+Fi4tfjXgYcXmj2RO0J1OQUfOjgeWiMg=;
-	b=hXYfpAA8SHEFyMDTRfb9XBKrGBYPFtLAOHOsPsbHn2ShQ4PcocaAW8CNUc1kZBIrQqS4dp
-	ng4C6vF+emgbvNBQ==
+	bh=i7Oi0ejhX3+OkOvAUCrRQfusj0+GsV3Blg6cnIjRiS8=;
+	b=dboEebtCpfTu9SKVqtaXhTeUPFh3h7705RSeIZ+eDt1CtA3XmEditRxe/dZWcXdXJoL6/7
+	gUAqPSfTx1VFLDAg==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
 To: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Borislav Petkov <bp@alien8.de>
 Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86@kernel.org,
-	x86-cpuid@lists.linux.dev,
-	LKML <linux-kernel@vger.kernel.org>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v2 20/20] MAINTAINERS: Include kcpuid under X86 CPUID DATABASE
-Date: Wed, 12 Mar 2025 15:37:37 +0100
-Message-ID: <20250312143738.458507-21-darwi@linutronix.de>
-In-Reply-To: <20250312143738.458507-1-darwi@linutronix.de>
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 14/20] tools/x86/kcpuid: Filter valid CPUID ranges
+Message-ID: <Z9GlyaR-oFEur1zy@lx-t490>
 References: <20250312143738.458507-1-darwi@linutronix.de>
+ <20250312143738.458507-15-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250312143738.458507-15-darwi@linutronix.de>
 
-kcpuid's CSV file is covered by the "x86 CPUID database" MAINTAINERS
-entry.  Recent patches have shown that changes to that file may require
-updates to the kcpuid code, so include the whole of tools/x86/kcpuid
-under the same entry.
+On Wed, 12 Mar 2025, Ahmed S. Darwish wrote:
+>
+> @@ -342,6 +359,7 @@ static void parse_line(char *line)
+>  		return;
+>
+>  	/* Skip line parsing if the index CPUID output is all zero */
+> +	index &= CPUID_FUNCTION_MASK;
+>  	func = &range->funcs[index];
+>  	if (!func->nr)
+>  		return;
 
-This also ensures that myself and the x86-cpuid mailing list are CCed on
-future kcpuid patches.
+My apologies, this line should've been part of the previous patch.
+Probably a rebase issue.
 
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I have it now fixed, but I'll wait before sending v3 to see if there are
+any comments on the PQ.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ed7aa6867674..ce2742712140 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -25695,7 +25695,7 @@ R:	Ahmed S. Darwish <darwi@linutronix.de>
- L:	x86-cpuid@lists.linux.dev
- S:	Maintained
- W:	https://x86-cpuid.org
--F:	tools/arch/x86/kcpuid/cpuid.csv
-+F:	tools/arch/x86/kcpuid/
- 
- X86 ENTRY CODE
- M:	Andy Lutomirski <luto@kernel.org>
--- 
-2.48.1
+Thanks,
 
+--
+Ahmed S. Darwish
+Linutronix GmbH
