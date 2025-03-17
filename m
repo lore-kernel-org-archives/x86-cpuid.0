@@ -1,189 +1,243 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C771D7E37
-	for <x86-cpuid@lists.linux.dev>; Wed, 12 Mar 2025 19:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F3E19CD17
+	for <x86-cpuid@lists.linux.dev>; Mon, 17 Mar 2025 16:52:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741809309; cv=none; b=gWenvTQDxrtwRUXp7/dzHbffPVHqF4j3qguWYZHKQD8kClhqmLXABQiv76Lkm9zDeTeW5FAhpM3yaWnhXXpnH2ggqOHu6oQPT9lTDP1I2V7IwaJy2Xbj9DcDlAySNsxFrqwHU2ESxub6IVAP5j9wm2GJVbRWBxImQ7phlx1L6pI=
+	t=1742230354; cv=none; b=Zwum/e1cIGKAG1IFKwdM3TwBT8Ezs2XzB8rnONLbWxwbwGBF/98tX0An9y5kcT5HRVLvognNHrKUCMrnM0ccOoSXt0m3VG+zGB7nEYbsR85wDPL1SdSR4On5kVxC5MxXBLjp3Stm7wTbY38/FF/7OO2Fr3DmkCnwlNlKKEEyIrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741809309; c=relaxed/simple;
-	bh=CplhzlJ4smylxHe7GvjlK3HB9K0ptwoBb3gJK2jRDiY=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=iTVhfy4JbbX0g4v7AO+fIRaiXrbslzkMeiM67woENtifKMolunQlWcm9TnfYAS1ERMqRPdiZLdAfHaLBDZkleAMnwi+PO0W/6bEHXwrDo6fYc59ToIU+p7hqxLdue4lDqnBmBLgl8g0B+kF9cXbPd04rJ5lAwhTrWxK27O/7H/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=ND7GjzrA; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	s=arc-20240116; t=1742230354; c=relaxed/simple;
+	bh=hsEDh+FXuLx9NTdy3JG4IFZ0feffgG/Vq0QbD5wEMVQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lRsa32vK93V88DO/nIYhII0AUKG9UM8mUCemNctPes+TzBa498FRZ1ahvgKJgUWaElN+ZswbpBnm0Dpdgt0A7PNPlp+Gti1gQ4llJbyZoBAqORSKhx5MyRQkJwYOjULS5/rl1pdzmcro/UwlD6eiZSUqz4JTz5KS9DTPukKOifw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=a3YbZPgi; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=m/kMyn4G; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="ND7GjzrA"
-Received: from [127.0.0.1] ([76.133.66.138])
-	(authenticated bits=0)
-	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 52CJsVp02657411
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Wed, 12 Mar 2025 12:54:31 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 52CJsVp02657411
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2025021701; t=1741809272;
-	bh=doQCaHhiMQgxyHB06XJnVyXGfPJ4R8+yj4l9i89I6Lg=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=ND7GjzrARImK75gOCS1BYdgH7YfLk9S8LAtRJvc/z0F1ooXAYkjFqdR+D61Jg4bwm
-	 Q015uCD2hatqoXf2PQXa4vMIUqC+We1q9rDUFe3Pm6rwp0Eo/lIIuXTkG5F1DQUwN9
-	 gIdwKgvQtBv5vi7Muasa3wxaLkhMkBV7xMpz7ws7ZS+rEmQYZdT45WS4SVw26Xzvv0
-	 MCzjfsYj+1zUeAontoRpQDFY1tw4VnOL+2gHQEqmAb1xHKe/cw1XjDGM/D8Nu3Z857
-	 BqMtdQlFQzNA4xRSbST8dk1ZQJktRRjig5zUkv1CsXC1wWCEaH8/GQsqhmhf11pqU2
-	 i+8S/efzWwvPg==
-Date: Wed, 12 Mar 2025 12:54:31 -0700
-From: "H. Peter Anvin" <hpa@zytor.com>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-        Dave Hansen <dave.hansen@linux.intel.com>,
-        Borislav Petkov <bp@alien8.de>
-CC: Thomas Gleixner <tglx@linutronix.de>,
-        Andrew Cooper <andrew.cooper3@citrix.com>,
-        John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-        x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_19/20=5D_tools/x86/kcpuid=3A?=
- =?US-ASCII?Q?_Update_bitfields_to_x86-cpuid-db_v2=2E3?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20250312143738.458507-20-darwi@linutronix.de>
-References: <20250312143738.458507-1-darwi@linutronix.de> <20250312143738.458507-20-darwi@linutronix.de>
-Message-ID: <4BCBA481-AC3A-4A65-B791-235E580286CC@zytor.com>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="a3YbZPgi";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="m/kMyn4G"
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1742230350;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=DSUrRlzDo/2i3jKk5S/thoktaQleNXutIuMAY0cSvNg=;
+	b=a3YbZPgiM/Y6SpPGdDEzudvBWxkBVt0xs6OeoeVJ8OwO4tYdVYu9VEaNrKZHE89BShZBrC
+	V3H3T1c7zCuJIlxJTh06SNu3ucsvLyRpn9zOsLhiiX/5sZznmp1kRXNVnjdfgDk1YELGJy
+	YV0GNo/egubyHYTxbNW8PZPjirNzI4XTYQhI/njomCL4l6UrhZsCYbHP3Xa2daJf05BUrK
+	JmUxhda2DY6aZEBFZ90kc+tNhi4AyzYK4ziCvsfWv6cId7u04ya71NdLlX6MLeVL1ldO7Z
+	j/5U0xZ7JiyezCgL/tlVscWWSAH2HG7VHOm6VN0dvmgEjcD5v/xARI1WRkMBhA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1742230350;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=DSUrRlzDo/2i3jKk5S/thoktaQleNXutIuMAY0cSvNg=;
+	b=m/kMyn4GcJCHpRmWRaWJ/Cu4uF7QXhrr8PHmBVp88mDTvlzp+uU35h8pTpCiTHSA/HGWPr
+	RklXOXl0lxmdXxBg==
+To: Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	x86@kernel.org,
+	x86-cpuid@lists.linux.dev,
+	LKML <linux-kernel@vger.kernel.org>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>
+Subject: [PATCH v2 00/29] x86: Leaf 0x2 and leaf 0x4 refactorings
+Date: Mon, 17 Mar 2025 17:47:16 +0100
+Message-ID: <20250317164745.4754-1-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On March 12, 2025 7:37:36 AM PDT, "Ahmed S=2E Darwish" <darwi@linutronix=2E=
-de> wrote:
->Update kcpuid's CSV file to version 2=2E3, as generated by x86-cpuid-db=
-=2E
->
->Summary of the v2=2E3 changes:
->
->* Per H=2E Peter Anvin's feedback, leaf 0x3 is not unique to Transmeta as
->  the CSV file earlier claimed=2E  Since leaf 0x3's format differs betwee=
-n
->  Intel and Transmeta, and the project does not yet support having the
->  same CPUID bitfield with varying interpretations across vendors, leaf
->  0x3 is removed for now=2E  Given that Intel discontinued support for PS=
-N
->  from Pentium 4 onward, and Linux force disables it on early boot for
->  privacy concerns, this should have minimal impact=2E
->
->* Leaf 0x80000021: Make bitfield IDs and descriptions coherent with each
->  other=2E  Remove "_support" from bitfield IDs, as no other leaf has suc=
-h
->  convention=2E
->
->Reported-by: "H=2E Peter Anvin" <hpa@zytor=2Ecom>
->Closes: https://lkml=2Ekernel=2Eorg/r/C7684E03-36E0-4D58-B6F0-78F4DB82D73=
-7@zytor=2Ecom
->Signed-off-by: Ahmed S=2E Darwish <darwi@linutronix=2Ede>
->Link: https://gitlab=2Ecom/x86-cpuid=2Eorg/x86-cpuid-db/-/blob/v2=2E3/CHA=
-NGELOG=2Erst
->---
-> tools/arch/x86/kcpuid/cpuid=2Ecsv | 30 +++++++++++-------------------
-> 1 file changed, 11 insertions(+), 19 deletions(-)
->
->diff --git a/tools/arch/x86/kcpuid/cpuid=2Ecsv b/tools/arch/x86/kcpuid/cp=
-uid=2Ecsv
->index 9613e09cbfb3=2E=2E8d25b0b49f3b 100644
->--- a/tools/arch/x86/kcpuid/cpuid=2Ecsv
->+++ b/tools/arch/x86/kcpuid/cpuid=2Ecsv
->@@ -1,5 +1,5 @@
-> # SPDX-License-Identifier: CC0-1=2E0
->-# Generator: x86-cpuid-db v2=2E2
->+# Generator: x86-cpuid-db v2=2E3
->=20
-> #
-> # Auto-generated file=2E
->@@ -116,14 +116,6 @@
->        0x2,         0,  edx,   30:24,    desc15                 , Descri=
-ptor #15
->        0x2,         0,  edx,      31,    edx_invalid            , Descri=
-ptors 12-15 are invalid if set
->=20
->-# Leaf 3H
->-# Transmeta Processor Serial Number (PSN)
->-
->-       0x3,         0,  eax,    31:0,    cpu_psn_0              , Proces=
-sor Serial Number bytes 0 - 3
->-       0x3,         0,  ebx,    31:0,    cpu_psn_1              , Proces=
-sor Serial Number bytes 4 - 7
->-       0x3,         0,  ecx,    31:0,    cpu_psn_2              , Proces=
-sor Serial Number bytes 8 - 11
->-       0x3,         0,  edx,    31:0,    cpu_psn_3              , Proces=
-sor Serial Number bytes 12 - 15
->-
-> # Leaf 4H
-> # Intel deterministic cache parameters
->=20
->@@ -1020,20 +1012,20 @@
-> 0x80000021,         0,  eax,       0,    no_nested_data_bp      , No nes=
-ted data breakpoints
-> 0x80000021,         0,  eax,       1,    fsgs_non_serializing   , WRMSR =
-to {FS,GS,KERNEL_GS}_BASE is non-serializing
-> 0x80000021,         0,  eax,       2,    lfence_rdtsc           , LFENCE=
- always serializing / synchronizes RDTSC
->-0x80000021,         0,  eax,       3,    smm_page_cfg_lock      , SMM pa=
-ging configuration lock is supported
->+0x80000021,         0,  eax,       3,    smm_page_cfg_lock      , SMM pa=
-ging configuration lock
-> 0x80000021,         0,  eax,       6,    null_sel_clr_base      , Null s=
-elector clears base
->-0x80000021,         0,  eax,       7,    upper_addr_ignore      , EFER M=
-SR Upper Address Ignore Enable bit supported
->-0x80000021,         0,  eax,       8,    autoibrs               , EFER M=
-SR Automatic IBRS enable bit supported
->-0x80000021,         0,  eax,       9,    no_smm_ctl_msr         , SMM_CT=
-L MSR (0xc0010116) is not present
->-0x80000021,         0,  eax,      10,    fsrs_supported         , Fast S=
-hort Rep STOSB (FSRS) is supported
->-0x80000021,         0,  eax,      11,    fsrc_supported         , Fast S=
-hort Rep CMPSB (FSRC) is supported
->-0x80000021,         0,  eax,      13,    prefetch_ctl_msr       , Prefet=
-ch control MSR is supported
->+0x80000021,         0,  eax,       7,    upper_addr_ignore      , EFER M=
-SR Upper Address Ignore
->+0x80000021,         0,  eax,       8,    autoibrs               , EFER M=
-SR Automatic IBRS
->+0x80000021,         0,  eax,       9,    no_smm_ctl_msr         , SMM_CT=
-L MSR (0xc0010116) is not available
->+0x80000021,         0,  eax,      10,    fsrs                   , Fast S=
-hort Rep STOSB
->+0x80000021,         0,  eax,      11,    fsrc                   , Fast S=
-hort Rep CMPSB
->+0x80000021,         0,  eax,      13,    prefetch_ctl_msr       , Prefet=
-ch control MSR is available
-> 0x80000021,         0,  eax,      16,    opcode_reclaim         , Reserv=
-es opcode space
-> 0x80000021,         0,  eax,      17,    user_cpuid_disable     , #GP wh=
-en executing CPUID at CPL > 0 is supported
->-0x80000021,         0,  eax,      18,    epsf_supported         , Enhanc=
-ed Predictive Store Forwarding (EPSF) is supported
->+0x80000021,         0,  eax,      18,    epsf                   , Enhanc=
-ed Predictive Store Forwarding
-> 0x80000021,         0,  eax,      22,    wl_feedback            , Worklo=
-ad-based heuristic feedback to OS
->-0x80000021,         0,  eax,      24,    eraps_support          , Enhanc=
-ed Return Address Predictor Security
->-0x80000021,         0,  eax,      27,    sbpb                   , Suppor=
-t for the Selective Branch Predictor Barrier
->+0x80000021,         0,  eax,      24,    eraps                  , Enhanc=
-ed Return Address Predictor Security
->+0x80000021,         0,  eax,      27,    sbpb                   , Select=
-ive Branch Predictor Barrier
-> 0x80000021,         0,  eax,      28,    ibpb_brtype            , Branch=
- predictions flushed from CPU branch predictor
-> 0x80000021,         0,  eax,      29,    srso_no                , CPU is=
- not subject to the SRSO vulnerability
-> 0x80000021,         0,  eax,      30,    srso_uk_no             , CPU is=
- not vulnerable to SRSO at user-kernel boundary
+Hi,
 
-As I said, you can simply treat leaf 3 as raw 128-bit hexadecimal number; =
-there really isn't a need to "interpret" it since the only meaningful use o=
-f it is as a unique identifier combined with vendor-FMS=2E
+This is a v2 of the leaf 0x2 and leaf 0x4 code paths cleanup, in
+preparation for the x86-cpuid-db CPUID model on top of this series.
+
+Changelog v2
+============
+
+Twelve patches got merged from v1, and they're now at tip/x86/core
+(thanks a lot).  Thus, this is on top of tip/x86/core as well.
+
+Apply Ingo Molnar's review remarks:
+
+   - New <asm/cpuid/> header structure matching what is at <asm/fpu/>:
+
+	<asm/cpuid/>
+	  |
+	  +-- api.h
+	  +-- leaf_0x2_api.h
+	  `-- types.h
+
+   - Standardize words usage and header file references across commit
+     logs and comments (CPUID, vendor names, <header.h>, etc.)
+
+   - Use cpuid_ prefix for all new functions at <asm/cpuid/api.h> and
+     <asm/cpuid/leaf_0x2_api.h>.
+
+Note, by the end of this series, leaf 0x2 call sites become:
+
+	const struct leaf_0x2_table *entry;
+	union leaf_0x2_regs regs;
+	u8 *ptr;
+
+	cpuid_get_leaf_0x2_regs(&regs);
+	for_each_leaf_0x2_entry(regs, ptr, entry) {
+		switch (entry->c_type) {
+			...
+		}
+	}
+
+Changelog v1
+============
+
+https://lkml.kernel.org/r/20250304085152.51092-1-darwi@linutronix.de
+
+As part of the onging x86-cpuid work [*], we've found that the handling
+of leaf 0x2 and leaf 0x4 code paths is difficult to work with in its
+current state.  This was mostly due to the organic incremental growth of
+the x86/cpu and x86/cacheinfo logic since the very early Linux days.
+
+This series cleans up and refactors these code paths in preparation for
+the new x86-cpuid model.
+
+Summary:
+
+- Patches 1 to 3 are independent bugfixes that were discovered during
+  this refactoring work.
+
+- Patches 4 to 10 are x86/cpu refactorings for code size and
+  readability.
+
+- Patch 10 adds standardized and kernel-doc documented logic for
+  accessing leaf 0x2 one byte descriptors.
+
+  This makes the leaf 0x2 sanitization logic centralized in one place.
+  x86/cpu and x86/cacheinfo is modified to use such macros afterwards.
+
+- Patches 11 to 28 refactors the x86/cacheinfo code.
+
+  Beside readability, some of the unrelated logic (e.g. AMD northbridge
+  cache_disable sysfs code) was first splitted from the generic leaf 0x4
+  code paths, at the structure relationships level, then gutted-out into
+  their own files.
+
+- Patches 29 to 31 consolidate the existing (loop-based lookup) leaf 0x2
+  cache and TLB descriptor tables into one hash-based lookup table.
+  This reduces code size while still keeping rodata size in check.
+
+  Standardized macros for accessing this consolidated table are also
+  added.  Call sites can now just do:
+
+	const struct leaf_0x2_table *entry;
+	union leaf_0x2_regs regs;
+	u8 *ptr;
+
+	get_leaf_0x2_regs(&regs);
+	for_each_leaf_0x2_entry(regs, ptr, entry) {
+		switch (entry->c_type) {
+			...
+		}
+	}
+
+  without need to worry about sanitizing registers, skipping certain
+  descriptors, etc.
+
+- Patches 32 and 33 uses the consolidated table above for x86/cpu and
+  x86/cacheinfo.
+
+- Patches 34 to 40 provide the final set of x86/refactorings.
+
+This series is based on -rc5.  It also applies cleanly on top of
+tip/x86/core.
+
+Note, testing was done by comparing below files:
+
+	/proc/cpuinfo
+	/sys/devices/system/cpu/
+	/sys/kernel/debug/x86/topo/
+	dmesg --notime | grep 'Last level [id]TLB entries'
+
+before and after on various old and new x86 machine configurations.
+
+[*] https://gitlab.com/x86-cpuid.org/x86-cpuid-db
+    https://x86-cpuid.org
+
+8<-----
+
+Ahmed S. Darwish (25):
+  x86: treewide: Introduce x86_vendor_amd_or_hygon()
+  x86/cpuid: Refactor <asm/cpuid.h>
+  x86/cpu: Remove leaf 0x2 parsing loop and add helpers
+  x86/cacheinfo: Use CPUID leaf 0x2 parsing helpers
+  x86/cacheinfo: Constify _cpuid4_info_regs instances
+  x86/cacheinfo: Align ci_info_init() assignment expressions
+  x86/cacheinfo: Standardize _cpuid4_info_regs instance naming
+  x86/cacheinfo: Consolidate AMD/Hygon leaf 0x8000001d calls
+  x86/cacheinfo: Separate amd_northbridge from _cpuid4_info_regs
+  x86/cacheinfo: Move AMD cache_disable_0/1 handling to separate file
+  x86/cacheinfo: Use sysfs_emit() for sysfs attributes show()
+  x86/cacheinfo: Separate Intel and AMD leaf 0x4 code paths
+  x86/cacheinfo: Rename _cpuid4_info_regs to _cpuid4_info
+  x86/cacheinfo: Clarify type markers for leaf 0x2 cache descriptors
+  x86/cacheinfo: Use enums for cache descriptor types
+  x86/cpu: Use enums for TLB descriptor types
+  x86/cacheinfo: Use consolidated leaf 0x2 descriptor table
+  x86/cpu: Use consolidated leaf 0x2 descriptor table
+  x86/cacheinfo: Separate leaf 0x2 handling and post-processing logic
+  x86/cacheinfo: Separate Intel leaf 0x4 handling
+  x86/cacheinfo: Extract out cache level topology ID calculation
+  x86/cacheinfo: Extract out cache self-snoop checks
+  x86/cacheinfo: Relocate leaf 0x4 cache_type mapping
+  x86/cacheinfo: Introduce cpuid_amd_hygon_has_l3_cache()
+  x86/cacheinfo: Apply maintainer-tip coding style fixes
+
+Thomas Gleixner (4):
+  x86/cacheinfo: Refactor leaf 0x2 cache descriptor lookup
+  x86/cacheinfo: Properly name amd_cpuid4()'s first parameter
+  x86/cacheinfo: Use proper name for cacheinfo instances
+  x86/cpu: Consolidate CPUID leaf 0x2 tables
+
+ arch/x86/events/amd/uncore.c              |    3 +-
+ arch/x86/events/rapl.c                    |    3 +-
+ arch/x86/include/asm/cpuid.h              |  218 +----
+ arch/x86/include/asm/cpuid/api.h          |  217 +++++
+ arch/x86/include/asm/cpuid/leaf_0x2_api.h |   96 ++
+ arch/x86/include/asm/cpuid/types.h        |  121 +++
+ arch/x86/include/asm/processor.h          |    5 +
+ arch/x86/kernel/amd_nb.c                  |   16 +-
+ arch/x86/kernel/cpu/Makefile              |    5 +-
+ arch/x86/kernel/cpu/amd_cache_disable.c   |  301 ++++++
+ arch/x86/kernel/cpu/bugs.c                |   12 +-
+ arch/x86/kernel/cpu/cacheinfo.c           | 1041 +++++++--------------
+ arch/x86/kernel/cpu/cpu.h                 |    9 +
+ arch/x86/kernel/cpu/cpuid_0x2_table.c     |  128 +++
+ arch/x86/kernel/cpu/intel.c               |  123 +--
+ arch/x86/kernel/cpu/mce/core.c            |    4 +-
+ arch/x86/kernel/cpu/mce/severity.c        |    3 +-
+ arch/x86/kernel/cpu/mtrr/cleanup.c        |    3 +-
+ arch/x86/kvm/svm/svm.c                    |    3 +-
+ arch/x86/pci/amd_bus.c                    |    3 +-
+ arch/x86/xen/enlighten.c                  |   15 +-
+ arch/x86/xen/pmu.c                        |    3 +-
+ 22 files changed, 1241 insertions(+), 1091 deletions(-)
+ create mode 100644 arch/x86/include/asm/cpuid/api.h
+ create mode 100644 arch/x86/include/asm/cpuid/leaf_0x2_api.h
+ create mode 100644 arch/x86/include/asm/cpuid/types.h
+ create mode 100644 arch/x86/kernel/cpu/amd_cache_disable.c
+ create mode 100644 arch/x86/kernel/cpu/cpuid_0x2_table.c
+
+base-commit: 6d536cad0d55e71442b6d65500f74eb85544269e
+--
+2.48.1
