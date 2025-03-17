@@ -1,54 +1,42 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868D516E863
-	for <x86-cpuid@lists.linux.dev>; Mon, 17 Mar 2025 17:32:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0E21A3168;
+	Mon, 17 Mar 2025 17:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742232760; cv=none; b=irYNw4za13qYWMdhPdJX97XRzSejaGTjsxoyLSohAJVq39FaFZm3HGnbd74t77D5zuITJoDjc9FYkbUyh6A/2XW9iUbToVakfaP9Z1UhmT35AkGLIo9K+A/4nt10272YrxZxbIS6+WujDy7Wn1ufcZHWk2xDtodK/EEQO2bkhos=
+	t=1742233733; cv=none; b=aE3ASHt5FbYpSu2oK7zGi640sgz4Jki25H3dPiofo8oQ+a+7YpKfRVwuzIhEP4lqCR4g0dDsjb6bUhkelbd6EZ2htf+873a1TU1O4JFC99Ixh8sI8MU/FDYjChEki5n60VQP3KJcp0kyEgIGivJDVNbgVhCuumkifXtCcjVcr4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742232760; c=relaxed/simple;
-	bh=ehYg2/ONqk8/XLmoEtapE5qDS33Dk/PLd1UqYX+muWY=;
+	s=arc-20240116; t=1742233733; c=relaxed/simple;
+	bh=gW5WrWEsRgzGYeA2WB5QR5OP8afZ6CKKTcYhrgeRDC4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hNAqFkBJ2dpFcAKelr3puQph47rRBvglZ6jMeyOxdvHKTWuHrjpG1xcmzLomZkojBTkXJbCiN+hDMDcHQw0z/17P6LgiPBrsrNWyJ7sHEtmzsxCOhhSYrYzDgORHS3Fcsi61SHl/27UjiNKh3ZSKovN4lUF/I+N5GR0cpXuJuqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=WH5iepXM; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=fADDa6XGm2GbVFieD+eBlPuOYQdqjvZqcBBC8ve8h5AWQU25zqcTTQ76WiE3jmcjokiZZPmb4b+HImkor5t5hQ0+KP3tzTJdM1/bFhP0VJniIOuGbgx/LcxwMcZn6wsWRnk6H76SxVYHRaQHlHGLD9gJ18mLtftpoD+gT6SSyng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Ak2UAg+p; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="WH5iepXM"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 016BE40E0196;
-	Mon, 17 Mar 2025 17:32:36 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Eo0M264fjHUB; Mon, 17 Mar 2025 17:32:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1742232752; bh=N+vz/El3SrhGmEy1RKNR0F5TTNUav0MIz5A/z8IeTBI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WH5iepXMEKBW0KXDr5gAbvCU+akjLByJvOTPckQX4PHrDubv5J/umCQumiFeet767
-	 GaWM1U1lBh7fEs6goZaa9jLgCcPD8TY4nKPXwvWBBXrvHbvBt8kEyebAo+351pJV0u
-	 KBb5cMKE44jJqu5OtzYzK9LLGOXzAwTy6P2T3akISC4dFykzmiMwmwpvlBYqOuhs/n
-	 t9W+llJOvQFNHUjKFKlk+U8dKdErxpunA9XgNCgVp3msOC5GTZHLDbxe2/KutaSyD3
-	 pf50miQ5nzSuDas8mRdG6sQxvALpjRF/f+daKaNAxSutYo9otsP1Cm59EmiJIodyqN
-	 Bsi9sW+tNbCbqyCZmQU+dSVZ3bQzpnmaUpZnnCm8H7vHd/5TBnglpkyb1/tLxpqqRT
-	 MifubnxUiVnn5V+Lx/jYsC2meFv8HEyqBZNZdTUHfHb+cofQXqV0/+P+CtGi0DMjqN
-	 jFYbtxFSZmVDiCyKQQDQ4/afGRdDzpX9G67DiUiEG1DL4u87AygrQZO2e63q4d/oHl
-	 Z0NiUib4wEr34b4JvGH0oWtf670Dgax1fyzklJu1D75YDTXoTwN04dJpctJ8wNkI/K
-	 nKQ0Hl+Bnx/BIs1xW1oC33ceMjhLYWWXLoZ8es2GSgtA1QrcjdBPl+N8tq50PVtgu8
-	 ZRgK9luTRs2oQGzHyW05zTwk=
-Received: from zn.tnic (pd95303ce.dip0.t-ipconnect.de [217.83.3.206])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id CFBF140E0169;
-	Mon, 17 Mar 2025 17:32:21 +0000 (UTC)
-Date: Mon, 17 Mar 2025 18:32:16 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>,
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Ak2UAg+p"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=3b0Uj79RdTQCZqfGxFLsxs3VkCOnmsKOMf9Ox34+5LQ=; b=Ak2UAg+pk2NqHPX/5EdoCo0swG
+	SvUtVy3/95AiPFC6NJJnOVBL6Gzn8QvpZQ7SRxp+UZYGxMBia4jROI3kGBbR83d09iwuWNaB8bqcU
+	YvgW3/VTG1qREOLJ1ga4coScnXLmHPQYrJejOBPKgBUKIx84V/0k7SWOxVfdRd6wG27bZ99RvtfTI
+	OEha3nZCf0jPRDopdcH2VQWHULshgYuR5KCGP9h2C/0YQLf6m+mji2b+jRwX+FN6OAMuUc+Jb/s5o
+	P0Jr4mQczwN7pj4lhejtL5sgwcXOdTkP5MpiKjVyQtyq79XJjGVrVBcPdeMhJ8i92tdxC3hFaIe/K
+	RXbX1PtQ==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+	id 1tuEa1-00000003XHM-1Bvd;
+	Mon, 17 Mar 2025 17:48:49 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id C9389300783; Mon, 17 Mar 2025 18:48:48 +0100 (CET)
+Date: Mon, 17 Mar 2025 18:48:48 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Borislav Petkov <bp@alien8.de>
+Cc: "Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
@@ -57,31 +45,31 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v2 01/29] x86: treewide: Introduce
  x86_vendor_amd_or_hygon()
-Message-ID: <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
+Message-ID: <20250317174848.GJ6888@noisy.programming.kicks-ass.net>
 References: <20250317164745.4754-1-darwi@linutronix.de>
  <20250317164745.4754-2-darwi@linutronix.de>
+ <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250317164745.4754-2-darwi@linutronix.de>
+In-Reply-To: <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
 
-On Mon, Mar 17, 2025 at 05:47:17PM +0100, Ahmed S. Darwish wrote:
-> The pattern to check if an x86 vendor is AMD or HYGON (or not both) is
-> pretty common.  Introduce x86_vendor_amd_or_hygon() at <asm/processor.h>
+On Mon, Mar 17, 2025 at 06:32:16PM +0100, Borislav Petkov wrote:
+> On Mon, Mar 17, 2025 at 05:47:17PM +0100, Ahmed S. Darwish wrote:
+> > The pattern to check if an x86 vendor is AMD or HYGON (or not both) is
+> > pretty common.  Introduce x86_vendor_amd_or_hygon() at <asm/processor.h>
+> 
+> So if we need to check "intel too", we do
+> 
+> x86_vendor_amd_or_hygon_or_intel?
+> 
+> Nah, this is silly.
 
-So if we need to check "intel too", we do
+Would it make more sense to have a Zen1 feature and check that instead?
 
-x86_vendor_amd_or_hygon_or_intel?
-
-Nah, this is silly.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Because, IIRC Hygon is simply a Zen1 copy.
