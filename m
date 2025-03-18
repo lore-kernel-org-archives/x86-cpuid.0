@@ -1,57 +1,58 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C417E209F49
-	for <x86-cpuid@lists.linux.dev>; Tue, 18 Mar 2025 11:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAE7209F33
+	for <x86-cpuid@lists.linux.dev>; Tue, 18 Mar 2025 11:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742296077; cv=none; b=l42mkbi1tKlTc73MjxaSicTfbA2o975It3XXkjHx6WiszNQjSBv5Bq42NWEf+ArQDBB3ulkyFtDY7Pc3mSs4a4BwM/k7H9IaYkBqNHjlEFCkjBsExkoeUspcsVh7Tvhn83H7MUqxF7f0A+JAESJ7CQREnBThFotetEjsw92nIYs=
+	t=1742296179; cv=none; b=q6hxM1rPLdnmMotV5ep6P/rI6QEDaqmV9GBkSsRP1O2sGLkUWlmr/ItUcjb+XZunvKJ0rm4MDlyHd9CzdZPsVkQfcjQtOWCrsCNpF3iuSPHFRc8P0hIX+hHYyUJf/nQewGi6LHKL5cAIru0baohXJxqEaDJ/RE56558l7K88Al4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742296077; c=relaxed/simple;
-	bh=X39AUEG5nv3lS/OxEL47cpT/j233rj4yGQy3dPiHJIw=;
+	s=arc-20240116; t=1742296179; c=relaxed/simple;
+	bh=hyVj8uYyP/1SoMIwYvBVqUPsk+CiVLmStLlDmg9A2xo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sThAQA9XLFro9Rvw53h0H7p2MBJmH0ChB4eHqx7ur37Q+yWRZKaag/vyqfIwuMTRipeX+7bI0lM5Sj75fRrz6p6MV6pH1G/Pl/385DpWkBWw4ONG0VE5bPdbUtGOWQHJFqND8726tXe4CXFiG4Ly+yW8VNh01lwv8idq6rYvAb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=q6tHMYLG; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=E4xkpF7U; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=XfqW+zqH2UwWtYY5kppmqQehf0OsC1LnUBxsPglT6SPxEzhij1g3ILNi3E0LgiuCb15xk6n5jZ94HxYOFQxp8QDuJJtGOuXuDBT10xDe+fXowlue0BQjZVFh6tvv+1O/5mWcMqpK2bijPuQvmejfRDghYXxCknyOiqyCzgdvXeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=IY3SS548; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UceKltUO; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="q6tHMYLG";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="E4xkpF7U"
-Date: Tue, 18 Mar 2025 12:07:51 +0100
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="IY3SS548";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UceKltUO"
+Date: Tue, 18 Mar 2025 12:09:34 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1742296073;
+	s=2020; t=1742296176;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=so7iBW617bBZ+P6Esht8Cob0j8gL2z/4LrETFf/UzOI=;
-	b=q6tHMYLG4Scg+mhtwT+VkKIGhJqOMifwsD/Y6O/eyZx6nPBkcKY9ORhjVEVo7S2uT8ovxQ
-	bdLbqi2kzlVXaS4aRSu+5GUmCOzs+x0alXboSl21oFXPPe9rZyf63Ikmknl1GPfNoXLqVq
-	O7RJtIChSw7mUQQ/85Q5x3cKMHP1u7SixQ8Li8BBGPD07RMNJG9wsL8HOoFtnJByVqW+0d
-	/NFUVbG8XUBGYadDPoPeiwWNJ3v6Bh21ZFdAB7TWH08O1kfg13y2bD0aNLdMdnjS8YACd0
-	FkJybkw2IlYE/ITT/7TOH74Rj3Gpg3RtgF+pkBcoyPt6yJNhO+sbZlRHltd5Kw==
+	bh=eic6q/rozoGbuSYNe4ZPpX4CFUhLOFjPoS0vJbaheh0=;
+	b=IY3SS548E6ttGoeKuSmJ3pYh3CqCCSsbmjSc4oAUJBKopjPlf9rairrzHprSG6dQRm3pJi
+	i/qtkje+KLBb/diuDnqEHusdE2FNI9GHOtLSJVZOxjj/FL7ZJk7f/tvvGBD7AscgHuKwk3
+	tx2u/MvfaJ+91h65kJEE0bNwqsZedfWGddKYDwyPsmNPpcqotFS8er3QMSdp2v3OqfZSOH
+	LNVxehnx8QZMVOXbn/kV/F5cov4IJy+q46dzWVthV4iD3r9bWMdFWBmsSDPdPl7zcoSk6N
+	fm+pSegx0RXdu9YB6lSEieNyLt1DQp3fPibOPofqSN6WeZ/uBffWnCJGK7jSdA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1742296073;
+	s=2020e; t=1742296176;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=so7iBW617bBZ+P6Esht8Cob0j8gL2z/4LrETFf/UzOI=;
-	b=E4xkpF7UmNwjiDYs8O1xww5LMPx+ES365xYoH0ER3l9msS9/k1SRzuu31aAsxs5vdjlIEC
-	LsJIuwVYxj2AH4Dg==
+	bh=eic6q/rozoGbuSYNe4ZPpX4CFUhLOFjPoS0vJbaheh0=;
+	b=UceKltUOb4R8knmkk8rPGyTbahs76sp3PW0ul68OPHNfgFTkVg/Suy7oCInnwZBswR31mo
+	Yf96K5AeP12Fx0Cw==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Borislav Petkov <bp@alien8.de>
+To: Ingo Molnar <mingo@kernel.org>
 Cc: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 01/29] x86: treewide: Introduce
- x86_vendor_amd_or_hygon()
-Message-ID: <Z9lUB2t0eZ8bz4vW@lx-t490>
+Subject: Re: [PATCH v2 03/29] x86/cpu: Remove leaf 0x2 parsing loop and add
+ helpers
+Message-ID: <Z9lUbnEAR1RmdbE_@lx-t490>
 References: <20250317164745.4754-1-darwi@linutronix.de>
- <20250317164745.4754-2-darwi@linutronix.de>
- <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
+ <20250317164745.4754-4-darwi@linutronix.de>
+ <Z9iVyrlDbFyI9Rqi@gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -60,69 +61,22 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
+In-Reply-To: <Z9iVyrlDbFyI9Rqi@gmail.com>
 
-Hi,
-
-On Mon, 17 Mar 2025, Borislav Petkov wrote:
+On Mon, 17 Mar 2025, Ingo Molnar wrote:
 >
-> On Mon, Mar 17, 2025, Ahmed S. Darwish wrote:
-> > The pattern to check if an x86 vendor is AMD or HYGON (or not both) is
-> > pretty common.  Introduce x86_vendor_amd_or_hygon() at <asm/processor.h>
+> Could you please turn this into at least two patches:
 >
-> So if we need to check "intel too", we do
+>   - One does the functional change - this patch should be as small as
+>     possible. This patch turns a piece of 'Intel documents' property
+>     into 'actual code' that differs from the previous code, which may
+>     or may not regress in practice.
 >
-> x86_vendor_amd_or_hygon_or_intel?
->
-> Nah, this is silly.
+>   - The other does the factoring out and the introduction of
+>     <asm/cpuid/leaf_0x2_api.h>.
 >
 
-I needed this while refactoring the cacheinfo.c leaf 0x8000001d code at
-patch 11/29 ("x86/cacheinfo: Consolidate AMD/Hygon leaf 0x8000001d
-calls") as the combined check was done multiple times.
-
-Then I found that there are 28 other cases in the x86 tree where the
-AMD/Hygon CPU vendor check is also combined.  So I did that macro and it
-also made a number the affected sites more succinct; e.g.:
-
-|  diff --git a/arch/x86/xen/enlighten.c b/arch/x86/xen/enlighten.c
-|  index 43dcd8c7badc..13df4917d7d8 100644
-|  --- a/arch/x86/xen/enlighten.c
-|  +++ b/arch/x86/xen/enlighten.c
-|  @@ -82,11 +82,9 @@ void xen_hypercall_setfunc(void)
-|   	if (static_call_query(xen_hypercall) != xen_hypercall_hvm)
-|   		return;
-|
-|  -	if ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-|  -	     boot_cpu_data.x86_vendor == X86_VENDOR_HYGON))
-|  -		static_call_update(xen_hypercall, xen_hypercall_amd);
-|  -	else
-|  -		static_call_update(xen_hypercall, xen_hypercall_intel);
-|  +	static_call_update(xen_hypercall,
-|  +			   x86_vendor_amd_or_hygon(boot_cpu_data.x86_vendor) ?
-|  +			   xen_hypercall_amd : xen_hypercall_intel);
-|   }
-|
-|   /*
-|  @@ -118,11 +116,8 @@ noinstr void *__xen_hypercall_setfunc(void)
-|   	if (!boot_cpu_has(X86_FEATURE_CPUID))
-|   		xen_get_vendor();
-|
-|  -	if ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-|  -	     boot_cpu_data.x86_vendor == X86_VENDOR_HYGON))
-|  -		func = xen_hypercall_amd;
-|  -	else
-|  -		func = xen_hypercall_intel;
-|  +	func = x86_vendor_amd_or_hygon(boot_cpu_data.x86_vendor) ?
-|  +		xen_hypercall_amd : xen_hypercall_intel;
-|
-|   	static_call_update_early(xen_hypercall, func);
-
-Nonetheless, I've seen your other emails in the thread, and I'll drop the
-patch.
+Sure, will do.
 
 Thanks!
-
---
-Ahmed S. Darwish
-Linutronix GmbH
+Ahmed
