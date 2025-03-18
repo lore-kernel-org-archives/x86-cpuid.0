@@ -1,55 +1,45 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890B214900F
-	for <x86-cpuid@lists.linux.dev>; Mon, 17 Mar 2025 21:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C417E209F49
+	for <x86-cpuid@lists.linux.dev>; Tue, 18 Mar 2025 11:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742247997; cv=none; b=ToMg+LYLSgMbcbnABmj2aDaNRnyJShUm7VEzKWwDv00hBt+owhXs1dJfAybc0c4wwZAChwOh3nVdh6wP8RBf6SUXd6rbe+Y9KHoAEpAE/b8mOZR5ZtqDlem2Obpnr5zULzqs5gKlN5SjWKoD/+aAJMNpHgm+FrnQ5I/YFiEkQG8=
+	t=1742296077; cv=none; b=l42mkbi1tKlTc73MjxaSicTfbA2o975It3XXkjHx6WiszNQjSBv5Bq42NWEf+ArQDBB3ulkyFtDY7Pc3mSs4a4BwM/k7H9IaYkBqNHjlEFCkjBsExkoeUspcsVh7Tvhn83H7MUqxF7f0A+JAESJ7CQREnBThFotetEjsw92nIYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742247997; c=relaxed/simple;
-	bh=fW8tuiu0H9a/7aalPs+w8kiH5c8CEzBl9Wrfo/TnaC8=;
+	s=arc-20240116; t=1742296077; c=relaxed/simple;
+	bh=X39AUEG5nv3lS/OxEL47cpT/j233rj4yGQy3dPiHJIw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FsTLriSQEdRwMb/ZX8Zi4ohg+J/gPkvL0wNLIbtMYMVwq0kgW9fVOF9bVtCKWflMHBVVpyUUtwSLG6FsL3WBgY/rctvUzNi2HGAvaO5glT0ji17E2Tp70KtLR6WQqx2IBr2Y2e432zl4zt4zWlps8WXp0AmwvJTmwxpFiPdm+F8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=HMP5NcLw; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=sThAQA9XLFro9Rvw53h0H7p2MBJmH0ChB4eHqx7ur37Q+yWRZKaag/vyqfIwuMTRipeX+7bI0lM5Sj75fRrz6p6MV6pH1G/Pl/385DpWkBWw4ONG0VE5bPdbUtGOWQHJFqND8726tXe4CXFiG4Ly+yW8VNh01lwv8idq6rYvAb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=q6tHMYLG; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=E4xkpF7U; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="HMP5NcLw"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 4C8C540E0169;
-	Mon, 17 Mar 2025 21:46:32 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Hjy1pqhb-D4R; Mon, 17 Mar 2025 21:46:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1742247986; bh=Ch5psyd+u1vctjnkVvsq2E+w/aIDMo5vSl7P20z9X5I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HMP5NcLwibFqjeRtSO7uBtHKA3TiPmkMBlyx31S55QWrjr876oJgLCBBsRw+B+J2Q
-	 OsWoyp5NgSaBjq7w/YLi2Y37wEARO24iMQipQQRoE8sK/gnGa6aVwU3mvIk7Kc5xwy
-	 JCqMKs8seOPmmM9Sdchlu6WLnXObShyuQ4XVbGzpcvZayLR5CbC5LLrHY1OpeSi2Ch
-	 BvSogSxM21g0HPRT33lnAsgYcv3YiV6h7QLdVY9CtreEvvOe8bXScdFQLlzUwNBHmX
-	 Gp0iFrkd97Fj7lW4ZE8DquQV+Ix34TIPaFbySSHKxWf3k2aKWahdbnDhYGaCvnURxO
-	 lE4vJ3eD430Bdb9PDHavEq4QeqKZjOU+yqMC27tlo7WGm/2GqWzeVfNg2dH/3J0DAc
-	 oAR5fV3ZpAjajQfTcATx6trKOvcM2isf4CtrO2u483XpCp7tiO8gvAu3ddSS+M04fV
-	 /PAs4PfRVyo8effNYlrnibW+/zvP4GhvDIB7uf10tdhd2xjMuPGLXucrB8U1oAOlup
-	 mUcL9ZU620p9oUsMipNiloLPemM0uAaKhXl6aEbXgkMbuyR/x+Y2DWLCZGiT2qaxMT
-	 kqlo4tZFu3/kZx+Y3d9DEkscSYxaC7K7lqFaJgDa9lnDVHx2iA7oJiwYSNlU7mfyWh
-	 wgq6lz2AyjByTqOHaqZ0D9sU=
-Received: from zn.tnic (pd95303ce.dip0.t-ipconnect.de [217.83.3.206])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 9EE4440E0214;
-	Mon, 17 Mar 2025 21:46:15 +0000 (UTC)
-Date: Mon, 17 Mar 2025 22:46:09 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Ingo Molnar <mingo@kernel.org>
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="q6tHMYLG";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="E4xkpF7U"
+Date: Tue, 18 Mar 2025 12:07:51 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1742296073;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=so7iBW617bBZ+P6Esht8Cob0j8gL2z/4LrETFf/UzOI=;
+	b=q6tHMYLG4Scg+mhtwT+VkKIGhJqOMifwsD/Y6O/eyZx6nPBkcKY9ORhjVEVo7S2uT8ovxQ
+	bdLbqi2kzlVXaS4aRSu+5GUmCOzs+x0alXboSl21oFXPPe9rZyf63Ikmknl1GPfNoXLqVq
+	O7RJtIChSw7mUQQ/85Q5x3cKMHP1u7SixQ8Li8BBGPD07RMNJG9wsL8HOoFtnJByVqW+0d
+	/NFUVbG8XUBGYadDPoPeiwWNJ3v6Bh21ZFdAB7TWH08O1kfg13y2bD0aNLdMdnjS8YACd0
+	FkJybkw2IlYE/ITT/7TOH74Rj3Gpg3RtgF+pkBcoyPt6yJNhO+sbZlRHltd5Kw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1742296073;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=so7iBW617bBZ+P6Esht8Cob0j8gL2z/4LrETFf/UzOI=;
+	b=E4xkpF7UmNwjiDYs8O1xww5LMPx+ES365xYoH0ER3l9msS9/k1SRzuu31aAsxs5vdjlIEC
+	LsJIuwVYxj2AH4Dg==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
@@ -58,46 +48,81 @@ Cc: "Ahmed S. Darwish" <darwi@linutronix.de>,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v2 01/29] x86: treewide: Introduce
  x86_vendor_amd_or_hygon()
-Message-ID: <20250317214609.GJZ9iYId2LhWBgqQ10@fat_crate.local>
+Message-ID: <Z9lUB2t0eZ8bz4vW@lx-t490>
 References: <20250317164745.4754-1-darwi@linutronix.de>
  <20250317164745.4754-2-darwi@linutronix.de>
- <Z9iXMTIcz5xmqax1@gmail.com>
+ <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z9iXMTIcz5xmqax1@gmail.com>
+In-Reply-To: <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
 
-On Mon, Mar 17, 2025 at 10:42:09PM +0100, Ingo Molnar wrote:
-> 
-> * Ahmed S. Darwish <darwi@linutronix.de> wrote:
-> 
-> > -	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
-> > -	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
-> > +	if (!x86_vendor_amd_or_hygon(boot_cpu_data.x86_vendor))
-> >  		return -ENODEV;
-> 
-> Could we just not do this?
-> 
-> The above vendor check may or may not be equivalent X86_FEATURE_ZEN1, 
-> which we could first assert via a single boot-time check:
-> 
-> 	WARN_ON_ONCE(boot_cpu_has(X86_FEATURE_ZEN1) !=
-> 			((boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
-> 			  boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)));
+Hi,
 
-No, it's not.
+On Mon, 17 Mar 2025, Borislav Petkov wrote:
+>
+> On Mon, Mar 17, 2025, Ahmed S. Darwish wrote:
+> > The pattern to check if an x86 vendor is AMD or HYGON (or not both) is
+> > pretty common.  Introduce x86_vendor_amd_or_hygon() at <asm/processor.h>
+>
+> So if we need to check "intel too", we do
+>
+> x86_vendor_amd_or_hygon_or_intel?
+>
+> Nah, this is silly.
+>
 
-Hygon is family 0x18 AFAIK and ZEN1 is not.
+I needed this while refactoring the cacheinfo.c leaf 0x8000001d code at
+patch 11/29 ("x86/cacheinfo: Consolidate AMD/Hygon leaf 0x8000001d
+calls") as the combined check was done multiple times.
 
-Just drop this patch.
+Then I found that there are 28 other cases in the x86 tree where the
+AMD/Hygon CPU vendor check is also combined.  So I did that macro and it
+also made a number the affected sites more succinct; e.g.:
 
--- 
-Regards/Gruss,
-    Boris.
+|  diff --git a/arch/x86/xen/enlighten.c b/arch/x86/xen/enlighten.c
+|  index 43dcd8c7badc..13df4917d7d8 100644
+|  --- a/arch/x86/xen/enlighten.c
+|  +++ b/arch/x86/xen/enlighten.c
+|  @@ -82,11 +82,9 @@ void xen_hypercall_setfunc(void)
+|   	if (static_call_query(xen_hypercall) != xen_hypercall_hvm)
+|   		return;
+|
+|  -	if ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
+|  -	     boot_cpu_data.x86_vendor == X86_VENDOR_HYGON))
+|  -		static_call_update(xen_hypercall, xen_hypercall_amd);
+|  -	else
+|  -		static_call_update(xen_hypercall, xen_hypercall_intel);
+|  +	static_call_update(xen_hypercall,
+|  +			   x86_vendor_amd_or_hygon(boot_cpu_data.x86_vendor) ?
+|  +			   xen_hypercall_amd : xen_hypercall_intel);
+|   }
+|
+|   /*
+|  @@ -118,11 +116,8 @@ noinstr void *__xen_hypercall_setfunc(void)
+|   	if (!boot_cpu_has(X86_FEATURE_CPUID))
+|   		xen_get_vendor();
+|
+|  -	if ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
+|  -	     boot_cpu_data.x86_vendor == X86_VENDOR_HYGON))
+|  -		func = xen_hypercall_amd;
+|  -	else
+|  -		func = xen_hypercall_intel;
+|  +	func = x86_vendor_amd_or_hygon(boot_cpu_data.x86_vendor) ?
+|  +		xen_hypercall_amd : xen_hypercall_intel;
+|
+|   	static_call_update_early(xen_hypercall, func);
 
-https://people.kernel.org/tglx/notes-about-netiquette
+Nonetheless, I've seen your other emails in the thread, and I'll drop the
+patch.
+
+Thanks!
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
