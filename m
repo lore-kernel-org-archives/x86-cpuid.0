@@ -1,134 +1,122 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EC81A841C
-	for <x86-cpuid@lists.linux.dev>; Wed, 19 Mar 2025 14:48:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534C71CCB4B;
+	Wed, 19 Mar 2025 16:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395707; cv=none; b=CqBKUzOtBMiStqLPMR1DdnZQ46by4dye2JhHgmpukrEC/yLIL6fLXOL4uNX1yuep7ciDhgXPaw26yto8qcdz88bFalzlXsHzpc4l8uOS17PO3d1oSTbDva0kZaUytUsQiVrNmsYMjKiykAwJdtx0O8b6MtEmWC3R4mPdrMiImqc=
+	t=1742400595; cv=none; b=LxiuhAJJ6oD2GarDar95hJN+HeUbMtDQQd2lShKTORaDFc/WvVk3pRhGKq8/26v84nQEOYjUlhEZc9CxDL1sBwPAIG2k30APa/toFrdJCLHY8nOm4SD+TSqiTjBLU4voEVlxPmBee0Ac9nffuaUVDlVTzezi8DgIBFrRkOLMGNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395707; c=relaxed/simple;
-	bh=c7v3mxoqWdwT0k/m2IYcuau8vrujmXPRETjgPMXJ9T0=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=cV3a7eYfONmjcPcTZnjpaxXicl9P4gRWJ2DMrhyXARuWkQX3v36X2ETqmseLn1IIs0Qfrfbdvhj5U5Bzp+X8ZAE7mGGabM6UtRQ806nTcqPqDfBg7gaOr0IV63Za1E6pTK9dIKpcGA64xhDXagvuuNBbas91q1e2lxJMr25PfHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=bxZ340Ct; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	s=arc-20240116; t=1742400595; c=relaxed/simple;
+	bh=G0vg0m0oxHgCnikWHLlyIDDQchsns62NJVtCPtY37Nk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N/idcIzugTuYbxxiDchXP/Ozqt2hxNcKM+1ST5arhgqr6Ij6gCg1lUovPDPhZMXPBGi6RZpGoHzEQmo1R3m0ccczvYLi6Dakvcx2OzUBLmlPUT2ecD3fFRdD21ySbwVjD+rogfHQjEy+ha33hZ/9apvw4msYeubLl75KdySyRrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=aykRC7O3; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=pSXToEV0; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="bxZ340Ct"
-Received: from [127.0.0.1] ([76.133.66.138])
-	(authenticated bits=0)
-	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 52JElqhh1575716
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Wed, 19 Mar 2025 07:47:52 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 52JElqhh1575716
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2025021701; t=1742395673;
-	bh=hzGATQF/l9ODdjCNYOMijC4R1djYt0XFE3qrA8/SXj4=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=bxZ340CtsdcOXXpxaAdodT2jBIwfiDdh1P4SeBgFjd7Am9sj9sYUvdO3hIrhqMijX
-	 H4rq30KRZiCnfUgNPl3MM1jcQ2jLwEulAoQHkhH5xzQ6jaB4i9tOw7TV7fS+K4SnYO
-	 hKGRXaVstAR+11XZciOSEVI4xUQQMV9oSt3OSsIgjy8MeE0gQsPGmoodIv53BbZEfQ
-	 c3rmR46lwXBQmh6/sbl9LvwA90cEeBaWN7UQB3lvPDZLU7jHkfbI6Imu555am49sSh
-	 hB0kXioUE1OaH3vaaJfF6lDVlBanp0G06U8qad2r+iJvL4hZfoaId7ONJpQKhkI3lT
-	 AX3DH65MKAimg==
-Date: Wed, 19 Mar 2025 07:47:51 -0700
-From: "H. Peter Anvin" <hpa@zytor.com>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>, Borislav Petkov <bp@alien8.de>
-CC: Ingo Molnar <mingo@redhat.com>, Dave Hansen <dave.hansen@linux.intel.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Andrew Cooper <andrew.cooper3@citrix.com>,
-        John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-        x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_01/29=5D_x86=3A_treewide=3A?=
- =?US-ASCII?Q?_Introduce_x86=5Fvendor=5Famd=5For=5Fhygon=28=29?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <Z9lUB2t0eZ8bz4vW@lx-t490>
-References: <20250317164745.4754-1-darwi@linutronix.de> <20250317164745.4754-2-darwi@linutronix.de> <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local> <Z9lUB2t0eZ8bz4vW@lx-t490>
-Message-ID: <14F10A4B-A274-40B2-9609-669E09981812@zytor.com>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="aykRC7O3";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="pSXToEV0"
+Date: Wed, 19 Mar 2025 17:09:50 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1742400592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=f3CF3UdUoe/ySTXFKSKClTZYWcZ5dr4XM27XFgv7WYE=;
+	b=aykRC7O3V3CaIFFQJ4Uqh55u6HeqG/LB+N8Y8l3x8FMmwgZG5tf4s1J6mEgi2tkiR9dRlC
+	/+UMn9BfXZYB+efafnIBv/yQbJpsSCfDSgFqS3WzwZy/GaV4xV49RBlEMRKgJlCubpGuFM
+	L91LSv1CY8tw9V7IJAl0ht0kjPb2Xmk9K55zaUYiKpP7LUGZvaHPxaQnhPop8PF8HtEh76
+	rdgodRXb6JBDoJUc/7j96akVfro3fo8VN9dTe5FyiHJJUc9ocJAMiZ7B/b7mpiQINkm5MQ
+	Uccl0zhGiQanPKI5tB7xC7QnHsNeXecYcCuMToLOCfi14qXZj0JWvgPpKeZpdA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1742400592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=f3CF3UdUoe/ySTXFKSKClTZYWcZ5dr4XM27XFgv7WYE=;
+	b=pSXToEV0KYvqqCQ960nqZtPvNAJl+CSF3Iz3NtlO1nDEaE7KeQ6sFJZjchvDjPd08NcOc2
+	14ECsS0WL1VVA4Bw==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: kernel test robot <lkp@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>, oe-kbuild-all@lists.linux.dev,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 18/29] x86/cacheinfo: Use enums for cache descriptor
+ types
+Message-ID: <Z9rsTirs9lLfEPD9@lx-t490>
+References: <20250317164745.4754-19-darwi@linutronix.de>
+ <202503192150.Vhannmnp-lkp@intel.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202503192150.Vhannmnp-lkp@intel.com>
 
-On March 18, 2025 4:07:51 AM PDT, "Ahmed S=2E Darwish" <darwi@linutronix=2E=
-de> wrote:
->Hi,
->
->On Mon, 17 Mar 2025, Borislav Petkov wrote:
->>
->> On Mon, Mar 17, 2025, Ahmed S=2E Darwish wrote:
->> > The pattern to check if an x86 vendor is AMD or HYGON (or not both) i=
-s
->> > pretty common=2E  Introduce x86_vendor_amd_or_hygon() at <asm/process=
-or=2Eh>
->>
->> So if we need to check "intel too", we do
->>
->> x86_vendor_amd_or_hygon_or_intel?
->>
->> Nah, this is silly=2E
->>
->
->I needed this while refactoring the cacheinfo=2Ec leaf 0x8000001d code at
->patch 11/29 ("x86/cacheinfo: Consolidate AMD/Hygon leaf 0x8000001d
->calls") as the combined check was done multiple times=2E
->
->Then I found that there are 28 other cases in the x86 tree where the
->AMD/Hygon CPU vendor check is also combined=2E  So I did that macro and i=
-t
->also made a number the affected sites more succinct; e=2Eg=2E:
->
->|  diff --git a/arch/x86/xen/enlighten=2Ec b/arch/x86/xen/enlighten=2Ec
->|  index 43dcd8c7badc=2E=2E13df4917d7d8 100644
->|  --- a/arch/x86/xen/enlighten=2Ec
->|  +++ b/arch/x86/xen/enlighten=2Ec
->|  @@ -82,11 +82,9 @@ void xen_hypercall_setfunc(void)
->|   	if (static_call_query(xen_hypercall) !=3D xen_hypercall_hvm)
->|   		return;
->|
->|  -	if ((boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_AMD ||
->|  -	     boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_HYGON))
->|  -		static_call_update(xen_hypercall, xen_hypercall_amd);
->|  -	else
->|  -		static_call_update(xen_hypercall, xen_hypercall_intel);
->|  +	static_call_update(xen_hypercall,
->|  +			   x86_vendor_amd_or_hygon(boot_cpu_data=2Ex86_vendor) ?
->|  +			   xen_hypercall_amd : xen_hypercall_intel);
->|   }
->|
->|   /*
->|  @@ -118,11 +116,8 @@ noinstr void *__xen_hypercall_setfunc(void)
->|   	if (!boot_cpu_has(X86_FEATURE_CPUID))
->|   		xen_get_vendor();
->|
->|  -	if ((boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_AMD ||
->|  -	     boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_HYGON))
->|  -		func =3D xen_hypercall_amd;
->|  -	else
->|  -		func =3D xen_hypercall_intel;
->|  +	func =3D x86_vendor_amd_or_hygon(boot_cpu_data=2Ex86_vendor) ?
->|  +		xen_hypercall_amd : xen_hypercall_intel;
->|
->|   	static_call_update_early(xen_hypercall, func);
->
->Nonetheless, I've seen your other emails in the thread, and I'll drop the
->patch=2E
->
->Thanks!
->
->--
->Ahmed S=2E Darwish
->Linutronix GmbH
+Hi,
 
-I would agree that abstracting this into something higher level makes sens=
-e, but have you considered whether or not it is actually necessary to do th=
-is in the first place? In the case of level 0x8000001d for example, that sh=
-ould be handled by the end bracket from leaf 0x80000000=2E
+On Wed, 19 Mar 2025, kernel test robot wrote:
+>
+> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse:
+>   static assertion failed: "sizeof(enum _cache_table_type) == 1"
+>
 
-In general, VFMS checks are not a good thing=2E
+I've checked the error report and reproduced it on my machine:
+
+    https://download.01.org/0day-ci/archive/20250319/202503192150.Vhannmnp-lkp@intel.com/reproduce
+
+After cloning sparse git repo and playing around with its validation test
+suite, I've realized that it does not understand __attribiute__((packed))
+on enums.
+
+Namely, applying below diff on top of sparse's git repo:
+
+    |  diff --git a/validation/enum-min-size.c b/validation/enum-min-size.c
+    |  index e8bd9fb1..e691b332 100644
+    |  --- a/validation/enum-min-size.c
+    |  +++ b/validation/enum-min-size.c
+    |  @@ -1,5 +1,9 @@
+    |   enum i { I = 1 };
+    |   _Static_assert(sizeof(enum i) == sizeof(int), "int");
+    |  +
+    |  +enum k { X = 0} __attribute__((packed));
+    |  +_Static_assert(sizeof(enum k) == sizeof(char), "char");
+    |  +
+    |   enum u { U = 1U };
+    |   _Static_assert(sizeof(enum u) == sizeof(int), "uint");
+
+Then running the modified test:
+
+    sparse/$ cd validation
+    sparse/validation$ ./test-suite enum-min-size.c
+
+leads to the same error:
+
+    TEST    enum-min-size (enum-min-size.c)
+    +enum-min-size.c:5:31: error: static assertion failed: "char"
+    error: FAIL: test 'enum-min-size.c' failed
+
+After checking other kernel code which have __packed on enums, I found
+this at <linux/rw_hint.h>, which is included by core SCSI code:
+
+    /* Sparse ignores __packed annotations on enums, hence the #ifndef below. */
+    #ifndef __CHECKER__
+    static_assert(sizeof(enum rw_hint) == 1);
+    #endif
+
+So I'll add a similar CPP guard (in v4, since I've already posted v3.)
+
+Thanks!
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
