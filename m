@@ -1,138 +1,134 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5101A5B9F;
-	Wed, 19 Mar 2025 14:13:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EC81A841C
+	for <x86-cpuid@lists.linux.dev>; Wed, 19 Mar 2025 14:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742393631; cv=none; b=hbSYdE0ysf72fSL/2eEjY/eNnZNy+B9SUw9pHrctTusd52tXpFakHP0e8PJURd0s7L600Ps704quh8iC4kKeUOvAoy3S6hTnlO6NMWlFIv/JMQdZnQQMOb6Cr5jiAcj58n5Xo/PxqfLkKR6QfV5qudpqX8znn08VBfP7XBuUp1Q=
+	t=1742395707; cv=none; b=CqBKUzOtBMiStqLPMR1DdnZQ46by4dye2JhHgmpukrEC/yLIL6fLXOL4uNX1yuep7ciDhgXPaw26yto8qcdz88bFalzlXsHzpc4l8uOS17PO3d1oSTbDva0kZaUytUsQiVrNmsYMjKiykAwJdtx0O8b6MtEmWC3R4mPdrMiImqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742393631; c=relaxed/simple;
-	bh=d1MWREdtzbaCDovZLjkEXWp+HndwpoCRn1SJTnJ/uMo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BHDZaNKsNwBk+lbxvGZy1a6XlQDZq0aZEBev9nX1nS8xmKJh5XtdAz2PimDHBTcI4rIlp/+88oHnE28RoGKe9K/+pyaSTMRtI8Kw8tKhZb+aMHVjFwR+BpRR2OD/JbR+zsY0dCWVEGKxUkPhHJZMPjRso14PjDSBG6LYZ2uXj7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=f53qLrxY; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1742395707; c=relaxed/simple;
+	bh=c7v3mxoqWdwT0k/m2IYcuau8vrujmXPRETjgPMXJ9T0=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=cV3a7eYfONmjcPcTZnjpaxXicl9P4gRWJ2DMrhyXARuWkQX3v36X2ETqmseLn1IIs0Qfrfbdvhj5U5Bzp+X8ZAE7mGGabM6UtRQ806nTcqPqDfBg7gaOr0IV63Za1E6pTK9dIKpcGA64xhDXagvuuNBbas91q1e2lxJMr25PfHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=bxZ340Ct; arc=none smtp.client-ip=198.137.202.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="f53qLrxY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1742393626; x=1773929626;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=d1MWREdtzbaCDovZLjkEXWp+HndwpoCRn1SJTnJ/uMo=;
-  b=f53qLrxYze4GHv2yzKXcxbqQSHxahSToJWPJm14+E9mQNLOTwFMRkCAm
-   WTNyN579YCsRp3arS5pAXWNgx2JQszkFvKB0FM+zEvcXqGFQs0gaS9Knd
-   ZB5PqZ6T/EMMRDy2TcpmuemNy7xOqa46m5sYgnS+MdNV2rsQewMiqhpbq
-   HA+KALRGZpPikIhRs2Tb1FN8WymbRZI2HW3jyWijblvrI3oAM+yF+hff+
-   fIdqnHkuFhbNr6tcHl6TW8nEDtbzHIwH4EuvaGLguXjYZFcYy4m/Boy9m
-   dAuW+6e9fNE6A/ZhBh0XYYQx2G/tKJ+Soo5lRCDtCCTeWSiKotNbGm3F7
-   g==;
-X-CSE-ConnectionGUID: iU7Bx0iRSOaYGuYJkfCdgw==
-X-CSE-MsgGUID: Bg2uY3DcQq6ZHgmvqCdsKg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11378"; a="43601139"
-X-IronPort-AV: E=Sophos;i="6.14,259,1736841600"; 
-   d="scan'208";a="43601139"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Mar 2025 07:13:45 -0700
-X-CSE-ConnectionGUID: GNLzpN9bRTqY6QzqszugxQ==
-X-CSE-MsgGUID: SlLQD+qyR1C3JCVaRA2HlQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,259,1736841600"; 
-   d="scan'208";a="123126308"
-Received: from lkp-server02.sh.intel.com (HELO a4747d147074) ([10.239.97.151])
-  by fmviesa010.fm.intel.com with ESMTP; 19 Mar 2025 07:13:41 -0700
-Received: from kbuild by a4747d147074 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tuuA0-000Eis-2c;
-	Wed, 19 Mar 2025 14:13:33 +0000
-Date: Wed, 19 Mar 2025 22:11:44 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Borislav Petkov <bp@alien8.de>
-Cc: oe-kbuild-all@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: Re: [PATCH v2 18/29] x86/cacheinfo: Use enums for cache descriptor
- types
-Message-ID: <202503192150.Vhannmnp-lkp@intel.com>
-References: <20250317164745.4754-19-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="bxZ340Ct"
+Received: from [127.0.0.1] ([76.133.66.138])
+	(authenticated bits=0)
+	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 52JElqhh1575716
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+	Wed, 19 Mar 2025 07:47:52 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 52JElqhh1575716
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+	s=2025021701; t=1742395673;
+	bh=hzGATQF/l9ODdjCNYOMijC4R1djYt0XFE3qrA8/SXj4=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=bxZ340CtsdcOXXpxaAdodT2jBIwfiDdh1P4SeBgFjd7Am9sj9sYUvdO3hIrhqMijX
+	 H4rq30KRZiCnfUgNPl3MM1jcQ2jLwEulAoQHkhH5xzQ6jaB4i9tOw7TV7fS+K4SnYO
+	 hKGRXaVstAR+11XZciOSEVI4xUQQMV9oSt3OSsIgjy8MeE0gQsPGmoodIv53BbZEfQ
+	 c3rmR46lwXBQmh6/sbl9LvwA90cEeBaWN7UQB3lvPDZLU7jHkfbI6Imu555am49sSh
+	 hB0kXioUE1OaH3vaaJfF6lDVlBanp0G06U8qad2r+iJvL4hZfoaId7ONJpQKhkI3lT
+	 AX3DH65MKAimg==
+Date: Wed, 19 Mar 2025 07:47:51 -0700
+From: "H. Peter Anvin" <hpa@zytor.com>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>, Borislav Petkov <bp@alien8.de>
+CC: Ingo Molnar <mingo@redhat.com>, Dave Hansen <dave.hansen@linux.intel.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Andrew Cooper <andrew.cooper3@citrix.com>,
+        John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+        x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_01/29=5D_x86=3A_treewide=3A?=
+ =?US-ASCII?Q?_Introduce_x86=5Fvendor=5Famd=5For=5Fhygon=28=29?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <Z9lUB2t0eZ8bz4vW@lx-t490>
+References: <20250317164745.4754-1-darwi@linutronix.de> <20250317164745.4754-2-darwi@linutronix.de> <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local> <Z9lUB2t0eZ8bz4vW@lx-t490>
+Message-ID: <14F10A4B-A274-40B2-9609-669E09981812@zytor.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250317164745.4754-19-darwi@linutronix.de>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Ahmed,
+On March 18, 2025 4:07:51 AM PDT, "Ahmed S=2E Darwish" <darwi@linutronix=2E=
+de> wrote:
+>Hi,
+>
+>On Mon, 17 Mar 2025, Borislav Petkov wrote:
+>>
+>> On Mon, Mar 17, 2025, Ahmed S=2E Darwish wrote:
+>> > The pattern to check if an x86 vendor is AMD or HYGON (or not both) i=
+s
+>> > pretty common=2E  Introduce x86_vendor_amd_or_hygon() at <asm/process=
+or=2Eh>
+>>
+>> So if we need to check "intel too", we do
+>>
+>> x86_vendor_amd_or_hygon_or_intel?
+>>
+>> Nah, this is silly=2E
+>>
+>
+>I needed this while refactoring the cacheinfo=2Ec leaf 0x8000001d code at
+>patch 11/29 ("x86/cacheinfo: Consolidate AMD/Hygon leaf 0x8000001d
+>calls") as the combined check was done multiple times=2E
+>
+>Then I found that there are 28 other cases in the x86 tree where the
+>AMD/Hygon CPU vendor check is also combined=2E  So I did that macro and i=
+t
+>also made a number the affected sites more succinct; e=2Eg=2E:
+>
+>|  diff --git a/arch/x86/xen/enlighten=2Ec b/arch/x86/xen/enlighten=2Ec
+>|  index 43dcd8c7badc=2E=2E13df4917d7d8 100644
+>|  --- a/arch/x86/xen/enlighten=2Ec
+>|  +++ b/arch/x86/xen/enlighten=2Ec
+>|  @@ -82,11 +82,9 @@ void xen_hypercall_setfunc(void)
+>|   	if (static_call_query(xen_hypercall) !=3D xen_hypercall_hvm)
+>|   		return;
+>|
+>|  -	if ((boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_AMD ||
+>|  -	     boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_HYGON))
+>|  -		static_call_update(xen_hypercall, xen_hypercall_amd);
+>|  -	else
+>|  -		static_call_update(xen_hypercall, xen_hypercall_intel);
+>|  +	static_call_update(xen_hypercall,
+>|  +			   x86_vendor_amd_or_hygon(boot_cpu_data=2Ex86_vendor) ?
+>|  +			   xen_hypercall_amd : xen_hypercall_intel);
+>|   }
+>|
+>|   /*
+>|  @@ -118,11 +116,8 @@ noinstr void *__xen_hypercall_setfunc(void)
+>|   	if (!boot_cpu_has(X86_FEATURE_CPUID))
+>|   		xen_get_vendor();
+>|
+>|  -	if ((boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_AMD ||
+>|  -	     boot_cpu_data=2Ex86_vendor =3D=3D X86_VENDOR_HYGON))
+>|  -		func =3D xen_hypercall_amd;
+>|  -	else
+>|  -		func =3D xen_hypercall_intel;
+>|  +	func =3D x86_vendor_amd_or_hygon(boot_cpu_data=2Ex86_vendor) ?
+>|  +		xen_hypercall_amd : xen_hypercall_intel;
+>|
+>|   	static_call_update_early(xen_hypercall, func);
+>
+>Nonetheless, I've seen your other emails in the thread, and I'll drop the
+>patch=2E
+>
+>Thanks!
+>
+>--
+>Ahmed S=2E Darwish
+>Linutronix GmbH
 
-kernel test robot noticed the following build warnings:
+I would agree that abstracting this into something higher level makes sens=
+e, but have you considered whether or not it is actually necessary to do th=
+is in the first place? In the case of level 0x8000001d for example, that sh=
+ould be handled by the end bracket from leaf 0x80000000=2E
 
-[auto build test WARNING on 6d536cad0d55e71442b6d65500f74eb85544269e]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Ahmed-S-Darwish/x86-treewide-Introduce-x86_vendor_amd_or_hygon/20250318-011153
-base:   6d536cad0d55e71442b6d65500f74eb85544269e
-patch link:    https://lore.kernel.org/r/20250317164745.4754-19-darwi%40linutronix.de
-patch subject: [PATCH v2 18/29] x86/cacheinfo: Use enums for cache descriptor types
-config: i386-randconfig-061-20250319 (https://download.01.org/0day-ci/archive/20250319/202503192150.Vhannmnp-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250319/202503192150.Vhannmnp-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503192150.Vhannmnp-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
-   drivers/cpuidle/poll_state.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
---
-   drivers/cpuidle/cpuidle-haltpoll.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
---
-   drivers/cpuidle/sysfs.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
---
-   drivers/cpuidle/governor.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
---
-   drivers/cpuidle/driver.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
---
-   drivers/cpuidle/cpuidle.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
---
-   drivers/cpuidle/governors/menu.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
---
-   drivers/cpuidle/governors/haltpoll.c: note: in included file (through arch/x86/include/asm/cpuid/api.h, arch/x86/include/asm/cpuid.h, arch/x86/include/asm/processor.h, ...):
->> arch/x86/include/asm/cpuid/types.h:56:1: sparse: sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
-
-vim +56 arch/x86/include/asm/cpuid/types.h
-
-    45	
-    46	/*
-    47	 * Leaf 0x2 1-byte descriptors' cache types
-    48	 * To be used for their mappings at cache_table[]
-    49	 */
-    50	enum _cache_table_type {
-    51		CACHE_L1_INST,
-    52		CACHE_L1_DATA,
-    53		CACHE_L2,
-    54		CACHE_L3
-    55	} __packed;
-  > 56	static_assert(sizeof(enum _cache_table_type) == 1);
-    57	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+In general, VFMS checks are not a good thing=2E
