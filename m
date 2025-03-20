@@ -1,58 +1,50 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80568209F4E
-	for <x86-cpuid@lists.linux.dev>; Thu, 20 Mar 2025 10:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D129F227B8E
+	for <x86-cpuid@lists.linux.dev>; Thu, 20 Mar 2025 19:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742467626; cv=none; b=FFG1MAvea3W4nxfj2c36zDgIAvhaRSER99FOnOYZvcQ42VBWdpW8oEmBMb4XEaJmqXZ0nt8Zut0XyBofraLVATaTz9tiMKFNOwGrw+yMPG62TjJrlKzTwaiTi0Dn1A4pz7ZP2lWl9pS95NCqbfyuUj6hJH85x0r+CIhUrvRIH/c=
+	t=1742499202; cv=none; b=mrJ1JX+TPTbcTp3b9w1duVSLJAga8lNkqmoBNxHOgeU1ke+QTm4/kuIgUlJYWEWQS7EmoRHYman2/LNWx1MjHWHw7pL08oH4r2KtyGMZOPAso1OKnS37nhEe+Frdjyo5qjipOSShLY3yikr8MA0TP0z0yXkgwKflINbEyXZ2vJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742467626; c=relaxed/simple;
-	bh=nfjuP5bAezlTHS42u66xkiaf4QBcEY5QodQ62iy0EJI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rQj5gh4ItE7xVTa2LpxioHLtDulUmcTcjscejzt+0QSUxqKz2Uc2QlpqXvxhseMh7K1qkS2QjTDTVkmqraki1+HXIAIKI3nnJOLvH62si+eV+gZoUok4g1cc5Mo4P8jkV3u/Ac2wfnhN1LNyXrLeLvGmV6yqPitygI9tQlEX93U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=sC9jHY6R; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=M7NG2Ct1; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1742499202; c=relaxed/simple;
+	bh=n2WuDKUJehig2OqByicj1g7VjYrq/PTeP2s0UY6W1go=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=b3U4EZCr6sTuTD+3FD/SaRuHelgDp9aHqdsyeJ8eWvqOvWEjRKR6XVgINXp1aUwY8p4M0lZDOCpVdVHWnzO0qnV1csB0WpTQzI/QDAvTFMroj24O/fxMZHgRYetd8Y2vX2oSzMx/7qkq1G91TGGqGBCC4H3TWhDt8JzUS+XaHHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=dyE0zpdC; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Jo57SlfX; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="sC9jHY6R";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="M7NG2Ct1"
-Date: Thu, 20 Mar 2025 11:47:00 +0100
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="dyE0zpdC";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Jo57SlfX"
+Date: Thu, 20 Mar 2025 20:33:16 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1742467622;
+	s=2020; t=1742499198;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jvEvvo9n9Zn/KFYTYk1CutaYJchw2EpXo8jFzaqmNkI=;
-	b=sC9jHY6RDY65gMJYJG9ICseYBvSaDBj+rWU0XaeuAn1uJkZJWS/jxTXK4ZdarhV1fjBhVq
-	AYNAFD/nRv2LNQK5BRbYXY9BYelgZrPEeNYQPbTOJGDubX/npDFdZ8DiQnDBvXLgido8OF
-	VEZ7zj5r+558K6mYtEH/djx1/MEqAbP+yj3UQfYQexEtbsHDx+z9VJHrMdGg5r7EYULP3a
-	SZJD+sLP1a1gj13g9mlE6zOBzYhfIac03AdWkN46vs4/z2yQeCg7OwmGzvpE+po1PafBeJ
-	fnE7vwZDoa3mqUAXNn7WaodRmn7Jlv2L06wcGGEwU84xgkSC2Q/go6GuQ2S+sg==
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=Dl7nJorMTIUh6c864KG5H8S26ZyKWP2DgtImU18sjfM=;
+	b=dyE0zpdCHp5FK1SSzbFFEpGygaozMaQD7LQDWSLbb7S85V3Gh3LN0/B3+q/WduCVMxFit3
+	8HDHvNG2IMdJXloapeANKKnecSkAH+zfcKnOVdxgjtJDzWBCQHh5kS1cEMXYVL8tQt1y7a
+	sXEM07LWjsfdHMMAgD3nXkYDXVDSklT1RNtsWClx6sz7H5Tw6XSrQSGjEdvA+Wyb57iuF4
+	SbNqmkzLuHMyuvrDQ5P6tIvNVtly2bY/X65JNELietnuREYsK9pxbhEdyQ9lrJb/XHmrYC
+	y7qoUK2BD1gbrZfAjKx2Q8KJ2jLoGvsCVNFYhcFAgU2TKknwEHSnNz7NNO+RIA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1742467622;
+	s=2020e; t=1742499198;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jvEvvo9n9Zn/KFYTYk1CutaYJchw2EpXo8jFzaqmNkI=;
-	b=M7NG2Ct1zZHKDNJGVw9PHnH6AwSALrZKAeHSSrIG1Zz2cmXJgQ3UpTsuoKtjDj9Btn/4mm
-	TIi+gyDry1pmwGBA==
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=Dl7nJorMTIUh6c864KG5H8S26ZyKWP2DgtImU18sjfM=;
+	b=Jo57SlfXu6hChPbC2fmm2psLr3kMlPM9nbkL0S0q++GJoXugCTApih6jNdBY5lh5+lB7vc
+	jmKO1twCqs1KxYAQ==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 To: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
+Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 01/29] x86: treewide: Introduce
- x86_vendor_amd_or_hygon()
-Message-ID: <Z9vyJLXNL2-CTIIG@lx-t490>
-References: <20250317164745.4754-1-darwi@linutronix.de>
- <20250317164745.4754-2-darwi@linutronix.de>
- <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
- <Z9lUB2t0eZ8bz4vW@lx-t490>
- <14F10A4B-A274-40B2-9609-669E09981812@zytor.com>
+Subject: [x86/cpuid] Question regarding historic leaf 0x80000000 code
+Message-ID: <Z9xtfC5pL-g4LYvK@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -61,33 +53,68 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <14F10A4B-A274-40B2-9609-669E09981812@zytor.com>
 
-On Wed, 19 Mar 2025, H. Peter Anvin wrote:
->
-> On March 18, "Ahmed S. Darwish" wrote:
-> >
-> > Then I found that there are 28 other cases in the x86 tree where the
-> > AMD/Hygon CPU vendor check is also combined.  So I did that macro and
-> > it also made a number the affected sites more succinct; e.g.:
-> >
-> > ...
->
-> I would agree that abstracting this into something higher level makes
-> sense, but have you considered whether or not it is actually necessary
-> to do this in the first place? In the case of level 0x8000001d for
-> example, that should be handled by the end bracket from leaf
-> 0x80000000.
->
-> In general, VFMS checks are not a good thing.
->
+Hi hpa,
 
-Great point, I'll consider that when I (soon) touch these areas again.
+As you probably know by now, we're working on a centralized "CPUID table"
+data model, on top of the cleanups at:
 
-In the next PQ, wherea cached CPUID table built on early boot, "CPUID
-truth" is centralized.  This way, the VMFS checks can indeed be reduced.
+    https://lore.kernel.org/x86-cpuid/20250304085152.51092-1-darwi@linutronix.de
+    https://lore.kernel.org/x86-cpuid/20250319122137.4004-1-darwi@linutronix.de
+    https://lore.kernel.org/x86-cpuid/20250312143738.458507-1-darwi@linutronix.de
 
-Thanks!
+The idea is to remove all the direct CPUID queries from the x86 code, and
+access a pre-filled table instead (with caveats outside the scope of this
+question.)
+
+While changing the CPUID queries one by one, I've stumbled with:
+
+    => arch/x86/kernel/cpu/common.c
+    void get_cpu_cap(struct cpuinfo_x86 *c)
+    {
+	...
+	/* AMD-defined flags: level 0x80000001 */
+	eax = cpuid_eax(0x80000000);
+	c->extended_cpuid_level = eax;
+
+	if ((eax & 0xffff0000) == 0x80000000) {
+		if (eax >= 0x80000001) {
+			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
+
+			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
+			c->x86_capability[CPUID_8000_0001_EDX] = edx;
+		}
+	}
+	...
+    }
+
+You've contributed that snippet here:
+
+    https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?h=2.4.0-test11pre5&id=67ad24e6d39c3
+
+Do you remember what was the rationale for the "if (eax & 0xffff0000) ==
+0x80000000" check?
+
+You've also contriubted a similar check to head_32.S:
+
+    https://lore.kernel.org/r/1258154897-6770-2-git-send-email-hpa@zytor.com
+
+    /* Check if extended functions are implemented */
+    movl $0x80000000, %eax
+    cpuid
+    /* Value must be in the range 0x80000001 to 0x8000ffff */
+    subl $0x80000001, %eax
+    cmpl $(0x8000ffff-0x80000001), %eax
+    ja .Lenable_paging
+
+So I would assume, it would be safe to have a similar check in our
+centralized "system CPUID table" scanner.
+
+In all cases, if you know more details, it would be great to know, so
+that I add it in the centralized CPUID table patch queue changelog (in a
+separate patch.)
+
+Thanks a lot!
 
 --
 Ahmed S. Darwish
