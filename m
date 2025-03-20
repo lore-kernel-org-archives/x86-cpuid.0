@@ -1,56 +1,58 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060831E0DE2;
-	Wed, 19 Mar 2025 16:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80568209F4E
+	for <x86-cpuid@lists.linux.dev>; Thu, 20 Mar 2025 10:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742401002; cv=none; b=cxXEjmjc9omBwSX2Sl3CRlLXY3x1WvHdYRL/3PWmPCH14UXqU+PabZfICp05zNzDgd0MdZQVvlNjmOBiZ7Hnblh7+MDmKEZolagOa9SKBUNJPlARtpF0GzBO1htv/bj1/UViOuHBLXUr2FSioXcOJ/lVf/NqWKgRR2WbnGyXgiY=
+	t=1742467626; cv=none; b=FFG1MAvea3W4nxfj2c36zDgIAvhaRSER99FOnOYZvcQ42VBWdpW8oEmBMb4XEaJmqXZ0nt8Zut0XyBofraLVATaTz9tiMKFNOwGrw+yMPG62TjJrlKzTwaiTi0Dn1A4pz7ZP2lWl9pS95NCqbfyuUj6hJH85x0r+CIhUrvRIH/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742401002; c=relaxed/simple;
-	bh=I48t3G+zI/DqaZbmsbXC24iEmLF1ScercaVRJJZw/+o=;
+	s=arc-20240116; t=1742467626; c=relaxed/simple;
+	bh=nfjuP5bAezlTHS42u66xkiaf4QBcEY5QodQ62iy0EJI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rGj8CEaL/Vc1HW4o2EvVDK9s5zkb7ST6yXSDuns7/4RiBChKVftvOXecsv9faFRkke4WTaFrdYi6IRKLF8hu1sDUy9NN1IsCBQ5Drh3CV5XtA5uTnJzYPNrdFFes7e2AfJUN6Cggl1JnNMhTgtzW6Sj6Z5899FfB3rd0dSr8/IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=zOwMfYiw; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=CYmRdPjv; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=rQj5gh4ItE7xVTa2LpxioHLtDulUmcTcjscejzt+0QSUxqKz2Uc2QlpqXvxhseMh7K1qkS2QjTDTVkmqraki1+HXIAIKI3nnJOLvH62si+eV+gZoUok4g1cc5Mo4P8jkV3u/Ac2wfnhN1LNyXrLeLvGmV6yqPitygI9tQlEX93U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=sC9jHY6R; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=M7NG2Ct1; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="zOwMfYiw";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="CYmRdPjv"
-Date: Wed, 19 Mar 2025 17:16:37 +0100
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="sC9jHY6R";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="M7NG2Ct1"
+Date: Thu, 20 Mar 2025 11:47:00 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1742400999;
+	s=2020; t=1742467622;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=W5ALVHkpdt7i16xvL9Sq6iWXM43kC76kXA1K3lnVR4k=;
-	b=zOwMfYiw6lG6jNRVOrGkwyZZrmareTnzRKR8hunLu3dpvuijW+OQJ3oGxhtQi+Sxf7hk9G
-	SLA9zl8Kh7bEl3h7HGOmezhbcKXtmkTyXYrXuG9S6t8Ax86KvcX9n6WSn9qPIgiE0RK78l
-	HPMOdUoTt++RpFK9jtlZ2Y5ozZqoqjpzOE2kR0jnUrpDOWybCHqj+JLCZBegcK3gNS9IUI
-	9ZzG0yo1N0U+hiZAceLGaQ1MA46CwMMHDjcPeCypRELhulQBDjnLKo3pN8wWu19cxYIVIc
-	wZZ9Refm6080Z+LvKdHCo5zmLrGJSdRi4mSQUX2ayE2RLahIQi8H8XeVKAjj3g==
+	bh=jvEvvo9n9Zn/KFYTYk1CutaYJchw2EpXo8jFzaqmNkI=;
+	b=sC9jHY6RDY65gMJYJG9ICseYBvSaDBj+rWU0XaeuAn1uJkZJWS/jxTXK4ZdarhV1fjBhVq
+	AYNAFD/nRv2LNQK5BRbYXY9BYelgZrPEeNYQPbTOJGDubX/npDFdZ8DiQnDBvXLgido8OF
+	VEZ7zj5r+558K6mYtEH/djx1/MEqAbP+yj3UQfYQexEtbsHDx+z9VJHrMdGg5r7EYULP3a
+	SZJD+sLP1a1gj13g9mlE6zOBzYhfIac03AdWkN46vs4/z2yQeCg7OwmGzvpE+po1PafBeJ
+	fnE7vwZDoa3mqUAXNn7WaodRmn7Jlv2L06wcGGEwU84xgkSC2Q/go6GuQ2S+sg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1742400999;
+	s=2020e; t=1742467622;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=W5ALVHkpdt7i16xvL9Sq6iWXM43kC76kXA1K3lnVR4k=;
-	b=CYmRdPjvK0RG3lBt/kQd3/vl0FIJRQpzNDaWlJo+39tpEh+dDKzS4FpNZmUEgzl1JBMSec
-	z8vtWfL29RjnYWAQ==
+	bh=jvEvvo9n9Zn/KFYTYk1CutaYJchw2EpXo8jFzaqmNkI=;
+	b=M7NG2Ct1zZHKDNJGVw9PHnH6AwSALrZKAeHSSrIG1Zz2cmXJgQ3UpTsuoKtjDj9Btn/4mm
+	TIi+gyDry1pmwGBA==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: kernel test robot <lkp@intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>,
+To: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Borislav Petkov <bp@alien8.de>, oe-kbuild-all@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 19/29] x86/cpu: Use enums for TLB descriptor types
-Message-ID: <Z9rt5Umvps26qqjR@lx-t490>
-References: <20250317164745.4754-20-darwi@linutronix.de>
- <202503192339.PuCOnZaa-lkp@intel.com>
+Subject: Re: [PATCH v2 01/29] x86: treewide: Introduce
+ x86_vendor_amd_or_hygon()
+Message-ID: <Z9vyJLXNL2-CTIIG@lx-t490>
+References: <20250317164745.4754-1-darwi@linutronix.de>
+ <20250317164745.4754-2-darwi@linutronix.de>
+ <20250317173216.GGZ9hcoDICYl1fBtBG@fat_crate.local>
+ <Z9lUB2t0eZ8bz4vW@lx-t490>
+ <14F10A4B-A274-40B2-9609-669E09981812@zytor.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -59,17 +61,34 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202503192339.PuCOnZaa-lkp@intel.com>
+In-Reply-To: <14F10A4B-A274-40B2-9609-669E09981812@zytor.com>
 
-On Thu, 20 Mar 2025, kernel test robot wrote:
+On Wed, 19 Mar 2025, H. Peter Anvin wrote:
 >
-> arch/x86/include/asm/cpuid/types.h:56:1:
-> sparse: static assertion failed: "sizeof(enum _cache_table_type) == 1"
+> On March 18, "Ahmed S. Darwish" wrote:
+> >
+> > Then I found that there are 28 other cases in the x86 tree where the
+> > AMD/Hygon CPU vendor check is also combined.  So I did that macro and
+> > it also made a number the affected sites more succinct; e.g.:
+> >
+> > ...
+>
+> I would agree that abstracting this into something higher level makes
+> sense, but have you considered whether or not it is actually necessary
+> to do this in the first place? In the case of level 0x8000001d for
+> example, that should be handled by the end bracket from leaf
+> 0x80000000.
+>
+> In general, VFMS checks are not a good thing.
 >
 
-I'll fix it in v4, as detailed in the other email:
+Great point, I'll consider that when I (soon) touch these areas again.
 
-    https://lore.kernel.org/x86-cpuid/Z9rsTirs9lLfEPD9@lx-t490
+In the next PQ, wherea cached CPUID table built on early boot, "CPUID
+truth" is centralized.  This way, the VMFS checks can indeed be reduced.
 
-Thanks,
-Ahmed
+Thanks!
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
