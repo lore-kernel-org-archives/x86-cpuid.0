@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D867261368
-	for <x86-cpuid@lists.linux.dev>; Mon, 24 Mar 2025 14:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F452620CF
+	for <x86-cpuid@lists.linux.dev>; Mon, 24 Mar 2025 14:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742826080; cv=none; b=GHEEAHELN0Zku5EztjxtPE7lmdwGg9bPqDBymDzdR99i4gscVN+yst7t/j/GXDUIwlwFt2lA/wzJDnmdGBHW7WC8NaR2PQ7JcZ7EueF9z51mcIUEZNohsvV634/ZrF1olOGTr062M2QnaxVDvOqGqGpGihlWhJuXi0m7iMLhWvE=
+	t=1742826081; cv=none; b=cwzBt+Vlr5cGAH08ahp41+n7btZvMreWbErrPjLUsR69rvCz83SO0eTCqk/PSGzNYXVIjwVyxZzbqJXUJ0QHJDkhVeubqyyjwYEWhv95hgP1C7+slejcRZZ5U9VFAXOUtkIAID3p5JB26KpjcPwu7tqFXm4HAbar+eX7DvcRV9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742826080; c=relaxed/simple;
-	bh=hlJEINp0MWs4PvmYX5e/esVtPDzXEBFZZKKS3C7B3kc=;
+	s=arc-20240116; t=1742826081; c=relaxed/simple;
+	bh=BKQD6k60Mnq8kNsJxtQIlNwtJHS5ZuWqFdDwFc62AC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8kaGSP3xp/hArWh7moqn7CtcdGglrBldemfo+TFNP4Ml95sqO+CUtJ/9NsAez4mZ8QT12NB4fwoQCOu6xiIVKji4aa6Vg2Md85I6v7IYloZy86YmsEUkMg4jP44aK5rF6kTxgpqUSm3kVNpn0evVYfVWOUaKKEPz8Ly94dISJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=1TwXhnVM; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=CTr8d3BY; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=XGBXLXRJMsITh5gdL7RXabtLeMzZBx56nwkSdvz7YTHk6szAFH0HQV29vCFIuPHA56oOQMFIOfctbBdrZS5cKI1hfjQQ62kZCJjiYFtGSvlzTuz/BCWXEXlWqquG4OhHFxMbyDboGtaQIIv/ni3oK8gKITKBOSTuQ0JMse3CYCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=MQKUumwY; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=sSGK7l38; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="1TwXhnVM";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="CTr8d3BY"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="MQKUumwY";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="sSGK7l38"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1742826075;
+	s=2020; t=1742826078;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=057rGxAD1cvihnAjC3OKTQL5jAwYl0z9M+EMf1Xwooo=;
-	b=1TwXhnVM+dY3ebKjP5pwQF0rvXNZ1+nN+kynN73wH5uwVGfsov6pE0FaHObjwZ0RWGlz9Z
-	w6VVnz03lnLuclcLf03Bu1YvunPyinlrcuTXTyBOkVQNwQxvhb9mlWLmRiTxYDmIW0/BiE
-	jJb6EWt6rX7jA7KLqdwnDw5UWj5D3XBkSyctdC3VkYj/QprDm75PE5cT+WFTgHCB6A5dDI
-	uqepRY1UfFO2Xsr7SiNkIxhOpPjImNIOT/WDwPLdPo09ydzMBKZgegNB9WH2LW/ClZ99Yz
-	qwLb9cNz65k0o9ewOD/G5AbZwcflb+/hNc7hw3acF9U0JTF86DcSZE1TIGNKnQ==
+	bh=x1DtEHn1El6g4W3dtqLn/pJd+l9oe/iYWXMyy19sLw4=;
+	b=MQKUumwY91dRbVgrqbUP+neoCVY1O3/MCVU+OqsIk0Mg8wthYhHdABuN4BcRzqegjhbQ9A
+	FmdazAysV7fC+4NZmkBk592EomyKb+Y4Ovr5ZNybLjJJKgpIzjlDG5QRY81eEX/RBJZ7aa
+	j8UJaNCDyEWnEDW61Jm5wtrRwr6z4ed4tVYh3NcdMNoQgaWhnpu8D9JI8sWo7EM90VEfkt
+	tcQ0Tn3oaNLxTXoi8k1s7HKMxDaWd61WKPwHqlbjcys+8sT6F4oKRcrKbs2qkvuPhCbJ4l
+	SmswF8UzjClDX35v+tt7nLPW6rbZJrPH9DwleWZr4AMFL7vHtU23ZJPXZw5Y7Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1742826075;
+	s=2020e; t=1742826078;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=057rGxAD1cvihnAjC3OKTQL5jAwYl0z9M+EMf1Xwooo=;
-	b=CTr8d3BYIzD5c6nxvfbKwl4s3nyVRy2/r/dlGv5Tn6FKq6Ow7dQPSdoifomfnfBqXRpMe4
-	gDqAwihPFwWyNeDw==
+	bh=x1DtEHn1El6g4W3dtqLn/pJd+l9oe/iYWXMyy19sLw4=;
+	b=sSGK7l38bMXGjba6WsaBASo++6GpF3mJLRnrCzAIZp902IfddAP1D1l+dix9zyQWq9bWhq
+	dVEJjgO2nNuwF9Bw==
 To: Ingo Molnar <mingo@redhat.com>,
 	Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>
@@ -50,9 +50,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v3 09/20] tools/x86/kcpuid: Use C99-style for loops
-Date: Mon, 24 Mar 2025 15:20:30 +0100
-Message-ID: <20250324142042.29010-10-darwi@linutronix.de>
+Subject: [PATCH v3 10/20] tools/x86/kcpuid: Use <cpuid.h> intrinsics
+Date: Mon, 24 Mar 2025 15:20:31 +0100
+Message-ID: <20250324142042.29010-11-darwi@linutronix.de>
 In-Reply-To: <20250324142042.29010-1-darwi@linutronix.de>
 References: <20250324142042.29010-1-darwi@linutronix.de>
 Precedence: bulk
@@ -63,178 +63,101 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since commit e8c07082a810 ("Kbuild: move to -std=gnu11") and the kernel
-allows C99-style variable declarations inside of a for() loop.
+Use the __cpuid_count() intrinsic, provided by GCC and LLVM, instead of
+rolling a manual version.  Both of the kernel's minimum required GCC
+version (5.1) and LLVM version (13.0.1) supports it, and it is heavily
+used across standard Linux user-space tooling.
 
-Adjust the kcpuid code accordingly.
-
-Note, this helps readability as some of the kcpuid functions have a huge
-list of variable declarations on top.
-
-Note, remove the empty lines before cpuid() invocations as it is clearer
-to have their parameter initialization and the actual call in one block.
+This also makes the CPUID call sites more readable.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- tools/arch/x86/kcpuid/kcpuid.c | 52 ++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 31 deletions(-)
+ tools/arch/x86/kcpuid/kcpuid.c | 37 ++++++++++++++--------------------
+ 1 file changed, 15 insertions(+), 22 deletions(-)
 
 diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
-index 1db2c8d7cf27..79deb506b349 100644
+index 79deb506b349..0dbd93ab652a 100644
 --- a/tools/arch/x86/kcpuid/kcpuid.c
 +++ b/tools/arch/x86/kcpuid/kcpuid.c
-@@ -172,13 +172,10 @@ static bool cpuid_store(struct cpuid_range *range, u32 f, int subleaf,
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #define _GNU_SOURCE
  
- static void raw_dump_range(struct cpuid_range *range)
- {
--	u32 f;
--	int i;
--
- 	printf("%s Leafs :\n", range->is_ext ? "Extended" : "Basic");
- 	printf("================\n");
++#include <cpuid.h>
+ #include <err.h>
+ #include <getopt.h>
+ #include <stdbool.h>
+@@ -86,16 +87,16 @@ static u32 user_index = 0xFFFFFFFF;
+ static u32 user_sub = 0xFFFFFFFF;
+ static int flines;
  
--	for (f = 0; (int)f < range->nr; f++) {
-+	for (u32 f = 0; (int)f < range->nr; f++) {
- 		struct cpuid_func *func = &range->funcs[f];
- 
- 		/* Skip leaf without valid items */
-@@ -186,7 +183,7 @@ static void raw_dump_range(struct cpuid_range *range)
- 			continue;
- 
- 		/* First item is the main leaf, followed by all subleafs */
--		for (i = 0; i < func->nr; i++)
-+		for (int i = 0; i < func->nr; i++)
- 			leaf_print_raw(&func->leafs[i]);
- 	}
- }
-@@ -194,15 +191,14 @@ static void raw_dump_range(struct cpuid_range *range)
- #define MAX_SUBLEAF_NUM		64
- struct cpuid_range *setup_cpuid_range(u32 input_eax)
- {
--	u32 max_func, idx_func, subleaf, max_subleaf;
--	u32 eax, ebx, ecx, edx, f = input_eax;
- 	struct cpuid_range *range;
--	bool allzero;
-+	u32 max_func, idx_func;
-+	u32 eax, ebx, ecx, edx;
- 
- 	eax = input_eax;
- 	ebx = ecx = edx = 0;
--
- 	cpuid(&eax, &ebx, &ecx, &edx);
+-static inline void cpuid(u32 *eax, u32 *ebx, u32 *ecx, u32 *edx)
+-{
+-	/* ecx is often an input as well as an output. */
+-	asm volatile("cpuid"
+-	    : "=a" (*eax),
+-	      "=b" (*ebx),
+-	      "=c" (*ecx),
+-	      "=d" (*edx)
+-	    : "0" (*eax), "2" (*ecx));
+-}
++/*
++ * Force using <cpuid.h> __cpuid_count() instead of __cpuid(). The
++ * latter leaves ECX uninitialized, which can break CPUID queries.
++ */
 +
- 	max_func = eax;
- 	idx_func = (max_func & 0xffff) + 1;
++#define cpuid(leaf, a, b, c, d)				\
++	__cpuid_count(leaf, 0, a, b, c, d)
++
++#define cpuid_count(leaf, subleaf, a, b, c, d)		\
++	__cpuid_count(leaf, subleaf, a, b, c, d)
  
-@@ -222,20 +218,21 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
- 	range->nr = idx_func;
- 	memset(range->funcs, 0, sizeof(struct cpuid_func) * idx_func);
+ static inline bool has_subleafs(u32 f)
+ {
+@@ -195,12 +196,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ 	u32 max_func, idx_func;
+ 	u32 eax, ebx, ecx, edx;
  
--	for (; f <= max_func; f++) {
+-	eax = input_eax;
+-	ebx = ecx = edx = 0;
+-	cpuid(&eax, &ebx, &ecx, &edx);
+-
+-	max_func = eax;
+-	idx_func = (max_func & 0xffff) + 1;
++	cpuid(input_eax, max_func, ebx, ecx, edx);
+ 
+ 	range = malloc(sizeof(struct cpuid_range));
+ 	if (!range)
+@@ -211,6 +207,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ 	else
+ 		range->is_ext = false;
+ 
++	idx_func = (max_func & 0xffff) + 1;
+ 	range->funcs = malloc(sizeof(struct cpuid_func) * idx_func);
+ 	if (!range->funcs)
+ 		err(EXIT_FAILURE, NULL);
+@@ -222,9 +219,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ 		u32 max_subleaf = MAX_SUBLEAF_NUM;
+ 		bool allzero;
+ 
 -		eax = f;
--		subleaf = ecx = 0;
-+	for (u32 f = input_eax; f <= max_func; f++) {
-+		u32 max_subleaf = MAX_SUBLEAF_NUM;
-+		bool allzero;
+-		ecx = 0;
+-		cpuid(&eax, &ebx, &ecx, &edx);
++		cpuid(f, eax, ebx, ecx, edx);
  
-+		eax = f;
-+		ecx = 0;
- 		cpuid(&eax, &ebx, &ecx, &edx);
--		allzero = cpuid_store(range, f, subleaf, eax, ebx, ecx, edx);
-+
-+		allzero = cpuid_store(range, f, 0, eax, ebx, ecx, edx);
+ 		allzero = cpuid_store(range, f, 0, eax, ebx, ecx, edx);
  		if (allzero)
- 			continue;
- 
- 		if (!has_subleafs(f))
- 			continue;
- 
--		max_subleaf = MAX_SUBLEAF_NUM;
--
- 		/*
- 		 * Some can provide the exact number of subleafs,
- 		 * others have to be tried (0xf)
-@@ -253,13 +250,12 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
- 		if (f == 0x80000026)
+@@ -251,9 +246,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
  			max_subleaf = 5;
  
--		for (subleaf = 1; subleaf < max_subleaf; subleaf++) {
-+		for (u32 subleaf = 1; subleaf < max_subleaf; subleaf++) {
- 			eax = f;
- 			ecx = subleaf;
--
- 			cpuid(&eax, &ebx, &ecx, &edx);
--			allzero = cpuid_store(range, f, subleaf,
--						eax, ebx, ecx, edx);
-+
-+			allzero = cpuid_store(range, f, subleaf, eax, ebx, ecx, edx);
+ 		for (u32 subleaf = 1; subleaf < max_subleaf; subleaf++) {
+-			eax = f;
+-			ecx = subleaf;
+-			cpuid(&eax, &ebx, &ecx, &edx);
++			cpuid_count(f, subleaf, eax, ebx, ecx, edx);
+ 
+ 			allzero = cpuid_store(range, f, subleaf, eax, ebx, ecx, edx);
  			if (allzero)
- 				continue;
- 		}
-@@ -280,12 +276,10 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
- static void parse_line(char *line)
- {
- 	char *str;
--	int i;
- 	struct cpuid_range *range;
- 	struct cpuid_func *func;
- 	struct subleaf *leaf;
- 	u32 index;
--	u32 sub;
- 	char buffer[512];
- 	char *buf;
- 	/*
-@@ -312,7 +306,7 @@ static void parse_line(char *line)
- 	strncpy(buffer, line, 511);
- 	buffer[511] = 0;
- 	str = buffer;
--	for (i = 0; i < 5; i++) {
-+	for (int i = 0; i < 5; i++) {
- 		tokens[i] = strtok(str, ",");
- 		if (!tokens[i])
- 			goto err_exit;
-@@ -378,7 +372,7 @@ static void parse_line(char *line)
- 	bit_end = strtoul(end, NULL, 0);
- 	bit_start = (start) ? strtoul(start, NULL, 0) : bit_end;
- 
--	for (sub = subleaf_start; sub <= subleaf_end; sub++) {
-+	for (u32 sub = subleaf_start; sub <= subleaf_end; sub++) {
- 		leaf = &func->leafs[sub];
- 		reg = &leaf->info[reg_index];
- 		bdesc = &reg->descs[reg->nr++];
-@@ -432,10 +426,10 @@ static void parse_text(void)
- static void show_reg(const struct reg_desc *rdesc, u32 value)
- {
- 	const struct bits_desc *bdesc;
--	int start, end, i;
-+	int start, end;
- 	u32 mask;
- 
--	for (i = 0; i < rdesc->nr; i++) {
-+	for (int i = 0; i < rdesc->nr; i++) {
- 		bdesc = &rdesc->descs[i];
- 
- 		start = bdesc->start;
-@@ -487,17 +481,13 @@ static void show_leaf(struct subleaf *leaf)
- 
- static void show_func(struct cpuid_func *func)
- {
--	int i;
--
--	for (i = 0; i < func->nr; i++)
-+	for (int i = 0; i < func->nr; i++)
- 		show_leaf(&func->leafs[i]);
- }
- 
- static void show_range(struct cpuid_range *range)
- {
--	int i;
--
--	for (i = 0; i < range->nr; i++)
-+	for (int i = 0; i < range->nr; i++)
- 		show_func(&range->funcs[i]);
- }
- 
 -- 
 2.48.1
 
