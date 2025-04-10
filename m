@@ -1,155 +1,84 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32381F873E
-	for <x86-cpuid@lists.linux.dev>; Wed,  9 Apr 2025 19:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDD820103A
+	for <x86-cpuid@lists.linux.dev>; Thu, 10 Apr 2025 05:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744227618; cv=none; b=sNDczQT1ITY8ow68vRvmSOu3DcMIa+481kvhei5R3yyqjb/MNhgkmnXJZ7c3ZXKhTDEgnoQHd7j903YZCj9myTFrWCPfkjyiaGw6fUYQordzOJ9riHtuYvP2Ls/C6ZU3zRyjCu9yDZUDY6WSEklG0H1x7eDZZYg8tnP95WPx0F8=
+	t=1744264408; cv=none; b=UVen7etD21aHhyPNl5KkfSwlTI3nd7+1zHb+usisJjwS8M2uZ9rU6KWu0azoXnpYqUshOR/3wl5seZZiiRcWew5RFv5VYA6Gy25E4tUsLWKyTqm00azwJoIr6nVJO0JyAt3T15WldziXFLS1q/jZyNzC3WjVVD7OZGqr1u/ERbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744227618; c=relaxed/simple;
-	bh=BKjWlgATClR/jbh/2TtHwEOlIWRbba20iVBWvvU6aUA=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
-	 Message-ID:Content-Type; b=uuwDbkTQajQXvU7KbibyQ3ebme4+WDImzzainvw+9n3N7CB+dtqtqycJIt+CvDQxc1JMmz3GSDjtihEcaXLtRigD4ujv5dOfBbUiXenFFLu0vyLFHSVlVGrU05OtjPiR41/cChLa43b1t69F1X/AxYEn5gyeKdG+Kq6qPqrqKsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=KLtSFQlW; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=4e8Q2lCg; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1744264408; c=relaxed/simple;
+	bh=FtkADtqTTAHBwNsbObL8YEun9ehU1SjIakCurok/u3A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O8yuXKGh1fDv6k6/+c61Cb74atYMFPW7P/s2o43E214NylWYK7my3g8ZigD9eoAOwYql1gJBXtYO/Nh3+8IJj8ykWArxKhaNGk+R3rsr5FBGDDT52XLHyW1QZdJTJNeaBDt0hf4KQ1H9tFxAi7cYlNwrou1JfykHnUq0hXDKwTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Zc2l3tXk; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=9ZcR2y7m; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="KLtSFQlW";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="4e8Q2lCg"
-Date: Wed, 09 Apr 2025 19:40:13 -0000
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Zc2l3tXk";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="9ZcR2y7m"
+Date: Thu, 10 Apr 2025 07:53:22 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1744227614;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
+	s=2020; t=1744264404;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=uFFp9QvJ9yjqhFS0MjkEplCanwzuCzCVOFKqt5PWuTs=;
-	b=KLtSFQlWTYhFTT62a4uX5HX1a6MO4pMrKAJm8tyAKjnFXGJiHdOi4tS456DlrNwdDRnpz6
-	QR2oaCS4G6dEe4v1FfFiRWYUiHp/94ZTpsuUuzmlDXfQyU07y4H94PEjSQplt1tr2YTbjx
-	uTYq7ja7LS2NxRd9kpc6Sll0XLjSVi8Gm2SgXV/gaPoqcc2rHBHy2o58gEvrfkG1ka/6UI
-	D9YxXCh3Rz782siUKbD1LKlWOoe8r4298+fMR9J5Vzn/J3t6iGhrxGnfm6TmTsVQ58SLgt
-	7WvU+4asetWe4eT8odE4igScBUqWKA98CfLpcujCzvPM1SehhafWVu9ycgNyMQ==
+	bh=FtkADtqTTAHBwNsbObL8YEun9ehU1SjIakCurok/u3A=;
+	b=Zc2l3tXkfoM8O+xad/kva2psLQs5gEY5FqLx1BmssCyPctzjo0YGvk+eEIbY7CKfRVdhoL
+	wVuETyrGnyTEhU/Xnjv40XwhGwSqCpPwTcTqlPjPsHWFGKGhu+GXBBC7gX5rMQPNBSvt9t
+	W8dKIaFw0G0S52YcN5JFKEyev3sK5nkgvonxuX2/+ZQ1gQAxX6YNu3QlFRzTpu3nwMdZ2G
+	f5ZW95rb2dqggEJk8u+LjsuE4dEqSxK9N5BACNhL9V8xuAKieRQrOqXE7mbSbdsVjsrXWT
+	ggV2ZsCHs1xbeHkCONuN9nQ+8bvWn0Y2VSosuhIhP/9XS54Q8wO/2zbZy6CcFQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1744227614;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
+	s=2020e; t=1744264404;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=uFFp9QvJ9yjqhFS0MjkEplCanwzuCzCVOFKqt5PWuTs=;
-	b=4e8Q2lCgj936Kl1dB8o7C01ih2CjzRjoruvOwqKxO3/104MZdtLtyc2pCenp1y++xY6S2i
-	dLvu7nXWUlCvWRCw==
-From: "tip-bot2 for Ahmed S. Darwish" <tip-bot2@linutronix.de>
-Sender: tip-bot2@linutronix.de
-Reply-to: linux-kernel@vger.kernel.org
-To: linux-tip-commits@vger.kernel.org
-Subject: [tip: x86/cpu] x86/cacheinfo: Properly parse CPUID(0x80000006) L2/L3
- associativity
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Ingo Molnar <mingo@kernel.org>,
- Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
- John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
- x86@kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250409122233.1058601-3-darwi@linutronix.de>
-References: <20250409122233.1058601-3-darwi@linutronix.de>
+	bh=FtkADtqTTAHBwNsbObL8YEun9ehU1SjIakCurok/u3A=;
+	b=9ZcR2y7mo2HDzwYkG5fXkCU1/sRq3qPTXrSFQz2XYldwavFdrFZqx7ZIsNaub9T4hKAR2J
+	BeUeIhmHFP89l0AQ==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Ingo Molnar <mingo@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] x86/cacheinfo: Properly parse CPUID(0x80000005)
+ L1d/L1i associativity
+Message-ID: <Z_dc0h-EI5RWtIK2@lx-t490>
+References: <20250409122233.1058601-1-darwi@linutronix.de>
+ <20250409122233.1058601-2-darwi@linutronix.de>
+ <Z_bCA8788lrr-NdB@gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <174422761319.31282.4153060826522358872.tip-bot2@tip-bot2>
-Robot-ID: <tip-bot2@linutronix.de>
-Robot-Unsubscribe:
- Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
-Precedence: bulk
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z_bCA8788lrr-NdB@gmail.com>
 
-The following commit has been merged into the x86/cpu branch of tip:
+On Wed, 09 Apr 2025, Ingo Molnar wrote:
+>
+> Yeah, so a Cc: stable tag is usually reserved for recent regressions,
+> or critical fixes - but this is a bug from 2009, ~16 years old. This
+> bug is old enough to receive a driving license in the US, and can
+> legally buy beer or wine in Germany.
+>
 
-Commit-ID:     d02c83d75f9f76dda046edbd9f39b911427677c9
-Gitweb:        https://git.kernel.org/tip/d02c83d75f9f76dda046edbd9f39b911427677c9
-Author:        Ahmed S. Darwish <darwi@linutronix.de>
-AuthorDate:    Wed, 09 Apr 2025 14:22:31 +02:00
-Committer:     Ingo Molnar <mingo@kernel.org>
-CommitterDate: Wed, 09 Apr 2025 20:47:05 +02:00
+Haha, noted :)
 
-x86/cacheinfo: Properly parse CPUID(0x80000006) L2/L3 associativity
+> So I've removed the tags from the two commits in tip:x86/cpu, but note
+> that the Fixes tag itself will give backporters enough information so
+> they can decide on whether to backport. Greg's -stable process
+> typically processes all Fixes tags for example, once Linus pulls this
+> into v6.16-to-be.
 
-Complete the AMD CPUID(4) emulation logic, which uses CPUID(0x80000006)
-for L2/L3 cache info and an assocs[] associativity mapping array, by
-adding entries for 3-way caches and 6-way caches.
+Yup, makes sense.
 
-Properly handle the case where CPUID(0x80000006) returns an L2/L3
-associativity of 9.  This is not real associativity, but a marker to
-indicate that the respective L2/L3 cache information should be retrieved
-from CPUID(0x8000001d) instead.  If such a marker is encountered, return
-early from legacy_amd_cpuid4(), thus effectively emulating an "invalid
-index" CPUID(4) response with a cache type of zero.
-
-When checking if CPUID(0x80000006) L2/L3 cache info output is valid, and
-given the associtivity marker 9 above, do not just check if the whole
-ECX/EDX register is zero.  Rather, check if the associativity is zero or
-9.  An associativity of zero implies no L2/L3 cache, which make it the
-more correct check anyway vs. a zero check of the whole output register.
-
-Fixes: a326e948c538 ("x86, cacheinfo: Fixup L3 cache information for AMD multi-node processors")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250409122233.1058601-3-darwi@linutronix.de
----
- arch/x86/kernel/cpu/cacheinfo.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/cacheinfo.c b/arch/x86/kernel/cpu/cacheinfo.c
-index f4817cd..52727f8 100644
---- a/arch/x86/kernel/cpu/cacheinfo.c
-+++ b/arch/x86/kernel/cpu/cacheinfo.c
-@@ -89,9 +89,13 @@ static const enum cache_type cache_type_map[] = {
- /*
-  * Fallback AMD CPUID(4) emulation
-  * AMD CPUs with TOPOEXT can just use CPUID(0x8000001d)
-+ *
-+ * @AMD_L2_L3_INVALID_ASSOC: cache info for the respective L2/L3 cache should
-+ * be determined from CPUID(0x8000001d) instead of CPUID(0x80000006).
-  */
- 
- #define AMD_CPUID4_FULLY_ASSOCIATIVE	0xffff
-+#define AMD_L2_L3_INVALID_ASSOC		0x9
- 
- union l1_cache {
- 	struct {
-@@ -128,7 +132,9 @@ union l3_cache {
- static const unsigned short assocs[] = {
- 	[1]		= 1,
- 	[2]		= 2,
-+	[3]		= 3,
- 	[4]		= 4,
-+	[5]		= 6,
- 	[6]		= 8,
- 	[8]		= 16,
- 	[0xa]		= 32,
-@@ -172,7 +178,7 @@ static void legacy_amd_cpuid4(int index, union _cpuid4_leaf_eax *eax,
- 		size_in_kb	= l1->size_in_kb;
- 		break;
- 	case 2:
--		if (!l2.val)
-+		if (!l2.assoc || l2.assoc == AMD_L2_L3_INVALID_ASSOC)
- 			return;
- 
- 		/* Use x86_cache_size as it might have K7 errata fixes */
-@@ -182,7 +188,7 @@ static void legacy_amd_cpuid4(int index, union _cpuid4_leaf_eax *eax,
- 		size_in_kb	= __this_cpu_read(cpu_info.x86_cache_size);
- 		break;
- 	case 3:
--		if (!l3.val)
-+		if (!l3.assoc || l3.assoc == AMD_L2_L3_INVALID_ASSOC)
- 			return;
- 
- 		assoc		= assocs[l3.assoc];
+Thanks a lot for all the support!
+Ahmed
