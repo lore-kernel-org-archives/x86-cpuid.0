@@ -1,111 +1,90 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884F71A3169
-	for <x86-cpuid@lists.linux.dev>; Mon, 14 Apr 2025 07:34:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9312275872
+	for <x86-cpuid@lists.linux.dev>; Mon, 14 Apr 2025 14:32:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744616088; cv=none; b=scWgx9mAzjjmQcA2rtipQlVogw410CqIp5oMMdW6dKuM23iGwN1Ke4mUBUFCwFUuOIubvGeXMsZvU9B1VI6ygYrEyQOoJ3KsJjwAwrGNCAVEhV76DsrfnDAUEU/Z4iWJ7zYu4e0iaUGnx5xJPH5wY/lVksbU4NOEs9+8oXiPasc=
+	t=1744641133; cv=none; b=jH9qrWCDPiDqoc0YKqCIC9hrXkJH0nU3QF9dQG4bEPBQtQeeskahZgkxbZCxnJVIfvjkiQf2tvILMiztclZjdzsudoCCR+OwRyeaxxy3gb6gXwHwjUBI74ZRdXxMnQ9U3uLqPvEA+tsrVn+DXAb1XZoWsMz+ds2mh8Z37ADeP7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744616088; c=relaxed/simple;
-	bh=C/urSx5Sfop9DHTUEjJi654T8mODpaZgDmLip1+mu1U=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
-	 Message-ID:Content-Type; b=s6dpIRXYKwpn2WVSLMs5R88ebsZ1pQTZzATfmmqNhWDFhMC8okvXXBM958H1vmNh8eQ6SPhLKB1Nb5OpaDrKveSsWn96lnPS/Hh54eIQqyjFkSexKHZJOrOW5P40J8Uu1WO01Bj54fNqeCil8cNImEBsvbcVg/oU3GnMV70PjN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=TOcJKoms; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=BzdcFMs/; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1744641133; c=relaxed/simple;
+	bh=qaPnQFoggjTvbZSrFzdoznbRVbBYn7p2ZNBLBZBMjhk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=XEm9Qes8EpoyYAMs4IIhpBnoYwPt4AwR8QL4/RprBclUhd6Flphm1SstEJWMKiCK/wQu1eHuUg33iD/Lr0nYECBNSdpz0I/Q3HidTeyzPVi8QYidiXguzJvIhsZBOmDZzoPPCZwAxGzX2R72tqHO2kESlJRLsQx6R0oFXNfL1YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CxVunIhf; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="TOcJKoms";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="BzdcFMs/"
-Date: Mon, 14 Apr 2025 07:34:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1744616084;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BVKWEwdZUqmFRh+kAjI6nl/4uFVQPa3tqO0WIQhrOIs=;
-	b=TOcJKomsXsZ/SRX47KOYODG5MgWEpm+dJbDHEQ2oxIJHFbNuEDx6T1y2txu3+sDxpMsx/r
-	3iyo15rPntUs8rFvqvteHNM419kw3XpMA1wlI7vJheE8TxH34pQeAw23WqdwQS93H4GjCB
-	vvGTvDD5yF2nLE33XO0y2Yax0mF7Tey86uHWlnOcLM53pY1mL+A6CG6NcFxXFJWOBFIQ3A
-	6avhlkjBeo6qOElZDsuR3SVgQAH8bothwTeBX+Z0Q7E/vTBswUhbRK0OvWP+qfvTHnenuY
-	xpcC9S1NiyDxE/xE9mk0X4pqdrI1w89AlOG9zr3fb15StcJWOCpn+m81WEBa5Q==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1744616084;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BVKWEwdZUqmFRh+kAjI6nl/4uFVQPa3tqO0WIQhrOIs=;
-	b=BzdcFMs/2veyiIDXry5qC/RHEqcfSLEgikIrIcJ/m7YrvcbUokkwBYiROkV3kFlCEhRWBS
-	KrDhcE87jfwAZmBQ==
-From: "tip-bot2 for Pi Xiange" <tip-bot2@linutronix.de>
-Sender: tip-bot2@linutronix.de
-Reply-to: linux-kernel@vger.kernel.org
-To: linux-tip-commits@vger.kernel.org
-Subject: [tip: x86/urgent] x86/cpu: Add CPU model number for Bartlett Lake
- CPUs with Raptor Cove cores
-Cc: Pi Xiange <xiange.pi@intel.com>, Ingo Molnar <mingo@kernel.org>,
- Peter Zijlstra <peterz@infradead.org>, Tony Luck <tony.luck@intel.com>,
- Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
- John Ogness <john.ogness@linutronix.de>,
- "Ahmed S. Darwish" <darwi@linutronix.de>, x86-cpuid@lists.linux.dev,
- x86@kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250414032839.5368-1-xiange.pi@intel.com>
-References: <20250414032839.5368-1-xiange.pi@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CxVunIhf"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e5cd420781so8690597a12.2
+        for <x86-cpuid@lists.linux.dev>; Mon, 14 Apr 2025 07:32:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744641130; x=1745245930; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qaPnQFoggjTvbZSrFzdoznbRVbBYn7p2ZNBLBZBMjhk=;
+        b=CxVunIhfVubhRe0pCnYEEb8VANcNBf5zpLvQpDpl4rwxFH93Nn6TwmJnnBQ86lnvc5
+         PR+3fmCm6Umd43HSYwmucEefXOw/inE9+FtWZEwkrS/rhf6pPka5w+2J/glTEeKTqI0w
+         +pZEqdyXeaisVHho8YqfYRe4PbyB61UhGBCP3ACiUdwFxFTsGffuW0bFXBc/kBSxa8mN
+         O9zHyLQdK7O7L8WeI08Ys4+Sfuadj7d0whmxJalw3eJIZeJs115YQHFA9L7PBHIujR7d
+         ZpEycxtuMofdpxlU3dS/TNAq3a42scugB2uXvYabBndGQlOCCsulH0lQBq1meJ/41Izo
+         IK+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744641130; x=1745245930;
+        h=cc:to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qaPnQFoggjTvbZSrFzdoznbRVbBYn7p2ZNBLBZBMjhk=;
+        b=QV8LtmQEl5YQ4FKJcXoPX/wsoRJuZDwmTPHD01H0isCX4gyzt1Qa5Z73N8DnwHL2r1
+         24sGY5mm6boy61++P1YrbK0pJGWRbXa11Cj7onXDCpc3cympMKysLI2l5Az4KaJprUp7
+         JlY7jD5lDIzEk92mCkLO7Jq1QnSjBfVNs6OCpRh7kFYryHVp3m4LnMudAULuTJjQsFM1
+         FAPUZEFzByIXbDVqDt7rUqtfAsy68cZWyHekwwjRFrxnOI4b1CkiFn3+mZK8xTktWkRc
+         gAe668O+k5C2zEgD2bKOKSdMfb7voyE0gufBXMxnQVxGo+/EwAtqV+yxlz0DMGEatI4z
+         BtMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUA/5zxgpHZlFC14VS/Uux/UOLmWIg50xIo9x3zUtmofNUiQo5KEeOXVCjHnQvVjKqIyQlKkJv+wAI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzUEs8mYcgHWjLWUfISiySIGE9bzxm34AMUneLfwatYU/vw1tsF
+	bpoTCZntJwA8hobE7Gks30d9kJvtLuW9BsHRRBAm/SLG9YRNzHQZqojN718yr/FvL7hSECNz9j+
+	rWvCgDM3NV7obtn/Dcl3+rExxd48=
+X-Gm-Gg: ASbGncvWkLgcxWFvjGv/ifh7SOZWYJCkZJ/jY+28pFRya54YTLMxaaTJT1hMg6MP4La
+	w2H7Va7CgNL82Jld/gvDNEXEne4kB+ZvgyyqjKCct03MU0UID3dM8S6gRzeIXAFHtKyqGOYqDjO
+	xEGpWUncEqngHLXd7xSeT5iw==
+X-Google-Smtp-Source: AGHT+IFwifLEktr9aApbyUVSW8lz9lOQQfiZXAuDaosCai1wQCjS4QaqENkSe9iSjJgq3a6xKGk9HoI7OY+yLN/dBDA=
+X-Received: by 2002:a05:6402:2350:b0:5ed:5fa2:98d9 with SMTP id
+ 4fb4d7f45d1cf-5f370115dfamr10868064a12.28.1744641129574; Mon, 14 Apr 2025
+ 07:32:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <174461608376.31282.1274518591545382020.tip-bot2@tip-bot2>
-Robot-ID: <tip-bot2@linutronix.de>
-Robot-Unsubscribe:
- Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
-Precedence: bulk
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Reply-To: ludloff@gmail.com
+From: Christian Ludloff <ludloff@gmail.com>
+Date: Mon, 14 Apr 2025 16:31:57 +0200
+X-Gm-Features: ATxdqUHgwk6QnA7tWrnbRv2z6G41jj9yv6cmRAuOUO6oR2RE0gElrJrwXP2CyaY
+Message-ID: <CAKSQd8Ug3Vk3A7eE6nB8UbhmOBBzVpfAqDYLf35Ym444MeQRdA@mail.gmail.com>
+Subject: Re: [tip: x86/urgent] x86/cpu: Add CPU model number for Bartlett Lake
+ CPUs with Raptor Cove cores
+To: linux-kernel@vger.kernel.org
+Cc: Pi Xiange <xiange.pi@intel.com>, Ingo Molnar <mingo@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Tony Luck <tony.luck@intel.com>, 
+	Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>, 
+	John Ogness <john.ogness@linutronix.de>, "Ahmed S. Darwish" <darwi@linutronix.de>, 
+	x86-cpuid@lists.linux.dev, x86@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The following commit has been merged into the x86/urgent branch of tip:
+> +#define INTEL_RAPTORCOVE IFM(6, 0xD7) /* Bartlett Lake */
 
-Commit-ID:     f3b9b7278259477d03dc643058fd9de9369290cb
-Gitweb:        https://git.kernel.org/tip/f3b9b7278259477d03dc643058fd9de9369290cb
-Author:        Pi Xiange <xiange.pi@intel.com>
-AuthorDate:    Mon, 14 Apr 2025 11:28:39 +08:00
-Committer:     Ingo Molnar <mingo@kernel.org>
-CommitterDate: Mon, 14 Apr 2025 09:25:07 +02:00
+Please fix this. It has the core and the product reversed. That is, it
+should be INTEL_BARTLETTLAKE and /* Raptor Cove */ to match
+the bulk of that file.
 
-x86/cpu: Add CPU model number for Bartlett Lake CPUs with Raptor Cove cores
+And yes, you also want to fix this for INTEL_PANTHERCOVE_X
+and /* Diamond Rapids */ entry.
 
-Bartlett Lake has a P-core only product with Raptor Cove.
+The macros refer to products.
+The comments refer to cores.
 
-Signed-off-by: Pi Xiange <xiange.pi@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250414032839.5368-1-xiange.pi@intel.com
----
- arch/x86/include/asm/intel-family.h | 2 ++
- 1 file changed, 2 insertions(+)
+Consistency, please.
+Sanity, please.
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 3a97a7e..405bde6 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -126,6 +126,8 @@
- #define INTEL_GRANITERAPIDS_X		IFM(6, 0xAD) /* Redwood Cove */
- #define INTEL_GRANITERAPIDS_D		IFM(6, 0xAE)
- 
-+#define INTEL_RAPTORCOVE		IFM(6, 0xD7) /* Bartlett Lake */
-+
- /* "Hybrid" Processors (P-Core/E-Core) */
- 
- #define INTEL_LAKEFIELD			IFM(6, 0x8A) /* Sunny Cove / Tremont */
+--
+Christian
