@@ -1,168 +1,111 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EA027EC7A
-	for <x86-cpuid@lists.linux.dev>; Fri, 11 Apr 2025 07:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884F71A3169
+	for <x86-cpuid@lists.linux.dev>; Mon, 14 Apr 2025 07:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744355066; cv=none; b=uXq/QEmx/N49zXOi+AVZ5XwP/9157lMcWXL+FiI5KrS9aQITOsR8kyA7/WfzFazMMUaUz1lrAfeURKPG4dEh/I0VlN7xXrU8OqUBE4++4fQqy1ZHvijotZ0zrUbXLkpygGvPBQXl90zsWUvTk5Dy8yafuuwjy0OJJ3j0pLzpL9M=
+	t=1744616088; cv=none; b=scWgx9mAzjjmQcA2rtipQlVogw410CqIp5oMMdW6dKuM23iGwN1Ke4mUBUFCwFUuOIubvGeXMsZvU9B1VI6ygYrEyQOoJ3KsJjwAwrGNCAVEhV76DsrfnDAUEU/Z4iWJ7zYu4e0iaUGnx5xJPH5wY/lVksbU4NOEs9+8oXiPasc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744355066; c=relaxed/simple;
-	bh=ySVeJdWJuakANiYyE9FVHFeBrWSom6GjCdzvIpzIyFY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijl1D3fTWARft31H+X9GBu76g+ja7bD+K7J6EzkkOYspR6M594uTwgq3TLJ/uKV+97fMaVIt3S1DkHeyIvWq3WCgC8gCZ1Ki2CNaP+WGtTt2FDJQeAZWPpeV0JqRXL+dDgnnLDexlaN+AWtrwjaykALNffzuWLx/aTA6kc7X9ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=D3FXasTP; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=VzsvHXQq; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1744616088; c=relaxed/simple;
+	bh=C/urSx5Sfop9DHTUEjJi654T8mODpaZgDmLip1+mu1U=;
+	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
+	 Message-ID:Content-Type; b=s6dpIRXYKwpn2WVSLMs5R88ebsZ1pQTZzATfmmqNhWDFhMC8okvXXBM958H1vmNh8eQ6SPhLKB1Nb5OpaDrKveSsWn96lnPS/Hh54eIQqyjFkSexKHZJOrOW5P40J8Uu1WO01Bj54fNqeCil8cNImEBsvbcVg/oU3GnMV70PjN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=TOcJKoms; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=BzdcFMs/; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="D3FXasTP";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="VzsvHXQq"
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="TOcJKoms";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="BzdcFMs/"
+Date: Mon, 14 Apr 2025 07:34:43 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1744355063;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
+	s=2020; t=1744616084;
+	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=U8HwGV/Y4xZF8mOuGq/oBUKRv04hGa2lTjJUvK/X5LY=;
-	b=D3FXasTPRDPGP95J6XQybO0vga4DubsdMYYePoibVOwD4p+XFS+sMxXnNmk9A6/DyCNBjz
-	jm54mSEADQa6qK6z9Qg3zvA2obZk961PQlc4d+o69a2aoFlEJuf1JJP/8HDcfUCcdioO2m
-	AL/cOMxsUAv/ult44JXDZbMrKtv2F8ISgu415SaZ/IEWqXcDlQqM8trKQvhI2wyzy3yr2x
-	Gn03TODVMuv6WgAodEH3l9cRIC8JpUe8MxQqhgiezKtTMmEnG1vA/oBvpRguq8M9TI17E9
-	YIZb3FFGNMQt2/w//Ni8knvOyUbEfuvpAwBCDxNUgbL4jwRdTf1UkorJZ9Kt+A==
+	bh=BVKWEwdZUqmFRh+kAjI6nl/4uFVQPa3tqO0WIQhrOIs=;
+	b=TOcJKomsXsZ/SRX47KOYODG5MgWEpm+dJbDHEQ2oxIJHFbNuEDx6T1y2txu3+sDxpMsx/r
+	3iyo15rPntUs8rFvqvteHNM419kw3XpMA1wlI7vJheE8TxH34pQeAw23WqdwQS93H4GjCB
+	vvGTvDD5yF2nLE33XO0y2Yax0mF7Tey86uHWlnOcLM53pY1mL+A6CG6NcFxXFJWOBFIQ3A
+	6avhlkjBeo6qOElZDsuR3SVgQAH8bothwTeBX+Z0Q7E/vTBswUhbRK0OvWP+qfvTHnenuY
+	xpcC9S1NiyDxE/xE9mk0X4pqdrI1w89AlOG9zr3fb15StcJWOCpn+m81WEBa5Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1744355063;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
+	s=2020e; t=1744616084;
+	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=U8HwGV/Y4xZF8mOuGq/oBUKRv04hGa2lTjJUvK/X5LY=;
-	b=VzsvHXQqSFaxPOFKQygrTKBtartgYV2VH2thUEIxRc3rHpHsJfuD9EGANBCawZx3Gncnex
-	I8e4uwN0kI/XjhAg==
-To: Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86@kernel.org,
-	x86-cpuid@lists.linux.dev,
-	LKML <linux-kernel@vger.kernel.org>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v1 2/2] x86/cacheinfo: Standardize header files and CPUID references
-Date: Fri, 11 Apr 2025 09:04:01 +0200
-Message-ID: <20250411070401.1358760-3-darwi@linutronix.de>
-In-Reply-To: <20250411070401.1358760-1-darwi@linutronix.de>
-References: <20250411070401.1358760-1-darwi@linutronix.de>
+	bh=BVKWEwdZUqmFRh+kAjI6nl/4uFVQPa3tqO0WIQhrOIs=;
+	b=BzdcFMs/2veyiIDXry5qC/RHEqcfSLEgikIrIcJ/m7YrvcbUokkwBYiROkV3kFlCEhRWBS
+	KrDhcE87jfwAZmBQ==
+From: "tip-bot2 for Pi Xiange" <tip-bot2@linutronix.de>
+Sender: tip-bot2@linutronix.de
+Reply-to: linux-kernel@vger.kernel.org
+To: linux-tip-commits@vger.kernel.org
+Subject: [tip: x86/urgent] x86/cpu: Add CPU model number for Bartlett Lake
+ CPUs with Raptor Cove cores
+Cc: Pi Xiange <xiange.pi@intel.com>, Ingo Molnar <mingo@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Tony Luck <tony.luck@intel.com>,
+ Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
+ John Ogness <john.ogness@linutronix.de>,
+ "Ahmed S. Darwish" <darwi@linutronix.de>, x86-cpuid@lists.linux.dev,
+ x86@kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250414032839.5368-1-xiange.pi@intel.com>
+References: <20250414032839.5368-1-xiange.pi@intel.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <174461608376.31282.1274518591545382020.tip-bot2@tip-bot2>
+Robot-ID: <tip-bot2@linutronix.de>
+Robot-Unsubscribe:
+ Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
+Precedence: bulk
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
-Reference header files using their canonical form <linux/cacheinfo.h>.
+The following commit has been merged into the x86/urgent branch of tip:
 
-Standardize on CPUID(0xN), instead of CPUID(N), for all standard leaves.
-This removes ambiguity and aligns them with their extended counterparts
-like CPUID(0x8000001d).
+Commit-ID:     f3b9b7278259477d03dc643058fd9de9369290cb
+Gitweb:        https://git.kernel.org/tip/f3b9b7278259477d03dc643058fd9de9369290cb
+Author:        Pi Xiange <xiange.pi@intel.com>
+AuthorDate:    Mon, 14 Apr 2025 11:28:39 +08:00
+Committer:     Ingo Molnar <mingo@kernel.org>
+CommitterDate: Mon, 14 Apr 2025 09:25:07 +02:00
 
-References: 0dd09e215a39 ("x86/cacheinfo: Apply maintainer-tip coding style fixes")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+x86/cpu: Add CPU model number for Bartlett Lake CPUs with Raptor Cove cores
+
+Bartlett Lake has a P-core only product with Raptor Cove.
+
+Signed-off-by: Pi Xiange <xiange.pi@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: x86-cpuid@lists.linux.dev
+Link: https://lore.kernel.org/r/20250414032839.5368-1-xiange.pi@intel.com
 ---
- arch/x86/kernel/cpu/cacheinfo.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/intel-family.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/cacheinfo.c b/arch/x86/kernel/cpu/cacheinfo.c
-index 52727f8c0006..cc7ae2bdcf4a 100644
---- a/arch/x86/kernel/cpu/cacheinfo.c
-+++ b/arch/x86/kernel/cpu/cacheinfo.c
-@@ -3,9 +3,9 @@
-  * x86 CPU caches detection and configuration
-  *
-  * Previous changes
-- * - Venkatesh Pallipadi:		Cache identification through CPUID(4)
-+ * - Venkatesh Pallipadi:		Cache identification through CPUID(0x4)
-  * - Ashok Raj <ashok.raj@intel.com>:	Work with CPU hotplug infrastructure
-- * - Andi Kleen / Andreas Herrmann:	CPUID(4) emulation on AMD
-+ * - Andi Kleen / Andreas Herrmann:	CPUID(0x4) emulation on AMD
-  */
+diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
+index 3a97a7e..405bde6 100644
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -126,6 +126,8 @@
+ #define INTEL_GRANITERAPIDS_X		IFM(6, 0xAD) /* Redwood Cove */
+ #define INTEL_GRANITERAPIDS_D		IFM(6, 0xAE)
  
- #include <linux/cacheinfo.h>
-@@ -78,7 +78,7 @@ struct _cpuid4_info {
- 	unsigned long size;
- };
++#define INTEL_RAPTORCOVE		IFM(6, 0xD7) /* Bartlett Lake */
++
+ /* "Hybrid" Processors (P-Core/E-Core) */
  
--/* Map CPUID(4) EAX.cache_type to linux/cacheinfo.h types */
-+/* Map CPUID(0x4) EAX.cache_type to <linux/cacheinfo.h> types */
- static const enum cache_type cache_type_map[] = {
- 	[CTYPE_NULL]	= CACHE_TYPE_NOCACHE,
- 	[CTYPE_DATA]	= CACHE_TYPE_DATA,
-@@ -87,7 +87,7 @@ static const enum cache_type cache_type_map[] = {
- };
- 
- /*
-- * Fallback AMD CPUID(4) emulation
-+ * Fallback AMD CPUID(0x4) emulation
-  * AMD CPUs with TOPOEXT can just use CPUID(0x8000001d)
-  *
-  * @AMD_L2_L3_INVALID_ASSOC: cache info for the respective L2/L3 cache should
-@@ -361,7 +361,7 @@ static void intel_cacheinfo_done(struct cpuinfo_x86 *c, unsigned int l3,
- {
- 	/*
- 	 * If llc_id is still unset, then cpuid_level < 4, which implies
--	 * that the only possibility left is SMT.  Since CPUID(2) doesn't
-+	 * that the only possibility left is SMT.  Since CPUID(0x2) doesn't
- 	 * specify any shared caches and SMT shares all caches, we can
- 	 * unconditionally set LLC ID to the package ID so that all
- 	 * threads share it.
-@@ -376,7 +376,7 @@ static void intel_cacheinfo_done(struct cpuinfo_x86 *c, unsigned int l3,
- }
- 
- /*
-- * Legacy Intel CPUID(2) path if CPUID(4) is not available.
-+ * Legacy Intel CPUID(0x2) path if CPUID(0x4) is not available.
-  */
- static void intel_cacheinfo_0x2(struct cpuinfo_x86 *c)
- {
-@@ -466,7 +466,7 @@ static bool intel_cacheinfo_0x4(struct cpuinfo_x86 *c)
- 
- void init_intel_cacheinfo(struct cpuinfo_x86 *c)
- {
--	/* Don't use CPUID(2) if CPUID(4) is supported. */
-+	/* Don't use CPUID(0x2) if CPUID(0x4) is supported. */
- 	if (intel_cacheinfo_0x4(c))
- 		return;
- 
-@@ -474,7 +474,7 @@ void init_intel_cacheinfo(struct cpuinfo_x86 *c)
- }
- 
- /*
-- * linux/cacheinfo.h shared_cpu_map setup, AMD/Hygon
-+ * <linux/cacheinfo.h> shared_cpu_map setup, AMD/Hygon
-  */
- static int __cache_amd_cpumap_setup(unsigned int cpu, int index,
- 				    const struct _cpuid4_info *id4)
-@@ -533,7 +533,7 @@ static int __cache_amd_cpumap_setup(unsigned int cpu, int index,
- }
- 
- /*
-- * linux/cacheinfo.h shared_cpu_map setup, Intel + fallback AMD/Hygon
-+ * <linux/cacheinfo.h> shared_cpu_map setup, Intel + fallback AMD/Hygon
-  */
- static void __cache_cpumap_setup(unsigned int cpu, int index,
- 				 const struct _cpuid4_info *id4)
-@@ -599,7 +599,7 @@ int init_cache_level(unsigned int cpu)
- }
- 
- /*
-- * The max shared threads number comes from CPUID(4) EAX[25-14] with input
-+ * The max shared threads number comes from CPUID(0x4) EAX[25-14] with input
-  * ECX as cache index. Then right shift apicid by the number's order to get
-  * cache id for this cache node.
-  */
--- 
-2.49.0
-
+ #define INTEL_LAKEFIELD			IFM(6, 0x8A) /* Sunny Cove / Tremont */
