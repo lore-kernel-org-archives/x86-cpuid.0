@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDFF24C664;
-	Tue, 22 Apr 2025 02:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468FD25E47D;
+	Tue, 22 Apr 2025 02:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745288191; cv=none; b=kUGl78ln+vGgnctPVZOlfLkkmUZteRY2+GY6EgEAutMksE3+UuWZnYUpJE2SIddse/qr8VJyvasyvYWrY8L4WTr67MAqYmIH8F8lpztBIjoraNCJvvGtx1yZK2YwqPJY66diZGfCmTSUAeKHZj9YSPlyl2asxggzLYE5BYNkIcg=
+	t=1745288254; cv=none; b=I3494+ys/hCeb7g4d7eaLlzITzny9q4yQjEaXE/KNsQh9rT0sJUt3icVj735IlXRXMoGmBCcosN77XfliWXeCIdFC+jEIu60j8O5CZz+sCAj54fhbSDcVAIvr+JxZ066SNKUaOKie6/61bwFt5cNQRd1YxIf+umMQ2wTSICkSVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745288191; c=relaxed/simple;
-	bh=BHpfc/S9C0le1JKbMWpHG10wMqwtDyGvp4bw7ETO/Uk=;
+	s=arc-20240116; t=1745288254; c=relaxed/simple;
+	bh=aa1A2mSz9WINcgudlJitBlD+EzdY8YT96sD7O0GzGi0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QrlxUyKgh8bxg1ibubONY32Vpfu3z6mmeqbxOrOomwXz7PGNTplSrSSiR3LEmqIE8yhFgEd3VQOVA8jXvqTHauWdQ3ZV3ibD2TW3JXhvBmVJFIhmJcvBd7ElKB9Q0xf9OXiRK3IMhjJCuaY2qRE5OyZpDwpSV4hK/pU/+BCH/gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X0jZ0Upx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxjROf0azPhoaA/WkxaZYv9EXlr4hS9mPPbetluI64cpNk7MGumMJqj+dqLds8C/xg29QTzKMav3Ngerg/kYCaxbdgy5KSKf2bwS4TEuxRalAnojf5ouJtfclbhlgZ/i/QPRAZim3NF2inN6TLz7vs1c6HbD5eust+HvlvLJbNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AvrFtDBd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X0jZ0Upx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D142FC4CEED;
-	Tue, 22 Apr 2025 02:16:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AvrFtDBd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC71C4CEEE;
+	Tue, 22 Apr 2025 02:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745288190;
-	bh=BHpfc/S9C0le1JKbMWpHG10wMqwtDyGvp4bw7ETO/Uk=;
+	s=k20201202; t=1745288254;
+	bh=aa1A2mSz9WINcgudlJitBlD+EzdY8YT96sD7O0GzGi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0jZ0UpxuAg213BfUZ0ceUV690dEiEOVdzHrSTuBYNKB/gFYRsm298oXZi00Sf+dG
-	 q9GRkpG7LoWDkZJtDMFvpVlZ3Yk0ptNST/IEqLqdVtzdpeJZmC6+VUcPoYEI/S6jii
-	 jTo7CZSY8utXg0Nf901PGSIiDhTfj2/5Qqpb4PvqOvF2zXEgUPeRFxSAe4rXllQkLI
-	 a6SQ9/obnoaQw2Mm/uVpoSg37tlKg0Q2PUovTzvimV9ijul3uPmD686SoyETZeHy9h
-	 JPg0WUskgPMAFL+mIdOKRxjkhVIh3pjpfYX9eR9gvDcfWG9qxIhwBgOxKugatVfBFq
-	 ddT4woWdOr8Qw==
+	b=AvrFtDBdZDGPr6qsdY08i3D3gRlMRXoee1vSc1EhgNmvxkTuGlTNcr+lZZPiHySa1
+	 pDWn0urckhSRZC/J0E7YWNtIGqa6YAoHsTH/7+QXBlIrbWVUQ8sUwqzsbq1VK8GY88
+	 UdIr6R4n4ldjPgJwqf6/DhOl5c+C1t9iifE50nJrxEXfPdg5/dqAQX3TU8dl/mVV+U
+	 VeCs5v4flQ6cLlCYiNWHJdy3rLpCaFZViMjnFryikz70wokXmhCgPKokd/pHLehiMR
+	 c1fgGNz/lU5zOfxNabgrIPLHSv46KUmJwQT0dnWdRihOOm1uRnNX0t6Y+EN8A0SIHG
+	 sjv3OJ60pTEig==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -45,12 +45,12 @@ Cc: Pi Xiange <xiange.pi@intel.com>,
 	mingo@redhat.com,
 	bp@alien8.de,
 	dave.hansen@linux.intel.com
-Subject: [PATCH AUTOSEL 6.14 22/30] x86/cpu: Add CPU model number for Bartlett Lake CPUs with Raptor Cove cores
-Date: Mon, 21 Apr 2025 22:15:42 -0400
-Message-Id: <20250422021550.1940809-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 18/23] x86/cpu: Add CPU model number for Bartlett Lake CPUs with Raptor Cove cores
+Date: Mon, 21 Apr 2025 22:16:58 -0400
+Message-Id: <20250422021703.1941244-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250422021550.1940809-1-sashal@kernel.org>
-References: <20250422021550.1940809-1-sashal@kernel.org>
+In-Reply-To: <20250422021703.1941244-1-sashal@kernel.org>
+References: <20250422021703.1941244-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.3
+X-stable-base: Linux 6.12.24
 Content-Transfer-Encoding: 8bit
 
 From: Pi Xiange <xiange.pi@intel.com>
@@ -88,7 +88,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 6d7b04ffc5fd0..ef5a06ddf0287 100644
+index 1a42f829667a3..62d8b9448dc5c 100644
 --- a/arch/x86/include/asm/intel-family.h
 +++ b/arch/x86/include/asm/intel-family.h
 @@ -115,6 +115,8 @@
