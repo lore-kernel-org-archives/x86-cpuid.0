@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1F522172E;
-	Tue, 29 Apr 2025 17:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773B7240611;
+	Tue, 29 Apr 2025 18:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948285; cv=none; b=fP2LZvgoRsAmeNKkxUxkVfBIASypVvujyReu4DtrVzUIec5RFglsFIHBPyeUyDtzwihINYH53ihxIgc+Za+3u/U/jhfFgbWS5FhrYw+xbqV045b+/nGaqY1QBKy5iJuqh7gNCQGRzrhdpks4NGzRG2mfmPMYuSStSQC3nbII7OU=
+	t=1745950731; cv=none; b=vA+1XqWF2EhbWFNCbEAjPUHpJaYzpIvxW4rh6TCDwNBaK7hTlHuTdUFV0oCcdj85LiuzZmbMk8pSzBIYRo4QczRmIb1bqDuOrvUV9DuUwq2p91umVSQ60dfrIDeSBA0lS9Io5vUXzwlryidwZNFGhmirOF6/vY+6fIUJtrRnWkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948285; c=relaxed/simple;
-	bh=aEYiLVbh2ed90V5BDtcW2W8Phq0xyY8YxSxuiuVm8lw=;
+	s=arc-20240116; t=1745950731; c=relaxed/simple;
+	bh=nEwHaSZOEAhkBct8JurOTjvC7W5GF1Vkgv3kLo+Ic5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPj/MnApWGzoMW04d2O+PM6v92aAWdadFJbO/nb0npgT5B4X9m/KBDNmOiOa2xs4mAkumPJwQOfc+OIRpMrkfcCsYaHkspt/iT5ikgsdFLBzQBFQrpWVT8+5l2tIQbdNgQcp7hLlKvOimwWthfY21fJ25pHBJW2BdcNBJoKnJ3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKJDPGfD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sOr/GN7i97mAma8LDSFsXh1pE2FjKf7CvKFIPH5tbq/cJ3y9v3/+ifHaVY0LBI1lq6LHfDYVNaBcWaoqGIb7c/V0TMkaWsn5yDP7EEzuDU+ypDfTWXPQAeNTR35rLKnRy9H0gB6rDoWC9HrqcB6hNCJMraq0OtGaZBslHXPxLFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/CqVcGq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKJDPGfD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88496C4CEE3;
-	Tue, 29 Apr 2025 17:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/CqVcGq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59ACBC4CEE3;
+	Tue, 29 Apr 2025 18:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948285;
-	bh=aEYiLVbh2ed90V5BDtcW2W8Phq0xyY8YxSxuiuVm8lw=;
+	s=korg; t=1745950730;
+	bh=nEwHaSZOEAhkBct8JurOTjvC7W5GF1Vkgv3kLo+Ic5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKJDPGfDl7y3w6cc9X8GwzGS0AbHcPikr2EV+ukpRl9btrK9H//qGVjG/p+Wjqcfh
-	 PWIX/oUCX2JVHZh99GlmL4qcbomimAgYP/Pbfpaak4GYl8LF8+mcbBdzqEmDPCMlBG
-	 aEu3u40sovQ7g2YEzy35XUtK6g8+TF0hIPt3bQ6U=
+	b=k/CqVcGq0cNKlr0M5Vy8DV/yrRrYsdd/9nki9c9jUL0wMn0/I6wPw+s3/DSS8d00g
+	 477+H5Y3awZL+HPTHQo/BQMecZI4ApTUXuwhl//3+RVOCoXv729J1UGccaq0EVYIP4
+	 qPodcu7cmah3AfUQCEdzyWRA+ii42dyjxxZys840=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,12 +38,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 243/280] x86/cpu: Add CPU model number for Bartlett Lake CPUs with Raptor Cove cores
-Date: Tue, 29 Apr 2025 18:43:04 +0200
-Message-ID: <20250429161125.069445280@linuxfoundation.org>
+Subject: [PATCH 6.6 186/204] x86/cpu: Add CPU model number for Bartlett Lake CPUs with Raptor Cove cores
+Date: Tue, 29 Apr 2025 18:44:34 +0200
+Message-ID: <20250429161106.997841961@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
-References: <20250429161115.008747050@linuxfoundation.org>
+In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
+References: <20250429161059.396852607@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -85,18 +85,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 1a42f829667a3..62d8b9448dc5c 100644
+index f81a851c46dca..652c0137e909f 100644
 --- a/arch/x86/include/asm/intel-family.h
 +++ b/arch/x86/include/asm/intel-family.h
-@@ -115,6 +115,8 @@
- #define INTEL_GRANITERAPIDS_X		IFM(6, 0xAD)
+@@ -159,6 +159,8 @@
+ #define INTEL_FAM6_GRANITERAPIDS_D	0xAE
  #define INTEL_GRANITERAPIDS_D		IFM(6, 0xAE)
  
 +#define INTEL_BARTLETTLAKE		IFM(6, 0xD7) /* Raptor Cove */
 +
  /* "Hybrid" Processors (P-Core/E-Core) */
  
- #define INTEL_LAKEFIELD			IFM(6, 0x8A) /* Sunny Cove / Tremont */
+ #define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
 -- 
 2.39.5
 
