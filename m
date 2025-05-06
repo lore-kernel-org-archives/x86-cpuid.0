@@ -1,119 +1,69 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178491FF1BF
-	for <x86-cpuid@lists.linux.dev>; Tue,  6 May 2025 08:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7215C227EA1;
+	Tue,  6 May 2025 08:10:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746518805; cv=none; b=hYuX3WJCrFXBU2OzM0rkcXYcOCDNggDtZHhPZA8M3pbYAUmzrOItf22h4gPYFKWjeYIkff7rWBQIzcWFOFqHXT+HL+y5dgJ3GSy8GdUIw+N1gZhHPj/D3g5mclvREOeG56kF5wAiWkJgJRFo/onUUNy255kE+5nmg5UDCaBwgEc=
+	t=1746519051; cv=none; b=cFra0PTF5egFWPS8zgZr/GlGgiAM2gtFUl9dF96rRH+pYzNP7mXEeUYSeqyej4Oe6PPR1evKhcrHgNuyVNn3kAXNcQWOYcnyvHQr4EtPVM1QWDMR6sGL2Vr34BCTmPqD/r/5VfPWPaxPNTXyvNgXxqtJeklINxj/gr8yalkhu04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746518805; c=relaxed/simple;
-	bh=gf76L72s2BkIXwrh9chxmnlaUfMXDTDPRP2B6Y+/hlk=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
-	 Message-ID:Content-Type; b=G7szBHOs3YpM1di/dmcpKBLeuvQr/O6GzQB0BvmcGx1VG68JzCuIL/7EbVUxnMT+Q+b3etEpKLjn2wn7MNbf//ZZ42EN+PNegGkVw+oa9VVOzRu9xamAfRGisDA8r6PpGEyMrwm133QHZ3BFSyc7n4Lw0OlGwwRmYubFFwRa2mA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=N7SylMC5; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ol+dYOjK; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1746519051; c=relaxed/simple;
+	bh=sE7co3/dVAvEaKILs88LONOZNr76UNHWgjyT3LLlIwA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CdUvshiU77naeeDd9BUC06iIth3uTtkIX5djMFPD9uLeYfTrcA2bkQm4Q7Dzmt1cIwBsdZ76cH4yOmbt7FYBsVWMsAYBvZvyy+HtnvAi998VjHxPPxAVZ5W9RT9VQkexWPiZQ0FmOwqVTo0tS46AeyY2tRDXeSXFAmmmCR8+UVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QMs6fh9+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="N7SylMC5";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ol+dYOjK"
-Date: Tue, 06 May 2025 08:06:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1746518802;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0MNqXpQ+w9eLKzeEr7MQo+lHmwyZ0Y4e+2IJSZVYgVw=;
-	b=N7SylMC5q+7mADnzpAWobXLbkavf1kmbSCLCN4x1lMrlJnwm69A4ZGvZyMoqyPnGvTsbyF
-	IW+lakDaUC8NZvjsp2AsH343Y3VEt51RCeiIMjjxhBDe2mFPzhZpSkxo2mnFp4TzMT3f88
-	x+AsnHfKgqpT0Cr5HoZ4z8rksbwZxhDFTJD13cWHlqXF/zqz57LUe1SAIHl+7p/QVwa28h
-	QBnVAcI5uvzt/hvMA7fGdnAcNFfdbCY/MsZfQGiA4ayFxxUdduu+TQJBwHz73l4WHgrVFM
-	s3QgRCERKaLXBlMLnz09eJGXwSie03XZZ9SLye7KRzNRLmgKSmDCARh3Hh2Fig==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1746518802;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0MNqXpQ+w9eLKzeEr7MQo+lHmwyZ0Y4e+2IJSZVYgVw=;
-	b=ol+dYOjKoqWDbTetdVd1fHsQMuqULEtU0BIZULeKA0mmGH4Y1FreTScx+5DQwaNwjLTm+p
-	1sVbhDaYbrNm4DCQ==
-From: "tip-bot2 for Ahmed S. Darwish" <tip-bot2@linutronix.de>
-Sender: tip-bot2@linutronix.de
-Reply-to: linux-kernel@vger.kernel.org
-To: linux-tip-commits@vger.kernel.org
-Subject:
- [tip: x86/cpu] tools/x86/kcpuid: Update bitfields to x86-cpuid-db v2.4
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Ingo Molnar <mingo@kernel.org>,
- Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
- John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
- x86@kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250506050437.10264-2-darwi@linutronix.de>
-References: <20250506050437.10264-2-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QMs6fh9+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A3CC4CEED;
+	Tue,  6 May 2025 08:10:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746519050;
+	bh=sE7co3/dVAvEaKILs88LONOZNr76UNHWgjyT3LLlIwA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QMs6fh9+MmfIMv6FK0J48BpgGbMprtaUL1hDaezBcmBOgTd8/TL9l3K/TVd/9A1NZ
+	 5qiI7RNPMBiSaRftCQcO2vTEmeF13wPJ/uUDop8qtnGbQUXg3ms9PlkjtJppvO4rXo
+	 kErREivFmfN+aZJtq+oCntl2K7spWwuaWh4rywqlYktOQlkbptocH8EsbkXm3jdo3E
+	 oc6CNae/taHr0iJLq1bJhB+sOhbw4GVaqqlP8b4SdJ68bN4yT/iSup67TfXY9fiZop
+	 0E91XsHZyaB8sa1yHdP2FkyQBAICvkNOKrFNL3jVtu19w/nHB08FM4n1/6eQYscuv5
+	 w8u92RQ71QR8g==
+Date: Tue, 6 May 2025 10:10:45 +0200
+From: Ingo Molnar <mingo@kernel.org>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 19/26] x86/cacheinfo: Use scanned CPUID(0x4)
+Message-ID: <aBnEBbDATdE2LTGU@gmail.com>
+References: <20250506050437.10264-1-darwi@linutronix.de>
+ <20250506050437.10264-20-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <174651880117.406.13932723282713907887.tip-bot2@tip-bot2>
-Robot-ID: <tip-bot2@linutronix.de>
-Robot-Unsubscribe:
- Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
-Precedence: bulk
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250506050437.10264-20-darwi@linutronix.de>
 
-The following commit has been merged into the x86/cpu branch of tip:
 
-Commit-ID:     49394b5af45cc368c587371592a7c5f71834557e
-Gitweb:        https://git.kernel.org/tip/49394b5af45cc368c587371592a7c5f71834557e
-Author:        Ahmed S. Darwish <darwi@linutronix.de>
-AuthorDate:    Tue, 06 May 2025 07:04:12 +02:00
-Committer:     Ingo Molnar <mingo@kernel.org>
-CommitterDate: Tue, 06 May 2025 10:01:57 +02:00
+* Ahmed S. Darwish <darwi@linutronix.de> wrote:
 
-tools/x86/kcpuid: Update bitfields to x86-cpuid-db v2.4
+> Refactor the Intel CPUID(0x4) cacheinfo logic to use scanned CPUID access
+> instead of issuing direct CPUID queries.
+> 
+> Since scanned CPUID access requires a cpuinfo_x86 reference, propagate it
+> down from <linux/cacheinfo.h>'s populate_cache_leaves() to all the
+> relevant functions.
 
-Update kcpuid's CSV file to version 2.4, as generated by x86-cpuid-db.
+Could you please split this patch into two parts, first one does the 
+mechanical propagation of the cpuinfo_x86 pointer down the function, 
+the second one does functional changes?
 
-Summary of the v2.4 changes:
+Thanks,
 
-* Mark CPUID(0x80000001) EDX:23 bit, 'e_mmx', as not exclusive to
-  Transmeta since it is supported by AMD as well.
-
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/blob/v2.4/CHANGELOG.rst
-Link: https://lore.kernel.org/r/20250506050437.10264-2-darwi@linutronix.de
----
- tools/arch/x86/kcpuid/cpuid.csv | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/tools/arch/x86/kcpuid/cpuid.csv b/tools/arch/x86/kcpuid/cpuid.csv
-index 8d25b0b..8d925ce 100644
---- a/tools/arch/x86/kcpuid/cpuid.csv
-+++ b/tools/arch/x86/kcpuid/cpuid.csv
-@@ -1,5 +1,5 @@
- # SPDX-License-Identifier: CC0-1.0
--# Generator: x86-cpuid-db v2.3
-+# Generator: x86-cpuid-db v2.4
- 
- #
- # Auto-generated file.
-@@ -689,7 +689,7 @@
- 0x80000001,         0,  edx,      19,    mp                     , Out-of-spec AMD Multiprocessing bit
- 0x80000001,         0,  edx,      20,    nx                     , No-execute page protection
- 0x80000001,         0,  edx,      22,    mmxext                 , AMD MMX extensions
--0x80000001,         0,  edx,      23,    e_mmx                  , MMX instructions (Transmeta)
-+0x80000001,         0,  edx,      23,    e_mmx                  , MMX instructions
- 0x80000001,         0,  edx,      24,    e_fxsr                 , FXSAVE and FXRSTOR instructions
- 0x80000001,         0,  edx,      25,    fxsr_opt               , FXSAVE and FXRSTOR optimizations
- 0x80000001,         0,  edx,      26,    pdpe1gb                , 1-GB large page support
+	Ingo
