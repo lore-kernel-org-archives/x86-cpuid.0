@@ -1,42 +1,42 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9E87260D
-	for <x86-cpuid@lists.linux.dev>; Tue,  6 May 2025 08:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E55322F169
+	for <x86-cpuid@lists.linux.dev>; Tue,  6 May 2025 08:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746521338; cv=none; b=LtBN8nKifRqQVQEZr8efg7o+61CjRhni+cc+tylfvf6CRKzKAEh0xpXtHhoMb2k3TTbHXbqWzGyuW+jI4OzTkYY4SWlCv8RydzrxDoN6JWOfKtCAL37Y8wnqea86LMAAIlj0NeruYYrrrmPWlD8AFXI1TFraBljH3O++kzIP5LI=
+	t=1746521408; cv=none; b=CExN9/tR6Cew7zYz4f3+zgOtT0SekvOBnAIwlWrLitwK0+ItOP8v4ZrnNDxlgyX6e/vezef/iXV4XaWgHsDvsRKGcxAzjCiwxFE8P0gKTXkcp5efGepc1QBCdS/gva+ysTlw2NGtel8U2YRpHhTJOZdAp8ICtqEiPOBUBDIpVhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746521338; c=relaxed/simple;
-	bh=nLYg5DLtfDfZDeuXiD8GIXR8IzkvLrzaJvCl6LcRzKI=;
+	s=arc-20240116; t=1746521408; c=relaxed/simple;
+	bh=62tgzI+V+izexYGzHdOBEqRAAShO9hKkzpQS6v6zIR8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dvC2flZFtEUyk9K5v3SpLEU22iYnpyP7/hvASn2hJ4nMvgVZMyc0r2CeuKZoHDpZehQq4kKa6cBGVOs+k1Ha+jMYpdaX6yJODOxbeYzNn1Qy4UsboqzYLqoUHBOC8JJiU33s/lJ+yzmvwLW6m6MQ2aCCOgPWsKQiE+tg9ijsYWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Pv9/k+bP; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=8iRFLSHB; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q1JQHiXjTLsc6XOZ5r92g03xPCgD6xjEOYpHgYh355zxmc06nnTw1tBBgn1j9/KugiSTVRhHO88/fJUfgqqfIbmMSGVP/WG3GVvnPi9qyea3YR7pe/rTgD2PKQ7QOshUupGQhHkWWz9DZl0LzzFyyGGQsZYIWBtSxKuiGrvajnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=MPCeexLh; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=6LwVSFdu; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Pv9/k+bP";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="8iRFLSHB"
-Date: Tue, 6 May 2025 10:48:53 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="MPCeexLh";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="6LwVSFdu"
+Date: Tue, 6 May 2025 10:50:04 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1746521336;
+	s=2020; t=1746521405;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=t0ncUfh0Cvfi5Yo8N3BI4CFhiwN/4omNA+mXfYWBDbg=;
-	b=Pv9/k+bPlBtpKmVGU9/hzxzJz77u8j04mkqEv/TyOu5U68rdH9jEJF13M/6SUQ6+RZP8+6
-	rAhFHkgocvDAM1Avqr7LgxZpV5r1D+gzLR1i+ggAHyEAgELWGQ+wgGv/AYkLM4zP1yQfzu
-	jSL56ghrU93Q7Qz1q7Vcl1bspriSVWGMnTkqL5i6JE6Bkg2anRgWRm8YBNuNDW8ZKXv34q
-	rgOEWZjPD0gw+siSPbl0eAoFUhL+AttVjmCbSi0o5dEkR/JgKBTGDpPEoZxUad7LmOe9DU
-	hjtV8ra+DwsDVky00RheLCjA8UjVcjp8MzEeUysltJNFYstFxI6voZcyNV9AYg==
+	bh=62tgzI+V+izexYGzHdOBEqRAAShO9hKkzpQS6v6zIR8=;
+	b=MPCeexLhJWkMmPRI/2FW7QSp9Xy4r7MSINEBZDZ+mt5xmqk9yuX8XEsiJciA7dWJk8WSpe
+	mHomaL7/a5atR+A6qX3Oh5wF2sswU056N7X/CGucXWncOyqhmS5CZgyG8tNoWjjNy2wy1D
+	VEikomh9keeT42o5UUl4+IyBPyTB1ksInZ0ky1UahclDgJaljZrbQCl/RzIARw7p24HIDW
+	SL8KCpm2aZwFFXUoKSjvVzJL7IGYgj2xDqSpHPm8Enm2Ic+0n2Fn2SHKCp69ahTiEexbrQ
+	YSEeESVqZzxgfoO23qShecDl7Ojr2qdBQbfyp4vK15uYNzbGYlaQOyx64Xd6uQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1746521336;
+	s=2020e; t=1746521405;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=t0ncUfh0Cvfi5Yo8N3BI4CFhiwN/4omNA+mXfYWBDbg=;
-	b=8iRFLSHBdgGqHp7NidI5vJX/+lhET0LWZvh/TjlMiZO5YFKU2w4ukCzB9FQZFK6/p7husr
-	qRdNQV2TZdjbnsDg==
+	bh=62tgzI+V+izexYGzHdOBEqRAAShO9hKkzpQS6v6zIR8=;
+	b=6LwVSFduYaAkkrb/Y5bF/DaLo+k8M+TT6euJYC4jIxDFgqK/mpWXGnQKVIwm1nGdlpImwb
+	VZbiO29cZaz+woDQ==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 To: Ingo Molnar <mingo@kernel.org>
 Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
@@ -46,10 +46,11 @@ Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 00/26] x86: Introduce centralized CPUID model
-Message-ID: <aBnM9WNo_dEjCvoU@lx-t490>
+Subject: Re: [PATCH v1 19/26] x86/cacheinfo: Use scanned CPUID(0x4)
+Message-ID: <aBnNPEQvAQ6FhcKE@lx-t490>
 References: <20250506050437.10264-1-darwi@linutronix.de>
- <aBnHCbo4OaWpM392@gmail.com>
+ <20250506050437.10264-20-darwi@linutronix.de>
+ <aBnEBbDATdE2LTGU@gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -58,26 +59,16 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBnHCbo4OaWpM392@gmail.com>
+In-Reply-To: <aBnEBbDATdE2LTGU@gmail.com>
 
 On Tue, 06 May 2025, Ingo Molnar wrote:
 >
->  Overall namespace suggestion: could you please use 'parse_' verbiage,
-> instead of 'scan_'? Even if a lot of the scan_ uses in this series are
-> a temporary back and forth that goes away after the conversion, but
-> still, some of it remains.
->
-> Today 'scan' is not really used in this context, in the kernel at
-> least, and I don't think it's a particularly good fit. 'Scanning'
-> suggests searching for something or looking for something, which we
-> don't really do: we parse the entire CPUID tree in essence, during
-> bootstrap, and re-parse it when something changes about it on the
-> hardware side. We don't really scan for anything in particular.
->
-> Does this make sense?
+> Could you please split this patch into two parts, first one does the
+> mechanical propagation of the cpuinfo_x86 pointer down the function,
+> the second one does functional changes?
 >
 
-Yup! will do.
+Makes sense, will do.
 
 Thanks,
 Ahmed
