@@ -1,158 +1,86 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FD423F41A
-	for <x86-cpuid@lists.linux.dev>; Tue,  6 May 2025 08:15:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316B822DA01;
+	Tue,  6 May 2025 08:16:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746519348; cv=none; b=VMt+K30C82p/BSKxx6lGMXLvu/rG7S9F/6VYF3tiZguCTcmnR36CptaUmInKWnXhP8TCXWqbvphQGPXrf4z6Xu868sEOxgOUrqbf00yYJbHzzXIk1Cyp6vOk4ymu5enAWF9KKh2I5YyUY9pGOoBbvPUQCKkBS+49U/uT3rG2rTo=
+	t=1746519372; cv=none; b=hptKIV9Zzt5kybNdTBRmDUx0BDU1VC7AZFF0QD+2+bused3IXF4WWzAwEX5wwmFeOyNlDuOnP0nJNktUC4OkbgFOwS+1bCz5bL28KUSVVXRAmEnMf1l/SszR7HWdQulaWulB01HlhHXF/U10BL+uFARZR55WAzi/RtmhKNkGeO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746519348; c=relaxed/simple;
-	bh=YKjqfQvee2j2+nsXOxD9gXSQQ3Wln6g5vc+oPD25nOk=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
-	 Message-ID:Content-Type; b=VD4Pne6ftfza9n5fUUFxwuMROBNYWKzC28ePzdSnePGNQB8eV5gbU0tBw3pTNEpUq0Q18gAu2z+7PaYrb1SnjmD+dbhCcxWyl5orMdwyrqvlmxjJdegh/uKVfc3GdqVjKWcMqwYDRv3raqAnAS86VkAw6tp31l3SQ+di/y90dSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=T9Vb/ulC; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=t1pApqld; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1746519372; c=relaxed/simple;
+	bh=IBMKzmGE761qCT/KSzjE1E9EZn49WR4X3grri5QOiy8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=glXqaSNC9MizLC5QMQhX82Y92g8pZgisLVczcqjgMtpaGL2ZT6Z/LVTHlkf4zQvd0GvL+/7z8MvHWGkQmtNTmJCmQp/kbD0HMp/g3ej84hZdiXk2lt+9aYdnwf/9Tl7WzssBQwwsLT7bCxI34UUbzTkekWOVn7xAXZwX5SLDsLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ldEB7MD0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="T9Vb/ulC";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="t1pApqld"
-Date: Tue, 06 May 2025 08:15:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1746519345;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vJuVUAXSSyw+InaimbZuOQtnqmauSCl3M20V+lzwRjs=;
-	b=T9Vb/ulCVdiVOHujUqhFIzIAxNp6HuteNimLNUHbQ6Rh+i2u90lCADoK8FNtju1sSEaBp/
-	oaV9+LGncp8483FSQWDp3TEHa00XRMW3rfzyHrWtEuP2gJJGg9gLjn0ETkyLGR/GlP/Cqz
-	io7FDdi6wqtjvVuc3Byi3LLZ9eXRm+eEziYjFt1BTbqOKSq453T2S0IGWVJk5bN5Xv1z7T
-	xEw74tONqOfEMPoCf3A/ZYRVc0iJsqTPJJj6ouBOIh0g/XyrnOgZNaHXwvijvAnUBFzHJG
-	ZveiLXXc6w5zVbWDye73oxPPxvGRHqtUwfxnJszWI6NtuDWj6fPZm7nWjW/uQA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1746519345;
-	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vJuVUAXSSyw+InaimbZuOQtnqmauSCl3M20V+lzwRjs=;
-	b=t1pApqldFMDgAZEhV8n9biEeapPJNvE7zjWkJZC5u5uBTiOkyGmCsgkD9f9VmrSP72FzoR
-	H5byt/NQF46TksBA==
-From: "tip-bot2 for Ahmed S. Darwish" <tip-bot2@linutronix.de>
-Sender: tip-bot2@linutronix.de
-Reply-to: linux-kernel@vger.kernel.org
-To: linux-tip-commits@vger.kernel.org
-Subject: [tip: x86/cpu] x86/cpu: Sanitize CPUID(0x80000000) output
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Ingo Molnar <mingo@kernel.org>,
- Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
- John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
- x86@kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250506050437.10264-3-darwi@linutronix.de>
-References: <20250506050437.10264-3-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ldEB7MD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0554EC4CEE4;
+	Tue,  6 May 2025 08:16:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746519371;
+	bh=IBMKzmGE761qCT/KSzjE1E9EZn49WR4X3grri5QOiy8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ldEB7MD0/bWOC19yj2U7Dhp1/ae+29tNEDGK62IQENKExPoYIQ7MKCa6M1mbSPF+y
+	 46D3UwCObXz1Xa4QAhRjgyLVx25IBVJZLGX8AVziYTbvaHaU5DLwhv91VbGqMNYlfU
+	 9IINoGDgnrmJFmHoooB0Wy0mVW5GYa9t+ktR3XGCf0yI0KWXx4HHsObXrTMAZy1aRF
+	 d3vgiSRY0txaa6Obk/aBrUPlUl9fTJOQm6iqMmNiKk36zGmqdutpkhDMOpVcPqKR3L
+	 LdqEWVGqgvKosTF/Iw1633beSnuTzs0a6OLdd49NbupclBskgHFyaWoGtAo4MgGzKH
+	 w/K90z3vHSUyA==
+Date: Tue, 6 May 2025 10:16:06 +0200
+From: Ingo Molnar <mingo@kernel.org>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 13/26] x86/cpuid: Scan CPUID(0x2)
+Message-ID: <aBnFRrnZQ9HwwULK@gmail.com>
+References: <20250506050437.10264-1-darwi@linutronix.de>
+ <20250506050437.10264-14-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <174651934390.406.14677915128369507134.tip-bot2@tip-bot2>
-Robot-ID: <tip-bot2@linutronix.de>
-Robot-Unsubscribe:
- Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
-Precedence: bulk
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250506050437.10264-14-darwi@linutronix.de>
 
-The following commit has been merged into the x86/cpu branch of tip:
 
-Commit-ID:     cc663ba3fe383a628a812f893cc98aafff39ab04
-Gitweb:        https://git.kernel.org/tip/cc663ba3fe383a628a812f893cc98aafff39ab04
-Author:        Ahmed S. Darwish <darwi@linutronix.de>
-AuthorDate:    Tue, 06 May 2025 07:04:13 +02:00
-Committer:     Ingo Molnar <mingo@kernel.org>
-CommitterDate: Tue, 06 May 2025 10:04:57 +02:00
+* Ahmed S. Darwish <darwi@linutronix.de> wrote:
 
-x86/cpu: Sanitize CPUID(0x80000000) output
+> +static void cpuid_read_0x2(const struct cpuid_scan_entry *e, struct cpuid_read_output *output)
+> +{
+> +	union leaf_0x2_regs *regs = (union leaf_0x2_regs *)output->leaf;
+> +	struct leaf_0x2_0 *l2 = (struct leaf_0x2_0 *)output->leaf;
+> +	int invalid_regs = 0;
+> +
+> +	/*
+> +	 * All Intel CPUs must report an iteration count of 1.	In case of
+> +	 * bogus hardware, keep the leaf marked as invalid at the CPUID table.
+> +	 */
+> +	cpuid_subleaf(e->leaf, e->subleaf, l2);
+> +	if (l2->iteration_count != 0x01)
+> +		return;
+> +
+> +	/*
+> +	 * The most significant bit (MSB) of each register must be clear.
+> +	 * If a register is malformed, replace its descriptors with NULL.
+> +	 */
+> +	for (int i = 0; i < 4; i++) {
+> +		if (regs->reg[i].invalid) {
+> +			regs->regv[i] = 0;
+> +			invalid_regs++;
+> +		}
 
-CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
-x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
-query will just repeat the output of the last valid standard CPUID leaf
-on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
-this by doing:
+Could we please emit a one-time syslog warning & diagnostic when we run 
+across invalid or otherwise weird looking CPUID data, instead of just 
+silently skipping and sanitizing it?
 
-	eax = cpuid_eax(0x80000000);
-	c->extended_cpuid_level = eax;
+Thanks,
 
-	if ((eax & 0xffff0000) == 0x80000000) {
-		// CPU has an extended CPUID range. Check for 0x80000001
-		if (eax >= 0x80000001) {
-			cpuid(0x80000001, ...);
-		}
-	}
-
-This is correct so far.  Afterwards though, the same possibly broken EAX
-value is used to check the availability of other extended CPUID leaves:
-
-	if (c->extended_cpuid_level >= 0x80000007)
-		...
-	if (c->extended_cpuid_level >= 0x80000008)
-		...
-	if (c->extended_cpuid_level >= 0x8000000a)
-		...
-	if (c->extended_cpuid_level >= 0x8000001f)
-		...
-
-which is invalid.  Fix this by immediately setting the CPU's max extended
-CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
-CPUID extended range.
-
-While at it, add a comment, similar to kernel/head_32.S, clarifying the
-CPUID(0x80000000) sanity check.
-
-References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
-Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
----
- arch/x86/kernel/cpu/common.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 4ada55f..e5734df 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1005,17 +1005,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
- 		c->x86_capability[CPUID_D_1_EAX] = eax;
- 	}
- 
--	/* AMD-defined flags: level 0x80000001 */
-+	/*
-+	 * Check if extended CPUID leaves are implemented: Max extended
-+	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
-+	 */
- 	eax = cpuid_eax(0x80000000);
--	c->extended_cpuid_level = eax;
-+	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
- 
--	if ((eax & 0xffff0000) == 0x80000000) {
--		if (eax >= 0x80000001) {
--			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
-+	if (c->extended_cpuid_level >= 0x80000001) {
-+		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
- 
--			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
--			c->x86_capability[CPUID_8000_0001_EDX] = edx;
--		}
-+		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
-+		c->x86_capability[CPUID_8000_0001_EDX] = edx;
- 	}
- 
- 	if (c->extended_cpuid_level >= 0x80000007) {
+	Ingo
