@@ -1,42 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4AE1F463E
-	for <x86-cpuid@lists.linux.dev>; Wed,  7 May 2025 07:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7D61C5D61
+	for <x86-cpuid@lists.linux.dev>; Wed,  7 May 2025 08:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746603403; cv=none; b=jGkXa4PQ5OrKaoH1XxiO1IKKeU9ZC0u/S86CLlMCtmcZ7lVRsbuSqawGi1TQUowAr0Q1DDgpWV98CFGshCRgpskuVLma248NdNiQAB/7n8GbXcw0VwPFQ2ClOEkIbxWwbSK5UZvczZgmB9mJ54N+wD+7EhTukiKDn+fKEtnzS8Y=
+	t=1746606931; cv=none; b=szcVUQLzvueJhEMMTvmxGOrcqNbAIkOh4OvSH84krsgy1zIE2QZltLSDUdHBPiR7j/6UEGBOkxyGVZgJ9FbT9rNENYcfyoNcYoftCg1c0qzRMmqytEXKUXXGwYolgPLWQRt5fZuAFwJeEF2bpi2FjzHY98+mntgTuq74LPW1Rso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746603403; c=relaxed/simple;
-	bh=dMn75clKei2svv0TnxnNa5qfSZW8xbYeKzKay6rJU4k=;
+	s=arc-20240116; t=1746606931; c=relaxed/simple;
+	bh=1jyTBOcmArkE8Z36utr9V2biBVQ+pbPrw3JWfCn6NLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hxp5E6H5YiAy/8nMefgxihf5tedZR5mMmcNxSPcKSAW0Ecf2csStchQ+ORQIV6GyKNtCmp3XB1V2LzWEJT+1O56E5KzgKvInXYy+Bi4Lp6NhytJN6coGsfu0t8J23bkJiXqihFpC96pURilTtLES9Q80DTXEZZ4xmMBo35vQVlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=mNzwdiET; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=CDnlzsKe; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=mjRNfyx6DF4NlsYYrSb+u1Ud/Jdw3r8Yb4suTAGVDkskXZnI2+Db7gLS7iyUMM/FQS0ncdJz6DgfjQuStW+875zLScWqVmfJPCu5U+Llfws4rrE7CxTSByvci1TZ6eXw093HzrRlqcd/C1204R6NMjYjObrtGFyU0JpYQGlAfas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=y+pAVywH; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=i840Ye8Y; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="mNzwdiET";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="CDnlzsKe"
-Date: Wed, 7 May 2025 09:36:37 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="y+pAVywH";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="i840Ye8Y"
+Date: Wed, 7 May 2025 10:35:26 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1746603399;
+	s=2020; t=1746606928;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VDaI8AdA8Qn0NK3CpkdWZgdey3l47BTjaidDhOmucl0=;
-	b=mNzwdiETFofhRA3KfhVtR1PT6dBbLAazNDsXnYEef4AKzPe4DspdPQ6y9CLVYo8K0Kp/E+
-	wcoc6Jd03tDQAPvBbpRhsu8JNiOU800atcie523vKg/WnggigQkXs7a6/m6j+wQFpJYiJW
-	qMweOntwh0B9ceeVFU6n04n/gVaYcOZkRRJCqVEEiZ1eoap75/yrhHG3pd2p84c69jy5/G
-	nsvIfzXbDTxugOmkMwiKBp31OTzaGIQG54Vp4A3n72vIIMLW8IhqnkDPSwlPL1xK0FTtn/
-	biIQSqBhafCd5ur4ypEkFYzzAFeHXYTswgvCq6vvZDnPZ0+MLJxcpEZSSgtcvw==
+	bh=wKP88jiLJ2LRmARbjHis7oZUhkjNg6ao9XoIi8JN85A=;
+	b=y+pAVywHMgnNwO0X5rC7bI13jT9ZS7MDCStRmHsgxiqWl31fTbrdoE65HH+zneO8FnYHSS
+	WCb8OaNLr+sNN8mXEyd74lsS/jltYFI47gTZ110oeTBU0VbopjZt8Sdg4VfK+n3f4UTgsv
+	6TSy/O3pAV/bKPy0Mmjrts1affoUQQa7OS9g2qQ9/FEG+6u2WhG3TCAc57dZQ9Tt61RLUe
+	Zlae/3Z0LVzs+k+Tesz1HdFdhAxDBFv1s4Z86rMoXq0m2hdeIaRJD21bcxDYicLLfRFV9G
+	3hB1b8zUQNMRiB2E51Kj2JLUg0cCjCXaBaIvKH42Nwm1DKRpcbUcKS08q+ur6g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1746603399;
+	s=2020e; t=1746606928;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VDaI8AdA8Qn0NK3CpkdWZgdey3l47BTjaidDhOmucl0=;
-	b=CDnlzsKenrkWXAFlNBGfoThnv0lSfxA8FyV5S4szyUDr5m+InIXrzPevxxe5clZgOYR28f
-	BvYaby7H0gXQ2MCw==
+	bh=wKP88jiLJ2LRmARbjHis7oZUhkjNg6ao9XoIi8JN85A=;
+	b=i840Ye8YBpS6lxCtNnCotFk32Bct149RtIYX/XFLo1TyxG4RZygwZpyfMmUz8hBKyWWB4L
+	AMqewwJN+KQPO5DQ==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 To: Ingo Molnar <mingo@kernel.org>
 Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
@@ -46,33 +48,92 @@ Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 12/26] x86/cpu: Use scanned CPUID(0x1)
-Message-ID: <aBsNhcFPeOiFuj34@lx-t490>
+Subject: Re: [PATCH v1 00/26] x86: Introduce centralized CPUID model
+Message-ID: <aBsbTiBuWmUC3QaP@lx-t490>
 References: <20250506050437.10264-1-darwi@linutronix.de>
- <20250506050437.10264-13-darwi@linutronix.de>
- <aBnHeoNq_LBY0xxj@gmail.com>
+ <aBnSgu_JyEi8fvog@gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aBnHeoNq_LBY0xxj@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aBnSgu_JyEi8fvog@gmail.com>
 
 On Tue, 06 May, Ingo Molnar wrote:
 >
-> * Ahmed S. Darwish <darwi@linutronix.de> wrote:
-> >
-> > -		if (cap0 & (1<<19)) {
-> > -			c->x86_clflush_size = ((misc >> 8) & 0xff) * 8;
-> > +		if (l1->clflush) {
-> > +			c->x86_clflush_size = l1->clflush_size * 8;
-> >
+> Regarding CPUID header organization:
 >
-> Nice patch, it really nicely demonstrates the maintainability
-> advantages of the new CPUID parser.
+>  - Please move <asm/cpuid/internal_api.h> into <asm/cpuid/table_api.h>.
+>
+>    There's not really much point to making it 'internal' AFAICS, as the
+>    main <asm/cpuid.h> header already includes <asm/cpuid/table_api.h>
+>    and <asm/cpuid/internal_api.h> respectively, so it's not all so much
+>    internal anymore.
 >
 
-Thank you. Really appreciated :)
+Yeah, will do.
+
+>
+>  - Could we rename <asm/cpuid/leaves.h> to <asm/cpuid/leaf_types.h> or
+>    so? It's really a sub-header of <asm/cpuid/types.h> and should thus
+>    share the nomenclature.
+>
+
+Correct, it aligns much better; will do.
+
+>
+>  - Please just use a single central API header: <asm/cpuid/api.h>, and
+>    remove <asm/cpuid.h>. It's confusing to have both <asm/cpuid.h> and
+>    a proper <asm/cpuid/> header hierarchy.
+>
+>    ( I wanted to point to <asm/fpu/api.h> as the shining example to
+>      follow, but then I noticed that somehow we grew a <asm/fpu.h> wart
+>      last year via b0b8a15bb89e. Will fix that ... )
+>
+>  - Is there a strong reason to keep <asm/cpuid/leaf_0x2_api.h>? I think
+>    for_each_leaf_0x2_entry() could just be moved into
+>    <asm/cpuid/api.h>, it's one of the accessors.
+>
+>  - In a similar vein, I don't see much point of keeping
+>    <asm/cpuid/table_api.h> header separate either. <asm/cpuid/api.h>
+>    won't be overly large I think.
+>
+>  - After all this we'll only have 3 headers left:
+>
+> 	<asm/cpuid/types.h>
+> 	<asm/cpuid/leaf_types.h>
+> 	<asm/cpuid/api.h>
+>
+
+The idea (which I admit was not properly executed) was to sepearate the
+(quite large) CPUID "raw operations" header with cpuid(), cpuid_count(),
+and cpuid_subleaf() from the new "CPUID API" work like cpudata_cpuid(),
+cpudata_cpuid_subleaf() and for_each_leaf_0x2_entry().
+
+This way, after all this new CPUID work gets more established, the CPUID
+raw operations becomes an implementation detail that call sites should
+not be encouraged much to look at.
+
+Would you be OK with at least having:
+
+    asm/cpuid/
+    ├── raw.h		Raw CPUID ops; what is now <asm/cpuid/api.h>
+    ├── api.h		Everything else (CPUID model API, CPUID(0x2) API, ..)
+    ├── leaf_types.h
+    └── types.h
+
+because if I merge raw.h and api.h, the new CPUID APIs (which people
+should be encouraged to use) would be so deep in the new merged header it
+will be no longer visible.
+
+What do you think?
+
+Thanks!
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
