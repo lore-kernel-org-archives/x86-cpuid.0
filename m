@@ -1,34 +1,44 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C17D24728E;
-	Tue,  6 May 2025 10:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4AE1F463E
+	for <x86-cpuid@lists.linux.dev>; Wed,  7 May 2025 07:36:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746527953; cv=none; b=IYgkRpMgGadfekiIiMJZLqaCgXfSCtcxF3lmFkHIcPCDg9x5EmBU6XnpO7NI2ER1wkuD4FeemAUSqPFjWu6Cnez68N9TbrAGiAWyAQww7zGYTTl1nBZiQgjWvnr61AKOJBH0bZjzrrrgpE0vrf/q0o45haBheVIDI2DXqgVsKV0=
+	t=1746603403; cv=none; b=jGkXa4PQ5OrKaoH1XxiO1IKKeU9ZC0u/S86CLlMCtmcZ7lVRsbuSqawGi1TQUowAr0Q1DDgpWV98CFGshCRgpskuVLma248NdNiQAB/7n8GbXcw0VwPFQ2ClOEkIbxWwbSK5UZvczZgmB9mJ54N+wD+7EhTukiKDn+fKEtnzS8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746527953; c=relaxed/simple;
-	bh=AGcugH0MZQoABaP4ndF6YTSPFWWsznGLgKe11JWoC38=;
+	s=arc-20240116; t=1746603403; c=relaxed/simple;
+	bh=dMn75clKei2svv0TnxnNa5qfSZW8xbYeKzKay6rJU4k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MF9S97U5WB0ErhU9hXo3XRgYpokxoIcWt272QmCUPrBhtWCqb5pzA8d+q/O+K3SV3OZV/6F/AJAgjEv3ObeFS0aUPeLRuQPExoviRhJTyjS9+hZj2xEPOTXwwIb0QESn0Ao4AG0NlT1GrzF7BxXFV/UxrTGMOX0LANnDNqgY+lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bY51umrQ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=hxp5E6H5YiAy/8nMefgxihf5tedZR5mMmcNxSPcKSAW0Ecf2csStchQ+ORQIV6GyKNtCmp3XB1V2LzWEJT+1O56E5KzgKvInXYy+Bi4Lp6NhytJN6coGsfu0t8J23bkJiXqihFpC96pURilTtLES9Q80DTXEZZ4xmMBo35vQVlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=mNzwdiET; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=CDnlzsKe; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bY51umrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEF1C4CEE4;
-	Tue,  6 May 2025 10:39:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746527953;
-	bh=AGcugH0MZQoABaP4ndF6YTSPFWWsznGLgKe11JWoC38=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bY51umrQSdfYfIvZxRv9a7fON/DWW6cigdT19HW9gTKiQu8cB3Zcg5332DJESysFX
-	 bFvVgClwKpiZ0MANUEJ2MBieHD/igPF+72kVLIeLqhkKmx0Kq7JqLcaekheQSli0Vb
-	 nqObLxJ0weTgLzz5DoL+3uJwoI5og9DPP4I4wb9TqwxG7bg+BMS0PQiSKYY9yCHPnc
-	 4Bsos2+XvrWliPVmpiPxxFhtytwxV60a9SGmSGIsZl5kfjC/EqEaSQb5kQL+2pmVUn
-	 /8OUlRpm1T0Q0L1UMgcwG54mz+R4KGHOnBU1JwrfJ2fuc5IfWmJrksKlApLc5Conpc
-	 IsPXc/PBh4VuA==
-Date: Tue, 6 May 2025 12:39:07 +0200
-From: Ingo Molnar <mingo@kernel.org>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="mNzwdiET";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="CDnlzsKe"
+Date: Wed, 7 May 2025 09:36:37 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1746603399;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VDaI8AdA8Qn0NK3CpkdWZgdey3l47BTjaidDhOmucl0=;
+	b=mNzwdiETFofhRA3KfhVtR1PT6dBbLAazNDsXnYEef4AKzPe4DspdPQ6y9CLVYo8K0Kp/E+
+	wcoc6Jd03tDQAPvBbpRhsu8JNiOU800atcie523vKg/WnggigQkXs7a6/m6j+wQFpJYiJW
+	qMweOntwh0B9ceeVFU6n04n/gVaYcOZkRRJCqVEEiZ1eoap75/yrhHG3pd2p84c69jy5/G
+	nsvIfzXbDTxugOmkMwiKBp31OTzaGIQG54Vp4A3n72vIIMLW8IhqnkDPSwlPL1xK0FTtn/
+	biIQSqBhafCd5ur4ypEkFYzzAFeHXYTswgvCq6vvZDnPZ0+MLJxcpEZSSgtcvw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1746603399;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VDaI8AdA8Qn0NK3CpkdWZgdey3l47BTjaidDhOmucl0=;
+	b=CDnlzsKenrkWXAFlNBGfoThnv0lSfxA8FyV5S4szyUDr5m+InIXrzPevxxe5clZgOYR28f
+	BvYaby7H0gXQ2MCw==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Ingo Molnar <mingo@kernel.org>
 Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -36,12 +46,11 @@ Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 13/26] x86/cpuid: Scan CPUID(0x2)
-Message-ID: <aBnmy_Bmf-H0wxqz@gmail.com>
+Subject: Re: [PATCH v1 12/26] x86/cpu: Use scanned CPUID(0x1)
+Message-ID: <aBsNhcFPeOiFuj34@lx-t490>
 References: <20250506050437.10264-1-darwi@linutronix.de>
- <20250506050437.10264-14-darwi@linutronix.de>
- <aBnFRrnZQ9HwwULK@gmail.com>
- <aBnMprnsFmPJDqaW@lx-t490>
+ <20250506050437.10264-13-darwi@linutronix.de>
+ <aBnHeoNq_LBY0xxj@gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -50,25 +59,20 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBnMprnsFmPJDqaW@lx-t490>
+In-Reply-To: <aBnHeoNq_LBY0xxj@gmail.com>
 
-
-* Ahmed S. Darwish <darwi@linutronix.de> wrote:
-
-> On Tue, 06 May 2025, Ingo Molnar wrote:
+On Tue, 06 May, Ingo Molnar wrote:
+>
+> * Ahmed S. Darwish <darwi@linutronix.de> wrote:
 > >
-> > Could we please emit a one-time syslog warning & diagnostic when we run
-> > across invalid or otherwise weird looking CPUID data, instead of just
-> > silently skipping and sanitizing it?
+> > -		if (cap0 & (1<<19)) {
+> > -			c->x86_clflush_size = ((misc >> 8) & 0xff) * 8;
+> > +		if (l1->clflush) {
+> > +			c->x86_clflush_size = l1->clflush_size * 8;
 > >
-> 
-> Sure; will do.
+>
+> Nice patch, it really nicely demonstrates the maintainability
+> advantages of the new CPUID parser.
+>
 
-Thanks! We haven't been doing this for any of the current code, right? 
-So depending on how frequent these messages are in practice, we might 
-have to tone it down a bit - but shining a bit of light on that dark 
-corner would be informative I think.
-
-Thanks,
-
-	Ingo
+Thank you. Really appreciated :)
