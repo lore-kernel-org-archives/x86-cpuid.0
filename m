@@ -1,123 +1,186 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5831F417E
-	for <x86-cpuid@lists.linux.dev>; Wed,  7 May 2025 09:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C54279782
+	for <x86-cpuid@lists.linux.dev>; Thu,  8 May 2025 15:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746610356; cv=none; b=ZtMwJ8SFtFKGlP/tzEN17ORF9+GadO3rwkUwtCxedgg5Yb4003R8dnmdgw5eBJYYkjwgL0I1Ep/KdGffJ9ksxIrOWt+jYXsQct8RiCmk0+b2yJXaxSmO33AilfQQ5ER3qMtyefBBhKniNB1NgUOvviUkQV01uY0cp04RpzegZa4=
+	t=1746716566; cv=none; b=EgYycKt+t9ASotOQOKzTEBHrQG/hhjbo5zqFGrPwrWG0vlDu1BVv/nDHcDLreryksKEe0TWPXaPyfcEVv/V1npvGsZBpoBS38SneMUODS9pO/OAKVnYSJoPKHg2mEhBgWvqbbUfSGs/aRV7e6mfac9XQK3SnZ54m5ZgDBUM+f4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746610356; c=relaxed/simple;
-	bh=J2R93UzTVb7CbyhVllcTkTkUf/7r32WFKlNat9suHEE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=msmTJmaUt7TIVQFx0VNmAPeFdKuklSbxtz5OnEgRA2HRL+j91HA4gcYI4+Eomiy5lWhGEuybOhtEDVC9SOpmNGA/6DHgnlLCiGlr4H0nn+HyJdvot9eJC+hv2RYWKQb5GeN+OrRQsd1J0/OjEFuaSdH2u+ihYYiDoxN0Wxuky7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=YM+qO1S7; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=bX0s/o+8; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1746716566; c=relaxed/simple;
+	bh=2mAnqkYc18lcfHBEKfiWQF6DjaHGoB11EEjw87oDQTQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZxJjPU0jAfYpJgUvWNiOdJDCaNIS3WF7lpWftLPnNN8xxFufQQ1JN+7j3kzi0kSnaRom1jPE5cfnCF+ECpx/6l7E65upbrnAIaMAmOUZCHKo68EMIPxJi8v1Gfw/gKXvPkxIpWOv7FS5Bzn0kZlpLLJ7mXZaR/FUqfWDkmeLH7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=bk8RhHLd; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=qI+A0EvZ; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="YM+qO1S7";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="bX0s/o+8"
-Date: Wed, 7 May 2025 11:32:31 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1746610353;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hJU9gUSyqy/IDG+zmBgqBXltz9wtMMR6YwuF4WrvREY=;
-	b=YM+qO1S7y8UcIAx7/Yr9PTPVU3sw88wBpiXsAFLXI/ZfZQ63rWJ0Y1PNBA+gMh+qX4WAMc
-	gleLRCAxt+EfdhP5Q/QmqH7ygNRCxZ0OQcQcca0ZSpruDcNjGLlEdmi/a457DSltbzlMCi
-	1iVnIIOiXfc0mCALyY7ZbJWHd4gfiQ0OWoRSZy4Ie8AzWwzasdXCEoPTxBqN2zS9DaeCLo
-	qKsx9Q6dhZWuiCO1BPD7uUoJLuzpYRCEhbCAVSW3KDX4toG+U06hvQT9HWiHqScDWtAbzb
-	GOJMgOzYhTV8KUS8OVSGm9oWmE6XtJpWfQDx27JUG+0vcX4xtvdn3j6JTZXkNw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1746610353;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hJU9gUSyqy/IDG+zmBgqBXltz9wtMMR6YwuF4WrvREY=;
-	b=bX0s/o+8UhuakGN82OFZ27mfHRTwrYekQ4boP8E4+ncWGk9ztlOyFwuJ58UhVWszX1dPEv
-	OxnHfnLp/jawboBQ==
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="bk8RhHLd";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="qI+A0EvZ"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Ingo Molnar <mingo@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1746716562;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=c2kf3EExoa/498HOrGmzKtVhO6kUQLl9SRNl4la3+N8=;
+	b=bk8RhHLdGlDctAVslXoOwRg1FhbFzWYivhNt4cbrHqRLeRAOIRBYtb3yG5vUucUlBK0uHk
+	duDqSFzKcyUn3YfGp6ZfkZ2dMh+60aLG+Fzz9cI/HoJykzHqw7YE3n4w2m7M+Re9aQi48J
+	oTBwna2ixciE1Qz5ZR2ZoCFtrM7lKqJAEN2+F/V6B/1qhT7paSV5ZiX1Bykg+PrbSqSt5C
+	3eh6/esiUmmjFfRQBVyvuR4aVwhLfECmM+iWrbSB4G05EmGwnzCkFCUTxuRERVBkEK+59S
+	8jXZ24YDarCYPkkhuLv+GRLExxxtpLpswqoD9Df/JgLHuqmfhDlZrh+yK7Tf2A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1746716562;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=c2kf3EExoa/498HOrGmzKtVhO6kUQLl9SRNl4la3+N8=;
+	b=qI+A0EvZnUM3acoH3EustLRG7ldyjw+gxtNCwBrBbEatCGE4aWz+g+qz4RMqSwu2itJ7y/
+	vmcOc8DZA/u46GCw==
+To: Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 00/26] x86: Introduce centralized CPUID model
-Message-ID: <aBsor3iOb0SJsLSQ@lx-t490>
-References: <20250506050437.10264-1-darwi@linutronix.de>
- <aBnSgu_JyEi8fvog@gmail.com>
+	John Ogness <john.ogness@linutronix.de>,
+	x86@kernel.org,
+	x86-cpuid@lists.linux.dev,
+	LKML <linux-kernel@vger.kernel.org>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>
+Subject: [PATCH v1 0/9] x86/cpuid: Headers cleanup
+Date: Thu,  8 May 2025 17:02:29 +0200
+Message-ID: <20250508150240.172915-1-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aBnSgu_JyEi8fvog@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, 06 May, Ingo Molnar wrote:
->
-> Wrt. <asm/cpuid/api.h>, we'll need a few followup cleanups there too
-> I think, such as migrating to the cpuid_*() namespace:
->
+Hi,
 
-Perfect, then I'll move ahead and do a "CPUID headers cleanup" patch
-queue /before/ moving into a v2 of this series.
+This is a CPUID headers cleanup series, on top of tip:x86/cpu.  It is a
+precursor for the upcoming v2 of the CPUID parser:
 
-Any other wishes in that domain?
+    [PATCH v1 00/26] x86: Introduce centralized CPUID model
+    https://lore.kernel.org/lkml/20250506050437.10264-1-darwi@linutronix.de
 
-> Rename have_cpuid_p() to cpuid_feature() or so.
+as suggested by Ingo here:
 
-ACK.
+    https://lore.kernel.org/lkml/aBnSgu_JyEi8fvog@gmail.com
 
-> I find the cpudata_cpuid_ namespace a bit confusing:
->
->	__cpudata_cpuid_subleaf_idx(__table, __leaf, __subleaf, __idx)
->	__cpudata_cpuid_subleaf(__table, __leaf, __subleaf)
->	cpudata_cpuid_subleaf(_cpuinfo, _leaf, _subleaf)
->	cpudata_cpuid(_cpuinfo, _leaf)
->	cpudata_cpuid_nr_entries(_cpuinfo, _leaf)
->	cpudata_cpuid_index(_cpuinfo, _leaf, _idx)
->	cpudata_cpuid_regs(_cpuinfo, _leaf)
->	cpudata_cpuid_index_regs(_cpuinfo, _leaf, _idx)
->
+* Summary:
 
-> All of CPUID processing is related to 'data', and we don't
-> really have any 'cpudata' primitives, so the cpudata_ prefix is
-> confusing to me.
->
-> It's particularly confusing for methods like cpudata_cpuid(),
-> which sounds like a generic method, while in reality it accesses
-> subleaf 0, right? Why not name it cpuid_subleaf_0() or so?
->
-> My suggestion would be to use a structure like this:
->
->	__cpuid_subleaf_idx(__table, __leaf, __subleaf, __idx)
->	__cpuid_subleaf(__table, __leaf, __subleaf)
->	cpuid_subleaf(_cpuinfo, _leaf, _subleaf)
->	cpuid_subleaf_0(_cpuinfo, _leaf)
->	cpuid_leaf_nr_entries(_cpuinfo, _leaf)
->	cpuid_leaf_index(_cpuinfo, _leaf, _idx)
->	cpuid_leaf_regs(_cpuinfo, _leaf)
->	cpuid_leaf_index_regs(_cpuinfo, _leaf, _idx)
->
-> Or so?
+The current CPUID header structure is:
 
-Yeah, that's honestly much much better.
+    include/asm/
+    ├── cpuid
+    │   ├── api.h
+    │   ├── leaf_0x2_api.h
+    │   └── types.h
+    └── cpuid.h
 
-(cpuid_subleaf() is already a raw CPUID OP at <asm/cpuid/api.h> now, but
- luckily it has one external call site, so it'll be easy to rename.)
+Simplify it into:
 
-> In my book it's a nice bonus that they thus become part of the overall
-> cpuid_*() API family. Note how these accessors still are all still
-> either cpuid_leaf_ or cpuid_subleaf_ prefixed.
+    include/asm/
+    ├── api.h
+    └── types.h
 
-Yeah, now a single <asm/cpuid/api.h> makes full sense as well :)
+Standardize the CPUID header namespace by enforcing a "cpuid_" prefix for
+all exported symbols.  That is:
+
+    have_cpuid_p()		➤	cpuid_feature()
+    hypervisor_cpuid_base()	➤	cpuid_hypervisor_base()
+    native_cpuid()		➤	cpuid_native()
+    native_cpuid_REG()		➤	cpuid_native_REG()
+
+Also rename:
+
+    cpuid_get_leaf_0x2_regs()	➤	cpuid_leaf_0x2()
+
+for consistency with the other <asm/cpuid/api.h> accessors that return
+full CPUID register output; i.e., cpuid_leaf() and cpuid_subleaf().
+
+Finally, rename:
+
+    for_each_leaf_0x2_entry()   ➤	for_each_cpuid_0x2_desc()
+
+to include "cpuid" in the iterator name, and since what is being iterated
+upon is CPUID(0x2) cache and TLB "descriptos", not "entries".
+
+* Testing:
+
+- Basic one-by-one allyesconfig compilation
+
+- Comparison of a before/after of below files:
+
+  - /proc/cpuinfo
+  - /sys/devices/system/cpu/
+  - /sys/kernel/debug/x86/topo/
+  - dmesg --notime | grep 'Last level [id]TLB entries'
 
 Thanks!
-Ahmed
+
+8<--
+
+Ahmed S. Darwish (9):
+  x86/cpuid: Move CPUID(0x2) APIs into <cpuid/api.h>
+  x86/cpuid: Set <asm/cpuid/api.h> as the main CPUID header
+  x86/cpuid: Rename have_cpuid_p() to cpuid_feature()
+  x86/cpuid: Rename hypervisor_cpuid_base() to cpuid_hypervisor_base()
+  x86/cpuid: Rename cpuid_get_leaf_0x2_regs() to cpuid_leaf_0x2()
+  x86/cacheinfo: Rename CPUID(0x2) descriptors iterator parameter
+  x86/cpu: Rename CPUID(0x2) descriptors iterator parameter
+  x86/cpuid: Rename native_cpuid() to cpuid_native()
+  x86/cpuid: Rename native_cpuid_REG() to cpuid_native_REG()
+
+ arch/x86/boot/compressed/pgtable_64.c     |   4 +-
+ arch/x86/boot/compressed/sev.c            |   8 +-
+ arch/x86/coco/sev/core.c                  |   2 +-
+ arch/x86/events/intel/pt.c                |   2 +-
+ arch/x86/include/asm/acrn.h               |   2 +-
+ arch/x86/include/asm/cpuid.h              |   9 --
+ arch/x86/include/asm/cpuid/api.h          | 103 ++++++++++++++++++----
+ arch/x86/include/asm/cpuid/leaf_0x2_api.h |  73 ---------------
+ arch/x86/include/asm/cpuid/types.h        |   3 +-
+ arch/x86/include/asm/microcode.h          |   2 +-
+ arch/x86/include/asm/processor.h          |   2 +-
+ arch/x86/include/asm/xen/hypervisor.h     |   2 +-
+ arch/x86/kernel/acpi/cstate.c             |   2 +-
+ arch/x86/kernel/amd_nb.c                  |   2 +-
+ arch/x86/kernel/cpu/cacheinfo.c           |  18 ++--
+ arch/x86/kernel/cpu/common.c              |  12 +--
+ arch/x86/kernel/cpu/intel.c               |  16 ++--
+ arch/x86/kernel/cpu/microcode/amd.c       |   2 +-
+ arch/x86/kernel/cpu/microcode/core.c      |   8 +-
+ arch/x86/kernel/cpu/microcode/intel.c     |   2 +-
+ arch/x86/kernel/cpu/microcode/internal.h  |   4 +-
+ arch/x86/kernel/fpu/xstate.c              |   2 +-
+ arch/x86/kernel/head32.c                  |   2 +-
+ arch/x86/kernel/hpet.c                    |   2 +-
+ arch/x86/kernel/jailhouse.c               |   2 +-
+ arch/x86/kernel/kvm.c                     |   2 +-
+ arch/x86/kernel/paravirt.c                |   2 +-
+ arch/x86/kernel/process.c                 |   2 +-
+ arch/x86/kernel/smpboot.c                 |   2 +-
+ arch/x86/kernel/tsc.c                     |   2 +-
+ arch/x86/kvm/cpuid.c                      |   4 +-
+ arch/x86/mm/mem_encrypt_identity.c        |   6 +-
+ arch/x86/virt/svm/sev.c                   |   2 +-
+ arch/x86/xen/enlighten_pv.c               |   6 +-
+ drivers/acpi/acpi_pad.c                   |   2 +-
+ drivers/dma/ioat/dca.c                    |   2 +-
+ drivers/firmware/efi/libstub/x86-5lvl.c   |   4 +-
+ drivers/idle/intel_idle.c                 |   2 +-
+ drivers/platform/x86/intel/pmc/core.c     |   2 +-
+ sound/soc/intel/avs/tgl.c                 |   2 +-
+ 40 files changed, 159 insertions(+), 169 deletions(-)
+ delete mode 100644 arch/x86/include/asm/cpuid.h
+ delete mode 100644 arch/x86/include/asm/cpuid/leaf_0x2_api.h
+
+base-commit: c1ab4ce3cb759f69fb9085a060e568b73e8f5cd8
+-- 
+2.49.0
+
