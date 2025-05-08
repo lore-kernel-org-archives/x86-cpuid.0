@@ -1,80 +1,71 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8616318A6A5
-	for <x86-cpuid@lists.linux.dev>; Thu,  8 May 2025 18:49:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BDA28C2A9
+	for <x86-cpuid@lists.linux.dev>; Thu,  8 May 2025 20:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746730152; cv=none; b=MidzrPlq0oTqEbHjkdwgfLCwxBK80j87TJYil8cvYoSwWOSrDhkp9VDP5daYghdXoJMlkEtzezQSqTeMruAZuu6uIjckESQsj90P0DRDmLVZXro8Po0ICzFs+mtczhiLiY2/AqkOWHcXyGqIthJJJddnDFPsMHjlZAFNVl7wvA4=
+	t=1746736875; cv=none; b=Ou/Wl8uVjLt5OQs0I4Msb8vEsRYAHU1VT5saoernITBhysXabZqMfJynhZU28q8RwcxUL5A/K6ED2puj9Z50GtsJHNOEunkcfOtVD21ObEmlFCBiQ5n5zXZBj6bMAf0PkDDtQ/BRC1REy5dG4DjwN1pu3Tkzf2ceJYPjyay9aaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746730152; c=relaxed/simple;
-	bh=wK6rXqJv6Q9HETINckal3+AxEXHzzBeOeWS295xZTwk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jr21uSBp7wAfkIWaO2tHOFicxzJmQXx7kp63FRFwAIbLS3MtEhJIn3fHqjQutNYB7vdeU18xJts319bDL9sFlTHOBHdOmZ6NUbfrWXHUAr8okXxCawrmBHJW7nBpfq70vb7PFECMFAZ2JScp6YO4a/5tqRgvicZzk0aQfl3V5kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=HFWJqwaQ; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=8w6gKwf6; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1746736875; c=relaxed/simple;
+	bh=aEq/Xh9an+2qi6oqklX7yydPmekwlr32/s2BWscXWmw=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=Hwlj6CRCwcQLj22HP27/BgK5Ff9kWCmWf/+YXTL3WqYQ2iqcQpAMxBwLSZ/02K8HXIajO2kex7S2ePyJzPrNSK64gdKKm+R/PI6oqzD6PzHFIcDFu1y6vpPUwF+MzEz20oQYVGJDB5RVj4M1bY3XurhsW6dVRn5fINb4A5v6B7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=eIvlhLqn; arc=none smtp.client-ip=198.137.202.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="HFWJqwaQ";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="8w6gKwf6"
-Date: Thu, 8 May 2025 20:49:07 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1746730149;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zgieM7TFBIUGIGLPFDm65OyHb8JUxeHxxWcl08nZ49E=;
-	b=HFWJqwaQ5ezyVwg/hm9exwbzdchg7qF7YRg02Jg4A6Eu6lxsaZiIVgGt5z10N2ulo6upfj
-	quv2GnAIxOorTbzMq+RNdCv4g2rI7yV9cFAtwQbOb/zxmwdK+oPwGseKdCBOEUElotSvKS
-	ckRlZkG4V6Fl/rU1v6KilP5dxmDFU4GFJnZiGBX7QQeXVdMS12A6wA0Q8XBvz0mIpFSG8J
-	d1sZdsreydHuo+giO2sQIyhvTd63o/SzLlpooBFlIotWZJPjGJnjVNtsYWTvWz6ot1jIet
-	zQCeBOHo8rhwqsFeoa7xgDJnqTV/iROK6Mbz1eAiwwLf0zmpwq0o3SbpXNPhJQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1746730149;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zgieM7TFBIUGIGLPFDm65OyHb8JUxeHxxWcl08nZ49E=;
-	b=8w6gKwf6CQhGNkG/oTsQWa54y6twhI0eUpzRpc6fOklc+fbkawR0v/F97ufGfl7QMahzuo
-	Qo6XA7TAUNoivKAg==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 0/9] x86/cpuid: Headers cleanup
-Message-ID: <aBz8o-Ikwvr9Y1PF@lx-t490>
-References: <20250508150240.172915-1-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="eIvlhLqn"
+Received: from [127.0.0.1] ([76.133.66.138])
+	(authenticated bits=0)
+	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 548Kekqh2110471
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+	Thu, 8 May 2025 13:40:46 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 548Kekqh2110471
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+	s=2025042001; t=1746736847;
+	bh=ijN0FKRxccZXqmoXwNNheIJANcAgwNxNmIDo5KCOPcg=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=eIvlhLqnfE0e4IEl0+hUsCFOo82g5+Z6jbB1BssADy86zpPVrp/L0p5fUgYXcUuFu
+	 W6aeUl8+O5w8HBJQAGfMASIP5Zyk0owWCFHCkVuaQZdKSm8lVmq+5n18j7Lj1U99PC
+	 fiGlK/B//YofoLpZlaU+KRrODR8pSbnl9UPp5qQi3fSjmkmzYD03v4syOXw0Cn+RSR
+	 OMIP5ZxpMkMc73TXo/F4GEJONnpIG6ZKSjApgdXeemORM4/DpGOfcST40EXoZecZMb
+	 Ddr1quvP44WuIWqGIVwjS91zWq3JCFwD8StJF/Kd5i+phUPURxJB19jLsNC8xxrq4k
+	 3mBe4ZbBxmSJw==
+Date: Thu, 08 May 2025 13:40:45 -0700
+From: "H. Peter Anvin" <hpa@zytor.com>
+To: Andrew Cooper <andrew.cooper3@citrix.com>,
+        "Ahmed S. Darwish" <darwi@linutronix.de>,
+        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+        Dave Hansen <dave.hansen@linux.intel.com>
+CC: Thomas Gleixner <tglx@linutronix.de>,
+        John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+        x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 02/26] x86/cpu: Sanitize CPUID(0x80000000) output
+User-Agent: K-9 Mail for Android
+In-Reply-To: <6b0c87e0-d98d-4394-85bd-8abf556ebf0f@citrix.com>
+References: <20250506050437.10264-1-darwi@linutronix.de> <20250506050437.10264-3-darwi@linutronix.de> <6b0c87e0-d98d-4394-85bd-8abf556ebf0f@citrix.com>
+Message-ID: <797B7A87-AAFB-4302-96E6-3FD956D614C2@zytor.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250508150240.172915-1-darwi@linutronix.de>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 08 May, Ahmed S. Darwish wrote:
+On May 7, 2025 1:50:48 AM PDT, Andrew Cooper <andrew=2Ecooper3@citrix=2Ecom=
+> wrote:
+>On 06/05/2025 6:04 am, Ahmed S=2E Darwish wrote:
+>> CPUID(0x80000000)=2EEAX returns the max extended CPUID leaf available=
+=2E  On
+>> x86-32 machines
 >
-> Simplify it into:
+>How certain are you that it's all 32bit CPUs?=C2=A0 AIUI, it's an Intel
+>specific behaviour, not shared by other x86 vendors of the same era=2E
 >
->     include/asm/
->     ├── api.h
->     └── types.h
->
+>~Andrew
 
-Typo:
-
-      include/asm/cpuid/
-      ├── api.h
-      └── types.h
-
-Thanks,
-Ahmed
+All 64-bit machines require CPUID leaf 0x80000000=2E
