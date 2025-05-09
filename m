@@ -1,86 +1,129 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7F24B28
-	for <x86-cpuid@lists.linux.dev>; Thu,  8 May 2025 22:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AC205ACF
+	for <x86-cpuid@lists.linux.dev>; Fri,  9 May 2025 09:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746743913; cv=none; b=T/9kl9rMVmqhwcG8EmJLf+Ht9MLZ4XA338oCV4Wa+saIrkQskYqqGVXT3YfY+vsAQJ5OEPw2yMN1Pxpc52tTglkL6AxRjryH+cybgfATYvbLUb3vBv6B3XNSn9svjXaPVq/duXPiJ4CUwQ+MM/frunWk/GCW0ctCcn32bq1Rn3Y=
+	t=1746782599; cv=none; b=NrNI2zZ2ch+7O5sTDl+//ZID78xrjKuQjfzOBksirh1cSn9D1VJlE9lQ2vKT5yYx8y0eCyiW3pMYN1NA4FUg04/0d4BkEH+paxUUP/iCa5kLybEJGQHcritMk9T6HeYVwkLbGWfH5yT8bSR85KKINCOPelfcoWaPUUjiv/4jgqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746743913; c=relaxed/simple;
-	bh=ubfU8ik9KR7qWEwFXC26OccxX7U5YYqWVoOrTFToFzI=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=RNBLdFrf2+0837bbvP8QPG71O59FUQKgaz23ws5iILYbTmjKlb5QVB+mgmM9NJbvCWSJIDB383W28X3ZbjUuk/3wR9ZxlogAU4WmrcAaheocn84EetyTCxbNBgYCOKwXbGTy5lBpIrOSYBp/O4fPgeqTwCzhTMhJT9Foqi9HXzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=VRk1d1sm; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	s=arc-20240116; t=1746782599; c=relaxed/simple;
+	bh=nbUdKnSjm4LnOuyzo/lWOvIEbOAfnZHdu678REqEbkA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=sYNd6pm8fIoJh4gCW9lRTMudsLKyQGGfgdQDP8YGzlcXhz74B0xfD4sCFcE0uRD5re4vLJpwPFb7pmMNjJ173+Jj7gDPDJoqLxNr8yH2bS+ItdYJKmZi7X8D7Mh53zeDUySOtbSRqVr6VxWNdnjVKkTnvoi+l+td31+aGmSd8mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de; spf=pass smtp.mailfrom=cacheline.de; dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b=bcfaLdxd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dEli/C46; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cacheline.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="VRk1d1sm"
-Received: from [IPv6:::1] ([172.56.43.203])
-	(authenticated bits=0)
-	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 548Mc1BH2145558
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Thu, 8 May 2025 15:38:02 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 548Mc1BH2145558
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2025042001; t=1746743883;
-	bh=1K13FyXuIq6scjZBNwzpY+RHoAidshJMTiiqhc1K+io=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=VRk1d1sm7qmXUVuWLMBEBpxM0cryrMGiHa7n/NtolziAUb6FUXsxOeneF45RttC4f
-	 dz2mrR68eKX5E6/gPoypmaFJu5j7QSDCmap59pixRhBjbnAs3EWsRtqDxmphePHJP8
-	 glGC2R4ly6SudbrGSamWHM/ihVREoiOXZasCf4ADmIbSokiEfAYwtFVv4RTC1wNW8z
-	 ryJi7zIXqf8upHAQGoxZlov+iV49glmdP4cPJv5sGg1mQJ5MCvUATMOCjkqZfGHPNL
-	 3YLtAHXRFYS9MNulpFXa3nxVj0zNwBIfozm4msT/oIItkMSE/74tZ0b260fmdn2IkT
-	 EFZiphmk/rM+A==
-Date: Thu, 08 May 2025 15:37:53 -0700
-From: "H. Peter Anvin" <hpa@zytor.com>
-To: Andrew Cooper <andrew.cooper3@citrix.com>,
-        "Ahmed S. Darwish" <darwi@linutronix.de>,
-        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-        Dave Hansen <dave.hansen@linux.intel.com>
-CC: Thomas Gleixner <tglx@linutronix.de>,
-        John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-        x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+	dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b="bcfaLdxd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dEli/C46"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id C0B5713801E0;
+	Fri,  9 May 2025 05:23:15 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 09 May 2025 05:23:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cacheline.de; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:reply-to:subject:subject:to:to; s=fm3; t=1746782595; x=
+	1746868995; bh=viP7kjlIVlpBSBpxSKbfEK6gKGtSEFGuYX1YWNLPR6U=; b=b
+	cfaLdxdElqb/vfLGCHY9Rw+E5kzUXzFLWcdjgFHOwy2Mt3paLigZmlM/gX14He1r
+	NgGqAzW1G26Uf6Xhpq6Jx065niv28iIZyMZcTnjx25kFtk/3iZVVvJ0awNvw1N0D
+	Q4vvRTyrLb6Js0FT8S91mfEeV+520/aWmDRh6T4PPH3lmK1l4mR/4BCkewq0wk7Y
+	sDlpqmTa4JzvyJlQo2S5xa28qCnXg7HOq1LGJI7/vYi/+FQ72H0cTkgy/c6QCKEG
+	UZu/Ols2zljvkjs1HSDTVg7ktXVUi/LRhdiZeYJbFnY6QimOw4GH2EpHn9ySXNFa
+	N7/C+VC5OuLx2hFVeNx8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1746782595; x=1746868995; bh=v
+	iP7kjlIVlpBSBpxSKbfEK6gKGtSEFGuYX1YWNLPR6U=; b=dEli/C46v68Px9Yzu
+	aAW4euSH5Z0JcDufEr1fVLPL9PmkyQ/iB1irYavrcE7Ncs02IRls1jw8Qgyp0YAJ
+	vA0wVvmzh219HfsM6lqiRQuMco4J/E24mxJFLZtrOUE7PqIihBo1B7X4wlLD8Hq2
+	ddvBM+4VWSovqZBUhgWK7eexFf0QvrfEs86x6WXzAFfcpRqMgncCEc9f+uW1/g05
+	0f0uXzl0LE4uJBoNMbtP+/ePzA91bjfc7fEN60ofY1CuLvsMNmU6kiZ9J185NlJL
+	YSl1BA47g1ILSbnBWgcVN1tQ3EuwUJluxnZXyJzLgxMhWx1tyJSdHScigbxzTsDe
+	R7yzA==
+X-ME-Sender: <xms:gskdaHhdC9RLJTSx9rxy2AGotZVnfOfFwvYa3t1qMzBealfqUQCkAg>
+    <xme:gskdaEC4ZgHDpv7hqsJZvv0av5zsQim5s8jjr2TnER4DnnqLA8e0Y8GHK-B82VJz5
+    _gXx4oB6A-LokQRwQw>
+X-ME-Received: <xmr:gskdaHFLpjRti3T9JSkNE_lceh02KeKPR4tRLv5sPWFhxKl7uhJf9snaduMHxKNdR1n2q4svgWVXvddM1rMf2ALQlIs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkgggtugfgjggfsehtkeertddt
+    reejnecuhfhrohhmpedftehhmhgvugcuufdrucffrghrfihishhhucdluggvvhdmfdcuoe
+    gurghrfihirdguvghvsegtrggthhgvlhhinhgvrdguvgeqnecuggftrfgrthhtvghrnhep
+    uddufeeuvdevtdffkeeuleejfefhfeelhfdvgffgueeukeetlefhveegveeihfetnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggrrhifihdr
+    uggvvhestggrtghhvghlihhnvgdruggvpdhnsggprhgtphhtthhopeduuddpmhhouggvpe
+    hsmhhtphhouhhtpdhrtghpthhtoheprghnughrvgifrdgtohhophgvrhefsegtihhtrhhi
+    gidrtghomhdprhgtphhtthhopegurghrfihisehlihhnuhhtrhhonhhigidruggvpdhrtg
+    hpthhtohepmhhinhhgohesrhgvughhrghtrdgtohhmpdhrtghpthhtohepsghpsegrlhhi
+    vghnkedruggvpdhrtghpthhtohepuggrvhgvrdhhrghnshgvnheslhhinhhugidrihhnth
+    gvlhdrtghomhdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhnihigrdguvgdprhgt
+    phhtthhopehhphgrseiihihtohhrrdgtohhmpdhrtghpthhtohepjhhohhhnrdhoghhnvg
+    hssheslhhinhhuthhrohhnihigrdguvgdprhgtphhtthhopeigkeeisehkvghrnhgvlhdr
+    ohhrgh
+X-ME-Proxy: <xmx:gskdaEQRpaGKBc2plN1EwY66j7rW7CpGh2fSuIzMYnFkRw-uyDeF7Q>
+    <xmx:gskdaEw2vz8iPSEankoDONMW2M86Hq5WGIg8v44711imMrS2eRUZ6w>
+    <xmx:gskdaK4CKWaEfR2ig3AmH2Xc10B8UzyENYh4FLywK-soGIDFSCav_A>
+    <xmx:gskdaJwJ5Cbc-h39Z0JpKUnKD7YDcsw7XM8ekzvaS7XRHHPBbTV55g>
+    <xmx:g8kdaA1Mluu4fcCSCpKyF77H871OI18LJ5hNRmk1I-aUVJDJJ3aFkpf9>
+Feedback-ID: i7c5149e1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 May 2025 05:23:11 -0400 (EDT)
+Date: Fri, 9 May 2025 11:23:10 +0200
+From: "Ahmed S. Darwish (dev)" <darwi.dev@cacheline.de>
+To: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: "Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v1 02/26] x86/cpu: Sanitize CPUID(0x80000000) output
-User-Agent: K-9 Mail for Android
-In-Reply-To: <3af01720-6bd1-40cd-9292-2c35ae22296c@citrix.com>
-References: <20250506050437.10264-1-darwi@linutronix.de> <20250506050437.10264-3-darwi@linutronix.de> <6b0c87e0-d98d-4394-85bd-8abf556ebf0f@citrix.com> <797B7A87-AAFB-4302-96E6-3FD956D614C2@zytor.com> <3af01720-6bd1-40cd-9292-2c35ae22296c@citrix.com>
-Message-ID: <59C811AB-F4DD-44EE-9645-E18C7DBE4C39@zytor.com>
+Message-ID: <aB3Jfta9e9fdqZFs@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6b0c87e0-d98d-4394-85bd-8abf556ebf0f@citrix.com>
+User-Agent: Mutt/2.2.14 (516568dc) (2025-02-20)
 
-On May 8, 2025 1:58:11 PM PDT, Andrew Cooper <andrew=2Ecooper3@citrix=2Ecom=
-> wrote:
->On 08/05/2025 9:40 pm, H=2E Peter Anvin wrote:
->> On May 7, 2025 1:50:48 AM PDT, Andrew Cooper <andrew=2Ecooper3@citrix=
-=2Ecom> wrote:
->>> On 06/05/2025 6:04 am, Ahmed S=2E Darwish wrote:
->>>> CPUID(0x80000000)=2EEAX returns the max extended CPUID leaf available=
-=2E  On
->>>> x86-32 machines
->>> How certain are you that it's all 32bit CPUs?=C2=A0 AIUI, it's an Inte=
-l
->>> specific behaviour, not shared by other x86 vendors of the same era=2E
->>>
->>> ~Andrew
->> All 64-bit machines require CPUID leaf 0x80000000=2E
->
->Yes, but why's that relevant?
->
->What I'm querying is the claim that all 32-bit machines behaved as Intel
->did, and returned rubble for out-of-range leaves=2E
->
->~Andrew
+Hi,
 
-They did not=2E Non-Intel CPUs did, and do, report 0 for undefined levels=
-=2E=20
+On Wed, 07 May 2025, Andrew Cooper wrote:
+>
+> On 06/05/2025 6:04 am, Ahmed S. Darwish wrote:
+> >
+> > CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
+> > x86-32 machines
+>
+> How certain are you that it's all 32bit CPUs?  AIUI, it's an Intel
+> specific behaviour, not shared by other x86 vendors of the same era.
+>
 
-I believe even today Intel CPUs report the "last level" value for up to 0x=
-7fffffff=2E=2E=2E
+Sorry, I missed responding to this earlier.
+
+You're correct.  I indeed assumed that for all invalid CPUID queries, the
+CPU repeats the output of the last valid standard leaf on /all/ x86
+machines — thus CPUID(0x80000000) behaves this way also on all x86-32
+machines lacking an extended range.
+
+I've done a quick check on some Intel vs. AMD machines, and indeed, this
+is Intel-specific.  AMD machines just return all-zero instead.
+
+(The patch content is still valid, and I guess that's what HPA was just
+ hinting at further down the thread.)
+
+Thanks!
+~ Ahmed
