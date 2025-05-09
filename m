@@ -1,129 +1,118 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AC205ACF
-	for <x86-cpuid@lists.linux.dev>; Fri,  9 May 2025 09:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6222928689B
+	for <x86-cpuid@lists.linux.dev>; Fri,  9 May 2025 09:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746782599; cv=none; b=NrNI2zZ2ch+7O5sTDl+//ZID78xrjKuQjfzOBksirh1cSn9D1VJlE9lQ2vKT5yYx8y0eCyiW3pMYN1NA4FUg04/0d4BkEH+paxUUP/iCa5kLybEJGQHcritMk9T6HeYVwkLbGWfH5yT8bSR85KKINCOPelfcoWaPUUjiv/4jgqA=
+	t=1746782919; cv=none; b=LS5BZy3yFNPOwCg29qjghTwJ4BoS47OS7M7OJImXrNkhiTQr5wCmLeMVo/ORhuIw3JLsYdRxtGtrxi3Y7T2YvBhdIbaAlQEciIEfL16cbhU+v1aSqZBYbWAlqvVC7MezVYJ5UjveVX7e/5pGN6UhxmOADWPjoqVi6zJI5aGD5F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746782599; c=relaxed/simple;
-	bh=nbUdKnSjm4LnOuyzo/lWOvIEbOAfnZHdu678REqEbkA=;
+	s=arc-20240116; t=1746782919; c=relaxed/simple;
+	bh=z15afqnSZ3avseRb+hX3bOV+QNP5+3t8At9bgSSKGro=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=sYNd6pm8fIoJh4gCW9lRTMudsLKyQGGfgdQDP8YGzlcXhz74B0xfD4sCFcE0uRD5re4vLJpwPFb7pmMNjJ173+Jj7gDPDJoqLxNr8yH2bS+ItdYJKmZi7X8D7Mh53zeDUySOtbSRqVr6VxWNdnjVKkTnvoi+l+td31+aGmSd8mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de; spf=pass smtp.mailfrom=cacheline.de; dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b=bcfaLdxd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dEli/C46; arc=none smtp.client-ip=103.168.172.147
+	 Content-Disposition:In-Reply-To; b=fij3zH/SzBEJVgiWVQvZmu0W/ArhqHotNGzEhGmVgmK/UK41bbjxGin3QePu4xFogwNloHdZqbVFKpB+jxuuKq0DVUicP91tL62GTxhMPOXd7VXwm26gaN7qxoqD/RZTdaV8k3n9GmMD8hBZafgJ29JNKZgGcvKzQjjr2pj8kSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de; spf=pass smtp.mailfrom=cacheline.de; dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b=FkKZQHDx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A5NLLivB; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cacheline.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b="bcfaLdxd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dEli/C46"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id C0B5713801E0;
-	Fri,  9 May 2025 05:23:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b="FkKZQHDx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A5NLLivB"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8BA351380193;
+	Fri,  9 May 2025 05:28:36 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 09 May 2025 05:23:15 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 09 May 2025 05:28:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cacheline.de; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:reply-to:subject:subject:to:to; s=fm3; t=1746782595; x=
-	1746868995; bh=viP7kjlIVlpBSBpxSKbfEK6gKGtSEFGuYX1YWNLPR6U=; b=b
-	cfaLdxdElqb/vfLGCHY9Rw+E5kzUXzFLWcdjgFHOwy2Mt3paLigZmlM/gX14He1r
-	NgGqAzW1G26Uf6Xhpq6Jx065niv28iIZyMZcTnjx25kFtk/3iZVVvJ0awNvw1N0D
-	Q4vvRTyrLb6Js0FT8S91mfEeV+520/aWmDRh6T4PPH3lmK1l4mR/4BCkewq0wk7Y
-	sDlpqmTa4JzvyJlQo2S5xa28qCnXg7HOq1LGJI7/vYi/+FQ72H0cTkgy/c6QCKEG
-	UZu/Ols2zljvkjs1HSDTVg7ktXVUi/LRhdiZeYJbFnY6QimOw4GH2EpHn9ySXNFa
-	N7/C+VC5OuLx2hFVeNx8Q==
+	cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm3; t=1746782916; x=1746869316; bh=dIWWiS5nyaNIyDc7xgCSC
+	GutcHi9+SeN0U3LvBIU+fI=; b=FkKZQHDxBesZOi30ZGZduC7+QMwxaBLVifIP3
+	SqvTdMxz0HcOc8d0DGZdwfktW3zhBBQ8+TQaf6Gry9zIw9PvxPOWWTkq9p8ITj2E
+	dRFkXT93kcvczxzXY0AQgBNecouNqtx3q78Xi5tPKtPuJwMtkGu0t7DoEW4Gjh0u
+	njm9AFPGYwTvqHWEv5upetg3jyOY1RiBCbnLOFvXh4VIwZ5XNDCeEjz3K0xWBP87
+	sqKoyqncDcCKWZhmQTGNQ09yX3iCyWD7d0mVZqkfUS7NawkUi9qr/CsLVvTO5Jhm
+	wC/Bg8HiJ8LpJAR3xHz6bnBDhd3mtUyUu+gaD/dCdqSHOlleQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1746782595; x=1746868995; bh=v
-	iP7kjlIVlpBSBpxSKbfEK6gKGtSEFGuYX1YWNLPR6U=; b=dEli/C46v68Px9Yzu
-	aAW4euSH5Z0JcDufEr1fVLPL9PmkyQ/iB1irYavrcE7Ncs02IRls1jw8Qgyp0YAJ
-	vA0wVvmzh219HfsM6lqiRQuMco4J/E24mxJFLZtrOUE7PqIihBo1B7X4wlLD8Hq2
-	ddvBM+4VWSovqZBUhgWK7eexFf0QvrfEs86x6WXzAFfcpRqMgncCEc9f+uW1/g05
-	0f0uXzl0LE4uJBoNMbtP+/ePzA91bjfc7fEN60ofY1CuLvsMNmU6kiZ9J185NlJL
-	YSl1BA47g1ILSbnBWgcVN1tQ3EuwUJluxnZXyJzLgxMhWx1tyJSdHScigbxzTsDe
-	R7yzA==
-X-ME-Sender: <xms:gskdaHhdC9RLJTSx9rxy2AGotZVnfOfFwvYa3t1qMzBealfqUQCkAg>
-    <xme:gskdaEC4ZgHDpv7hqsJZvv0av5zsQim5s8jjr2TnER4DnnqLA8e0Y8GHK-B82VJz5
-    _gXx4oB6A-LokQRwQw>
-X-ME-Received: <xmr:gskdaHFLpjRti3T9JSkNE_lceh02KeKPR4tRLv5sPWFhxKl7uhJf9snaduMHxKNdR1n2q4svgWVXvddM1rMf2ALQlIs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvvdehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746782916; x=1746869316; bh=dIWWiS5nyaNIyDc7xgCSCGutcHi9+SeN0U3
+	LvBIU+fI=; b=A5NLLivB+rEI8f1qIWrO6qt/Y5sMNBdVOq4hrQVRYL5krlww7jd
+	9L+6hg82T2SHhp+afeWac7ypr4NIan/sAzQb+ACsjpSi+TTGj/ZzMay5aj3BqeYA
+	xs39rDleTy/ZAVYD6z/6b3txVtu3wXpZ7gRoSWTkxuf0ZZmcBk1EqkySpLotzCe5
+	g340LUGFgby2N1QIA4+8QTXWitzssddvzsayimkL4dE5QcOeImfarDcmM30H2Tlq
+	nO6wfc4Wf4mVx8lDs7d+p8Hcdf9bC2Fo64Zc3P4xnBJOzcCDMhR9qKdaihISWgGM
+	gDD6EjCsiVB/2FitA/g0thgsBu8UU60Do0A==
+X-ME-Sender: <xms:xModaK-eL-K39NxfSS4ipyQDKeMvRaDz7sRF_1IUfq1XJx6FPRuciQ>
+    <xme:xModaKvmIWrb1CKc7leCFBCPDl452jQAK4oy3FqfbjgZXn0TXli7iR72t7cXyZS0I
+    FmmfK77gJSgAtEc3fQ>
+X-ME-Received: <xmr:xModaAAxsYzbnfksQDP4VtqKA7FxP_LfdAlbpRtX3mkqeJr2n66ww7IR5NOHuBKBlWEg_MbhRVJ_bIpgGVCq0SyKoeo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvvdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkgggtugfgjggfsehtkeertddt
-    reejnecuhfhrohhmpedftehhmhgvugcuufdrucffrghrfihishhhucdluggvvhdmfdcuoe
-    gurghrfihirdguvghvsegtrggthhgvlhhinhgvrdguvgeqnecuggftrfgrthhtvghrnhep
-    uddufeeuvdevtdffkeeuleejfefhfeelhfdvgffgueeukeetlefhveegveeihfetnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggrrhifihdr
-    uggvvhestggrtghhvghlihhnvgdruggvpdhnsggprhgtphhtthhopeduuddpmhhouggvpe
-    hsmhhtphhouhhtpdhrtghpthhtoheprghnughrvgifrdgtohhophgvrhefsegtihhtrhhi
-    gidrtghomhdprhgtphhtthhopegurghrfihisehlihhnuhhtrhhonhhigidruggvpdhrtg
-    hpthhtohepmhhinhhgohesrhgvughhrghtrdgtohhmpdhrtghpthhtohepsghpsegrlhhi
-    vghnkedruggvpdhrtghpthhtohepuggrvhgvrdhhrghnshgvnheslhhinhhugidrihhnth
-    gvlhdrtghomhdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhnihigrdguvgdprhgt
-    phhtthhopehhphgrseiihihtohhrrdgtohhmpdhrtghpthhtohepjhhohhhnrdhoghhnvg
-    hssheslhhinhhuthhrohhnihigrdguvgdprhgtphhtthhopeigkeeisehkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:gskdaEQRpaGKBc2plN1EwY66j7rW7CpGh2fSuIzMYnFkRw-uyDeF7Q>
-    <xmx:gskdaEw2vz8iPSEankoDONMW2M86Hq5WGIg8v44711imMrS2eRUZ6w>
-    <xmx:gskdaK4CKWaEfR2ig3AmH2Xc10B8UzyENYh4FLywK-soGIDFSCav_A>
-    <xmx:gskdaJwJ5Cbc-h39Z0JpKUnKD7YDcsw7XM8ekzvaS7XRHHPBbTV55g>
-    <xmx:g8kdaA1Mluu4fcCSCpKyF77H871OI18LJ5hNRmk1I-aUVJDJJ3aFkpf9>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkgggtuggjfgesthdtredttder
+    vdenucfhrhhomhepfdethhhmvgguucfurdcuffgrrhifihhshhculdguvghvmddfuceoug
+    grrhifihdruggvvhestggrtghhvghlihhnvgdruggvqeenucggtffrrghtthgvrhhnpedt
+    ledtkeekffekleefudekgeeukeejhefffeeuteeujeeuvdetvdfhhedvudevueenucffoh
+    hmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepuggrrhifihdruggvvhestggrtghhvghlihhnvgdruggvpd
+    hnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggr
+    rhifiheslhhinhhuthhrohhnihigrdguvgdprhgtphhtthhopehmihhnghhosehkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehmihhnghhosehrvgguhhgrthdrtghomhdprhgtphht
+    thhopegsphesrghlihgvnhekrdguvgdprhgtphhtthhopegurghvvgdrhhgrnhhsvghnse
+    hlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtohepthhglhigsehlihhnuhhtrhho
+    nhhigidruggvpdhrtghpthhtoheprghnughrvgifrdgtohhophgvrhefsegtihhtrhhigi
+    drtghomhdprhgtphhtthhopehhphgrseiihihtohhrrdgtohhmpdhrtghpthhtohepjhho
+    hhhnrdhoghhnvghssheslhhinhhuthhrohhnihigrdguvg
+X-ME-Proxy: <xmx:xModaCdJW4oDYsvTxPK9lt5hR7jVmlIlU9esWhN21Q07V7uobIsSHA>
+    <xmx:xModaPPzzmraYTqPkM3J-RWyXdDAKe52Y1jFkl6tr4iS7IcT32aOJg>
+    <xmx:xModaMnMNIj5x6mtRVXPjtoID25j7Txvr2UwCrMEPlvWZlYnp7-VzA>
+    <xmx:xModaBtZYfiEMHc6TNllwj6oPA82rK6hoqrVmeIRtgIZ3VJbZxL2vA>
+    <xmx:xModaM9ZBZ46VW8xghtdbFyfa9NnUs4-onxW2_taQTCaEzLv65-rapKd>
 Feedback-ID: i7c5149e1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 05:23:11 -0400 (EDT)
-Date: Fri, 9 May 2025 11:23:10 +0200
+ 9 May 2025 05:28:33 -0400 (EDT)
+Date: Fri, 9 May 2025 11:28:31 +0200
 From: "Ahmed S. Darwish (dev)" <darwi.dev@cacheline.de>
-To: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Ingo Molnar <mingo@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 02/26] x86/cpu: Sanitize CPUID(0x80000000) output
-Message-ID: <aB3Jfta9e9fdqZFs@lx-t490>
+Subject: Re: [PATCH v1 00/26] x86: Introduce centralized CPUID model
+Message-ID: <aB3Kvx1lC93972Q9@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6b0c87e0-d98d-4394-85bd-8abf556ebf0f@citrix.com>
+In-Reply-To: <aBsor3iOb0SJsLSQ@lx-t490>
 User-Agent: Mutt/2.2.14 (516568dc) (2025-02-20)
 
-Hi,
-
-On Wed, 07 May 2025, Andrew Cooper wrote:
+On Wed, 07 May 2025, Ahmed S. Darwish wrote:
 >
-> On 06/05/2025 6:04 am, Ahmed S. Darwish wrote:
+> On Tue, 06 May, Ingo Molnar wrote:
 > >
-> > CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
-> > x86-32 machines
+> > Wrt. <asm/cpuid/api.h>, we'll need a few followup cleanups there too
+> > I think, such as migrating to the cpuid_*() namespace:
+> >
 >
-> How certain are you that it's all 32bit CPUs?  AIUI, it's an Intel
-> specific behaviour, not shared by other x86 vendors of the same era.
+> Perfect, then I'll move ahead and do a "CPUID headers cleanup" patch
+> queue /before/ moving into a v2 of this series.
 >
 
-Sorry, I missed responding to this earlier.
+Sent at:
 
-You're correct.  I indeed assumed that for all invalid CPUID queries, the
-CPU repeats the output of the last valid standard leaf on /all/ x86
-machines — thus CPUID(0x80000000) behaves this way also on all x86-32
-machines lacking an extended range.
-
-I've done a quick check on some Intel vs. AMD machines, and indeed, this
-is Intel-specific.  AMD machines just return all-zero instead.
-
-(The patch content is still valid, and I guess that's what HPA was just
- hinting at further down the thread.)
+    [PATCH v1 0/9] x86/cpuid: Headers cleanup
+    https://lore.kernel.org/lkml/20250508150240.172915-1-darwi@linutronix.de
 
 Thanks!
 ~ Ahmed
