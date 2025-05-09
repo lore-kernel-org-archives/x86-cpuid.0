@@ -1,91 +1,91 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6222928689B
-	for <x86-cpuid@lists.linux.dev>; Fri,  9 May 2025 09:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBADC28DF20
+	for <x86-cpuid@lists.linux.dev>; Fri,  9 May 2025 09:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746782919; cv=none; b=LS5BZy3yFNPOwCg29qjghTwJ4BoS47OS7M7OJImXrNkhiTQr5wCmLeMVo/ORhuIw3JLsYdRxtGtrxi3Y7T2YvBhdIbaAlQEciIEfL16cbhU+v1aSqZBYbWAlqvVC7MezVYJ5UjveVX7e/5pGN6UhxmOADWPjoqVi6zJI5aGD5F0=
+	t=1746784775; cv=none; b=DnonCxTq6d0FpryCaEyC9UL1Yh24+WIb2Mp5IBh+0blMvt4zbzR/rE8wA1wSpbB3ftWjKI0uxvoLp5wHfjflgz+mRGZCZcBHWbzRUX8jBjyAYaJFfWT88e8ifcenG9txUVIF3xzo2Gjq471Vry1W5DfK+UDCDasCg7vUYKQ6zNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746782919; c=relaxed/simple;
-	bh=z15afqnSZ3avseRb+hX3bOV+QNP5+3t8At9bgSSKGro=;
+	s=arc-20240116; t=1746784775; c=relaxed/simple;
+	bh=sRMnY+ZMRqJWg+cb8Ifcp0dbwb2cc0Qd6+6wObEIesg=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=fij3zH/SzBEJVgiWVQvZmu0W/ArhqHotNGzEhGmVgmK/UK41bbjxGin3QePu4xFogwNloHdZqbVFKpB+jxuuKq0DVUicP91tL62GTxhMPOXd7VXwm26gaN7qxoqD/RZTdaV8k3n9GmMD8hBZafgJ29JNKZgGcvKzQjjr2pj8kSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de; spf=pass smtp.mailfrom=cacheline.de; dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b=FkKZQHDx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A5NLLivB; arc=none smtp.client-ip=103.168.172.147
+	 Content-Disposition:In-Reply-To; b=oKY2GTizQVIH/592heBV7oHJGBdAWsGnLa68hIScnaQrQ2sZuc80cKHMYZKpFhWPF9+3+Wn5T1tkX4WgW1RhX9wgA/OrkU7PySmHJ+8rnMrQ/5NA5gTaB9OM5uZlWcSpVrBJsD4bzl6BAStpjZyzZRL04Xl9JpnAeytsf7p0v0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de; spf=pass smtp.mailfrom=cacheline.de; dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b=hhg1sPpL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZRKzLpvm; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cacheline.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cacheline.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b="FkKZQHDx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A5NLLivB"
+	dkim=pass (2048-bit key) header.d=cacheline.de header.i=@cacheline.de header.b="hhg1sPpL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZRKzLpvm"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8BA351380193;
-	Fri,  9 May 2025 05:28:36 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id E9F3B13801E2;
+	Fri,  9 May 2025 05:59:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 09 May 2025 05:28:36 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 09 May 2025 05:59:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cacheline.de; h=
 	cc:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm3; t=1746782916; x=1746869316; bh=dIWWiS5nyaNIyDc7xgCSC
-	GutcHi9+SeN0U3LvBIU+fI=; b=FkKZQHDxBesZOi30ZGZduC7+QMwxaBLVifIP3
-	SqvTdMxz0HcOc8d0DGZdwfktW3zhBBQ8+TQaf6Gry9zIw9PvxPOWWTkq9p8ITj2E
-	dRFkXT93kcvczxzXY0AQgBNecouNqtx3q78Xi5tPKtPuJwMtkGu0t7DoEW4Gjh0u
-	njm9AFPGYwTvqHWEv5upetg3jyOY1RiBCbnLOFvXh4VIwZ5XNDCeEjz3K0xWBP87
-	sqKoyqncDcCKWZhmQTGNQ09yX3iCyWD7d0mVZqkfUS7NawkUi9qr/CsLVvTO5Jhm
-	wC/Bg8HiJ8LpJAR3xHz6bnBDhd3mtUyUu+gaD/dCdqSHOlleQ==
+	:to; s=fm3; t=1746784772; x=1746871172; bh=Knocie7AspkrYXXpPGQii
+	Ms4Xx8l5ahcfQMqyNo5S20=; b=hhg1sPpLWjVgKP82PA1rI8Hbls/CTqCttvg55
+	G2wp+a5XBHBVUE0LVxOz9n5u6Nlj48Iz4B71vcsN7fD/gOOIIgErlvmTTu1+reP5
+	8fL51ScMullQT5oKZOjCY6eDNfV2/ya08m6UTqRX3jJeo3fvJoO5lh1Mgbsq77Br
+	CbmsWY62/mPsHtymx3c8I6Fzwb8fh2Zb3tQBKZZ1ariGu5V6dsifukcdkY293i3+
+	UNAHfQ+QqGNiYTUsNuUkFNizqtZLScJ3NMbeeWeaFYgZOoklEPWpfECRXpDbFLGo
+	0uW1/M6IrtDIenC7v35NylaLf9YwvOslcCl63MQ1h14JzKzUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:reply-to:subject:subject:to:to
 	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746782916; x=1746869316; bh=dIWWiS5nyaNIyDc7xgCSCGutcHi9+SeN0U3
-	LvBIU+fI=; b=A5NLLivB+rEI8f1qIWrO6qt/Y5sMNBdVOq4hrQVRYL5krlww7jd
-	9L+6hg82T2SHhp+afeWac7ypr4NIan/sAzQb+ACsjpSi+TTGj/ZzMay5aj3BqeYA
-	xs39rDleTy/ZAVYD6z/6b3txVtu3wXpZ7gRoSWTkxuf0ZZmcBk1EqkySpLotzCe5
-	g340LUGFgby2N1QIA4+8QTXWitzssddvzsayimkL4dE5QcOeImfarDcmM30H2Tlq
-	nO6wfc4Wf4mVx8lDs7d+p8Hcdf9bC2Fo64Zc3P4xnBJOzcCDMhR9qKdaihISWgGM
-	gDD6EjCsiVB/2FitA/g0thgsBu8UU60Do0A==
-X-ME-Sender: <xms:xModaK-eL-K39NxfSS4ipyQDKeMvRaDz7sRF_1IUfq1XJx6FPRuciQ>
-    <xme:xModaKvmIWrb1CKc7leCFBCPDl452jQAK4oy3FqfbjgZXn0TXli7iR72t7cXyZS0I
-    FmmfK77gJSgAtEc3fQ>
-X-ME-Received: <xmr:xModaAAxsYzbnfksQDP4VtqKA7FxP_LfdAlbpRtX3mkqeJr2n66ww7IR5NOHuBKBlWEg_MbhRVJ_bIpgGVCq0SyKoeo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvvdeiucetufdoteggodetrf
+	1746784772; x=1746871172; bh=Knocie7AspkrYXXpPGQiiMs4Xx8l5ahcfQM
+	qyNo5S20=; b=ZRKzLpvm3FPpeLZP4B0Tv2cMcnybhzNvwQ/+W3dQ8CCs1NmnTow
+	+JEen2QwNpqU/JIQ5JLWoz3nSBShTv3/L1cosgrRQT/mo6GWoDCScKJN6H4GpfYE
+	chndpf6Z9bcolwsFdsGVS/2mU8sEvt85baQuHcCMjTXsuHfEjLhBryfdm6DLCIFd
+	YHdIMtvQ7+WOkGPudWR4HMI3XtFSdx/aWyoAJaXvXb5/mZZL77rVCkkOI9uJzCMV
+	r8OO1AhCUWa+D7gBkzZOPXAwwjUZ+uP1tkYacx91RGV77SnLCJbwdyEf5FA2DDIo
+	pxgHRqByDWtZ0uQxi8QSxpnb479DxnlVNBQ==
+X-ME-Sender: <xms:BNIdaJYcBaEaSZgES6cmbBytPPVPca5mmbhWO6DX8jBd-Yuxr7NhzA>
+    <xme:BNIdaAYMGt31CZY2AXS48PnKfuGsK2FuEFM0Oih7h1l8BDgNeQWYsB050D12fHI5g
+    ahydUo-Igl_slXF428>
+X-ME-Received: <xmr:BNIdaL_azMsRbC9MIwmQ82L5qkyfyJLfyIcHNCdLmb90UtZNM8gnNdORRj8u7n0JspIHZtlmjABPL3zzgKsFCCYGmnY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvfedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkgggtuggjfgesthdtredttder
     vdenucfhrhhomhepfdethhhmvgguucfurdcuffgrrhifihhshhculdguvghvmddfuceoug
-    grrhifihdruggvvhestggrtghhvghlihhnvgdruggvqeenucggtffrrghtthgvrhhnpedt
-    ledtkeekffekleefudekgeeukeejhefffeeuteeujeeuvdetvdfhhedvudevueenucffoh
-    hmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepuggrrhifihdruggvvhestggrtghhvghlihhnvgdruggvpd
-    hnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggr
-    rhifiheslhhinhhuthhrohhnihigrdguvgdprhgtphhtthhopehmihhnghhosehkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehmihhnghhosehrvgguhhgrthdrtghomhdprhgtphht
-    thhopegsphesrghlihgvnhekrdguvgdprhgtphhtthhopegurghvvgdrhhgrnhhsvghnse
-    hlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtohepthhglhigsehlihhnuhhtrhho
-    nhhigidruggvpdhrtghpthhtoheprghnughrvgifrdgtohhophgvrhefsegtihhtrhhigi
-    drtghomhdprhgtphhtthhopehhphgrseiihihtohhrrdgtohhmpdhrtghpthhtohepjhho
-    hhhnrdhoghhnvghssheslhhinhhuthhrohhnihigrdguvg
-X-ME-Proxy: <xmx:xModaCdJW4oDYsvTxPK9lt5hR7jVmlIlU9esWhN21Q07V7uobIsSHA>
-    <xmx:xModaPPzzmraYTqPkM3J-RWyXdDAKe52Y1jFkl6tr4iS7IcT32aOJg>
-    <xmx:xModaMnMNIj5x6mtRVXPjtoID25j7Txvr2UwCrMEPlvWZlYnp7-VzA>
-    <xmx:xModaBtZYfiEMHc6TNllwj6oPA82rK6hoqrVmeIRtgIZ3VJbZxL2vA>
-    <xmx:xModaM9ZBZ46VW8xghtdbFyfa9NnUs4-onxW2_taQTCaEzLv65-rapKd>
+    grrhifihdruggvvhestggrtghhvghlihhnvgdruggvqeenucggtffrrghtthgvrhhnpeek
+    keduudefgeduvdfhveehhedvfeeiueduiedvkeejhfdtfeeiieevjeejieekhfenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegurghrfihirdgu
+    vghvsegtrggthhgvlhhinhgvrdguvgdpnhgspghrtghpthhtohepuddupdhmohguvgepsh
+    hmthhpohhuthdprhgtphhtthhopegurghrfihisehlihhnuhhtrhhonhhigidruggvpdhr
+    tghpthhtohepmhhinhhgohesrhgvughhrghtrdgtohhmpdhrtghpthhtohepsghpsegrlh
+    hivghnkedruggvpdhrtghpthhtohepuggrvhgvrdhhrghnshgvnheslhhinhhugidrihhn
+    thgvlhdrtghomhdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhnihigrdguvgdprh
+    gtphhtthhopegrnhgurhgvfidrtghoohhpvghrfeestghithhrihigrdgtohhmpdhrtghp
+    thhtohephhhprgesiiihthhorhdrtghomhdprhgtphhtthhopehjohhhnhdrohhgnhgvsh
+    hssehlihhnuhhtrhhonhhigidruggvpdhrtghpthhtohepgiekieeskhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:BNIdaHopuGG_JVEgLNpYUH98o8HA-YT5KlSzxQOkjNzS4rpXatwSgA>
+    <xmx:BNIdaEoJaVWwtCnxf-I7YdYBbVcEy3QeNwTBH48hfThdPpOxXS31pg>
+    <xmx:BNIdaNQMMPnZg37WYUg0ctISDesLHZFOT71nbyUjCd-kYOMKv838hA>
+    <xmx:BNIdaMp_CWO3qrquhZJo8GeoWdpkitnGUPPIfnA6GY4dOw8ShBMdVg>
+    <xmx:BNIdaBOxZsb8rjxjm9R4lTMiA6BlgLr_T0qzNqnGKtFFW1Pj0CGgQcX3>
 Feedback-ID: i7c5149e1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 05:28:33 -0400 (EDT)
-Date: Fri, 9 May 2025 11:28:31 +0200
+ 9 May 2025 05:59:29 -0400 (EDT)
+Date: Fri, 9 May 2025 11:59:27 +0200
 From: "Ahmed S. Darwish (dev)" <darwi.dev@cacheline.de>
 To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Ingo Molnar <mingo@kernel.org>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
+Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 00/26] x86: Introduce centralized CPUID model
-Message-ID: <aB3Kvx1lC93972Q9@lx-t490>
+Subject: Re: [PATCH v1 9/9] x86/cpuid: Rename native_cpuid_REG() to
+ cpuid_native_REG()
+Message-ID: <aB3R_5_aSCeGeLVr@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -94,25 +94,50 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBsor3iOb0SJsLSQ@lx-t490>
+In-Reply-To: <20250508150240.172915-10-darwi@linutronix.de>
 User-Agent: Mutt/2.2.14 (516568dc) (2025-02-20)
 
-On Wed, 07 May 2025, Ahmed S. Darwish wrote:
+On Thu, 08 May 2025, Ahmed S. Darwish wrote:
 >
-> On Tue, 06 May, Ingo Molnar wrote:
-> >
-> > Wrt. <asm/cpuid/api.h>, we'll need a few followup cleanups there too
-> > I think, such as migrating to the cpuid_*() namespace:
-> >
+> -	native_cpuid_eax(1);
+> +	cpuid_native_eax(1);
 >
-> Perfect, then I'll move ahead and do a "CPUID headers cleanup" patch
-> queue /before/ moving into a v2 of this series.
+...
+>
+> -	cpuid_1_eax = native_cpuid_eax(1);
+> +	cpuid_1_eax = cpuid_native_eax(1);
 >
 
-Sent at:
+Now that I'm looking at this with fresher eyes, I think below form would
+be much better:
 
-    [PATCH v1 0/9] x86/cpuid: Headers cleanup
-    https://lore.kernel.org/lkml/20250508150240.172915-1-darwi@linutronix.de
+    cpuid_eax_native()
+    cpuid_ebx_native()
+    cpuid_ecx_native()
+    cpuid_edx_native()
 
-Thanks!
+So that it aligns with:
+
+    cpuid_eax()
+    cpuid_ebx()
+    cpuid_ecx()
+    cpuid_edx()
+
+at the rest of the <cpuid/api.h> header.  Thus the diff becomes:
+
+-   cpuid_1_eax = native_cpuid_eax(1);
++   cpuid_1_eax = cpuid_eax_native(1);
+
+-   if (native_cpuid_ecx(1) & BIT(31))
++   if (cpuid_ecx_native(1) & BIT(31))
+
+But I'll wait for review feedback before rolling a v2.  Maybe people want
+to keep having "native_" at the start, instead of forcing a strict
+"cpuid_" namespace.
+
+(With "CPUID refactoring" hat on, and as the above mini diff shows, I
+ honestly think forcing a "cpuid_" namespace, even on native OPs, is much
+ cleaner.)
+
+Thanks,
 ~ Ahmed
