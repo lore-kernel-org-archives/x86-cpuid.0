@@ -1,67 +1,64 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4330E29B787
-	for <x86-cpuid@lists.linux.dev>; Thu, 15 May 2025 20:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04661F5827
+	for <x86-cpuid@lists.linux.dev>; Thu, 15 May 2025 20:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747340515; cv=none; b=T7RmhUH+IvXscxWSNuyUyZfrPUnndp3so3Z6rrYxhftp3iUoMY0wFK2LHwbfWUKOYGlxSaEORwAeWbuHWGhg/RoPeh+4lcGusacpIuTC581OTaJrwFSGsjqnAnNgRxy8gVadi5Ua6BnEY8nU8KuH8BpYHIj0lYUlQSUrpOaVae0=
+	t=1747340945; cv=none; b=kbgPjy0SuZB+iWRENMT/fUsbbmagk4MpWc5RbUkpjveAOFq4pKqCzreXx9pOGbVg2kt5EWC5KyMHJYeZVTfrHtguNV8OmlWl9+F7JoPN41f5nGevWgVMC4Oylo68rQvMPjrrU6unjDT4NP4Jujoa3YaBs/2IzvcM9vP8A4IB6Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747340515; c=relaxed/simple;
-	bh=mJfCC/iRmdk2M7MvZLIWog78RJ8ElfIQyxW4zW2+VQ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8SlIA8MV47sSBDyZKc4hZMj6ZJ/MpeBaT9aUJN46lvj1u6VKiLz3CrU0KTowd45v57qCq0S5IYe+Dy+um4ZevlzwLsFAOSzQ/PZrrNGCjsiqFO0Ks0Eb3VtwjOvwa4AqTWB32UgDB2n3n8C4AXdmYfthD/0w+6PUjOLmtxEosM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=N9omGqi/; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=eaNcOIgz; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1747340945; c=relaxed/simple;
+	bh=qpTfU7XOprI/kvZiFlufF/io7suJwOtPxC3JUsMa7AE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OanU+1DlB7fPEhdGGgexACH93xuycww4GrNgcRerjbtRhVd8Z5gE5w6YE+w7SHgucgtKbFK03tLjZSHciAfkR/M+59dw4u7HuTWxsUl8N0qyiOlOmD7IyO8cWI5NidNOEO7PhpgeZyF0CtXSB9ynROFzT+IM4/Ss5HdCMtXOYdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Kib/ZCuX; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Db4LWQCb; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="N9omGqi/";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="eaNcOIgz"
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Kib/ZCuX";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Db4LWQCb"
+Date: Thu, 15 May 2025 22:28:59 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1747340511;
+	s=2020; t=1747340941;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HoF1rv0y4osaBn1doVAbQf/kbyat3/wfg/xnJwdsyfA=;
-	b=N9omGqi/zjnrKBhcHLykxO4+HAUpCZcOQ0V3XHHYV6EvYUI0u7q+Gqk55w54UB9QKA1Q6b
-	Q2Kve/nRypdYVr6vu5p+FL3nAkRcNnUB5dEnDz6VtAmhGtDLOU1TnOwmadk4NQ/rNVeeDU
-	7I5kAjNS6QH1au2CVx27fbMYEtjVda/gy4mCKziou+HMp6yZXwRcX8WaX7PKJ9GU7fTFdg
-	gmDjXXj+2Av4lznceuvs01WGczq9FBtjTgLq1BpaJn8R69Bjx10vSNxl/MJEZqlmXZbxAc
-	KVXRD1Fjw3a5S17WBtSbEOd6bIZWw+CfShoitikLtWbjly2kkEwRXdsck3kXoA==
+	bh=dezAiO+6NtjbxTAnko7B/7eCkBAIolQDl5NvQdCS6XI=;
+	b=Kib/ZCuXdQ3WDGWvoOs83ymOxhu8Z+1YXrMJfoaLmznHs+lEvO7yS5DOUmDbaRxFKPGMJZ
+	Tj3SUYlL7gH8Fg7LOFnXxyBTUlckgUp6fAAj8Mw/m2qWCagyS97U92dm7T+SHahzyTeuph
+	bpgzxjVEbJzCrFud+dACtTKoq7dUkL1RzZ+MVCL/LYFV6d+7uRfUHsWuiy0VydfSB6xV1k
+	RJi5NaPMKi20vg0zWtpC7532XwB0zIAn4Hb7HxgLhotnDfAyEmtng+OxPm0f6qnS81YO3P
+	FqzzKi6XBWz4RMbCLVtYKeuDGphW+AcggC8R1SwspTr7JKEQ5Zm0IhrM+1c/ag==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1747340511;
+	s=2020e; t=1747340941;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HoF1rv0y4osaBn1doVAbQf/kbyat3/wfg/xnJwdsyfA=;
-	b=eaNcOIgzD2aIyZRLU9+dakO2rnoBRDD9OQ3W3JENFmSW1Yhz0YSPLz2j+8e1XCAONdoDn8
-	WQY08vW5GVlixJAw==
-To: Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
+	bh=dezAiO+6NtjbxTAnko7B/7eCkBAIolQDl5NvQdCS6XI=;
+	b=Db4LWQCbnxXF5EZLHTQMY5tIb/rAR4vcjMfR6XC5Oha3wuhXdrfv1xYBMRm6ZdPrc2ZMag
+	e37wXweFAcHgf4CA==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86@kernel.org,
-	x86-cpuid@lists.linux.dev,
-	LKML <linux-kernel@vger.kernel.org>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v2 2/2] x86/cpuid: Rename hypervisor_cpuid_base() to cpuid_hypervisor_base()
-Date: Thu, 15 May 2025 22:21:42 +0200
-Message-ID: <20250515202143.34448-3-darwi@linutronix.de>
-In-Reply-To: <20250515202143.34448-1-darwi@linutronix.de>
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3] x86/cpuid: Rename hypervisor_cpuid_base() to
+ cpuid_base_hypervisor()
+Message-ID: <aCZOi0Oohc7DpgTo@lx-t490>
 References: <20250515202143.34448-1-darwi@linutronix.de>
+ <20250515202143.34448-3-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250515202143.34448-3-darwi@linutronix.de>
 
 In order to let all the APIs under <cpuid/api.h> have a shared "cpuid_"
 namespace, rename hypervisor_cpuid_base() to cpuid_base_hypervisor().
@@ -79,6 +76,10 @@ Adjust call-sites accordingly.
 Suggested-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
+
+ Changelog-v3: Fix commit subject line to include the new function name,
+ cpuid_base_hypervisor().
+
  arch/x86/include/asm/acrn.h           | 2 +-
  arch/x86/include/asm/cpuid/api.h      | 6 +++---
  arch/x86/include/asm/xen/hypervisor.h | 2 +-
@@ -97,7 +98,7 @@ index 1dd14381bcb6..fab11192c60a 100644
  	if (boot_cpu_has(X86_FEATURE_HYPERVISOR))
 -		return hypervisor_cpuid_base("ACRNACRNACRN", 0);
 +		return cpuid_base_hypervisor("ACRNACRNACRN", 0);
- 
+
  	return 0;
  }
 diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
@@ -107,33 +108,33 @@ index ccf20c62b89f..44fa82e1267c 100644
 @@ -188,14 +188,14 @@ static __always_inline bool cpuid_function_is_indexed(u32 function)
  	return false;
  }
- 
+
 -#define for_each_possible_hypervisor_cpuid_base(function) \
 +#define for_each_possible_cpuid_base_hypervisor(function) \
  	for (function = 0x40000000; function < 0x40010000; function += 0x100)
- 
+
 -static inline u32 hypervisor_cpuid_base(const char *sig, u32 leaves)
 +static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
  {
  	u32 base, eax, signature[3];
- 
+
 -	for_each_possible_hypervisor_cpuid_base(base) {
 +	for_each_possible_cpuid_base_hypervisor(base) {
  		cpuid(base, &eax, &signature[0], &signature[1], &signature[2]);
- 
+
  		/*
 diff --git a/arch/x86/include/asm/xen/hypervisor.h b/arch/x86/include/asm/xen/hypervisor.h
 index bd0fc69a10a7..c2fc7869b996 100644
 --- a/arch/x86/include/asm/xen/hypervisor.h
 +++ b/arch/x86/include/asm/xen/hypervisor.h
 @@ -43,7 +43,7 @@ extern struct start_info *xen_start_info;
- 
+
  static inline uint32_t xen_cpuid_base(void)
  {
 -	return hypervisor_cpuid_base(XEN_SIGNATURE, 2);
 +	return cpuid_base_hypervisor(XEN_SIGNATURE, 2);
  }
- 
+
  struct pci_dev;
 diff --git a/arch/x86/kernel/jailhouse.c b/arch/x86/kernel/jailhouse.c
 index cd8ed1edbf9e..9e9a591a5fec 100644
@@ -142,11 +143,11 @@ index cd8ed1edbf9e..9e9a591a5fec 100644
 @@ -49,7 +49,7 @@ static uint32_t jailhouse_cpuid_base(void)
  	    !boot_cpu_has(X86_FEATURE_HYPERVISOR))
  		return 0;
- 
+
 -	return hypervisor_cpuid_base("Jailhouse\0\0\0", 0);
 +	return cpuid_base_hypervisor("Jailhouse\0\0\0", 0);
  }
- 
+
  static uint32_t __init jailhouse_detect(void)
 diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
 index f3642226e0a5..921c1c783bc1 100644
@@ -154,11 +155,11 @@ index f3642226e0a5..921c1c783bc1 100644
 +++ b/arch/x86/kernel/kvm.c
 @@ -875,7 +875,7 @@ static noinline uint32_t __kvm_cpuid_base(void)
  		return 0;	/* So we don't blow up on old processors */
- 
+
  	if (boot_cpu_has(X86_FEATURE_HYPERVISOR))
 -		return hypervisor_cpuid_base(KVM_SIGNATURE, 0);
 +		return cpuid_base_hypervisor(KVM_SIGNATURE, 0);
- 
+
  	return 0;
  }
 diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
@@ -168,12 +169,11 @@ index 7f43d8d24fbe..ecd85f4801cc 100644
 @@ -236,7 +236,7 @@ static struct kvm_hypervisor_cpuid kvm_get_hypervisor_cpuid(struct kvm_vcpu *vcp
  	struct kvm_cpuid_entry2 *entry;
  	u32 base;
- 
+
 -	for_each_possible_hypervisor_cpuid_base(base) {
 +	for_each_possible_cpuid_base_hypervisor(base) {
  		entry = kvm_find_cpuid_entry(vcpu, base);
- 
- 		if (entry) {
--- 
-2.49.0
 
+ 		if (entry) {
+--
+2.49.0
