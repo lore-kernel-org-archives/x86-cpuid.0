@@ -1,65 +1,65 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A211DDD1
-	for <x86-cpuid@lists.linux.dev>; Thu, 15 May 2025 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C50725A33D
+	for <x86-cpuid@lists.linux.dev>; Thu, 15 May 2025 17:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747329442; cv=none; b=F7MeksAd3CrDTy/l1RUZKMOiKNr2ogxHxbk+OfBWr7hPhPKPYogFkpOVWStmdSS2U+oJCAhspd2u4VW7xvO4qjknNIPWu+FLwYT+fBgsc5wYfzQAuwOJZ6nK+xwE+L8oYyq0+wSYiE2K6FdkdRaFZkyPTOvbEioumAHdIGyfx9c=
+	t=1747329442; cv=none; b=Zt08cplIfazJU6wlrgfAm5WAECsZ/C7Rx1PAuL9xLJ45AYqx+/pNHPW0+dJ4vpowXTpWApKULcs7i0WmVTSuVx10hyJWKneL9A/wk4M1JzM0j9s74B408h93hpftzOT+N9bfh+4KtT1WN1U9GPJU4qN1ZNAGY1gXXhci0giVKtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747329442; c=relaxed/simple;
-	bh=tVWMekDkW9q0LUBiYNi1WrWKIkReHw2wUIeY4xwjPWM=;
+	bh=DWLi+pfq8wqzoy9fxCts7QtNQgnQ2rSQjG8nmDTG4fg=;
 	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
-	 Message-ID:Content-Type; b=e7KAfbTXZ/hSExLaBnhlFvdYIcnX7mnoPQGZIYupp+s16ZHzof8s+/+3HZ1F8XRzwJw+qCZHQRa2LAhZsRrAQN8clBeUe4C72nH9nDgXzCwAP4uuqVo6+mTq/upkwP8xGNTgdx0tG881NW2fE4x+Fr31BmR8TZmCZUnTbCT7jJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=JEaq9lpe; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=CFnsHxki; arc=none smtp.client-ip=193.142.43.55
+	 Message-ID:Content-Type; b=dW/lK8DVHTqLH0TKUATZvENkuIffFTapdKWdEKOrxzTim6VdGNJer+5nGU4Z+bzmJbf20orLQyb8ZS2mV619J4aRNZzyEd38WpgCO8OUFaAn+Ghcb3d+5TTQlnwkRI0zm4l/g6CChlv6yXFI85MQfj8+zW5Kab7wpyuFjmJCAgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=gb2h1jsa; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UkHh7Do7; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="JEaq9lpe";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="CFnsHxki"
-Date: Thu, 15 May 2025 17:17:16 -0000
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="gb2h1jsa";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UkHh7Do7"
+Date: Thu, 15 May 2025 17:17:17 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1747329437;
+	s=2020; t=1747329438;
 	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
 	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
 	 content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ts5qO5wERAEeVRAGXMcVz8JaQ+lxfccpla54kuhx38E=;
-	b=JEaq9lpebTn4/9DJ8MaujKnXo9XAWX9iw26Kb+RxTXGvx39NlEZK0ZGvkdF5kzOJfQWZ8m
-	bqW50ewWbCHa1jzfiI1ptnZqf6dMJVlu/jmR0AgnthTkVGszWN8JWYm77SkLCkzIUYJ0jW
-	MewJPY1KsK5N2vhV5DhINWfg1xdt3+lSneTCYPl/XAG+sdclVeJP3uBPqkz/sIW8b+KlZD
-	/YZEsMu0zbCrEiYXCKftLxP+be9MAWC7lx8iTXbZszbIVCBdTEswaMJoZ+PRfKAi7xQMS7
-	k1fD2nglcRnr/8Dmc3DEYTKqVei74vd2ptmz0ICUoKnYeP5lDqh0yZ/cAu7FgA==
+	bh=f9tTeSggDHomyX793xESkkRISzN7l8LzMhIpDueBFBU=;
+	b=gb2h1jsaZ6AUTNMme0vLxtQvHVIBgA3oo7bLOfMRiLhxSAoTzY5CLv2bI+uCSGY5jwvJJT
+	fZVJJW8Tiz8PylDJ4zOb0ICu7BPFkEV6ZOfc6Qn/CVQbPWMx7sYdtx6igx8NMBRmUEdZsq
+	OQDb6yXJ1lD0XH9mSt0uwcklmEkgY8VPszHytxF2wBU5RfNOhOSoCOi6My6o1RQRmm6VWE
+	Pivt9pmK/2icXBMxlyy9RpgkI7V/Xb/COX6rcI6tWiLy8IICwkuqffbcI7GcSRzQq3/U/0
+	OJet5/TMucu0nZvLVt666h/9JU0x6vXsxeQv/E+CY+/VVOoWnlZ6yOfqsZdvZQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1747329437;
+	s=2020e; t=1747329438;
 	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
 	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
 	 content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ts5qO5wERAEeVRAGXMcVz8JaQ+lxfccpla54kuhx38E=;
-	b=CFnsHxkiIfzNcxrjUzWCul2ciiU8OA9Iz2eV5e92pM2SDO9MvKekPuzNvagjuGx5iYR3MB
-	R/vZW+938qw5ZJDw==
+	bh=f9tTeSggDHomyX793xESkkRISzN7l8LzMhIpDueBFBU=;
+	b=UkHh7Do7ewNKvzSou7/b4i7mz389YdJ+VWS5Dqy9ZpDq7xv+3V24QjAUJJyrR8Q8mDRAW1
+	6uwU8eS7tAMVq8Bg==
 From: "tip-bot2 for Ahmed S. Darwish" <tip-bot2@linutronix.de>
 Sender: tip-bot2@linutronix.de
 Reply-to: linux-kernel@vger.kernel.org
 To: linux-tip-commits@vger.kernel.org
-Subject: [tip: x86/core] x86/cpuid: Rename cpuid_get_leaf_0x2_regs() to
- cpuid_leaf_0x2()
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Ingo Molnar <mingo@kernel.org>,
- "H. Peter Anvin" <hpa@zytor.com>, Andrew Cooper <andrew.cooper3@citrix.com>,
+Subject:
+ [tip: x86/core] x86/cpuid: Set <asm/cpuid/api.h> as the main CPUID header
+Cc: Ingo Molnar <mingo@kernel.org>, "Ahmed S. Darwish" <darwi@linutronix.de>,
+ Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
  John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
  x86@kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250508150240.172915-6-darwi@linutronix.de>
-References: <20250508150240.172915-6-darwi@linutronix.de>
+In-Reply-To: <20250508150240.172915-3-darwi@linutronix.de>
+References: <20250508150240.172915-3-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <174732943606.406.3556994959930813413.tip-bot2@tip-bot2>
+Message-ID: <174732943783.406.7046718117296673782.tip-bot2@tip-bot2>
 Robot-ID: <tip-bot2@linutronix.de>
 Robot-Unsubscribe:
  Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
@@ -69,164 +69,375 @@ Content-Transfer-Encoding: 7bit
 
 The following commit has been merged into the x86/core branch of tip:
 
-Commit-ID:     c4c9ea879c3b22e812bf69cf94c5042f809a4ab0
-Gitweb:        https://git.kernel.org/tip/c4c9ea879c3b22e812bf69cf94c5042f809a4ab0
+Commit-ID:     968e3000680713f712bcf02c51c4d7bb7d4d7685
+Gitweb:        https://git.kernel.org/tip/968e3000680713f712bcf02c51c4d7bb7d4d7685
 Author:        Ahmed S. Darwish <darwi@linutronix.de>
-AuthorDate:    Thu, 08 May 2025 17:02:34 +02:00
+AuthorDate:    Thu, 08 May 2025 17:02:31 +02:00
 Committer:     Ingo Molnar <mingo@kernel.org>
-CommitterDate: Thu, 15 May 2025 18:42:49 +02:00
+CommitterDate: Thu, 15 May 2025 18:23:55 +02:00
 
-x86/cpuid: Rename cpuid_get_leaf_0x2_regs() to cpuid_leaf_0x2()
+x86/cpuid: Set <asm/cpuid/api.h> as the main CPUID header
 
-Rename the CPUID(0x2) register accessor function:
+The main CPUID header <asm/cpuid.h> was originally a storefront for the
+headers:
 
-    cpuid_get_leaf_0x2_regs(regs)
+    <asm/cpuid/api.h>
+    <asm/cpuid/leaf_0x2_api.h>
 
-to:
+Now that the latter CPUID(0x2) header has been merged into the former,
+there is no practical difference between <asm/cpuid.h> and
+<asm/cpuid/api.h>.
 
-    cpuid_leaf_0x2(regs)
+Migrate all users to the <asm/cpuid/api.h> header, in preparation of
+the removal of <asm/cpuid.h>.
 
-for consistency with other <cpuid/api.h> accessors that return full CPUID
-registers outputs like:
+Don't remove <asm/cpuid.h> just yet, in case some new code in -next
+started using it.
 
-    cpuid_leaf(regs)
-    cpuid_subleaf(regs)
-
-In the same vein, rename the CPUID(0x2) iteration macro:
-
-    for_each_leaf_0x2_entry()
-
-to:
-
-    for_each_cpuid_0x2_desc()
-
-to include "cpuid" in the macro name, and since what is iterated upon is
-CPUID(0x2) cache and TLB "descriptos", not "entries".  Prefix an
-underscore to that iterator macro parameters, so that the newly renamed
-'desc' parameter do not get mixed with "union leaf_0x2_regs :: desc[]" in
-the macro's implementation.
-
-Adjust all the affected call-sites accordingly.
-
-While at it, use "CPUID(0x2)" instead of "CPUID leaf 0x2" as this is the
-recommended style.
-
-No change in functionality intended.
-
+Suggested-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
 Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
 Cc: John Ogness <john.ogness@linutronix.de>
 Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250508150240.172915-6-darwi@linutronix.de
+Link: https://lore.kernel.org/r/20250508150240.172915-3-darwi@linutronix.de
 ---
- arch/x86/include/asm/cpuid/api.h | 34 +++++++++++++++----------------
- arch/x86/kernel/cpu/cacheinfo.c  |  4 ++--
- arch/x86/kernel/cpu/intel.c      |  4 ++--
- 3 files changed, 21 insertions(+), 21 deletions(-)
+ arch/x86/boot/compressed/sev.c        | 2 +-
+ arch/x86/boot/startup/sev-startup.c   | 2 +-
+ arch/x86/coco/sev/core.c              | 2 +-
+ arch/x86/coco/sev/vc-handle.c         | 2 +-
+ arch/x86/events/intel/pt.c            | 2 +-
+ arch/x86/include/asm/processor.h      | 2 +-
+ arch/x86/kernel/acpi/cstate.c         | 2 +-
+ arch/x86/kernel/amd_nb.c              | 2 +-
+ arch/x86/kernel/cpu/cacheinfo.c       | 2 +-
+ arch/x86/kernel/cpu/common.c          | 2 +-
+ arch/x86/kernel/cpu/intel.c           | 2 +-
+ arch/x86/kernel/fpu/xstate.c          | 2 +-
+ arch/x86/kernel/hpet.c                | 2 +-
+ arch/x86/kernel/process.c             | 2 +-
+ arch/x86/kernel/smpboot.c             | 2 +-
+ arch/x86/kernel/tsc.c                 | 2 +-
+ arch/x86/kvm/cpuid.c                  | 2 +-
+ arch/x86/virt/svm/sev.c               | 2 +-
+ arch/x86/xen/enlighten_pv.c           | 2 +-
+ drivers/acpi/acpi_pad.c               | 2 +-
+ drivers/dma/ioat/dca.c                | 2 +-
+ drivers/idle/intel_idle.c             | 2 +-
+ drivers/platform/x86/intel/pmc/core.c | 2 +-
+ sound/soc/intel/avs/tgl.c             | 2 +-
+ 24 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
-index c0211fc..bf97f97 100644
---- a/arch/x86/include/asm/cpuid/api.h
-+++ b/arch/x86/include/asm/cpuid/api.h
-@@ -216,17 +216,17 @@ static inline u32 hypervisor_cpuid_base(const char *sig, u32 leaves)
-  */
+diff --git a/arch/x86/boot/compressed/sev.c b/arch/x86/boot/compressed/sev.c
+index 612b443..fd1b67d 100644
+--- a/arch/x86/boot/compressed/sev.c
++++ b/arch/x86/boot/compressed/sev.c
+@@ -21,7 +21,7 @@
+ #include <asm/fpu/xcr.h>
+ #include <asm/ptrace.h>
+ #include <asm/svm.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
  
- /**
-- * cpuid_get_leaf_0x2_regs() - Return sanitized leaf 0x2 register output
-+ * cpuid_leaf_0x2() - Return sanitized CPUID(0x2) register output
-  * @regs:	Output parameter
-  *
-- * Query CPUID leaf 0x2 and store its output in @regs.	Force set any
-+ * Query CPUID(0x2) and store its output in @regs.  Force set any
-  * invalid 1-byte descriptor returned by the hardware to zero (the NULL
-  * cache/TLB descriptor) before returning it to the caller.
-  *
-- * Use for_each_leaf_0x2_entry() to iterate over the register output in
-+ * Use for_each_cpuid_0x2_desc() to iterate over the register output in
-  * parsed form.
-  */
--static inline void cpuid_get_leaf_0x2_regs(union leaf_0x2_regs *regs)
-+static inline void cpuid_leaf_0x2(union leaf_0x2_regs *regs)
- {
- 	cpuid_leaf(0x2, regs);
+ #include "error.h"
+ #include "sev.h"
+diff --git a/arch/x86/boot/startup/sev-startup.c b/arch/x86/boot/startup/sev-startup.c
+index 435853a..0b7e3b9 100644
+--- a/arch/x86/boot/startup/sev-startup.c
++++ b/arch/x86/boot/startup/sev-startup.c
+@@ -38,7 +38,7 @@
+ #include <asm/smp.h>
+ #include <asm/cpu.h>
+ #include <asm/apic.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/cmdline.h>
  
-@@ -251,34 +251,34 @@ static inline void cpuid_get_leaf_0x2_regs(union leaf_0x2_regs *regs)
- }
+ /* For early boot hypervisor communication in SEV-ES enabled guests */
+diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
+index b40c159..5678c3f 100644
+--- a/arch/x86/coco/sev/core.c
++++ b/arch/x86/coco/sev/core.c
+@@ -42,7 +42,7 @@
+ #include <asm/smp.h>
+ #include <asm/cpu.h>
+ #include <asm/apic.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/cmdline.h>
+ #include <asm/msr.h>
  
- /**
-- * for_each_leaf_0x2_entry() - Iterator for parsed leaf 0x2 descriptors
-- * @regs:   Leaf 0x2 register output, returned by cpuid_get_leaf_0x2_regs()
-+ * for_each_cpuid_0x2_desc() - Iterator for parsed CPUID(0x2) descriptors
-+ * @regs:   CPUID(0x2) register output, as returned by cpuid_leaf_0x2()
-  * @__ptr:  u8 pointer, for macro internal use only
-- * @entry:  Pointer to parsed descriptor information at each iteration
-+ * @desc:   Pointer to parsed CPUID(0x2) descriptor at each iteration
-  *
-- * Loop over the 1-byte descriptors in the passed leaf 0x2 output registers
-- * @regs.  Provide the parsed information for each descriptor through @entry.
-+ * Loop over the 1-byte descriptors in the passed CPUID(0x2) output registers
-+ * @regs.  Provide the parsed information for each descriptor through @desc.
-  *
-  * To handle cache-specific descriptors, switch on @entry->c_type.  For TLB
-  * descriptors, switch on @entry->t_type.
-  *
-  * Example usage for cache descriptors::
-  *
-- *	const struct leaf_0x2_table *entry;
-+ *	const struct leaf_0x2_table *desc;
-  *	union leaf_0x2_regs regs;
-  *	u8 *ptr;
-  *
-- *	cpuid_get_leaf_0x2_regs(&regs);
-- *	for_each_leaf_0x2_entry(regs, ptr, entry) {
-- *		switch (entry->c_type) {
-+ *	cpuid_leaf_0x2(&regs);
-+ *	for_each_cpuid_0x2_desc(regs, ptr, desc) {
-+ *		switch (desc->c_type) {
-  *			...
-  *		}
-  *	}
-  */
--#define for_each_leaf_0x2_entry(regs, __ptr, entry)				\
--	for (__ptr = &(regs).desc[1];						\
--	     __ptr < &(regs).desc[16] && (entry = &cpuid_0x2_table[*__ptr]);	\
--	     __ptr++)
-+#define for_each_cpuid_0x2_desc(_regs, _ptr, _desc)				\
-+	for (_ptr = &(_regs).desc[1];						\
-+	     _ptr < &(_regs).desc[16] && (_desc = &cpuid_0x2_table[*_ptr]);	\
-+	     _ptr++)
+diff --git a/arch/x86/coco/sev/vc-handle.c b/arch/x86/coco/sev/vc-handle.c
+index b4895c6..0989d98 100644
+--- a/arch/x86/coco/sev/vc-handle.c
++++ b/arch/x86/coco/sev/vc-handle.c
+@@ -32,7 +32,7 @@
+ #include <asm/smp.h>
+ #include <asm/cpu.h>
+ #include <asm/apic.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
  
- /*
-  * CPUID(0x80000006) parsing:
+ static enum es_result vc_slow_virt_to_phys(struct ghcb *ghcb, struct es_em_ctxt *ctxt,
+ 					   unsigned long vaddr, phys_addr_t *paddr)
+diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
+index f37cce2..9dbc688 100644
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -18,7 +18,7 @@
+ #include <linux/slab.h>
+ #include <linux/device.h>
+ 
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/perf_event.h>
+ #include <asm/insn.h>
+ #include <asm/io.h>
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index 50d3469..bde58f6 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -16,7 +16,7 @@ struct vm86;
+ #include <uapi/asm/sigcontext.h>
+ #include <asm/current.h>
+ #include <asm/cpufeatures.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/page.h>
+ #include <asm/pgtable_types.h>
+ #include <asm/percpu.h>
+diff --git a/arch/x86/kernel/acpi/cstate.c b/arch/x86/kernel/acpi/cstate.c
+index d5ac341..8698d66 100644
+--- a/arch/x86/kernel/acpi/cstate.c
++++ b/arch/x86/kernel/acpi/cstate.c
+@@ -14,7 +14,7 @@
+ 
+ #include <acpi/processor.h>
+ #include <asm/cpu_device_id.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/mwait.h>
+ #include <asm/special_insns.h>
+ #include <asm/smp.h>
+diff --git a/arch/x86/kernel/amd_nb.c b/arch/x86/kernel/amd_nb.c
+index 7c79c9f..c1acead 100644
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -15,7 +15,7 @@
+ #include <linux/pci_ids.h>
+ 
+ #include <asm/amd/nb.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ 
+ static u32 *flush_words;
+ 
 diff --git a/arch/x86/kernel/cpu/cacheinfo.c b/arch/x86/kernel/cpu/cacheinfo.c
-index 6d61f7d..b6349c1 100644
+index f866d94..6d61f7d 100644
 --- a/arch/x86/kernel/cpu/cacheinfo.c
 +++ b/arch/x86/kernel/cpu/cacheinfo.c
-@@ -388,8 +388,8 @@ static void intel_cacheinfo_0x2(struct cpuinfo_x86 *c)
- 	if (c->cpuid_level < 2)
- 		return;
+@@ -16,7 +16,7 @@
+ #include <asm/amd/nb.h>
+ #include <asm/cacheinfo.h>
+ #include <asm/cpufeature.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/mtrr.h>
+ #include <asm/smp.h>
+ #include <asm/tlbflush.h>
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 114aaaf..c14db8d 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -29,7 +29,7 @@
  
--	cpuid_get_leaf_0x2_regs(&regs);
--	for_each_leaf_0x2_entry(regs, ptr, entry) {
-+	cpuid_leaf_0x2(&regs);
-+	for_each_cpuid_0x2_desc(regs, ptr, entry) {
- 		switch (entry->c_type) {
- 		case CACHE_L1_INST:	l1i += entry->c_size; break;
- 		case CACHE_L1_DATA:	l1d += entry->c_size; break;
+ #include <asm/alternative.h>
+ #include <asm/cmdline.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/perf_event.h>
+ #include <asm/mmu_context.h>
+ #include <asm/doublefault.h>
 diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
-index 7f8ca29..f8141b5 100644
+index 584dd55..7f8ca29 100644
 --- a/arch/x86/kernel/cpu/intel.c
 +++ b/arch/x86/kernel/cpu/intel.c
-@@ -716,8 +716,8 @@ static void intel_detect_tlb(struct cpuinfo_x86 *c)
- 	if (c->cpuid_level < 2)
- 		return;
+@@ -16,7 +16,7 @@
+ #include <asm/cpu_device_id.h>
+ #include <asm/cpufeature.h>
+ #include <asm/cpu.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/hwcap2.h>
+ #include <asm/intel-family.h>
+ #include <asm/microcode.h>
+diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
+index 3e477a5..9aa9ac8 100644
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -21,7 +21,7 @@
+ #include <asm/fpu/signal.h>
+ #include <asm/fpu/xcr.h>
  
--	cpuid_get_leaf_0x2_regs(&regs);
--	for_each_leaf_0x2_entry(regs, ptr, entry)
-+	cpuid_leaf_0x2(&regs);
-+	for_each_cpuid_0x2_desc(regs, ptr, entry)
- 		intel_tlb_lookup(entry);
- }
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/msr.h>
+ #include <asm/tlbflush.h>
+ #include <asm/prctl.h>
+diff --git a/arch/x86/kernel/hpet.c b/arch/x86/kernel/hpet.c
+index c9982a7..d6387dd 100644
+--- a/arch/x86/kernel/hpet.c
++++ b/arch/x86/kernel/hpet.c
+@@ -7,7 +7,7 @@
+ #include <linux/cpu.h>
+ #include <linux/irq.h>
  
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/irq_remapping.h>
+ #include <asm/hpet.h>
+ #include <asm/time.h>
+diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
+index 4b668bc..c1d2dac 100644
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -30,7 +30,7 @@
+ #include <linux/hw_breakpoint.h>
+ #include <linux/entry-common.h>
+ #include <asm/cpu.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/apic.h>
+ #include <linux/uaccess.h>
+ #include <asm/mwait.h>
+diff --git a/arch/x86/kernel/smpboot.c b/arch/x86/kernel/smpboot.c
+index d6cf1e2..d7d61b3 100644
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -64,7 +64,7 @@
+ 
+ #include <asm/acpi.h>
+ #include <asm/cacheinfo.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/desc.h>
+ #include <asm/nmi.h>
+ #include <asm/irq.h>
+diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
+index 5d3a764..87e7491 100644
+--- a/arch/x86/kernel/tsc.c
++++ b/arch/x86/kernel/tsc.c
+@@ -16,7 +16,7 @@
+ #include <linux/static_key.h>
+ #include <linux/static_call.h>
+ 
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/hpet.h>
+ #include <asm/timer.h>
+ #include <asm/vgtod.h>
+diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
+index 571c906..7f43d8d 100644
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -21,7 +21,7 @@
+ #include <asm/user.h>
+ #include <asm/fpu/xstate.h>
+ #include <asm/sgx.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include "cpuid.h"
+ #include "lapic.h"
+ #include "mmu.h"
+diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+index 76926f7..942372e 100644
+--- a/arch/x86/virt/svm/sev.c
++++ b/arch/x86/virt/svm/sev.c
+@@ -27,7 +27,7 @@
+ #include <asm/smp.h>
+ #include <asm/cpu.h>
+ #include <asm/apic.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/cmdline.h>
+ #include <asm/iommu.h>
+ #include <asm/msr.h>
+diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
+index 3be3835..7f9ded1 100644
+--- a/arch/x86/xen/enlighten_pv.c
++++ b/arch/x86/xen/enlighten_pv.c
+@@ -49,7 +49,7 @@
+ #include <xen/hvc-console.h>
+ #include <xen/acpi.h>
+ 
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/paravirt.h>
+ #include <asm/apic.h>
+ #include <asm/page.h>
+diff --git a/drivers/acpi/acpi_pad.c b/drivers/acpi/acpi_pad.c
+index 3fde449..6f8bbe1 100644
+--- a/drivers/acpi/acpi_pad.c
++++ b/drivers/acpi/acpi_pad.c
+@@ -19,7 +19,7 @@
+ #include <linux/acpi.h>
+ #include <linux/perf_event.h>
+ #include <linux/platform_device.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/mwait.h>
+ #include <xen/xen.h>
+ 
+diff --git a/drivers/dma/ioat/dca.c b/drivers/dma/ioat/dca.c
+index c9aba23..5d3c0ae 100644
+--- a/drivers/dma/ioat/dca.c
++++ b/drivers/dma/ioat/dca.c
+@@ -10,7 +10,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/dca.h>
+ 
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ 
+ /* either a kernel change is needed, or we need something like this in kernel */
+ #ifndef CONFIG_SMP
+diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
+index 6a1712b..433d858 100644
+--- a/drivers/idle/intel_idle.c
++++ b/drivers/idle/intel_idle.c
+@@ -51,7 +51,7 @@
+ #include <linux/notifier.h>
+ #include <linux/cpu.h>
+ #include <linux/moduleparam.h>
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
+ #include <asm/mwait.h>
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index ff7f64d..9f678c7 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -22,7 +22,7 @@
+ #include <linux/suspend.h>
+ #include <linux/units.h>
+ 
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
+ #include <asm/msr.h>
+diff --git a/sound/soc/intel/avs/tgl.c b/sound/soc/intel/avs/tgl.c
+index 56905f2..9dbb3ad 100644
+--- a/sound/soc/intel/avs/tgl.c
++++ b/sound/soc/intel/avs/tgl.c
+@@ -47,7 +47,7 @@ static int avs_tgl_config_basefw(struct avs_dev *adev)
+ #ifdef CONFIG_X86
+ 	unsigned int ecx;
+ 
+-#include <asm/cpuid.h>
++#include <asm/cpuid/api.h>
+ 	ecx = cpuid_ecx(CPUID_TSC_LEAF);
+ 	if (ecx) {
+ 		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(ecx), &ecx);
