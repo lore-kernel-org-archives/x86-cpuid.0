@@ -1,113 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B2A25B67B;
-	Thu, 15 May 2025 17:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2083325A2C0
+	for <x86-cpuid@lists.linux.dev>; Thu, 15 May 2025 17:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747328410; cv=none; b=LpzOG5aytboLYawdMSGiOGTSIO2FVtRveMNBazN0bZlObMgnOiiRzFV6Nmre9Mg5de8ocfpo+Y7QZWhO9xkxfMA3BNJYKsW2M4qWnIb5n03JnDLJOvckAUYDokG+fkDHk7EhLPtI/ETUwpuaXtxenFbtbd0dgH4cS4x4JtngVGs=
+	t=1747329438; cv=none; b=uZ2KuhrAXRIj3kDznSI31ar1dyrXnPC8yNt4fChmP7lEbGUrJI6PoYm9Z3KPamBsVlSn48+umgsXy0Ne3WkUxFccIgpenotQC0mPOe1CzoszJqyTXE4IKOHYkxGGV7fcfnTolLaZYxX5AIymcnmgDs8R0pRImDbNC5C2Jz5PpGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747328410; c=relaxed/simple;
-	bh=5qeMLE6ej4uOKJekPHmct9MV2OdhfF5qaIcfM+oEXOY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hSVUzOG5CaekJUn23144HdWiN+6UV+7VpD3SO1zcW2Cuf/ZIZz5skyMXAIeYhc+/Rtr9krJedNHzqjRVv29qvErWTBUKewzTFAZlzN1n9saHOCzzoOAD/UWEgeuvZeBAd3pSPnQstt2/Crtcz/k5sGgRBmJ5bftqDF97I/qe3DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sOnN0xQA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747329438; c=relaxed/simple;
+	bh=MNqz2tzv89uMSYwBmim6oUIR8Q1b4KxpaZnq+KjILEs=;
+	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
+	 Message-ID:Content-Type; b=sLPsu0RwjhDlICmgMZo1akARF+YSBRr+RW9yFm93S3dsP2g2HRB3h6JHDDOB0l4EQ/mb2niqbeAOv/rxdBm3oa4dCImH6EBYwuAg1e4GQftLCGAmrBwzLb/Y7H6XU7Mrzl/RQKBJEpfhpw4rth1J18fAsFa5Yz6eT4U321MbVpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=i/vDy4e4; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=1x78PTMc; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sOnN0xQA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8E2C4CEE7;
-	Thu, 15 May 2025 17:00:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747328409;
-	bh=5qeMLE6ej4uOKJekPHmct9MV2OdhfF5qaIcfM+oEXOY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sOnN0xQAZho2QwHXBaCZLXn//1oVLI0C2LsISF839YM1HTRLlBct9NYu1dtqO0Ul1
-	 mooH9Y49amxHCiSBf9UVuvbZnGHfSbmJFCECia47CJpfR4eSMlm4B5f1XOehgyCs4Z
-	 DAxEkJ4Qhf/JeFynyRTz/e1Cxfsp5p4VSJ2Bj/ba7d7ITYDzDoDoziZciD+HBqAjb8
-	 HXliOEmpHTtInzuuDTgZ4t1kt0tJXUID58Mk4oL54a/TskRMyNmUaLoDPHC0VbvUNb
-	 NsnZ4DFZ+1NII5cek/xH2GnqmIqbg8pjN6kAhvQ5aIhCV1FI9xc5/3DhnoZEDGv7Lh
-	 B8GvWmkeSToQw==
-Date: Thu, 15 May 2025 19:00:04 +0200
-From: Ingo Molnar <mingo@kernel.org>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 8/9] x86/cpuid: Rename native_cpuid() to cpuid_native()
-Message-ID: <aCYdlAgG0rrEXtFK@gmail.com>
-References: <20250508150240.172915-1-darwi@linutronix.de>
- <20250508150240.172915-9-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="i/vDy4e4";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="1x78PTMc"
+Date: Thu, 15 May 2025 17:17:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1747329435;
+	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SO5bdLm8iikFzL92Vi0eZYrrmsKDoOgUV0OZhOLbhx8=;
+	b=i/vDy4e4WxKewwv4l1TZAYGvxM5lgfcnGxjQAF3bo5WjM8wRP+yC9S5roOc11Vv2FcPCQe
+	je6+8P2lfxMarxMWrxPKlBI4QzwBkMAa3l6o71KExHypJpdTahRMxuymhsI5zG6zq51IH3
+	JiId2rSUO4ug9KZ8PzfJLWktIuMClW5aYeVIESl7enoftkR+xsfYCybzPh3Dl3RFT+w7P9
+	jnnRSs7xfBerRgCRhNXqcw6zbcF+0HiGqUuIodGNI0JLWom1jiV8phjxm3PHYOebeiRTvW
+	DqQ9G8FuUpqTZOSviwuXzwsNVNgVjGitiok4yQI74jz9tke8osgtG/GtctjqtQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1747329435;
+	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SO5bdLm8iikFzL92Vi0eZYrrmsKDoOgUV0OZhOLbhx8=;
+	b=1x78PTMcxs9i3KRLpCS6/OyY3ZMbFykBbuh1LTHqv7OnpHrjsXqTZJ1Q1/P6w2Yrk6MUFR
+	UQXfcl4fwPYHtFBw==
+From: "tip-bot2 for Ahmed S. Darwish" <tip-bot2@linutronix.de>
+Sender: tip-bot2@linutronix.de
+Reply-to: linux-kernel@vger.kernel.org
+To: linux-tip-commits@vger.kernel.org
+Subject: [tip: x86/core] x86/cpu/intel: Rename CPUID(0x2) descriptors iterator
+ parameter
+Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Ingo Molnar <mingo@kernel.org>,
+ "H. Peter Anvin" <hpa@zytor.com>, Andrew Cooper <andrew.cooper3@citrix.com>,
+ John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
+ x86@kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250508150240.172915-8-darwi@linutronix.de>
+References: <20250508150240.172915-8-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250508150240.172915-9-darwi@linutronix.de>
+Message-ID: <174732943411.406.16408552779328178408.tip-bot2@tip-bot2>
+Robot-ID: <tip-bot2@linutronix.de>
+Robot-Unsubscribe:
+ Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
+Precedence: bulk
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
+The following commit has been merged into the x86/core branch of tip:
 
-* Ahmed S. Darwish <darwi@linutronix.de> wrote:
+Commit-ID:     234792ea4421499f123e73b2e6411469a561a123
+Gitweb:        https://git.kernel.org/tip/234792ea4421499f123e73b2e6411469a561a123
+Author:        Ahmed S. Darwish <darwi@linutronix.de>
+AuthorDate:    Thu, 08 May 2025 17:02:36 +02:00
+Committer:     Ingo Molnar <mingo@kernel.org>
+CommitterDate: Thu, 15 May 2025 18:48:10 +02:00
 
-> In order to let all the APIs under <cpuid/api.h> have a shared "cpuid_"
-> namespace, rename native_cpuid() to cpuid_native().
-> 
-> Adjust all call-sites accordingly.
-> 
-> Suggested-by: Ingo Molnar <mingo@kernel.org>
-> Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-> ---
->  arch/x86/boot/compressed/sev.c           | 6 +++---
->  arch/x86/include/asm/cpuid/api.h         | 6 +++---
->  arch/x86/kernel/cpu/microcode/intel.c    | 2 +-
->  arch/x86/kernel/cpu/microcode/internal.h | 4 ++--
->  arch/x86/kernel/paravirt.c               | 2 +-
->  arch/x86/mm/mem_encrypt_identity.c       | 6 +++---
->  arch/x86/xen/enlighten_pv.c              | 4 ++--
->  7 files changed, 15 insertions(+), 15 deletions(-)
-> 
-> diff --git a/arch/x86/boot/compressed/sev.c b/arch/x86/boot/compressed/sev.c
-> index f054bf52c10a..4b617f8f9b7f 100644
-> --- a/arch/x86/boot/compressed/sev.c
-> +++ b/arch/x86/boot/compressed/sev.c
-> @@ -494,7 +494,7 @@ static int sev_check_cpu_support(void)
->  	/* Check for the SME/SEV support leaf */
->  	eax = 0x80000000;
->  	ecx = 0;
-> -	native_cpuid(&eax, &ebx, &ecx, &edx);
-> +	cpuid_native(&eax, &ebx, &ecx, &edx);
->  	if (eax < 0x8000001f)
->  		return -ENODEV;
+x86/cpu/intel: Rename CPUID(0x2) descriptors iterator parameter
 
-I'm torn about this one.
+The CPUID(0x2) descriptors iterator has been renamed from:
 
-native_*() is a pretty generic way to denote baremetal methods, all 
-around the x86 tree:
+    for_each_leaf_0x2_entry()
 
-  starship:~/tip> git grep -E '\<native_' arch/x86/ | wc -l
-  682
+to:
 
-Likewise for:
+    for_each_cpuid_0x2_desc()
 
-	native_cpuid_eax()
-	native_cpuid_ebx()
-	native_cpuid_ecx()
-	native_cpuid_edx()
+since it iterates over CPUID(0x2) cache and TLB "descriptors", not
+"entries".
 
-I think it might be better to leave these as native_cpuid_*, because 
-shifting a naming inconsistency into another namespace isn't really a 
-net improvement.
+In the macro's x86/cpu call-site, rename the parameter denoting the
+parsed descriptor at each iteration from 'entry' to 'desc'.
 
-'git grep cpuid_eax' will still give meaningful results, so 
-greppability of cpuid_ APIs only suffers somewhat. The for_each_cpuid_ 
-methods are already outliers.
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: x86-cpuid@lists.linux.dev
+Link: https://lore.kernel.org/r/20250508150240.172915-8-darwi@linutronix.de
+---
+ arch/x86/kernel/cpu/intel.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-There's always a bigger fish^W prefix. ;-)
-
-Thanks,
-
-	Ingo
+diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
+index f8141b5..076eaa4 100644
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -648,11 +648,11 @@ static unsigned int intel_size_cache(struct cpuinfo_x86 *c, unsigned int size)
+ }
+ #endif
+ 
+-static void intel_tlb_lookup(const struct leaf_0x2_table *entry)
++static void intel_tlb_lookup(const struct leaf_0x2_table *desc)
+ {
+-	short entries = entry->entries;
++	short entries = desc->entries;
+ 
+-	switch (entry->t_type) {
++	switch (desc->t_type) {
+ 	case STLB_4K:
+ 		tlb_lli_4k = max(tlb_lli_4k, entries);
+ 		tlb_lld_4k = max(tlb_lld_4k, entries);
+@@ -709,7 +709,7 @@ static void intel_tlb_lookup(const struct leaf_0x2_table *entry)
+ 
+ static void intel_detect_tlb(struct cpuinfo_x86 *c)
+ {
+-	const struct leaf_0x2_table *entry;
++	const struct leaf_0x2_table *desc;
+ 	union leaf_0x2_regs regs;
+ 	u8 *ptr;
+ 
+@@ -717,8 +717,8 @@ static void intel_detect_tlb(struct cpuinfo_x86 *c)
+ 		return;
+ 
+ 	cpuid_leaf_0x2(&regs);
+-	for_each_cpuid_0x2_desc(regs, ptr, entry)
+-		intel_tlb_lookup(entry);
++	for_each_cpuid_0x2_desc(regs, ptr, desc)
++		intel_tlb_lookup(desc);
+ }
+ 
+ static const struct cpu_dev intel_cpu_dev = {
