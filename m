@@ -1,74 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5EE282E1;
-	Fri, 16 May 2025 08:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FC51DFE8
+	for <x86-cpuid@lists.linux.dev>; Fri, 16 May 2025 09:01:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747385432; cv=none; b=U6c5Ve03Yg4pxSc7Nu6TFFCfHI1tR2a0NDC5ulxBep1LLP4YYs3sCRuPd6z3AgSQVO7QHuHHPJSiAATIeEJDyoj4o37akjckmjvDM3afyNCcOztPgPhi/QmGIBP27JorT7L7jnyQ6XNsTZkPLK0gMB9ljW+X8pZytSfnJ4lkFOk=
+	t=1747386063; cv=none; b=M68fEPiDorPD+Jp+8zDatMR5xL5c5+JrUSlE4PlRi+WpaMw/oB8XH/cxMw6OhXQIkhT6m4c5Z7ap2WBMUyje+U45vR4tru/OYK90SybBd6UaGN7dT1UFZk5uwJeuDsyQlpTdgCinIW6lpahG8XGx45CnZ4PttocNXC30i/HiYe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747385432; c=relaxed/simple;
-	bh=YeMsR+Q8rbkJfYosMP6R9lHZR953mBK5ZvA3rGosN7I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PaA3ngtgIetN7bbTGuIlBtYXIJnZgSeOZJ61NfzCW+EmRINKHRdz6LzGqFpfFMBcb8X2DJZeS9TpV1xdtERVp8sgKfO+trQ2PwwwZ1EndiChBRcQyQ9QWUDwz1pTfdOz+kwjGIKUYYtYf7NQ2zcB0yiMx9is6yni1VKdnyjaJ6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ao426/So; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747386063; c=relaxed/simple;
+	bh=GYa/YaANJ6VXGToJj4KAUIkqcyAj8eau/yBxIOt0pJc=;
+	h=Date:From:To:Subject:Cc:In-Reply-To:References:MIME-Version:
+	 Message-ID:Content-Type; b=VEuujMY3miH67tIESN+afCqRdC1fgdgBTVCtfCsZGlWmGn/8Udkirc+KC1afqf4n91fqpZAk4+S8KQiW6yR/rOkgkcF+0K7bHarNuwhIVU1cr95Oy+Na98VIM57XgFkmSBJq+bYnb585PfXR4HtLQuaGzwEIl5ShU4bFxTCgSGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Zp1+931/; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=p6fvYGFT; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ao426/So"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7955C4CEE4;
-	Fri, 16 May 2025 08:50:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747385430;
-	bh=YeMsR+Q8rbkJfYosMP6R9lHZR953mBK5ZvA3rGosN7I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ao426/SotdeUutGnvr/v48OsPGYvwSjLfgXsOybB/VFmgil1AAb6jof8LQwHVP6El
-	 EPjC6oNhe7ShZvIc6hADRfYqWv7F4Gp76D5uSvQuS5JmV9PRk7t9T7dZwt0fU6yDwY
-	 ckW2HxDSAc0/oDNBx/HVbISiu/pbCOh5HdfLrQvi73dwAUSSNcC9OHFPdkmvBDWwHT
-	 CCm0incPf5VJegM80R29kJEaeRa+dp0XFBrCsIQpKhkkmlX5AzxuEZGhIxxi8jvxox
-	 fQuzdVYoBgVqcNtuJxesICnX6Hn5a2hqYMF3s/EOv3OaoXfSVS+5IAeyi9NlPzAawE
-	 Hd+iMq9S/LSug==
-Date: Fri, 16 May 2025 10:50:25 +0200
-From: Ingo Molnar <mingo@kernel.org>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] x86/cpuid: Fix CPUID(0x2) iterator kernel-doc
-Message-ID: <aCb8UWg5bNNT5yT1@gmail.com>
-References: <20250515202143.34448-1-darwi@linutronix.de>
- <20250515202143.34448-2-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Zp1+931/";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="p6fvYGFT"
+Date: Fri, 16 May 2025 09:00:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1747386060;
+	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=uFlfKRnb/HyA83iZtvMmzZR6nHpJoD8gHlSTHA8MDvI=;
+	b=Zp1+931/C1UdCqzjBt4VVdaPVivUFt7YtcH8w0mGeb7jmVmIGOWdeg6Pk5+/m0gB0laNmd
+	WFJ25lG/hnGyOCr4Z9O+vBiQJQxs6aWXjgpXB4peDOTGVaFUkE/jfSuCcx2HjAdg3ZGCqh
+	/yDpVWavJ5mw3CpzO6hILyevYuuvMeLz1Dso4z9ZtPCnZAqu0W0nu4KhQDdjumaPtm7opF
+	2BrGkLK0QaZsMoE84UHplM7KkZ1PzCs7Com2WJFcZAbxUJ0ETVE1HRbGFOYNqw2p6s1vPH
+	X1Mt9oILmn9d7+CKuwXmrpq9b/Z61Wa9IXXxeXOv2Hs0mi9MveWOxO8XD9r5Cg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1747386060;
+	h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=uFlfKRnb/HyA83iZtvMmzZR6nHpJoD8gHlSTHA8MDvI=;
+	b=p6fvYGFTc6ZaNs4ekmm/nGqO5WUJXhc36II5PE11+OHsT28vLNkeY6Mt+3PKYxf/49gV8R
+	T84aNX5JnylHDzAQ==
+From: "tip-bot2 for Ahmed S. Darwish" <tip-bot2@linutronix.de>
+Sender: tip-bot2@linutronix.de
+Reply-to: linux-kernel@vger.kernel.org
+To: linux-tip-commits@vger.kernel.org
+Subject: [tip: x86/core] x86/cpu/intel: Rename CPUID(0x2) descriptors iterator
+ parameter
+Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Ingo Molnar <mingo@kernel.org>,
+ "H. Peter Anvin" <hpa@zytor.com>, Andrew Cooper <andrew.cooper3@citrix.com>,
+ John Ogness <john.ogness@linutronix.de>, x86-cpuid@lists.linux.dev,
+ x86@kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250508150240.172915-8-darwi@linutronix.de>
+References: <20250508150240.172915-8-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250515202143.34448-2-darwi@linutronix.de>
+Message-ID: <174738605887.406.8422170755255496716.tip-bot2@tip-bot2>
+Robot-ID: <tip-bot2@linutronix.de>
+Robot-Unsubscribe:
+ Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
+Precedence: bulk
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
+The following commit has been merged into the x86/core branch of tip:
 
-* Ahmed S. Darwish <darwi@linutronix.de> wrote:
+Commit-ID:     119deb95b0bc2793d4b002549444ce0aec346b4f
+Gitweb:        https://git.kernel.org/tip/119deb95b0bc2793d4b002549444ce0aec346b4f
+Author:        Ahmed S. Darwish <darwi@linutronix.de>
+AuthorDate:    Thu, 08 May 2025 17:02:36 +02:00
+Committer:     Ingo Molnar <mingo@kernel.org>
+CommitterDate: Fri, 16 May 2025 10:49:55 +02:00
 
-> The CPUID(0x2) cache/TLB descriptors iterator has been recently changed
-> from:
-> 
->     for_each_leaf_0x2_entry(regs, __ptr, entry)
-> 
-> to:
-> 
->     for_each_cpuid_0x2_desc(_regs, _ptr, _desc)
-> 
-> but the attached kernel-doc was not fully adapted.  Fix it.
-> 
-> Fixes: c4c9ea879c3b ("x86/cpuid: Rename cpuid_get_leaf_0x2_regs() to cpuid_leaf_0x2()")
-> Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+x86/cpu/intel: Rename CPUID(0x2) descriptors iterator parameter
 
-I've folded this fix back into the originator commit.
+The CPUID(0x2) descriptors iterator has been renamed from:
 
-Thanks,
+    for_each_leaf_0x2_entry()
 
-	Ingo
+to:
+
+    for_each_cpuid_0x2_desc()
+
+since it iterates over CPUID(0x2) cache and TLB "descriptors", not
+"entries".
+
+In the macro's x86/cpu call-site, rename the parameter denoting the
+parsed descriptor at each iteration from 'entry' to 'desc'.
+
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: x86-cpuid@lists.linux.dev
+Link: https://lore.kernel.org/r/20250508150240.172915-8-darwi@linutronix.de
+---
+ arch/x86/kernel/cpu/intel.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
+index f8141b5..076eaa4 100644
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -648,11 +648,11 @@ static unsigned int intel_size_cache(struct cpuinfo_x86 *c, unsigned int size)
+ }
+ #endif
+ 
+-static void intel_tlb_lookup(const struct leaf_0x2_table *entry)
++static void intel_tlb_lookup(const struct leaf_0x2_table *desc)
+ {
+-	short entries = entry->entries;
++	short entries = desc->entries;
+ 
+-	switch (entry->t_type) {
++	switch (desc->t_type) {
+ 	case STLB_4K:
+ 		tlb_lli_4k = max(tlb_lli_4k, entries);
+ 		tlb_lld_4k = max(tlb_lld_4k, entries);
+@@ -709,7 +709,7 @@ static void intel_tlb_lookup(const struct leaf_0x2_table *entry)
+ 
+ static void intel_detect_tlb(struct cpuinfo_x86 *c)
+ {
+-	const struct leaf_0x2_table *entry;
++	const struct leaf_0x2_table *desc;
+ 	union leaf_0x2_regs regs;
+ 	u8 *ptr;
+ 
+@@ -717,8 +717,8 @@ static void intel_detect_tlb(struct cpuinfo_x86 *c)
+ 		return;
+ 
+ 	cpuid_leaf_0x2(&regs);
+-	for_each_cpuid_0x2_desc(regs, ptr, entry)
+-		intel_tlb_lookup(entry);
++	for_each_cpuid_0x2_desc(regs, ptr, desc)
++		intel_tlb_lookup(desc);
+ }
+ 
+ static const struct cpu_dev intel_cpu_dev = {
