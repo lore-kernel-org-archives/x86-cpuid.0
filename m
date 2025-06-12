@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77812E1756
-	for <x86-cpuid@lists.linux.dev>; Thu, 12 Jun 2025 23:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127A52E0B69
+	for <x86-cpuid@lists.linux.dev>; Thu, 12 Jun 2025 23:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749771632; cv=none; b=HhcV0Yslehx4JUMnGfdIc86g4j6FzSkrUuPU53A5A7GIACBgNHMPEi9mtINEPVsGI9gnccAyZKQxkOW0YkNJJNsOQeVEulM8KaAvgeTBliQIPmCqQOrkNMYtsVDdLOj+QVC52fOLCPlOMXREUnnXt57IsvulhFPWNsXH8pwka2U=
+	t=1749771635; cv=none; b=l9iBkUVoZyj1441Lww0CG6iqdSAkdS5Ha7wa9P0ylaQ08ZMELWSFchRlvpFP3WpjXnkoqEgkvznjdjYfYWWTn6FvOs6o6L9mE+Z/pNXHvJUk35B1HxF/tWccU2gdWS4ZPpePNWaH6AuiLjGfUC67Mn81bOuLcrMxzQl4C4XJGQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749771632; c=relaxed/simple;
-	bh=VM+Tq2JHqf5zPcRiSy1otnHq9UT5dGu3SFfeNLN2rO8=;
+	s=arc-20240116; t=1749771635; c=relaxed/simple;
+	bh=uLB6+jUDU36CNXqX8JFhOtPaiBVOkrpnE6WiIL+0ESM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbYKm0HZcUoKhxEPjdshjVDpZ9lqkjmUPWhYjMDLj3e8IVuqcodcbl8xfOB02fE3jbuSbN+l4Wyo3ihQgViablCSw/ZNBm+0YHNf0W6mbD3GgCJ9fUlYQq2sVWc0c6LLAnFzgZGJM7A3cwebUVYoyGQeiMFp1cfgGifRPSr8MNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=h/3NmRVl; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=aHDxpVi+; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=eW1qTQ50BZhTIIZZyUKdW3rJ6r0cm5FMXcxpXJJJm0qqkq8knHCcm6vM3GGTIPCaRGKUCQTI47OBaAx/1UcFhqbicGUjTY8suUpdTF9F2pZe6Wl4EQoKmTDNTzjZEkjr7jTv9HhYmsF9ExcFJARtBHy1zOBNdFjDr/ezbQ5+9+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=plVzzIWe; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=9N26kAI8; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="h/3NmRVl";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="aHDxpVi+"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="plVzzIWe";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="9N26kAI8"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1749771629;
+	s=2020; t=1749771632;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=9Dt63MaH2HMdvBtvlDsryqLPF+tYIcYR7emziyJ9L1M=;
-	b=h/3NmRVlk2fm7TIjkaNzkyJYlzXqhwXNQGi+sVhT9qyosudX+8lpd9V51peiOIkGpWX3gu
-	WV124HhcuW4lYEWRNoyuuICr51AwA5BspySa01/LusBytfEKn/Imcre10sELIFdxDB6rxD
-	B9op0g5VYOZ+F1bnrsdQGXWoLXDIju6MuXmGIR4UdywvrOi9PSF4GGITJzx1xRoodpQumm
-	FmfREoMqeo58/ZSFS0kSbRqQEIfiIR55Q58BappjFguVu4QCc86esjc5Qted2C5lMlahx6
-	ueSGymieQ7xowD/ozHFh0zkcc6a9r2eyXDSMVzKyTTOqOz9YpAxf0OogZ4Dalg==
+	bh=AyX/eCKjMXH8T5o1dKBgq3rnP1IwAJ2aHpMeGCd3K88=;
+	b=plVzzIWexYzQt8Vlx3432DSCnrrNqT1SHotZvMgBAwQkbIqdTdjltho/mbZ9A1iReUuUqo
+	oXT4xZ/rAmU/jf34hTDkpp0PycvHJnUiFKn+q/8Jgba/s6YxSdBos3Wr/Hti7ENwWtjjW5
+	ieM1FV3zjA0nTXoncP0rwjHka5VYMcBb0KRt5dE10LnRQcYtMz3hpCP2sV4/Rnv2BuGxc1
+	wIcY78vhc8xoBFpd87wlx4gjxVeMRDRNf6kfrZID3RbrgxU08RD9IH6iWBOL8hlS0Yjf3K
+	eyd24SuQU6wbYvlUhdcLl/SmEZIHwhbNzS3wFWWOYVAVxfp8uV0XmfXLdsiFSA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1749771629;
+	s=2020e; t=1749771632;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=9Dt63MaH2HMdvBtvlDsryqLPF+tYIcYR7emziyJ9L1M=;
-	b=aHDxpVi++tBoRmkbQDbIMzD5Ah+4ZXOWLWi/PCauyxFyxeJhKAsq3oXyLMCQUj4/8hvQxM
-	L8U/TnVH/jStd1Bg==
+	bh=AyX/eCKjMXH8T5o1dKBgq3rnP1IwAJ2aHpMeGCd3K88=;
+	b=9N26kAI8wXSWHCE139B9h3XBmG6Wkd5j+kSkvnZL5jrJxoziVd8IqToJeoEHVR7hmIZBbw
+	LgtPpavu0lFJfrAg==
 To: Ingo Molnar <mingo@redhat.com>,
 	Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>
@@ -54,9 +54,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v3 03/44] x86/boot: Reorder sme.c headers alphabetically
-Date: Fri, 13 Jun 2025 01:39:29 +0200
-Message-ID: <20250612234010.572636-4-darwi@linutronix.de>
+Subject: [PATCH v3 04/44] x86/cpu: Reorder scattered.c headers alphabetically
+Date: Fri, 13 Jun 2025 01:39:30 +0200
+Message-ID: <20250612234010.572636-5-darwi@linutronix.de>
 In-Reply-To: <20250612234010.572636-1-darwi@linutronix.de>
 References: <20250612234010.572636-1-darwi@linutronix.de>
 Precedence: bulk
@@ -73,33 +73,23 @@ be included next.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/boot/startup/sme.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/scattered.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/boot/startup/sme.c b/arch/x86/boot/startup/sme.c
-index 70ea1748c0a7..922b236be02f 100644
---- a/arch/x86/boot/startup/sme.c
-+++ b/arch/x86/boot/startup/sme.c
-@@ -34,15 +34,15 @@
+diff --git a/arch/x86/kernel/cpu/scattered.c b/arch/x86/kernel/cpu/scattered.c
+index dbf6d71bdf18..3d23b943f596 100644
+--- a/arch/x86/kernel/cpu/scattered.c
++++ b/arch/x86/kernel/cpu/scattered.c
+@@ -4,8 +4,8 @@
   */
- #define USE_EARLY_PGTABLE_L5
+ #include <linux/cpu.h>
  
-+#include <linux/cc_platform.h>
- #include <linux/kernel.h>
--#include <linux/mm.h>
- #include <linux/mem_encrypt.h>
--#include <linux/cc_platform.h>
-+#include <linux/mm.h>
+-#include <asm/memtype.h>
+ #include <asm/apic.h>
++#include <asm/memtype.h>
+ #include <asm/processor.h>
  
-+#include <asm/coco.h>
- #include <asm/init.h>
--#include <asm/setup.h>
- #include <asm/sections.h>
--#include <asm/coco.h>
-+#include <asm/setup.h>
- #include <asm/sev.h>
- 
- #define PGD_FLAGS		_KERNPG_TABLE_NOENC
+ #include "cpu.h"
 -- 
 2.49.0
 
