@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B233A2EBDCC;
-	Tue, 17 Jun 2025 15:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD97C4C7F;
+	Mon, 23 Jun 2025 13:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174886; cv=none; b=ST1n5ejqojj7o2Mk/KCwDDeBsGJBaiSygd/3lQEKs1CyX6hDX9H+WDqd8xpw8m2x82nVaMX0dbSXd+oF3f6GwPI6lcOrahfYExFG7s88dwB0kfGQ63qA7/E2fl2gKW062+8L9mFsfCr487c8BLTLx0tSEnD6RjlqfRKTtsWMPrs=
+	t=1750684697; cv=none; b=bcojK92k0u3TGdzLbcOzxs8BxtIZiZsU3xCOEBFq3gjGezPvTbNBtgmqba6FMnG2jQzkGzeXJaE1D7vemUSGpRx0qx2RcZD+yfwIswinSMgGyJWYYyTsK/jI5b2pomVqhmTcWPnK61GBmhxP16bbPJcEkl/NnZFquuotyNkGCvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174886; c=relaxed/simple;
-	bh=oowcxXkBPCRlRaRHiwVcI1Mi/UQ5rBmhOTN+MY7rGDI=;
+	s=arc-20240116; t=1750684697; c=relaxed/simple;
+	bh=O8TO5JDxkuBFz4XkXtuKxpwAxJI10zUJ3uHvW3YlySo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpBfAaz7+7P6lvPyU3pgs+G/I6TlC/zlAqy951BU+l0DZk9mddQMmRVvoc0CF7Ux0saLpm2mP2/8UmNZAPkt1GtNcRH3tdlbs1bh6trsgXr2YuUll0erPuhwDPjbcJMqUNdroebCVq6bfaM6/aCKfwGrUYsnGbuBkyl1OU2i55A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQm9RG+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OymvxeMb2Zor9rJUeSzlIiwmdNChQbL3qS8xVZ4NYufNxvxXSdxps8ALrz0hYCEBYWufVPisZiwOiM9UTmIPoiRzhgMIZXflup4G3WP6AwItYwieJOPc6jpQnem2zM2xpOEYNKX4mj9l0g7jVDAqjDovZNs3/VV/qHne7uT6I/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2F8y6S0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQm9RG+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7B8C4CEF0;
-	Tue, 17 Jun 2025 15:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2F8y6S0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F219BC4CEF0;
+	Mon, 23 Jun 2025 13:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174886;
-	bh=oowcxXkBPCRlRaRHiwVcI1Mi/UQ5rBmhOTN+MY7rGDI=;
+	s=korg; t=1750684697;
+	bh=O8TO5JDxkuBFz4XkXtuKxpwAxJI10zUJ3uHvW3YlySo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQm9RG+Y7OEwT+t5ZeZW4p8F+psSRPh458I3QOQL/TSLayibsNExtvLVKDH2L5L2W
-	 Fxb7Z6FBTH5u9ONJNtIaHAMA9pvLvB+EUb5MhDsL7fViQs4d7ey7DAQye1oelZNbFt
-	 dfiC7UCLWJBnSfWwyLdgJhXYvJb7krKREnpe1k2o=
+	b=x2F8y6S0jQWM0z16mqPHHgyVZbiAuZsZ3tm2vv1bDawASY+rlfaVkkCbdr77VXAC8
+	 tmJMlMqsZmU0RWxaBb0pws0+u+FbGHkvlAeSTivNYqK6/5QI9QiWN8nzeAG1mf/mUk
+	 cRdZ5vKtveW57kz7qgfaBmUommZPDSkYGPcEWfyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,12 +34,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Ogness <john.ogness@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 030/780] x86/cpu: Sanitize CPUID(0x80000000) output
-Date: Tue, 17 Jun 2025 17:15:38 +0200
-Message-ID: <20250617152452.731151133@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+Subject: [PATCH 5.4 011/222] x86/cpu: Sanitize CPUID(0x80000000) output
+Date: Mon, 23 Jun 2025 15:05:46 +0200
+Message-ID: <20250623130612.236444502@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,7 +51,7 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -109,10 +109,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 0ff057ff11ce9..5de4a879232a6 100644
+index ae9d8aa3ae48e..bd29a436e87e8 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
-@@ -1005,17 +1005,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
+@@ -934,17 +934,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
  		c->x86_capability[CPUID_D_1_EAX] = eax;
  	}
  
