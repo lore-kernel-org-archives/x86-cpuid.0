@@ -1,54 +1,45 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECDA2C3251
-	for <x86-cpuid@lists.linux.dev>; Fri,  4 Jul 2025 11:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE9A2206A7
+	for <x86-cpuid@lists.linux.dev>; Mon,  7 Jul 2025 16:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751628884; cv=none; b=kegEO567NG6Ep0+/7wIyDy7+uaW7jMGKg6DzatMAiQ97HyRbSnXGH1lyhcInkNznzJm1uSzM5wbcYj0scs4Xph7hfK4p0vjnIfJsib2FHrCjdUn/JcpHpcJ+WE2mp3ruAm4ok0scX9UU1fBlSfmY4Fs5Sc+Q1R1Hkcm1+/TGvdc=
+	t=1751907110; cv=none; b=Gm6aLkvkN4yTKciiU+8QYPHSKtoj77A5CdcQJLwuMl0DgVOxczyTCncnFwg+n/2BL/RfTPNuKYZ1rB3oxdlCKYGsyp5ofucKzqsxO6awIU4R46hESpeLSojUhHNNCNeiPw2n6hGwVlmMyhVwkaCWG7h5fSz/93ec6NH1vXBi/SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751628884; c=relaxed/simple;
-	bh=jauJUXOgS9CxVwOrtviqQhH8NcfG+vcev+cr7jqa3EQ=;
+	s=arc-20240116; t=1751907110; c=relaxed/simple;
+	bh=06MGt39LsqGSUhPV94+hP4L8EkX+7nMB0woh5SXVhY8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rbaP+KtcTrHldJEC2yRDQjxDvdsIAlaOzgNJywKqtkMfogNN0jxO69TkXSjpy3t2SQ2mfgjIOutnHm2MqUsp+p1pDVTUx2+EhPKxBjrgIFtACnbrrbbk39MZyMrWCSvLw481hG/IUwwxMuT2mB0t64cdcsZbsRTOoXUmU3aVmhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=MxpGVQ1V; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=UmdsSylb8NoR540KSizm6Im21qtu0F1DdsbbLALeEJ9cBKkdiU53uCi8PKmsnWw7yB35rfVQKaunhECaYpcbqqOMOkHd9WsK/fiRLjeAf5EcVQ2SUn2baSCl0hYDNY5YhzAR7qk+JvkFiBBdWd8nOqdmQNsqkCEhhm3+cDxvg8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=eEIItSYk; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=WX6Rwkjs; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="MxpGVQ1V"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 747DF40E021F;
-	Fri,  4 Jul 2025 11:34:41 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id WCeqKQIl9r34; Fri,  4 Jul 2025 11:34:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1751628876; bh=5hapxyWfX3xGCoNmgWLrd+ASas9ckfy21LbXXSp6WT4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MxpGVQ1VJI7b2NMa2BiOtjZ1c2ldwbCfpKwTnLZlCqi7YWnkuWU2IvMfIhcXHoEWs
-	 1b2fxAUpxZy4ELVGKvZfErID2oYI/wTc68c8BNNyLK7Gylv+hMJ/guxEGulst8RM1r
-	 PdAaqVOLieAPtmK4Z3KZEwveDS1ZvZ540r8BVm8quwPdizXwjupKHw1aMJBHyclBRj
-	 VR+fY8KjLH/NMDJZ4pmbHRu2FQS7IXBCWUw3q42hRh6tTnA1F8LZcKu47OfcDq52CH
-	 NDCPYtjRxN6YY6d/dgOh5UUVnx1d4WWjfViwkuy8+J4Fd1Oc/S7KH+bN1E01EQhdBQ
-	 nv66IonGVsm+bLjyLT0c8VGvVVfBZlDvPF0vI4amPNy+MnPQ2PvIkY2VQ5UJGLTktV
-	 mML/VpLuC4b8fgdaUADQF4aSmJldytpmNsG+y0QuOlWyZqilMflQkKu/Nw9ZWdU1KP
-	 +CJoW++6rkmbWF08R3PcBBp4/6DvWIKkDil5QOsEFHf8adsOS114qkSMUI7KtO+NgV
-	 ZFQySTXj/bxg9nWuzu91hU/pxSFk2hH0bbjYmAWKj/DfzRPwWUwnVn0psKfq+ffWuQ
-	 t6twlli7FAwOUbkZ6sj+mcefxEVMV7WmOZUIyAY2sbCGz293466u3h1ffAMGvheisy
-	 09lB5S5ye5YGKRgOIJkfTXpY=
-Received: from zn.tnic (p57969c58.dip0.t-ipconnect.de [87.150.156.88])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4C73C40E021C;
-	Fri,  4 Jul 2025 11:34:22 +0000 (UTC)
-Date: Fri, 4 Jul 2025 13:34:21 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>,
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="eEIItSYk";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="WX6Rwkjs"
+Date: Mon, 7 Jul 2025 18:51:45 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1751907107;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=X/LOiAvJ72lpg6zVQ7UqekT6IMCqQe42xPEKSqzYEjo=;
+	b=eEIItSYkf3kuxJc5fKC/8LY6qpD/XV6mtOt1ghF+XupNyBzX9UC1BEWvf/h5ZvTLyCfLtq
+	+VGZlMYMyMuHKMZXAKWNTUsl1vzxUjiFAYjDY+SORbX4TXCOShk0yrpjWOBaBHHsLCuP+c
+	uVHSwI7YG4ifX9+sRp6DxASKqzRQgGLeo7jRoc63PSx6/nxKjnpdjzyPo1vG+lCIyNXAfo
+	O/aV7PIYydGgTFT5ipsJy438WS0hC7amyWdlDQTD8l7Ef+TOtwZSd+V3r4rd7nyWy0S+Gl
+	bF5qAup0su4tSgtZCRLmSs8f7bbGxvkCeg9bKukVWVzpMwT+RAy+nVYndKk91A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1751907107;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=X/LOiAvJ72lpg6zVQ7UqekT6IMCqQe42xPEKSqzYEjo=;
+	b=WX6RwkjsxuvXp5xu/qIIboGbGxIhwRiIThApdDPjKUCU8k54UCHuNVT+wQLH85PvZcE7Lk
+	kxySsqZAs0Abg8Bg==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Cezary Rojewski <cezary.rojewski@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
@@ -59,40 +50,28 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 16/44] thermal: intel: Reorder headers alphabetically
-Message-ID: <20250704113421.GNaGe8PbALdikAapIf@fat_crate.local>
+Subject: Re: [PATCH v3 02/44] ASoC: Intel: avs: Include CPUID header at file
+ scope
+Message-ID: <aGv7IZmcqiYSU4My@lx-t490>
 References: <20250612234010.572636-1-darwi@linutronix.de>
- <20250612234010.572636-17-darwi@linutronix.de>
+ <20250612234010.572636-3-darwi@linutronix.de>
+ <da5bf77b-5bdb-440f-92b5-db35d8687987@intel.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250612234010.572636-17-darwi@linutronix.de>
+In-Reply-To: <da5bf77b-5bdb-440f-92b5-db35d8687987@intel.com>
 
-On Fri, Jun 13, 2025 at 01:39:42AM +0200, Ahmed S. Darwish wrote:
-> The source file uses cpuid_*() macros, but it does not include
-> <asm/cpuid/api.h>.  Sort its include lines so that the CPUID header can
-> be included next.
-> 
-> Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-> ---
->  drivers/thermal/intel/x86_pkg_temp_thermal.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+On Mon, 16 Jun 2025, Cezary Rojewski wrote:
+>
+> The existing location of #include isn't my best work, clearly. Thank
+> you for addressing that, Ahmed. For the avs-driver bits:
+>
+> Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
+>
 
-Can we merge all those silly includes sorting patches into a single, per-topic
-or per-tree patch respectively please?
-
-A single includes sorting patch is fine too since the whole pile will go
-through tip eventually.
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Sure, no problem.  Thanks for the Acked-by :-)
