@@ -1,45 +1,45 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE9A2206A7
-	for <x86-cpuid@lists.linux.dev>; Mon,  7 Jul 2025 16:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1469C253B73
+	for <x86-cpuid@lists.linux.dev>; Mon,  7 Jul 2025 16:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751907110; cv=none; b=Gm6aLkvkN4yTKciiU+8QYPHSKtoj77A5CdcQJLwuMl0DgVOxczyTCncnFwg+n/2BL/RfTPNuKYZ1rB3oxdlCKYGsyp5ofucKzqsxO6awIU4R46hESpeLSojUhHNNCNeiPw2n6hGwVlmMyhVwkaCWG7h5fSz/93ec6NH1vXBi/SA=
+	t=1751907335; cv=none; b=QTn94w+kLJqXrzijRwn92GGeC0lVZ5hGhB0wb8oWS7LkuxBGa1RUM02O5Y6ZpwUb38NvCog+Fica25APLBxbfb0BRdLwfkRzMhJzW69YpKFP6a+0IqxBe6E2otSAIUUJBkDioYtMCMJi1BlcP8cSMirHVXqZWo3mvH4RIFYk724=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751907110; c=relaxed/simple;
-	bh=06MGt39LsqGSUhPV94+hP4L8EkX+7nMB0woh5SXVhY8=;
+	s=arc-20240116; t=1751907335; c=relaxed/simple;
+	bh=5YYQ2di3hMXS5QJHCQax3da8RkBqlCRDcTuJ8Z7oVw4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UmdsSylb8NoR540KSizm6Im21qtu0F1DdsbbLALeEJ9cBKkdiU53uCi8PKmsnWw7yB35rfVQKaunhECaYpcbqqOMOkHd9WsK/fiRLjeAf5EcVQ2SUn2baSCl0hYDNY5YhzAR7qk+JvkFiBBdWd8nOqdmQNsqkCEhhm3+cDxvg8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=eEIItSYk; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=WX6Rwkjs; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=YvSUQAkpvmRTLK6MN+bmdV3G8jJyz2NJ2cVt7jUnCIlPCMvFwMn+eriEfcqRjwym48UkvT5W0K5haamRRJzcXpxi9WqYu+LvcyUtI3c8PpGJ8tVGpjX1Wh5h8UGzFWUEXxRk64QfIxL8Vu7FepFYWRT5TFLy7D+x/buUYJZukoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=IPgQ3LnP; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=6f4y0mkQ; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="eEIItSYk";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="WX6Rwkjs"
-Date: Mon, 7 Jul 2025 18:51:45 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="IPgQ3LnP";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="6f4y0mkQ"
+Date: Mon, 7 Jul 2025 18:55:29 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1751907107;
+	s=2020; t=1751907332;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=X/LOiAvJ72lpg6zVQ7UqekT6IMCqQe42xPEKSqzYEjo=;
-	b=eEIItSYkf3kuxJc5fKC/8LY6qpD/XV6mtOt1ghF+XupNyBzX9UC1BEWvf/h5ZvTLyCfLtq
-	+VGZlMYMyMuHKMZXAKWNTUsl1vzxUjiFAYjDY+SORbX4TXCOShk0yrpjWOBaBHHsLCuP+c
-	uVHSwI7YG4ifX9+sRp6DxASKqzRQgGLeo7jRoc63PSx6/nxKjnpdjzyPo1vG+lCIyNXAfo
-	O/aV7PIYydGgTFT5ipsJy438WS0hC7amyWdlDQTD8l7Ef+TOtwZSd+V3r4rd7nyWy0S+Gl
-	bF5qAup0su4tSgtZCRLmSs8f7bbGxvkCeg9bKukVWVzpMwT+RAy+nVYndKk91A==
+	bh=5YYQ2di3hMXS5QJHCQax3da8RkBqlCRDcTuJ8Z7oVw4=;
+	b=IPgQ3LnPgT+hySskS7j6hx3eyIPgrlQs9RJtNGVFSndbM+eSv/fpoCjS7K5ADHoYHtCn2Y
+	JtWUReAAW+SCh4bhCpfX6zaN9yXfn1JUU9BpfRMDV6u4ZmkTVMOX5cIPyHT5eL8Da7BEli
+	u/diBrPM2U+OBz7WiiGvlblVfxIUz6de7kHit3Wbx1rNn6yaHA/jtBWTD80QI701XeVFXy
+	HjE8dnHzkLcOjeZExUty3lGHzRr6MDVuw3qUqTNBSBx/OYjdpFyVJQVFsDxdKKzEeSI8EC
+	poMZMP64EMi+EPAgYKpr+dGtKkmd0WGnTRJOkD94Bw3FSvoDGzjffLgRXqSfpg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1751907107;
+	s=2020e; t=1751907332;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=X/LOiAvJ72lpg6zVQ7UqekT6IMCqQe42xPEKSqzYEjo=;
-	b=WX6RwkjsxuvXp5xu/qIIboGbGxIhwRiIThApdDPjKUCU8k54UCHuNVT+wQLH85PvZcE7Lk
-	kxySsqZAs0Abg8Bg==
+	bh=5YYQ2di3hMXS5QJHCQax3da8RkBqlCRDcTuJ8Z7oVw4=;
+	b=6f4y0mkQ/qzH5pwAeiV98bQID7wNhnMZJm2lnjlkRtaueHfrY2DEL5HrZAa5nCqc69W0Xy
+	C8PKVxzQRQ0TTfCg==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Cezary Rojewski <cezary.rojewski@intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+To: Borislav Petkov <bp@alien8.de>
+Cc: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
@@ -52,10 +52,10 @@ Cc: Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v3 02/44] ASoC: Intel: avs: Include CPUID header at file
  scope
-Message-ID: <aGv7IZmcqiYSU4My@lx-t490>
+Message-ID: <aGv8AWwHbi5seDxi@lx-t490>
 References: <20250612234010.572636-1-darwi@linutronix.de>
  <20250612234010.572636-3-darwi@linutronix.de>
- <da5bf77b-5bdb-440f-92b5-db35d8687987@intel.com>
+ <20250704113201.GMaGe7sZritvfQT0uz@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -64,14 +64,15 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <da5bf77b-5bdb-440f-92b5-db35d8687987@intel.com>
+In-Reply-To: <20250704113201.GMaGe7sZritvfQT0uz@fat_crate.local>
 
-On Mon, 16 Jun 2025, Cezary Rojewski wrote:
+On Fri, 04 Jul 2025, Borislav Petkov wrote:
 >
-> The existing location of #include isn't my best work, clearly. Thank
-> you for addressing that, Ahmed. For the avs-driver bits:
+> I'm guessing this will get eventually converted to the parsed struct in
+> the end?
 >
-> Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
+> I guess I'll have to continue reading and see... :)
 >
 
-Sure, no problem.  Thanks for the Acked-by :-)
+Yup, next iteration of this PQ shall also convert all the CPUID(0x15)
+call sites, as they're quite simple :)
