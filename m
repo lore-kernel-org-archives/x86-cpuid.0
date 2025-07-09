@@ -1,163 +1,206 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF37235078
-	for <x86-cpuid@lists.linux.dev>; Wed,  9 Jul 2025 17:06:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6B92222D7
+	for <x86-cpuid@lists.linux.dev>; Wed,  9 Jul 2025 17:13:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752080781; cv=none; b=gvKJgSX4iWKfbzanQH+8SkTT2UdoZnu1FRZDArmYfBA1e8OuSxckDjvW94GPJWmQE1wGP+sbAgd3Q++SPhyMrBHlFY0ButUrresR/ADRPZXTd7OcZlDtxam42Mj5lyoWvrwE0n/CEDmA9jjzfMJJMGQZZZJC1ecICnG5BAnu0TA=
+	t=1752081198; cv=none; b=t1a+8PUBRNgw4vw2/1vttmLIg+2U1DkDddYhIcfJ8gTnl84K3Lz5KS5Xo7AH1Gpx/tCGnoSMbvonwhC96IMLEPHgnMwVMpsbdrlHu+GkWFUVwiLBNP/APJ8aIhO4+RDI7oX8sQ/rN/oweyVW5NcRkfQlrjMiTFbcB2+3OWttXGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752080781; c=relaxed/simple;
-	bh=boRgXFhKddB07Ao/wmCchsRdbdJXJsaKKBS8cjumbkE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtMaou69VDpk1FshsV71S3FuUKeeO4CaZlFUHkIor8YtZ0lZSI41almS7C0dZZBZ8pfDlMDyaIkgt//e6dO7pFModTXzZ8DvoQ04cR2ir9s5PxVZ7FdpvUrXx82slcUlJz6Ocr+r4R+6txRiD4q3l75X7l6ye/CEcq0Ri4vED/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=rWjvuRPZ; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=RpZHdvif; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1752081198; c=relaxed/simple;
+	bh=O2YQhZBU1ofBekN2KwRZdHuhqsC4q7S/ZNAWBEom2CU=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=YTDGcYS/zb8aOlEN+pkGTbzu17ABU+s5W/uzp+2s1i5XYvXTn2eA/DyLskGd0M65uqz5GpJC/Grc8zW6uUl1K/NwjUw8belJM3FIfAfzH7cUPabQ+K6fWmWzfI1BBfpb6YpY5pCMJQWcGkTBZ4FVnhMCF+wxYMjq8/LYcz/p/Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qXv9FDqU; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="rWjvuRPZ";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="RpZHdvif"
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1752080778;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5OwVg3uk2MbXbIzloOALjinnMmaKuXJuiDJZknzR0Gg=;
-	b=rWjvuRPZ6UQ/B2QNFU9SSkgW9uRvXkAPdmRduiRvpUuOgXusdgnAYXpbUy24xL6upZYw6P
-	VFae9q13bmrpdzLJXG7hpJdLOoVbZfK+/h38QRhZFAjxMBTWY64Fqhzs0wxSDXAnlb/9aP
-	YfsD/JB7Ag7Ly4VMouh6PF7C/mFXPk6r3VevQrKHzIVU0JD89cbun379lS203Nvszzo+gN
-	gonS92s8KAQJwajF7C2hiEFu4KeAuqYXpOjdIZVT+lmscwJ0AGyw1mur9T6gBd3bR08VhN
-	RDIPE40kKt8xlLYIrL2r8he877YZXiyeP6mdoBupCwMWNnMMX9ZUQoTtXlTIgA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1752080778;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5OwVg3uk2MbXbIzloOALjinnMmaKuXJuiDJZknzR0Gg=;
-	b=RpZHdvifupwHFp2UH9RHpC8LlxbdpPZjxahon9/pMDBWK7q9Ahx1MbK15PXoxk9p2Utdue
-	OOaRcid2opmKABAA==
-To: Borislav Petkov <bp@alien8.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86@kernel.org,
-	x86-cpuid@lists.linux.dev,
-	LKML <linux-kernel@vger.kernel.org>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v1 7/7] x86/cpuid: Rename cpuid_leaf()/cpuid_subleaf() APIs
-Date: Wed,  9 Jul 2025 19:04:53 +0200
-Message-ID: <20250709170454.74854-8-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qXv9FDqU"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-313fb0ec33bso147179a91.2
+        for <x86-cpuid@lists.linux.dev>; Wed, 09 Jul 2025 10:13:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1752081195; x=1752685995; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MFdwR3lAJd7vdYwnOv4iE7Hy18jXCV9dXILHs2CzgU0=;
+        b=qXv9FDqU5weZsDTNfzEOZS5Vb4kM2jJYEXwyRN87wFy3Gt9E/rb62qR2FtapVZCkun
+         qe4WWk3Q4P1P2ELIRzcFzrijrcstqQ8ATlAyTmxsUVOG/yThuJ4YVWz3YGTdCuZ0I5RO
+         o58EkY8PcOf4lJrb2yOZIN+APoL9218I1FY21BP5icm5cnW6921nExtMc+c1a63IR5zk
+         aPBWDjf/5Kv4CF9ZW20Vt48chE3SfewyxBr0XWsIhpzrijLpUdyZblgV6I/MNxRwNksk
+         e30d5QoyCE2G4glwHOe5tj0RD+L1Ln8zmAt9iEmEolwNgsAt+SCh4ah2tDFEGs1B4Yp2
+         4/dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752081195; x=1752685995;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MFdwR3lAJd7vdYwnOv4iE7Hy18jXCV9dXILHs2CzgU0=;
+        b=vgyIjB6hkUKv/aG8ZBKyCW41XT8i30FS/VZ1kLTUz5qc/GtKRY/m13G2JmHAvD3BHu
+         5u5R4su1HCGksDr7o0eXwCSNC0EelOVMdbraI2hVUfgR8MsKlJ3dmZ7hfxpK8rsAPx9W
+         TUWlbTglnXhXK/xOU508t4D716ed+9IvjHgi4W6GQRTE3QXLkICL0BbXQQBdwfr+wbCK
+         mL5PmYDjpjwa92t2g2ex6y3ZzOIvrN2cwIjeWvOlaEW8ACfZqTlfpcK7bvQlhc32QcZ1
+         7dhGzoaHk7ZJevj4g1Etg28RzJv81nQBc2fyvS7RfOR6L+Gip7S5MxscWo5JBL7ady1F
+         kq8g==
+X-Forwarded-Encrypted: i=1; AJvYcCUaYpwDzMDYnymrrA4fofPEaIKSMlTFi3gOEhYbX+ThPj6PJD+O2pdcN83S7SJahjtGnwERMMT3ONY=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwMkK8cGmBV3v4ct2nDmrh5iMLE50uQwReZgMVi/f+CXkGOLRht
+	aCXgX6XTo+Nu9LtYx15E7Jv+z7gegt8jqWb56gBFWIP3ZMBB5C8LLR4cWhmE1+5JhRQWFIBJROl
+	+pJ7O5w==
+X-Google-Smtp-Source: AGHT+IF4KmprglJhQcCJjAzzWMjja6iK8iRcdlNEdxxLpwXx5M10tRiFlzyYJ7m3VJ2DYG0UO1IJjLbBGog=
+X-Received: from pjbsz11.prod.google.com ([2002:a17:90b:2d4b:b0:311:b3fb:9f74])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4ec4:b0:312:e9bd:5d37
+ with SMTP id 98e67ed59e1d1-31c3c269ae4mr1071299a91.6.1752081185093; Wed, 09
+ Jul 2025 10:13:05 -0700 (PDT)
+Date: Wed, 9 Jul 2025 10:13:03 -0700
 In-Reply-To: <20250709170454.74854-1-darwi@linutronix.de>
-References: <20250709170454.74854-1-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20250709170454.74854-1-darwi@linutronix.de>
+Message-ID: <aG6jH9ZHWiTxfFM3@google.com>
+Subject: Re: [PATCH v1 0/7] x86: Disentangle <asm/processor.h> dependency on
+ CPUID APIs
+From: Sean Christopherson <seanjc@google.com>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, Thomas Gleixner <tglx@linutronix.de>, 
+	Andrew Cooper <andrew.cooper3@citrix.com>, John Ogness <john.ogness@linutronix.de>, x86@kernel.org, 
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-A new CPUID model will be added where its APIs will be designated as the
-"official" CPUID API.  Free the cpuid_leaf() and cpuid_subleaf() function
-names for that model.  Rename them accordingly to cpuid_read() and
-cpuid_read_subleaf().
+On Wed, Jul 09, 2025, Ahmed S. Darwish wrote:
+> Hi,
+>=20
+> This series avoids including the full CPUID API from <asm/processor.h>.
+> That header only needs the CPUID data types and not the full API.
+>=20
+> Replace the <asm/cpuid/api.h> inclusion in <asm/processor.h> with an
+> include of <asm/cpuid/types.h>.
+>=20
+> Modify all CPUID call sites which implicitly included the CPUID API
+> though <asm/processor.h> to explicitly include <asm/cpuid/api.h> instead.
+>=20
+> This work prepares for an upcoming v4 of the CPUID model:
+>=20
+>     [PATCH v3 00/44] x86: Introduce a centralized CPUID data model
+>     https://lore.kernel.org/lkml/20250612234010.572636-1-darwi@linutronix=
+.de
+>=20
+> where <asm/cpuid/api.h> needs to include <asm/processor.h>, thus creating
+> a circular dependency if not resolved beforehand=E2=80=A6  Patches 1->19 =
+of the
+> v3 above had parts of this series circular dependency disentanglement.
+>=20
+> Per Boris' remarks above, merge the header includes reorderings into two
+> patches only: one patch for x86 and one for drivers.
+>=20
+> The 0-day bot x86-32 compilation error:
+>=20
+>     Re: [PATCH v3 41/44] x86/cpu: <asm/processor.h>: Do not include CPUID=
+=E2=80=A6
+>     https://lore.kernel.org/lkml/202506132039.imS2Pflx-lkp@intel.com
+>=20
+> is also fixed in this series.
+>=20
+> Beside the call sites converted at CPUID model v3 above, this series also
+> switches below files:
+>=20
+>     arch/x86/kernel/cpu/microcode/core.c
+>     arch/x86/kernel/cpu/microcode/intel.c
+>     arch/x86/kernel/cpu/mshyperv.c
+>     arch/x86/kvm/lapic.c
+>     arch/x86/kvm/svm/sev.c
 
-Note, for kernel/cpuid.c, rename its local file operations read function
-from cpuid_read() to cpuid_read_f() so that it does not conflict with the
-new names.
+I'm officially confused.  Neither lapic.c nor svm/sev.c are modified in thi=
+s series.
+Does "this series" actually mean something other than _this_ seris?
 
-No functional change.
-
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
----
- arch/x86/include/asm/cpuid/api.h   | 6 +++---
- arch/x86/kernel/cpu/topology_amd.c | 2 +-
- arch/x86/kernel/cpu/topology_ext.c | 2 +-
- arch/x86/kernel/cpuid.c            | 5 ++---
- 4 files changed, 7 insertions(+), 8 deletions(-)
-
-diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
-index 44fa82e1267c..2b9750cc8a75 100644
---- a/arch/x86/include/asm/cpuid/api.h
-+++ b/arch/x86/include/asm/cpuid/api.h
-@@ -131,12 +131,12 @@ static inline void __cpuid_read(u32 leaf, u32 subleaf, u32 *regs)
- 	__cpuid(regs + CPUID_EAX, regs + CPUID_EBX, regs + CPUID_ECX, regs + CPUID_EDX);
- }
- 
--#define cpuid_subleaf(leaf, subleaf, regs) {		\
-+#define cpuid_read_subleaf(leaf, subleaf, regs) {	\
- 	static_assert(sizeof(*(regs)) == 16);		\
- 	__cpuid_read(leaf, subleaf, (u32 *)(regs));	\
- }
- 
--#define cpuid_leaf(leaf, regs) {			\
-+#define cpuid_read(leaf, regs) {			\
- 	static_assert(sizeof(*(regs)) == 16);		\
- 	__cpuid_read(leaf, 0, (u32 *)(regs));		\
- }
-@@ -228,7 +228,7 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
-  */
- static inline void cpuid_leaf_0x2(union leaf_0x2_regs *regs)
- {
--	cpuid_leaf(0x2, regs);
-+	cpuid_read(0x2, regs);
- 
- 	/*
- 	 * All Intel CPUs must report an iteration count of 1.	In case
-diff --git a/arch/x86/kernel/cpu/topology_amd.c b/arch/x86/kernel/cpu/topology_amd.c
-index abc6f5a7a486..c6bedae12a7e 100644
---- a/arch/x86/kernel/cpu/topology_amd.c
-+++ b/arch/x86/kernel/cpu/topology_amd.c
-@@ -80,7 +80,7 @@ static bool parse_8000_001e(struct topo_scan *tscan, bool has_topoext)
- 	if (!boot_cpu_has(X86_FEATURE_TOPOEXT))
- 		return false;
- 
--	cpuid_leaf(0x8000001e, &leaf);
-+	cpuid_read(0x8000001e, &leaf);
- 
- 	tscan->c->topo.initial_apicid = leaf.ext_apic_id;
- 
-diff --git a/arch/x86/kernel/cpu/topology_ext.c b/arch/x86/kernel/cpu/topology_ext.c
-index eb915c73895f..60dfaa02ffd0 100644
---- a/arch/x86/kernel/cpu/topology_ext.c
-+++ b/arch/x86/kernel/cpu/topology_ext.c
-@@ -71,7 +71,7 @@ static inline bool topo_subleaf(struct topo_scan *tscan, u32 leaf, u32 subleaf,
- 	default: return false;
- 	}
- 
--	cpuid_subleaf(leaf, subleaf, &sl);
-+	cpuid_read_subleaf(leaf, subleaf, &sl);
- 
- 	if (!sl.num_processors || sl.type == INVALID_TYPE)
- 		return false;
-diff --git a/arch/x86/kernel/cpuid.c b/arch/x86/kernel/cpuid.c
-index cbd04b677fd1..b55fe9c7359a 100644
---- a/arch/x86/kernel/cpuid.c
-+++ b/arch/x86/kernel/cpuid.c
-@@ -59,8 +59,7 @@ static void cpuid_smp_cpuid(void *cmd_block)
- 	complete(&cmd->done);
- }
- 
--static ssize_t cpuid_read(struct file *file, char __user *buf,
--			  size_t count, loff_t *ppos)
-+static ssize_t cpuid_read_f(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- {
- 	char __user *tmp = buf;
- 	struct cpuid_regs_done cmd;
-@@ -120,7 +119,7 @@ static int cpuid_open(struct inode *inode, struct file *file)
- static const struct file_operations cpuid_fops = {
- 	.owner = THIS_MODULE,
- 	.llseek = no_seek_end_llseek,
--	.read = cpuid_read,
-+	.read = cpuid_read_f,
- 	.open = cpuid_open,
- };
- 
--- 
-2.49.0
-
+>     drivers/acpi/acpi_processor.c
+>     drivers/acpi/processor_core.c
+>     drivers/cpufreq/longrun.c
+>     drivers/cpufreq/powernow-k7.c
+>     drivers/cpufreq/powernow-k8.c
+>     drivers/hwtracing/coresight/coresight-platform.c
+>     drivers/xen/xen-acpi-processor.c
+>=20
+> to explicitly include <asm/cpuid/api.h>.
+>=20
+> Based on v6.16-rc5.
+>=20
+> Note, the last patch is a CPUID API naming change in preparation for the
+> model as well.  It can be skipped if merging it is not desired at this
+> stage.
+>=20
+> Thanks!
+>=20
+> 8<-----
+>=20
+> Ahmed S. Darwish (7):
+>   x86/cpuid: Remove transitional <asm/cpuid.h> header
+>   ASoC: Intel: avs: Include CPUID header at file scope
+>   x86: Reorder headers alphabetically
+>   drivers: Reorder headers alphabetically
+>   treewide: Explicitly include <asm/cpuid/api.h>
+>   x86/cpu: <asm/processor.h>: Do not include CPUID API header
+>   x86/cpuid: Rename cpuid_leaf()/cpuid_subleaf() APIs
+>=20
+>  arch/x86/boot/compressed/pgtable_64.c        |  1 +
+>  arch/x86/boot/startup/sme.c                  |  9 +--
+>  arch/x86/coco/tdx/tdx.c                      |  6 +-
+>  arch/x86/events/amd/core.c                   |  2 +
+>  arch/x86/events/amd/ibs.c                    |  1 +
+>  arch/x86/events/amd/lbr.c                    |  2 +
+>  arch/x86/events/amd/power.c                  |  3 +
+>  arch/x86/events/amd/uncore.c                 | 15 ++---
+>  arch/x86/events/intel/core.c                 |  1 +
+>  arch/x86/events/intel/lbr.c                  |  1 +
+>  arch/x86/events/zhaoxin/core.c               | 12 ++--
+>  arch/x86/include/asm/acrn.h                  |  2 +
+>  arch/x86/include/asm/cpuid.h                 |  8 ---
+>  arch/x86/include/asm/cpuid/api.h             |  6 +-
+>  arch/x86/include/asm/microcode.h             |  1 +
+>  arch/x86/include/asm/processor.h             |  2 +-
+>  arch/x86/include/asm/xen/hypervisor.h        |  1 +
+>  arch/x86/kernel/cpu/amd.c                    | 26 ++++----
+>  arch/x86/kernel/cpu/centaur.c                |  1 +
+>  arch/x86/kernel/cpu/hygon.c                  |  1 +
+>  arch/x86/kernel/cpu/mce/core.c               | 63 ++++++++++----------
+>  arch/x86/kernel/cpu/mce/inject.c             |  1 +
+>  arch/x86/kernel/cpu/microcode/core.c         | 23 +++----
+>  arch/x86/kernel/cpu/microcode/intel.c        | 12 ++--
+>  arch/x86/kernel/cpu/mshyperv.c               | 29 +++++----
+>  arch/x86/kernel/cpu/resctrl/core.c           |  6 +-
+>  arch/x86/kernel/cpu/resctrl/monitor.c        |  1 +
+>  arch/x86/kernel/cpu/scattered.c              |  3 +-
+>  arch/x86/kernel/cpu/sgx/main.c               |  3 +
+>  arch/x86/kernel/cpu/topology_amd.c           |  3 +-
+>  arch/x86/kernel/cpu/topology_common.c        |  3 +-
+>  arch/x86/kernel/cpu/topology_ext.c           |  3 +-
+>  arch/x86/kernel/cpu/transmeta.c              |  3 +
+>  arch/x86/kernel/cpu/zhaoxin.c                |  1 +
+>  arch/x86/kernel/cpuid.c                      |  6 +-
+>  arch/x86/kernel/paravirt.c                   | 29 ++++-----
+>  arch/x86/kvm/cpuid.h                         |  3 +
+>  arch/x86/kvm/mmu/spte.c                      |  1 +
+>  drivers/cpufreq/longrun.c                    |  7 ++-
+>  drivers/cpufreq/powernow-k7.c                | 14 ++---
+>  drivers/cpufreq/powernow-k8.c                | 17 +++---
+>  drivers/cpufreq/speedstep-lib.c              |  6 +-
+>  drivers/firmware/efi/libstub/x86-5lvl.c      |  1 +
+>  drivers/hwmon/fam15h_power.c                 | 14 +++--
+>  drivers/hwmon/k10temp.c                      |  2 +
+>  drivers/hwmon/k8temp.c                       | 12 ++--
+>  drivers/thermal/intel/intel_hfi.c            |  1 +
+>  drivers/thermal/intel/x86_pkg_temp_thermal.c | 15 ++---
+>  sound/soc/intel/avs/tgl.c                    | 25 +++++---
+>  49 files changed, 235 insertions(+), 173 deletions(-)
+>  delete mode 100644 arch/x86/include/asm/cpuid.h
+>=20
+> base-commit: d7b8f8e20813f0179d8ef519541a3527e7661d3a
+> --=20
+> 2.49.0
+>=20
