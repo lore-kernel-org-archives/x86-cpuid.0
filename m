@@ -1,166 +1,90 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF6A367;
-	Mon, 14 Jul 2025 20:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD5F2798EA
+	for <x86-cpuid@lists.linux.dev>; Wed, 16 Jul 2025 17:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752525312; cv=none; b=ZLD0+MnoCfFB/FFYaAPz9dO3mG5A/8Hsux0ZBa02zlnWCuESIBph/zm14epE5Gze3ZED/6sLD3kY0KbtdisGlJ1onBp7R3OZiRYRbjbChjsErOIyU1MVWN0mr9pdfyXK7EllZqXuk0owg8iTj6G/wS6MX2gRBPOx1wlWq1FIWtE=
+	t=1752686291; cv=none; b=SteI50HqCA3anaRmK1239NFqxj8tItz8wL09fA6JWJxPPWm/kSajWYxpxZNKEV4xG7jDA9wQ6NafScioYK6cTcZ/zQLdwzZK/h401YN9Ejkx0M6L3V9ACian/OiJCMYa+6s/Pi2oyq0gyWylgvZgVpqKF+v5K+/Z34eTYOPVtCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752525312; c=relaxed/simple;
-	bh=d9o1GGJ7p6AQZPByJ803Cs+qEKbmdKWrkFKKV4lTAhE=;
+	s=arc-20240116; t=1752686291; c=relaxed/simple;
+	bh=cAoVPxkt/dinsa6nJwl+96VpyIGHPL7qFsPziq3Z1r8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i91cKISPMsgq3SpEotaW76blPkyF4PCggEvvbVC++wDIaTHmjtf8dAnTSnekAcKLJI02LBn3tEsDGRHAjlo+UettYRxaz11K5hSHX8SVa/tlICiXDeD7lun1VvQeqY3tiYCikez1KF8CNkOWdGNkT4iFrjiaZrl7zz4YDcTewJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X2yCalwF; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=hTJFR3XuNM5gt21NEjBsW1YsKx6XeyfwpDLg4r4XYbBTXYqKNha4Jz9wI8zL0nZ92mg5MGbymqteoKefrWb1PAE973cJy5MyxN5kAVoAHAQFL+13T1cTzkima6Bq5dSew1og47cmjDPz78j9rqWEwr9aCowVL1sML7+9bt+Qkcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=KWp0HYhC; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=fonCkGI1; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X2yCalwF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752525311; x=1784061311;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=d9o1GGJ7p6AQZPByJ803Cs+qEKbmdKWrkFKKV4lTAhE=;
-  b=X2yCalwFYz8B8Rqzd3ESLMneR7vqjv5r6GyNwx/da8xuPHLGmUiXAjOu
-   r2rFWNVrQi2V85JLw51dZBbpymkUdM8fc6bFTdv5zU6qj+TkLvYauW4d/
-   ZXGRQ4v0JVEbTqjvXgDKv1waUduRjF6+mpVkIZ9ZYqiebBf31icaIhYYj
-   hNx3bwg0myL1j8hkCxaMiqqEzfQc2WeY9d88lOYW6Sw6u3cSA6BAJ3UK7
-   ebzI4ymGYbMZK207I8eJCPhd6tcGS/BHxawUm3m+X0+x9V7Yvqjk65nQx
-   8jXX4TUWh6gskNB5cuawDDb8OUjVOHu0Bg43i4+LPeaTzYhNWT4byByE4
-   A==;
-X-CSE-ConnectionGUID: oXWo4yReSTavnA6bReACaQ==
-X-CSE-MsgGUID: D5E9/zsFSQCmHBAIdnmUoQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="72180344"
-X-IronPort-AV: E=Sophos;i="6.16,312,1744095600"; 
-   d="scan'208";a="72180344"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2025 13:35:10 -0700
-X-CSE-ConnectionGUID: 7nfCtbUpTbOdzEmbQSHAuQ==
-X-CSE-MsgGUID: DnUvKCJ/Tbenx4L3r9R5ug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,312,1744095600"; 
-   d="scan'208";a="161347666"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by orviesa003.jf.intel.com with ESMTP; 14 Jul 2025 13:35:07 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ubPtA-0009JD-2q;
-	Mon, 14 Jul 2025 20:35:04 +0000
-Date: Tue, 15 Jul 2025 04:34:21 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>,
-	Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Cc: oe-kbuild-all@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="KWp0HYhC";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="fonCkGI1"
+Date: Wed, 16 Jul 2025 19:17:50 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1752686273;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PFNvBmuWcrSDG+7MTp9BSMX1nNEj1yPghZI+Kgwr7fA=;
+	b=KWp0HYhCCmSRIhzS/mgd4Hb433TYSiUd6hjruBiZsfBNH3O3ldqZr77YBWJP5hAv/sQzmL
+	ovTa9Edy9+4EbPkne0Gbr8fy6hGbL1EtUHuxw7VI/I0DO8hukJ7jWC7EivCBwACs3svwS4
+	ecYtf+Nc0XmRPVzk58bpSpu48TS4fB0dHwxyUgS8w6CWychMXieomcJzhT8QjOY53jowZj
+	Nkrr6UjO31SsdiT4ILEGb9CWVWDrTqaNx5c4XZo8EFBDzbk+fSZ+q+p5b9Ck9FKac4/tSM
+	fl6Pyy/nSIYEqUT3cnOJBCA8tDx4Zgz2/sPot3ztPteE7JTf7k6r8QhwDis6hA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1752686273;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PFNvBmuWcrSDG+7MTp9BSMX1nNEj1yPghZI+Kgwr7fA=;
+	b=fonCkGI1Tk1whOZH+s5kMMPnYyht+a62wgXi4OeuKLujHGLgy5giIr7DgOA8HvPfYzse1J
+	SR9QOeTWDObeCVCA==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v2 6/6] x86/cpu: <asm/processor.h>: Do not include CPUID
  API header
-Message-ID: <202507150403.hKKg9xjJ-lkp@intel.com>
+Message-ID: <aHfevkaADwRv0Fzb@lx-t490>
 References: <20250709203033.90125-7-darwi@linutronix.de>
+ <202507150403.hKKg9xjJ-lkp@intel.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250709203033.90125-7-darwi@linutronix.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <202507150403.hKKg9xjJ-lkp@intel.com>
 
-Hi Ahmed,
+Hi!
 
-kernel test robot noticed the following build errors:
+On Tue, 15 Jul 2025, kernel test robot wrote:
+>
+> All errors:
+>
+>    drivers/char/agp/efficeon-agp.c: ...
+>
 
-[auto build test ERROR on d7b8f8e20813f0179d8ef519541a3527e7661d3a]
+Sorry, my "i386 compilation testing" was to do an allyesconfig, disable
+CONFIG_64BIT, then compile…
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ahmed-S-Darwish/x86-cpuid-Remove-transitional-asm-cpuid-h-header/20250710-043320
-base:   d7b8f8e20813f0179d8ef519541a3527e7661d3a
-patch link:    https://lore.kernel.org/r/20250709203033.90125-7-darwi%40linutronix.de
-patch subject: [PATCH v2 6/6] x86/cpu: <asm/processor.h>: Do not include CPUID API header
-config: i386-randconfig-005-20250714 (https://download.01.org/0day-ci/archive/20250715/202507150403.hKKg9xjJ-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14+deb12u1) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250715/202507150403.hKKg9xjJ-lkp@intel.com/reproduce)
+This — now I embarrasingly discover — does not enable the kconfig options
+that depend on X86_32=y; e.g., the CONFIG_AGP_EFFICEON case above.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507150403.hKKg9xjJ-lkp@intel.com/
+It seems that, kinda like cross compilation, an "ARCH=i386" environment
+variable should do the job well with allyesconfig and the rest.
 
-All errors (new ones prefixed by >>):
+I'll make sure that all future CPUID work passes that step before sending
+it mainline.
 
-   drivers/char/agp/efficeon-agp.c: In function 'efficeon_create_gatt_table':
->> drivers/char/agp/efficeon-agp.c:197:37: error: implicit declaration of function 'cpuid_ebx' [-Werror=implicit-function-declaration]
-     197 |         const int clflush_chunk = ((cpuid_ebx(1) >> 8) & 0xff) << 3;
-         |                                     ^~~~~~~~~
-   cc1: some warnings being treated as errors
+Thanks a lot,
 
-
-vim +/cpuid_ebx +197 drivers/char/agp/efficeon-agp.c
-
-^1da177e4c3f41 Linus Torvalds  2005-04-16  177  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  178  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  179  /*
-d6e05edc59ecd7 Andreas Mohr    2006-06-26  180   * Since we don't need contiguous memory we just try
-^1da177e4c3f41 Linus Torvalds  2005-04-16  181   * to get the gatt table once
-^1da177e4c3f41 Linus Torvalds  2005-04-16  182   */
-^1da177e4c3f41 Linus Torvalds  2005-04-16  183  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  184  #define GET_PAGE_DIR_OFF(addr) (addr >> 22)
-^1da177e4c3f41 Linus Torvalds  2005-04-16  185  #define GET_PAGE_DIR_IDX(addr) (GET_PAGE_DIR_OFF(addr) - \
-^1da177e4c3f41 Linus Torvalds  2005-04-16  186  	GET_PAGE_DIR_OFF(agp_bridge->gart_bus_addr))
-^1da177e4c3f41 Linus Torvalds  2005-04-16  187  #define GET_GATT_OFF(addr) ((addr & 0x003ff000) >> 12)
-^1da177e4c3f41 Linus Torvalds  2005-04-16  188  #undef  GET_GATT
-^1da177e4c3f41 Linus Torvalds  2005-04-16  189  #define GET_GATT(addr) (efficeon_private.gatt_pages[\
-^1da177e4c3f41 Linus Torvalds  2005-04-16  190  	GET_PAGE_DIR_IDX(addr)]->remapped)
-^1da177e4c3f41 Linus Torvalds  2005-04-16  191  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  192  static int efficeon_create_gatt_table(struct agp_bridge_data *bridge)
-^1da177e4c3f41 Linus Torvalds  2005-04-16  193  {
-^1da177e4c3f41 Linus Torvalds  2005-04-16  194  	int index;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  195  	const int pati    = EFFICEON_PATI;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  196  	const int present = EFFICEON_PRESENT;
-^1da177e4c3f41 Linus Torvalds  2005-04-16 @197  	const int clflush_chunk = ((cpuid_ebx(1) >> 8) & 0xff) << 3;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  198  	int num_entries, l1_pages;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  199  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  200  	num_entries = A_SIZE_LVL2(agp_bridge->current_size)->num_entries;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  201  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  202  	printk(KERN_DEBUG PFX "efficeon_create_gatt_table(%d)\n", num_entries);
-^1da177e4c3f41 Linus Torvalds  2005-04-16  203  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  204  	/* There are 2^10 PTE pages per PDE page */
-^1da177e4c3f41 Linus Torvalds  2005-04-16  205  	BUG_ON(num_entries & 0x3ff);
-^1da177e4c3f41 Linus Torvalds  2005-04-16  206  	l1_pages = num_entries >> 10;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  207  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  208  	for (index = 0 ; index < l1_pages ; index++) {
-^1da177e4c3f41 Linus Torvalds  2005-04-16  209  		int offset;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  210  		unsigned long page;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  211  		unsigned long value;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  212  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  213  		page = efficeon_private.l1_table[index];
-^1da177e4c3f41 Linus Torvalds  2005-04-16  214  		BUG_ON(page);
-^1da177e4c3f41 Linus Torvalds  2005-04-16  215  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  216  		page = get_zeroed_page(GFP_KERNEL);
-^1da177e4c3f41 Linus Torvalds  2005-04-16  217  		if (!page) {
-^1da177e4c3f41 Linus Torvalds  2005-04-16  218  			efficeon_free_gatt_table(agp_bridge);
-^1da177e4c3f41 Linus Torvalds  2005-04-16  219  			return -ENOMEM;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  220  		}
-^1da177e4c3f41 Linus Torvalds  2005-04-16  221  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  222  		for (offset = 0; offset < PAGE_SIZE; offset += clflush_chunk)
-6619a8fb594486 H. Peter Anvin  2007-10-17  223  			clflush((char *)page+offset);
-^1da177e4c3f41 Linus Torvalds  2005-04-16  224  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  225  		efficeon_private.l1_table[index] = page;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  226  
-6a12235c7d2d75 David Woodhouse 2009-07-29  227  		value = virt_to_phys((unsigned long *)page) | pati | present | index;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  228  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  229  		pci_write_config_dword(agp_bridge->dev,
-^1da177e4c3f41 Linus Torvalds  2005-04-16  230  			EFFICEON_ATTPAGE, value);
-^1da177e4c3f41 Linus Torvalds  2005-04-16  231  	}
-^1da177e4c3f41 Linus Torvalds  2005-04-16  232  
-^1da177e4c3f41 Linus Torvalds  2005-04-16  233  	return 0;
-^1da177e4c3f41 Linus Torvalds  2005-04-16  234  }
-^1da177e4c3f41 Linus Torvalds  2005-04-16  235  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+--
+Ahmed S. Darwish
+Linutronix GmbH
