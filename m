@@ -1,136 +1,99 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DDC2F83D3
-	for <x86-cpuid@lists.linux.dev>; Fri, 15 Aug 2025 07:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACCF20408A
+	for <x86-cpuid@lists.linux.dev>; Fri, 15 Aug 2025 07:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755241616; cv=none; b=YLZAsbajLLUkX9gDDdK6+QwVUQrRtqLw9eQMe5dxkoYRH2GwqeuC8ELxKq9ptQBgODE92Imx/+97/K0XjHOoPI+e0P5J70Kj0GlFZhtoUy7Vbxu4i2NLCbyOuWlmvNhsT5qEvFCoHds+IDQg0jvms0/NhnAb/1WjzSeiBXHVTsY=
+	t=1755242162; cv=none; b=ttZ4I1JrJAodwf109w450szAo0/Tkb9balJuXSG9IgjvXE7PQ7X8pX6B5BacIe7UKc1X3KSzDtJ2l9CYVopBj7SBFkrtMzaLV3RhW4P7Mzjfom3jCOcULBn+QAQH9MmNYwsyI2sXTxO5ylE/aySArxBWYvHKYVuvp0GY+4/SWnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755241616; c=relaxed/simple;
-	bh=2p3mVQR6Pei4EbU9vfHkMqnuC71LnqWy+OEui4qrQhk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czlOEAdPsshzzXqr01DUD/HFYhph0917g4KlzfulYUZ7mNawjjHQ9nLjfmENomxh4mqcWdguAEr7CzRCl/jms30AiQ3UAeeviK9nxoK1lkZ+v8YynsHwDnqKoIb7gIVNndOJ/9CdXDdipBXc+h8bT7HSjH8KXYgQDx4D3jc4W4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=wy0SeTkS; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=XfP1BrBq; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1755242162; c=relaxed/simple;
+	bh=RkLDp6zDRxv8BgRNh3MlVTs4P6ItOnLnxvRRn78MzWw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bvK+cCinZlRGZwrhuKr5/atUxPRiMt1cbX13S4mBamPHZAeSIESahDY3tRuxc0IB7J5UeesT4hDDQBayIbaTipobp76pEebDENwQJF/lHLFNpXOoJtJG4GAY+Tx8JK8+xqQIcrjrsMxC4TPkGjVNN+SfwBMJnnSMolKZMNWHdKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=PQdfvki4; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=0WUlp69i; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wy0SeTkS";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="XfP1BrBq"
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="PQdfvki4";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="0WUlp69i"
+Date: Fri, 15 Aug 2025 09:15:56 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1755241614;
+	s=2020; t=1755242157;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Lr8g2138fQgNu0HI5HEQ50NVYhPOnkdlyJJ7xfGQCns=;
-	b=wy0SeTkS2d6Mdb9+Q1aIiW39aynWaseSM445L+/4iabdY6oC+Il0otO6B9YkbiD6TrJRcC
-	QrsrKGq1PIord+n9sCTv6/SBc5Q3D4xildNm5RBTTMOKCT9+QpZRSimZLCEv3jcwg48xbW
-	Gi+y1tBR7vZ1hyKXkbv5IpRlwiJBK302pHq8/ffGrhPYQOjCKkhC2x1jevNmIa5+aGjmh7
-	RnmE19XpnuNeENYpx2JI2MyDoteTNGWBn4QSmb1QAWmgr2JfFQWgOgLOcU2JVCaRUSrYMe
-	FQ5zI7DjfHlNHNXspI4MkiFFJZGm0NLhZRX1vgs8bACz9umDBvOlvCgysE44ow==
+	bh=C4UN0KzIR1Tf5MZYHvlC0T5XL7J3huLu6aBx5aMBUKU=;
+	b=PQdfvki4RNOwwd17t5MzersaHCajZsJPqtyUCp/iLPG1ECLTwYlQ15A/hc88LBddW4MKBW
+	RoMcaFOtYdHYAttCxvA130ZtvmJiUPBTQwzKbU0r0M7Fod6/+c8vHZZOAXkwrgzzyuyyd0
+	+sKlKF2HnHbTzw7/DKeADQ4eah1188hR4YNfcmw5uU6JiQCwMhXvYM5dGfQtOUk2UXbdZb
+	ERfWz5dIJPdYdF7iOUlo8mDkSnSxTgHWSx0dEaWbYmM59JpXlA9BEMeEdipCf6M0QTUcRR
+	Hxaf/+kggP5Z6V5tTosa3P5VIU9nuotF4vnH6Tf1lCl37IxkFCcjcnsWshstEA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1755241614;
+	s=2020e; t=1755242157;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Lr8g2138fQgNu0HI5HEQ50NVYhPOnkdlyJJ7xfGQCns=;
-	b=XfP1BrBqt1e2Sww0FRaPWW3nSiAAUHedLKhuBdGHHmBAgouwJ8CTnJV5nOwt6IftaPa+FW
-	b4RosLL7da4tdNBA==
-To: Borislav Petkov <bp@alien8.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86@kernel.org,
-	x86-cpuid@lists.linux.dev,
-	LKML <linux-kernel@vger.kernel.org>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v4 34/34] x86/tsc: Use parsed CPUID(0x16)
-Date: Fri, 15 Aug 2025 09:02:27 +0200
-Message-ID: <20250815070227.19981-35-darwi@linutronix.de>
-In-Reply-To: <20250815070227.19981-1-darwi@linutronix.de>
-References: <20250815070227.19981-1-darwi@linutronix.de>
+	bh=C4UN0KzIR1Tf5MZYHvlC0T5XL7J3huLu6aBx5aMBUKU=;
+	b=0WUlp69ipHyEt5YlVdD0vzcttdVVsQFAtDVw6l1hY/vkKCfo5Wx1n3KPM7fIAb8z2jlo6W
+	XsoA4zR0Nh0OuNDw==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Nikunj A Dadhania <nikunj@amd.com>
+Cc: x86-cpuid@lists.linux.dev, bp@alien8.de, thomas.lendacky@amd.com,
+	santosh.shukla@amd.com
+Subject: Re: [PATCH] db/leaf_8000000a: Add Page modification logging
+Message-ID: <aJ7erI-UKNIBehjP@lx-t490>
+References: <20250811125236.2606331-1-nikunj@amd.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250811125236.2606331-1-nikunj@amd.com>
 
-Use parsed CPUID(0x16) access instead of direct CPUID queries.
+Hi,
 
-Remove the "max standard CPUID level >= CPUID_LEVEL_FREQ" checks since
-the CPUID parser API's NULL check is equivalent.
+On Mon, 11 Aug 2025, Nikunj A Dadhania wrote:
+>
+> Page modification logging(PML) is hardware feature designed to track
+> guest modified memory pages. PML enables the hypervisor to identify
+> which pages in a guest's memory have been changed since the last
+> checkpoint or during live migration.
+>
+> Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+> ---
+>  db/xml/leaf_8000000a.xml | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/db/xml/leaf_8000000a.xml b/db/xml/leaf_8000000a.xml
+> index 7f73318..433c4b1 100644
+> --- a/db/xml/leaf_8000000a.xml
+> +++ b/db/xml/leaf_8000000a.xml
+> @@ -14,6 +14,11 @@
+>      <ebx>
+>        <bit0  len="32" id="svm_nasid"               desc="Number of address space identifiers (ASID)" />
+>      </ebx>
+> +    <ecx>
+> +      <bit4  len="1"  id="pml"                     desc="Page modification logging (PML)">
+> +        <linux        feature="true"               proc="false" />
+> +      </bit4>
+> +    </ecx>
+>
 
-At cpu_khz_from_cpuid(), remove the Intel vendor check.  The CPUID parser
-caches this leaf output for Intel machines only, thus the CPUID parser
-API's NULL check is also equivalent.
+Thanks a lot for the patch.
 
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
----
- arch/x86/kernel/tsc.c | 24 +++++-------------------
- 1 file changed, 5 insertions(+), 19 deletions(-)
+feature="true" means that the Linux kernel will have an X86_FEATURE_PML
+flag at some point.  I've quickly searched LKML, and I didn't find any
+draft patches for such a flag.
 
-diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
-index 87e749106dda..34da49d45d85 100644
---- a/arch/x86/kernel/tsc.c
-+++ b/arch/x86/kernel/tsc.c
-@@ -662,6 +662,7 @@ static unsigned long quick_pit_calibrate(void)
-  */
- unsigned long native_calibrate_tsc(void)
- {
-+	const struct leaf_0x16_0 *l16 = cpuid_leaf(&boot_cpu_data, 0x16);
- 	unsigned int eax_denominator, ebx_numerator, ecx_hz, edx;
- 	unsigned int crystal_khz;
- 
-@@ -703,13 +704,8 @@ unsigned long native_calibrate_tsc(void)
- 	 * clock, but we can easily calculate it to a high degree of accuracy
- 	 * by considering the crystal ratio and the CPU speed.
- 	 */
--	if (crystal_khz == 0 && boot_cpu_data.cpuid_level >= CPUID_LEAF_FREQ) {
--		unsigned int eax_base_mhz, ebx, ecx, edx;
--
--		cpuid(CPUID_LEAF_FREQ, &eax_base_mhz, &ebx, &ecx, &edx);
--		crystal_khz = eax_base_mhz * 1000 *
--			eax_denominator / ebx_numerator;
--	}
-+	if (crystal_khz == 0 && l16)
-+		crystal_khz = l16->cpu_base_mhz * 1000 * eax_denominator / ebx_numerator;
- 
- 	if (crystal_khz == 0)
- 		return 0;
-@@ -736,19 +732,9 @@ unsigned long native_calibrate_tsc(void)
- 
- static unsigned long cpu_khz_from_cpuid(void)
- {
--	unsigned int eax_base_mhz, ebx_max_mhz, ecx_bus_mhz, edx;
--
--	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
--		return 0;
--
--	if (boot_cpu_data.cpuid_level < CPUID_LEAF_FREQ)
--		return 0;
--
--	eax_base_mhz = ebx_max_mhz = ecx_bus_mhz = edx = 0;
--
--	cpuid(CPUID_LEAF_FREQ, &eax_base_mhz, &ebx_max_mhz, &ecx_bus_mhz, &edx);
-+	const struct leaf_0x16_0 *l16 = cpuid_leaf(&boot_cpu_data, 0x16);
- 
--	return eax_base_mhz * 1000;
-+	return l16 ? (l16->cpu_base_mhz * 1000) : 0;
- }
- 
- /*
--- 
-2.50.1
+If that feature flag is not planned, there's no need to send a v2.  I'll
+just set feature="false" before merging to tip.
 
+Thanks!
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
