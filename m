@@ -1,142 +1,145 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AF92C0F9F
-	for <x86-cpuid@lists.linux.dev>; Fri, 15 Aug 2025 15:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55658226861
+	for <x86-cpuid@lists.linux.dev>; Fri, 15 Aug 2025 15:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755271519; cv=none; b=r6202cW6Ws5FCRjxfzJHjxzj0go1mJKzfRGzZdehZbltdt1Bit38NUlv0PLpxB3ZIW6pnbW/ThbLfZfNlbkYVk0pVJTqzNqpLtiKsaFP732zdaM+ZGl5ZleTIEJs2z3dfl5yBkRcAks15yIscGiqwLqFI+pKw3AyOP9cDzYNBlM=
+	t=1755272048; cv=none; b=uuWFoRSUoShliQ0WX2tqNzM4ZYXWVMyZ5JH7pDaCtQONOp4VtL6eJkmpJ6At0PFlYzFqIEY/89UmZ986SNry8AJht5ncQ3rqe5eGuVV8vm0cEDg1xQsptUcY4EIEI85tWKSSVb1tnE+UB8Mv5qQBFNyY16Zii++jG1KJTiAhKNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755271519; c=relaxed/simple;
-	bh=tqLM8IrA4jSmJ6iybPPAFpjKb9OeBINoNkY8rjQgREU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qk3qFldkCIlipHspcMm1hsk60TKKiJZufImXMiLJLS701liU8mN80XRMZAyHCr3vTO9e924xBfBc+VelNPqMclwTnqdgGAqTEuwagW9dMrStqgG1Ek11A7ECOidLJHLn10guFOSX1AeXVSMCjodClyKKNlHh/bgabFF0+pU+KqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ndXVi0/q; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1755272048; c=relaxed/simple;
+	bh=9lHqDqnCAZOhPJzNdwbbL90BIhP3tdlv+FGXJ+LDFSo=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=biLKvmUzCTlyxCCvx7uyCXIOmhagYUKqYmDx2j/qxDk8xxEEn7bZB6Uq/Smra6RNPNpLy7lsSjEQ3sX//yd6MOD86fUWU4RzjFX6RuXqAlhcQRciHcOLnE6n02L9kEvdOOFnr5gRGvNAC8k7kpcBSnkNjQZXGOoFuaqgflA6uLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4U6798lQ; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ndXVi0/q"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1755271518; x=1786807518;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=tqLM8IrA4jSmJ6iybPPAFpjKb9OeBINoNkY8rjQgREU=;
-  b=ndXVi0/qbpwraFMBk1ZIhJicKCmT28E3ICVc9ciVoSJ2dHFis1bJqTNo
-   EOUfHGeYRHNcuUtkg1ZixIFy0nf3Z1Aot5P0mCbn6CMmKH9hpNi/jTevz
-   SdU3IRf1YRNl+YJQSukfBLbDGHBd3Vtbe9REf2Mn4NqoLX6iB1w6g6IW5
-   khf7FgNtQ5SWgZFtNdVwhsIubJ6XZw4nsIhck5Hqa7z7uO8Q5eb5VnuDt
-   Hf9fYnyXqKdRhGnDNlvK2F5JgQk57hwdnWDaNjVsyq5/fKWsj786g26xV
-   GFAW17JP20lwnUOLsXbfrGJQEa0K4qE1n9WmbLkfHJiCTWAYz7pBpzw2l
-   Q==;
-X-CSE-ConnectionGUID: 676ka9TwTveknNspemWKPg==
-X-CSE-MsgGUID: 7DlktIirQOKu5f5E9czrBw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11523"; a="75160561"
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="75160561"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Aug 2025 08:25:17 -0700
-X-CSE-ConnectionGUID: KSJBIb8ASTKdlJ4e668Mmg==
-X-CSE-MsgGUID: LwWJuMU7R3iiU8CcDQwKXg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,290,1747724400"; 
-   d="scan'208";a="166526263"
-Received: from puneetse-mobl.amr.corp.intel.com (HELO [10.125.111.211]) ([10.125.111.211])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Aug 2025 08:25:17 -0700
-Message-ID: <4a680b7d-2ecb-4579-a5ea-b612c08ebefa@intel.com>
-Date: Fri, 15 Aug 2025 08:25:16 -0700
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4U6798lQ"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-323266d8396so2016366a91.0
+        for <x86-cpuid@lists.linux.dev>; Fri, 15 Aug 2025 08:34:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1755272047; x=1755876847; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=r+lAMpo3zrpCtTQnD+bH8tk+Voow5VNOXIWfYifzfJg=;
+        b=4U6798lQWQfWIGHrBVVKF+vYZ/uZathhQ4JMa3DrbBizsPyeUuXGzTsaVINEeikq5l
+         bRMVRoKnG5c59KhI3jwig5yADKJRP2hslpEltoUHeCFJzd5/lW/45E32oclDhB7REq5f
+         67FZg+vi8tHjVci9eAKMNvn0Yob9hVhNGCCLgIllaea6kF/ey2iLFrdZ1jWTjYZOGE37
+         7uECZiA0WTOdA/Z4OxiJlsbCC2/NNtA+AuhncZhix+faHDIVDcovlou6P3yEJMSWqxrF
+         ws2pU/+R84ZYhCruGUlbqao22LYeocuo/K/uVp15NZxi8z9ae42DTQLAyaUIcr7jFs0d
+         nGWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755272047; x=1755876847;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r+lAMpo3zrpCtTQnD+bH8tk+Voow5VNOXIWfYifzfJg=;
+        b=J+oceBxiCbC9BXtj1dEmLTC7nmkirAIEtgv6pSIjeQZBcnfeNikZ1YQsfjskhen/gk
+         DZyFHVkZ1xBjiYjkCUpG1WDtQpqV13FqfKWfSfO08OF8M+Yp9sSYdBIAfjDnX25BiUMP
+         iHTSWSNRTHDElLTMIMCiqxNVkQ79dlgLrHbTup1q6G4nW6kqF5EfALd10ublNCzVTS+O
+         8J65b0JG0Io+xZAizPsK3pZAHupEn65vCredUPlGT/VtIXro4FPN+RbhjqryfrjQ6RZB
+         2S9te1dygCr6j1wOxC4uoELuOSc1z5aVulHjruOm1vbgYQqCzydo2V+9NLfFbTLt9Sfn
+         /00A==
+X-Forwarded-Encrypted: i=1; AJvYcCVuDzwvEvv3nu6yjkooFPwUTf1ZB8pX4xy+gEQnUMl0yjB9gloDviEZ3D8IDpT9APAFLO/3ChmrI/Q=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw4eAGn651FErR3+Q14GlxTRlSfgwd/cCVbakOKxcJhAbm0dBxD
+	aSpZTB+s76jKXpALc01oElqeCPVp9jMvgG8Sgtejpd7BaoqaZzZqK9TgdGOtyPl2lHrk5Kj5sPl
+	0/phLOA==
+X-Google-Smtp-Source: AGHT+IFGDJJaW8mq6Y/ptxBjAXZTERHnVQrVVxPsYnIKl/PSeunKkWvMrdQzayHzGxTYoLzFv2AGXzHzd/M=
+X-Received: from pjyp16.prod.google.com ([2002:a17:90a:e710:b0:31c:160d:e3be])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4b10:b0:321:38a:dd17
+ with SMTP id 98e67ed59e1d1-32342147210mr3753630a91.20.1755272046649; Fri, 15
+ Aug 2025 08:34:06 -0700 (PDT)
+Date: Fri, 15 Aug 2025 08:34:05 -0700
+In-Reply-To: <20250815070227.19981-8-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 28/34] x86/cacheinfo: Use parsed CPUID(0x80000005) and
- CPUID(0x80000006)
-To: "Ahmed S. Darwish" <darwi@linutronix.de>, Borislav Petkov <bp@alien8.de>,
- Ingo Molnar <mingo@redhat.com>, Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
- Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>,
- David Woodhouse <dwmw2@infradead.org>,
- Sean Christopherson <seanjc@google.com>,
- Peter Zijlstra <peterz@infradead.org>, Sohil Mehta <sohil.mehta@intel.com>,
- John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
- x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-References: <20250815070227.19981-1-darwi@linutronix.de>
- <20250815070227.19981-29-darwi@linutronix.de>
-From: Dave Hansen <dave.hansen@intel.com>
-Content-Language: en-US
-Autocrypt: addr=dave.hansen@intel.com; keydata=
- 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
-In-Reply-To: <20250815070227.19981-29-darwi@linutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20250815070227.19981-1-darwi@linutronix.de> <20250815070227.19981-8-darwi@linutronix.de>
+Message-ID: <aJ9TbaNMgaplKSbH@google.com>
+Subject: Re: [PATCH v4 07/34] x86/cpuid: Introduce a centralized CPUID data model
+From: Sean Christopherson <seanjc@google.com>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, Thomas Gleixner <tglx@linutronix.de>, 
+	Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>, 
+	David Woodhouse <dwmw2@infradead.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Sohil Mehta <sohil.mehta@intel.com>, John Ogness <john.ogness@linutronix.de>, x86@kernel.org, 
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 
-On 8/15/25 00:02, Ahmed S. Darwish wrote:
-> +static void legacy_amd_cpuid4(struct cpuinfo_x86 *c, int index, struct leaf_0x4_0 *regs)
->  {
-> -	unsigned int dummy, line_size, lines_per_tag, assoc, size_in_kb;
-> -	union l1_cache l1i, l1d, *l1;
-> -	union l2_cache l2;
-> -	union l3_cache l3;
-> +	const struct leaf_0x80000005_0 *el5 = cpuid_leaf(c, 0x80000005);
-> +	const struct leaf_0x80000006_0 *el6 = cpuid_leaf(c, 0x80000006);
-> +	const struct cpuid_regs *el5_raw = (const struct cpuid_regs *)el5;
+On Fri, Aug 15, 2025, Ahmed S. Darwish wrote:
+> + * For a given leaf/subleaf combination, the CPUID table inside @_cpuinfo
+> + * contains an array of CPUID output storage entries.  An array of storage
+> + * entries is used to accommodate CPUID leaves which produce the same output
+> + * format for a large subleaf range.  This is common for CPUID hierarchical
+> + * objects enumeration; e.g., CPUID(0x4) and CPUID(0xd).  Check CPUID_LEAF().
 
-Is there any way we could get rid of the casts? The lack of type safety
-on those always worries me. Maybe a helper like this:
+IMO, the end result is quite misleading for leaves with "repeated" entries.  0xd
+in particular will be bizarre due to its array starting at ECX=2.  E.g.
+cpuid_subleaf_index() straight up won't work (without lying) due to hardcoding
+'0' as the subleaf.
 
-    const struct cpuid_regs *el5_raw = cpuid_leaf_raw(c, 0x80000006);
+#define cpuid_subleaf_index(_cpuinfo, _leaf, _idx)			\
+({									\
+	__cpuid_assert_leaf_has_dynamic_subleaves(_cpuinfo, _leaf);	\
+	__cpuid_table_subleaf_idx(&(_cpuinfo)->cpuid, _leaf, 0, _idx);	\
+                                                             ^
+                                                             |
 
-(although that would probably just do casts internally). The other way
-would be to rig the macros up so that each 'struct leaf_$FOO' had a:
+And then the usage would be similarly bizarre, e.g.
 
-	union {
-		struct leaf_0x80000005_0 l;
-		struct cpuid_regs raw;
-	};
+	for (i = XFEATURE_YMM; i < ARRAY_SIZE(xstate_sizes); i++) {
+		struct cpuid_xstate_sizes *xs = &xstate_sizes[i];
+		struct cpuid_0xd_2 *c = cpuid_subleaf_index(..., 0xD, i - 2);
 
-and then the macros just selected one of the two.
+		...
+	}
 
+Even the cases where the array starts at '0' look weird:
+
+	const struct leaf_0x4_0 *regs = cpuid_subleaf_index(c, 0x4, index);
+
+because the code is obviously not grabbing CPUID(0x4).0.
+
+And the subleaf_index naming is also weird, because they're essentially the same
+thing, e.g. the SDM refers to "sub-leaf index" for more than just the repeated
+cases.
+
+Rather than define the structures names using an explicit starting subleaf, what
+if the structures and APIs explicitly reference 'n' as the subleaf?  That would
+communicate that the struct represents a repeated subleaf, explicitly tie the API
+to that structure, and would provide macro/function names that don't make the
+reader tease out the subtle usage of "index".
+
+And then instead of just the array size, capture the start:end of the repeated
+subleaf so that the caller doesn't need to manually do the math.
+
+E.g.
+
+	const struct leaf_0x4_n *regs = cpuid_subleaf_n(c, 0x4, index);
+
+	struct cpuid_0xd_n *c = cpuid_subleaf_n(..., 0xD, i);
+and
+
+Tangentially related, having to manually specific count=1 to CPUID_LEAF() for
+the common case is also ugly.  If a dedicated CPUID_LEAF_N() macro is added to
+specificy the start:end of the range, then CPUID_LEAF() can just hardcode the
+count to '1'.  E.g.
+
+struct cpuid_leaves {
+	CPUID_LEAF(0x0,		 	0);
+	CPUID_LEAF(0x1,			0);
+	CPUID_LEAF(0x2,		 	0);
+	CPUID_LEAF_N(0x4,		0,	7);
+	CPUID_LEAF(0xd,			0);
+	CPUID_LEAF(0xd,			1);
+	CPUID_LEAF_N(0xd,		2,	63);
+	CPUID_LEAF(0x16,	 	0);
+	CPUID_LEAF(0x80000000,		0);
+	CPUID_LEAF(0x80000005,		0);
+	CPUID_LEAF(0x80000006,		0);
+	CPUID_LEAF_N(0x8000001d,	0,	7);
+};
