@@ -1,46 +1,54 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0AD35A28A;
-	Mon, 18 Aug 2025 14:47:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F2623506A
+	for <x86-cpuid@lists.linux.dev>; Mon, 18 Aug 2025 14:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755528458; cv=none; b=EQpzfpG5JuMpPyETjO9XHqYj5whbPia7xmsdYieS7oDXD2T7E+5hpUvEjnu9lG3h3a1A7D52Hp3tVW16yhprWfZniUfcvx2EjUqq5vYanS+3tthNdNRMDR/bBSbNN0qqKgX6o7uAWedf+lr3h8WXhoDKuXO+eff+KFuR6E9VgQM=
+	t=1755529031; cv=none; b=fqnHMFKqpdbCtBLpzwCLcra9zhceK5dXay6QustlCjDmgbJuA0aKrQkF+aSY5oIQdwLB0oq8tn5ur4A+e5/ECFT7npOtXWH+Ol2cElXx3lp92H7TyD0I6qc963i6J47nHi9SQ46KWkHfUJi6vfnipYEVOd83jcIJ5VuGfK8TC2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755528458; c=relaxed/simple;
-	bh=/gevmWoGhr/iSvgSdPa6jgG1Fdb5jzFj8h50WFqbKMo=;
+	s=arc-20240116; t=1755529031; c=relaxed/simple;
+	bh=LNvE4zpWNqd2iGNmZXznuKyVTpKjjxWo3c8go/svefI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XWFYWrHXDBc2TDx62II2GUQsqDvuJKuaTGOpPaobW3X6L49M3pCphQa1zHDT09qKvEjWy5UYCZV8A/6gPIIqbfyXUp3q5EjzSPA+9nomwG0xzxFv/jNNOgqYWNxetWCMr+rli7ikVAKSofK65GFgeO4FUnnvKiYadQJwtnIbTfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Rpw5cUfs; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=OOgbGEpC; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=n0TUOVGTlP/x7GvOboccyes78FKfNTyVO70sJhGdjjRlJmMsZT9GnxqDRXF1NiO0JmO0o6yeAm+qfPwe26i/kpjcf/h7qs+3CSvG68WkLNEPhuE8JddA2Y48kNedb90WQUpwyUT9IE2X4z3TDyrCVBgtihBJ4EZLYYPaxG0a3f4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=KJEvzW/q; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Rpw5cUfs";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="OOgbGEpC"
-Date: Mon, 18 Aug 2025 16:47:32 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1755528454;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MD7BlFTIAjpDURHkhhochN+snxk6+ltTIEJ1JTtK1ss=;
-	b=Rpw5cUfslher2rbOCkLNveM/8tf4htp9SJmKyGJkiiuWCvTOvFWYSfvdVyEJKkanVf3FT8
-	+ZOpNolYBds2gYZejg9mp6ci+EaQyds6xkhggjR6vdkvJKBV9V2Qatd1d5h7jlG5Vm9MqB
-	49+P1EwT9h7Dmd5TRM9I/5828jTBxF8WQ3JgjYgWWShOcWJgElE+RHVXon06Ne7esmkYFh
-	opdjOyDOb0zgUvsypIXF22gi5hmCsrreNHlzZ4yhfbuyCGILuHWfoQa4NoQrIzTJMwaTC6
-	5SjpMitC/XomcX0DGPG7Fwo3zl3ee8knqc7qlxB/smPjDHYDFWx/oqtAaMu1Bg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1755528454;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MD7BlFTIAjpDURHkhhochN+snxk6+ltTIEJ1JTtK1ss=;
-	b=OOgbGEpCbZU8q/EFr4Tz8uWcgnpsaUmDuzPu7nMd2i0lloyGvqC+qZ7Y5/UUM3aVtbuNde
-	L/QiWsowXU4w4eDw==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: kernel test robot <oliver.sang@intel.com>
-Cc: oe-lkp@lists.linux.dev, lkp@intel.com, linux-kernel@vger.kernel.org,
-	Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="KJEvzW/q"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id F253D40E0286;
+	Mon, 18 Aug 2025 14:57:05 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id b5rO5ZouPHPD; Mon, 18 Aug 2025 14:57:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1755529021; bh=AIAf2EokjAc/oXHY1uqaLGKogcjDtiV+JksDO1o757s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KJEvzW/qSKzkgQ06SAf6VOQkD8BC6OPhWKA7+VlnGSCtrJVObZT9IK1ziRRqg/Acr
+	 r9cYDeDelKY6LpUqpHh4QQ9t5s4yx/J3OBMHjXGew2iF3Z02WJcDOORvjwlQ8cLTS4
+	 nOpNgeY4I3dIQozWTVb9UBlJob5qLjXGfelkamq57KUAx+JOiBno9wlbwwyJU3dpSO
+	 ShCOiircmYGZkySmJiwEg3HWr/RHw5WSlbV97ffCNbyBigp4XuVuZjkiwFvn1ZoSVG
+	 /BflgYOvIw8R+kEgLXTjKGmCK92ZkD4blxX+TLSweleYPDeoaMGSM6l7A6e4aQk/i/
+	 4p6hK+RhZUak+H/EMtlbV8CaI4fnVFT/QSPy08GhrHjyWvueNk9jx2E4u/Wxsc7OIP
+	 9MtTDt8cBRiyYdujttG8YrT1hKn5TWLLkGbjspbsBW3kgabEgkpvyuVtjhLA/dvAS7
+	 3hHcFkOFSGJtDjDo9jz9XoDsY2BbkhySb3KqsE/y6RJO2/wJomtzb77bjACDV1kalR
+	 crn4rgp5/lhj798HbVXNRnzL/mEqFB9cTtXMO/yg7ikajKYocINSXGeCqksXgK1Lz2
+	 miriAtQlIbZJsG7GP4fYFZrdXpC9/IIUXo1Bp8baF6xI5qu3zQoD14qz7Ye+rVEEJ+
+	 Yt8mbx834XeJR6YiUUW4p00c=
+Received: from zn.tnic (pd953092e.dip0.t-ipconnect.de [217.83.9.46])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 3642940E023B;
+	Mon, 18 Aug 2025 14:56:47 +0000 (UTC)
+Date: Mon, 18 Aug 2025 16:56:46 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
@@ -50,41 +58,53 @@ Cc: oe-lkp@lists.linux.dev, lkp@intel.com, linux-kernel@vger.kernel.org,
 	Peter Zijlstra <peterz@infradead.org>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev
-Subject: Re: [PATCH v4 29/34] x86/amd_nb: Trickle down 'struct cpuinfo_x86'
- reference
-Message-ID: <aKM9BH0q630ClMth@lx-t490>
-References: <20250815070227.19981-30-darwi@linutronix.de>
- <202508180405.3e28d0dd-lkp@intel.com>
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 02/34] ASoC: Intel: avs: Include CPUID header at file
+ scope
+Message-ID: <20250818145646.GGaKM_Ltrggbwkj2TB@fat_crate.local>
+References: <20250815070227.19981-1-darwi@linutronix.de>
+ <20250815070227.19981-3-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <202508180405.3e28d0dd-lkp@intel.com>
+In-Reply-To: <20250815070227.19981-3-darwi@linutronix.de>
 
-On Mon, 18 Aug 2025, kernel test robot wrote:
->
-> [    1.202568][    T1] BUG: using smp_processor_id() in preemptible [00000000] code: swapper/0/1
-> [ 1.202670][ T1] caller is init_amd_nbs (arch/x86/kernel/amd_nb.c:319)
->
+On Fri, Aug 15, 2025 at 09:01:55AM +0200, Ahmed S. Darwish wrote:
+> Commit
+> 
+>     cbe37a4d2b3c ("ASoC: Intel: avs: Configure basefw on TGL-based platforms")
+> 
+> includes the main CPUID header from within a C function.  This works by
+> luck and forbids valid refactorings inside the CPUID header.
+> 
+> Include the CPUID header at file scope instead.
+> 
+> Note, for the CPUID(0x15) leaf number, use CPUID_LEAF_TSC instead of
+> defining a custom local macro for it.
+> 
+> Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+> Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
+> ---
+>  sound/soc/intel/avs/tgl.c | 25 ++++++++++++++++---------
+>  1 file changed, 16 insertions(+), 9 deletions(-)
 
-Hmm... This is triggered by:
+I'm guessing that:
 
-    static __init int init_amd_nbs(void)
-    {
-	struct cpuinfo_x86 *c = this_cpu_ptr(&cpu_info);
-	...
-    }
+https://lore.kernel.org/r/aGv8AWwHbi5seDxi@lx-t490
 
-Since this is all __init code anyway, for the next iteration I'll use
-'boot_cpu_data' instead of per-CPU cpu_info access.
+still needs to happen yet?
 
-Thanks!
+Because I don't see it in this set...
 
---
-Ahmed S. Darwish
-Linutronix GmbH
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
