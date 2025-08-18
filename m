@@ -1,47 +1,48 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75D8257AC8
-	for <x86-cpuid@lists.linux.dev>; Mon, 18 Aug 2025 16:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206A2343D68
+	for <x86-cpuid@lists.linux.dev>; Mon, 18 Aug 2025 17:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755535039; cv=none; b=AAO/K6xLh4ZFu+tosFmjtJV8IYVsrQ7DKQ/O31HMpxzQO04MYGnNsR4F31TPosaVapfQ7pI7LzppLnIcbsT0CBaLRuUF6w4dlmkoXuEnUxJEkCCvaVPRFREA5Li3AXG3vaejYBsoNOo2T3CBIeW7QT1w3pVvW8PbLaFeXusNvlI=
+	t=1755536408; cv=none; b=N90SMnQNBlIuU/Lr7uz3pvlX99F022C7wBfF7sPDCykhNKPneYteGXQ3oFplbM8j8VIVsXJ6Ij9IVHUfe7BSF8+/NGtHY5U5BhlKA3a9nyT0d8uuyoYRKF2U5VXc/s2MCMoD1qAxcLjPcGvJHoAXv1jVsaNbagnD4xYAYZEaH8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755535039; c=relaxed/simple;
-	bh=8eNf0iKa0ig3TuxwumQ2/QRd1bTDl/mqIxw/LuoIvZw=;
+	s=arc-20240116; t=1755536408; c=relaxed/simple;
+	bh=uHO+5UGTXCFLqgCRByT85ahgS97z/GDSSKPRDkUM38U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CshQo75AmopyIEbIP1nXDSe5DuBTkit4O2h/pL3Ywrnhp70LpWlkSu0/ZA0hLGJvHlpy9A8rQavIkDPSieYkemH4Ry9NeJwm7DZLYfCXt0fZKUdJmxI7jU7pbEnqURAaq1JTg0WRgFty0EExkGc3lJxa0D7v/+loT9M5SuIWGPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=n5+vEN12; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=97vdCJ19; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=PNuGynf9wQmG+vXDapmo+IWLGDOWSWM+3fcSzpcpl21cbcQJkImPJgwKHGY0kiv1I4NS3j4ktmIscq0wHVIp8sCi8XuthElif6p0DgfyM2Zp+o6i2SWF/gSfW0/Dd1bEjwDDFo3qd2TE68Nw/KLY5dQscnBvt34W2QitB+69VpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ndOqgRK3; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=iYyrUX4t; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="n5+vEN12";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="97vdCJ19"
-Date: Mon, 18 Aug 2025 18:37:13 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ndOqgRK3";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="iYyrUX4t"
+Date: Mon, 18 Aug 2025 19:00:03 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1755535035;
+	s=2020; t=1755536405;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ZcfYUOp3ONarOFQ9ApEyTry+lTvGB64KU4u/3784Bfk=;
-	b=n5+vEN12rbGP5L/u4vO3Huz1gPEaGj+as65fKG1SvibuAo/vXWI2wwzBQXFAhP/Pa/cktX
-	nyjx1oXzEQJ+Q51q7NF7BqKRnBpDgfu18gCY0gZLcXDQYsIWruKwZzty76+RYkaZyMftNf
-	Jlio166ozQucntttojCT6hIqFiAM6gci3EUnHZxpy/D1xV+TqF76cPmFCil8M7ZX+jY9tI
-	RMxYfjg04/GPT4JLLTATmjNMFcOUk2d/wmz1DneNXPd0FNCQsx30y3nzSzIdrltPgelrtH
-	/oUgtNIyZXV6FV+HwlCK/c+PaQwke3UD347CJbNUupSFpYxekfU/NZf+REzycg==
+	bh=JK2fvOJ8FC8e7QmXUAN4QIVvXniykVvupKasMJEv4gA=;
+	b=ndOqgRK3QwBf/a4UVfQNsCj01ioiTN8y78gBmTSstl+7E55Ud45VMYR87WSRknb8NuLZDS
+	DcgRD2V2c3UhxC8UvXMRX8MSOWlP/3p9kYjqel7yZcZRRP29uvvbDTg+YtMXAIsO5cmjxe
+	y/AZlgzWM6gVBYyA2cGoJxqNAiflgBry+YI3yKzdwbcqLns96GTq3P6gnUdqCcR5DLA4f+
+	H96TWw+awYF/e6Czsm9B93LX1E4T1h8gOvW6Jw4a/OloYHQDPSCfOr0kBjsJlwXZgVuPiZ
+	1uzY3foKfpd8TIKJyx29Tm8Pf32BfsqrEfoV/3sVHZbFkqtXzhZidJEG1/BZRg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1755535035;
+	s=2020e; t=1755536405;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ZcfYUOp3ONarOFQ9ApEyTry+lTvGB64KU4u/3784Bfk=;
-	b=97vdCJ19J7JIIyOfNtDVegOcd1/0peo0SN0PASMkFjO4mt5vKasg/bors4uEpchDX8AZSL
-	OPrLUsJQd0kp+VCQ==
+	bh=JK2fvOJ8FC8e7QmXUAN4QIVvXniykVvupKasMJEv4gA=;
+	b=iYyrUX4tDYZZbGshEPoPtj185dTaHhL6He9GUWrrPVKiKx2k7oEUq4mDVJPleI/omeiSHd
+	cJY1XcQ2+JqfYJCg==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 To: David Woodhouse <dwmw2@infradead.org>
-Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
+Cc: Dave Hansen <dave.hansen@intel.com>, Borislav Petkov <bp@alien8.de>,
+	Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
@@ -51,10 +52,13 @@ Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 00/34] x86: Introduce a centralized CPUID data model
-Message-ID: <aKNWuX6UHd_6wJoR@lx-t490>
+Subject: Re: [PATCH v4 28/34] x86/cacheinfo: Use parsed CPUID(0x80000005) and
+ CPUID(0x80000006)
+Message-ID: <aKNcE7D_s9D7spvR@lx-t490>
 References: <20250815070227.19981-1-darwi@linutronix.de>
- <ebab779b93b8be44bd5089ae6ecc9746b1517a68.camel@infradead.org>
+ <20250815070227.19981-29-darwi@linutronix.de>
+ <4a680b7d-2ecb-4579-a5ea-b612c08ebefa@intel.com>
+ <e9620899cc52cd45c090c939898be8787ff84df6.camel@infradead.org>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -64,61 +68,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ebab779b93b8be44bd5089ae6ecc9746b1517a68.camel@infradead.org>
+In-Reply-To: <e9620899cc52cd45c090c939898be8787ff84df6.camel@infradead.org>
 
 Hi!
 
-On Sat, 16 Aug 2025, David Woodhouse wrote:
+On Mon, 18 Aug 2025, David Woodhouse wrote:
 >
-> Nice work.
+> How about automatically building the cast into the macro invocation...
 >
-
-Thanks a lot.
-
->
-> Looks like you haven't attempted to address hypervisor CPUID yet.
+> #define cpuid_leaf(c, l) ((struct cpuid_leaf_ ## l *)__cpuid_leaf(c, l)
+> #define cpuid_lead_index(c, l, i) ((struct cpuid_leaf_ ## l ## _ ## i) __cpuid_leaf_index(c, l, i)
 >
 
-Yeah, I plan to tackle the hypervisor stuff after the X86_FEATURE(s)
-dependency graph mentioned in the Bhyve thread:
+There are zero casts needed by this model.  From patch 07/34 ("x86/cpuid:
+Introduce a centralized CPUID data model"), the access CPUID parser APIs
+just dissolve into:
 
-    https://lore.kernel.org/lkml/aKL0WlA4wIU8l9RT@lx-t490
+    const struct leaf_0x7_0 *l7_0;
+    const struct leaf_0x7_1 *l7_1;
 
-> I've attempted to document that in a section at the end of
-> http://david.woodhou.se/ExtDestId.pdf — I wonder if we should find
-> somewhere to publish it as canonical?
+    l7_0 = cpuid_subleaf(c, 0x7, 0);
+                         |   |   └────────┐
+                         |   └─────────┐  |
+                         *             *  *
+                        &c.cpuid.leaf_0x7_0[0]
 
-That PDF, and the text file it links to, is some of the best
-documentation I ever saw in kernel land...
+    l7_1 = cpuid_subleaf(c, 0x7, 1);
+                         |   |   └────────┐
+                         |   └─────────┐  |
+                         *             *  *
+                        &c.cpuid.leaf_0x7_1[0]
 
-I would be more than happy to cover the last section of that PDF
-('Hhypervisor Detection via CPUID') under the x86-cpuid-db umbrella.
+where, for example, the data type of 'c.cpuid.leaf_0x7_0[0]' is native
+'struct leaf_0x7_0', and so on.
 
-There's some very basic hypervisor-related things:
+The per-CPU CPUID table(s) are built in a /fully-typed/ form:
 
-    https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/blob/tip/db/xml/hypervisors.xml
-    https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/blob/tip/db/xml/leaf_40000000.xml
+    struct leaf_0x0_0		leaf_0x0_0[1];
+    struct leaf_0x1_0		leaf_0x1_0[1];
+    struct leaf_0x2_0		leaf_0x2_0[1];
+    struct leaf_0x4_0		leaf_0x4_0[8];
+    struct leaf_0x16_0		leaf_0x16_0[1];
+    struct leaf_0x80000000_0	leaf_0x80000000_0[1];
+    struct leaf_0x80000005_0	leaf_0x80000005_0[1];
+    struct leaf_0x80000006_0	leaf_0x80000006_0[1];
+    struct leaf_0x8000001d_0	leaf_0x8000001d_0[8];
 
-But the idea of CPUID block "ranges", as in cpuid_base_hypervisor(), is
-not yet covered.  Also, the only thing these XMLs above actually do is
-generating the 'struct leaf_0x40000000_0' data type:
+Then, the exported CPUID parser APIs do some CPP tokenization magic to
+access such fully-typed data -- no casting needed.
 
-    Subject: [PATCH v4 06/34] x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
-    https://lore.kernel.org/lkml/20250815070227.19981-7-darwi@linutronix.de
+The only exception is raw EAX->EDX register access:
 
->
-> I suspect our loop in cpuid_base_hypervisor() should be 'fixed' to
-> comply with the new rule I just made up, that it should only scan each
-> block at 0x4000_0.00 until it finds an empty block, rather than going
-> all the way up to 0x4001_0000?
->
-> Are there any hypervisors which provide more than one block, that
-> *aren't* just putting the Hyper-V leaves at 0x4000_0000 and their own
-> native leaves at 0x4000_0100 ?
->
+    /**
+     * cpuid_leaf_regs() - Access parsed CPUID data in raw format
+     * @_cpuinfo:	CPU capability structure reference ('struct cpuinfo_x86')
+     * @_leaf:		CPUID leaf, in compile-time 0xN format
+     *
+     * Similar to cpuid_leaf(), but returns a raw 'struct cpuid_regs' pointer to
+     * the parsed CPUID data instead of a "typed" <cpuid/leaf_types.h> pointer.
+     */
+    #define cpuid_leaf_regs(_cpuinfo, _leaf)				\
+	((struct cpuid_regs *)(cpuid_leaf(_cpuinfo, _leaf)))
 
-I think, no, but you and others at Cc are definitely the more experienced
-folks regarding this :)
+But the usage of this raw-access API is very limited.  This is by design,
+as one of the purpose of this work was to ensure type safety and avoid
+call-site bit fiddling.
 
 Thanks!
 
