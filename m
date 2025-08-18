@@ -1,174 +1,299 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD68274B47
-	for <x86-cpuid@lists.linux.dev>; Mon, 18 Aug 2025 19:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B75263F3C
+	for <x86-cpuid@lists.linux.dev>; Mon, 18 Aug 2025 21:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755546879; cv=none; b=eCXEQqDtZzKldH9Aayt0qFp8IDCzYHFRxHYz8pEFqM6YRCI2q/QdU7ubBkqNodrCsiQcFdrp7tP5Lq+2/yTgvPNXiZZfALecjQzD/HHf+hfghgEx3L56OVmK+cQOMtYDo1Krjr0FOMqH4iYHnwltKVZERJxgDyi7ZwnNQHwuXe8=
+	t=1755552586; cv=none; b=Y7kSOKKTiM8Wcfr8O41z9SLt26OvPwdsSliYq7Xk4oqDWza0M43B1on0/cBMh+9Fic7fohORTmOnuSHsCJZus+M0Q8/7JZ1Od1gAi011Eqwa/eD00wBFYCtlPx1kS+l+otzo1IGfjZM+kC2kx3RVIeX4PD4X28DbIMbtCKcSn6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755546879; c=relaxed/simple;
-	bh=AjBkWERY+/aj14vFb/9D5lKJgIo1+n5GRGra2HiPZWs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S/Nw187kNWpGET+p6lgzUsdzHRrBMFWSTzphUb9lBlziIynslj+I+0bDvjUhJUxtEe2v4Dwa1DyRQ7KvitO25QQ1SU6DZg5P3akTLQ4WfyaOMWXz9jMl989XD6DoKXG7XEMpTiAodj5n924ZoiDx9nUkOkLjc745MWFmXB243IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=OhqGs1q2; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Guiz44cW; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1755552586; c=relaxed/simple;
+	bh=sMjgUlT5byKgxkBAyS8SQAA/QGjk7FegBPjqmgUHwpA=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=f6stRc+dtRx4rN7hO8JBjFttlJJ3NqvdyJ8xaswKzLESKj5LA6WYj5ZmaUqyQH5HmdUZxbx8A+MDSHgG1UAgKt0GA5AyWyhnW1M4L+snEz+aFgLnYcUhfmJCS5tAoDqM9TTjZIrbWptIC+mRm+ybmvsol81xjgC4w+CWgU1mOXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qSFkTyoK; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="OhqGs1q2";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Guiz44cW"
-Date: Mon, 18 Aug 2025 21:54:32 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1755546875;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8EK6IbAY+H2krDZaq2z6lx6oUhFKs1mi/bb3jmcT0s0=;
-	b=OhqGs1q2x6BUB1tCpFb1yyr1uJTDEMb2MBzXG2zrNpvkxeYgEhDquSNkA4irjOznROy7xV
-	UBns1E3WNMGpT39d7QOYTz52Q2hu3JONqXGm5S2ytDcYUQxWwcU+0u4yEOIcR9ggKXV5/N
-	1qyIssejXDxE67c7TOTWfcjhKxBhPDOMuj2O8dphdG/YYC7yMa/5w8Xp8rAFG6uwskct2K
-	G05jGoW+S+PFNxaH5aeAzoe6gby0CMHIhtD2cwH5rvMiNYOqD86dcjYxlLQzohVQosz8Xk
-	bIr5eR3EqjgGA74RKNQ4rdzpwgCYmSpK6gcRELgo/uO0TiPGdSK5YXZMQrAjWA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1755546875;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8EK6IbAY+H2krDZaq2z6lx6oUhFKs1mi/bb3jmcT0s0=;
-	b=Guiz44cWsxNuhpSyEaYfpKUgUYq7exqPCGNjMjWZMvPh1jQ19Fdjwx2MqLeDLI7SN0daOU
-	tbGyKvKgKa3EDPAw==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Sean Christopherson <seanjc@google.com>
-Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 07/34] x86/cpuid: Introduce a centralized CPUID data
- model
-Message-ID: <aKOE-FzHy0JatC8I@lx-t490>
-References: <20250815070227.19981-1-darwi@linutronix.de>
- <20250815070227.19981-8-darwi@linutronix.de>
- <aJ9TbaNMgaplKSbH@google.com>
- <aKMvTrrKYgJNWX8L@lx-t490>
- <aKN0debsio7ocitW@google.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qSFkTyoK"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-b471737e673so8744866a12.1
+        for <x86-cpuid@lists.linux.dev>; Mon, 18 Aug 2025 14:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1755552584; x=1756157384; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BDXIaKWk81ObDEtlEwv0PcTKST5fIOdwiVWZYaIVrII=;
+        b=qSFkTyoKNNnCqBNX+g8gGGp5JIVLJtDPe4muJIvNUfMJ5+uUFSTV7TslLoMTnyiP6g
+         l8us2vdXV8CVYLSKpzfe35wbfl0w+/tVxeuXdtzj7c9i3IDTDFDSWAsXH0At0o/DygbM
+         CTd8VONNd2u6mmsARdBdKgFNufhldzzekHjaxbRdrA07A94p32Qi2U+tBOS4V7rOWaGt
+         0Bd8XMFYBk7jx7kCIrHPLGpC0sLmZTRdHcUIeO7K+EsACHf7kMiH89EprvzyTcdLsBE5
+         pMA3dWoXHRrpjzNgirEJ/jcznNI4mEGvSP70UtcnQ6TfjcRHTcdj5VMkpgjxpR9gwQQi
+         y6wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755552584; x=1756157384;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BDXIaKWk81ObDEtlEwv0PcTKST5fIOdwiVWZYaIVrII=;
+        b=qSm4/f3jNEzVGXTRbevPmAb5JTRqblawdPrQTr39o1vtfM/dAd6RyHBXNHFlsIiFG5
+         v7mUZni2iBFon24ScK+X7FycvceF5uyaZBNG+ls0/vnhn+WA3UhhuCI5aMgNyvCC3/7V
+         T3zzOO+EvdDBqOA61ecEF2qgMAFuqKCT3gslJrZt0ct2OgjNkLI6/WPlLxUCjyWasaW4
+         2j1oRwS+QI5vlYAmyRejAcpU21z1Pl+MF5jSVylLpkcxuHtN5KHbXHNpbD/nUH2+FKXN
+         QNqV3P0vBRaqoVF1/5bHuQ50SBRRw7EDBmg2w9Egzg61q5O7ap2OIoKiDrlQ0jo/ld7o
+         W20A==
+X-Forwarded-Encrypted: i=1; AJvYcCXxhJO1Pm+tKYXVN8foeRFAKtRlAc/O5kmWDu0OrglFuUKuuHZSJmFs5WedqZASsSRzHy6mt5ZHGbc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyMouLKYgIIBpqNmW7dJeimEMD6nLOIGf4mQ1o7SsWnegzLKje9
+	gUE+wY++SF3oAFu+d8tWQMGaHHSqES7OoR59yugBIgoKDFbm4qaE4EvkNlnEI9pp46FBp/h+26g
+	KwoMfnA==
+X-Google-Smtp-Source: AGHT+IFj6MhFtjo/07xux15sdZuniVtAPgBbeLwFhyL5pTG4o1erzuz5gmZuj/A7LntvBRobeg1BCoUWB1s=
+X-Received: from pgls25.prod.google.com ([2002:a63:5259:0:b0:b47:75d:de68])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:9147:b0:240:1119:d725
+ with SMTP id adf61e73a8af0-2430d4a6d9dmr113868637.34.1755552583960; Mon, 18
+ Aug 2025 14:29:43 -0700 (PDT)
+Date: Mon, 18 Aug 2025 14:29:42 -0700
+In-Reply-To: <aKOE-FzHy0JatC8I@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aKN0debsio7ocitW@google.com>
+Mime-Version: 1.0
+References: <20250815070227.19981-1-darwi@linutronix.de> <20250815070227.19981-8-darwi@linutronix.de>
+ <aJ9TbaNMgaplKSbH@google.com> <aKMvTrrKYgJNWX8L@lx-t490> <aKN0debsio7ocitW@google.com>
+ <aKOE-FzHy0JatC8I@lx-t490>
+Message-ID: <aKObRk0Ze1_LVqWj@google.com>
+Subject: Re: [PATCH v4 07/34] x86/cpuid: Introduce a centralized CPUID data model
+From: Sean Christopherson <seanjc@google.com>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, Thomas Gleixner <tglx@linutronix.de>, 
+	Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>, 
+	David Woodhouse <dwmw2@infradead.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Sohil Mehta <sohil.mehta@intel.com>, John Ogness <john.ogness@linutronix.de>, x86@kernel.org, 
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 
-Hi,
+On Mon, Aug 18, 2025, Ahmed S. Darwish wrote:
+> Hi,
+> 
+> On Mon, 18 Aug 2025, Sean Christopherson wrote:
+> >
+> > Why not?  Like C structs, there can only be one variable sized array, i.e. there
+> > can't be multiple "n" subleafs.  If the concern is calling __cpuid_subleaf_n()
+> > with i < start, then I don't see how embedding start in the structure name helps
+> > in any way, since 'i' isn't a compile-time constant and so needs to be checked at
+> > runtime no matter what.
+> >
+> 
+> Hmmm...
+> 
+> I can indeed find the offset of the dynamic 'leaf_0x.._n' subleaf storage
+> by CPP tokenization, since the CPUID table will be in the form:
+> 
+>     struct leaf_0x0_0           leaf_0x0_0[1];
+>     struct leaf_0x1_0           leaf_0x1_0[1];
+>     struct leaf_0x2_0           leaf_0x2_0[1];
+>     struct leaf_0x4_0           leaf_0x4_0[8];
+>     struct leaf_0xd_0		leaf_0xd_0[1];
+>     struct leaf_0xd_1		leaf_0xd_1[1];
+>     struct leaf_0xd_n		leaf_0xd_n[62];
+>     struct leaf_0x16_0          leaf_0x16_0[1];
+>     struct leaf_0x80000000_0    leaf_0x80000000_0[1];
+>     struct leaf_0x80000005_0    leaf_0x80000005_0[1];
+>     struct leaf_0x80000006_0    leaf_0x80000006_0[1];
+>     struct leaf_0x8000001d_0    leaf_0x8000001d_0[8];
+> 
+> I was also kinda worried about the different subleaf semantics:
+> 
+>     struct leaf_0x4_n		=> starts from subleaf 0
+>     struct leaf_0xd_n		=> starts from subleaf 2
+> 
+> But, hopefully it would be clear when looking at the generated header in
+> total.
+> 
+> Still: for the API you're proposing, I'll need to generate an error for
+> things like:
+> 
+>     cpuid_subleaf_n(c, 0xd, 0);
+>     cpuid_subleaf_n(c, 0xd, 1);
+> 
+> which could not have happened in the API I proposed earlier.  But... I
+> can let the XML files generate some symbols in the form:
+> 
+>     LEAF_0x4_n_MIN_SUBLEAF	0
+>     LEAF_0xd_n_MIN_SUBLEAF	2
+> 
+> and generate an error (once) if the passed subleaf is less than the
+> minimum.  I can also generate that error (once) at compile-time if the
+> given subleaf was a compile-time constant.
 
-On Mon, 18 Aug 2025, Sean Christopherson wrote:
->
-> Why not?  Like C structs, there can only be one variable sized array, i.e. there
-> can't be multiple "n" subleafs.  If the concern is calling __cpuid_subleaf_n()
-> with i < start, then I don't see how embedding start in the structure name helps
-> in any way, since 'i' isn't a compile-time constant and so needs to be checked at
-> runtime no matter what.
->
+Eh, if the kernel can flag "cpuid_subleaf_n(c, 0xd, 1)" at compile time, then yay.
+But I don't think it's worth going too far out of the way to detect, and it's most
+definitely not worth bleeding the lower bound into the APIs.
 
-Hmmm...
+E.g. it's not really any different than doing:
 
-I can indeed find the offset of the dynamic 'leaf_0x.._n' subleaf storage
-by CPP tokenization, since the CPUID table will be in the form:
+   cpuid_subleaf_n(c, 0xd, 2, 64);
 
-    struct leaf_0x0_0           leaf_0x0_0[1];
-    struct leaf_0x1_0           leaf_0x1_0[1];
-    struct leaf_0x2_0           leaf_0x2_0[1];
-    struct leaf_0x4_0           leaf_0x4_0[8];
-    struct leaf_0xd_0		leaf_0xd_0[1];
-    struct leaf_0xd_1		leaf_0xd_1[1];
-    struct leaf_0xd_n		leaf_0xd_n[62];
-    struct leaf_0x16_0          leaf_0x16_0[1];
-    struct leaf_0x80000000_0    leaf_0x80000000_0[1];
-    struct leaf_0x80000005_0    leaf_0x80000005_0[1];
-    struct leaf_0x80000006_0    leaf_0x80000006_0[1];
-    struct leaf_0x8000001d_0    leaf_0x8000001d_0[8];
+and AFAIT the original code wouldn't flag that at compile time.
 
-I was also kinda worried about the different subleaf semantics:
+> Maybe there's a cleaner way for detecting this subleaf lower-bound error,
 
-    struct leaf_0x4_n		=> starts from subleaf 0
-    struct leaf_0xd_n		=> starts from subleaf 2
+Not sure "cleaner" is the right word, but if you really want to add compile-time
+sanity checks, you could put the actual definitions in a dedicated header file
+that's included multiple times without any #ifdef guards.  Once to define
+"struct cpuid_leaves", and a second time to define global metadata for each leaf,
+e.g. the first/last subleaf in a dynamic range.
 
-But, hopefully it would be clear when looking at the generated header in
-total.
+---
+ arch/x86/include/asm/cpuid/api.h       | 11 ++++---
+ arch/x86/include/asm/cpuid/leaf_defs.h | 12 +++++++
+ arch/x86/include/asm/cpuid/types.h     | 43 +++++++++++++++-----------
+ 3 files changed, 44 insertions(+), 22 deletions(-)
+ create mode 100644 arch/x86/include/asm/cpuid/leaf_defs.h
 
-Still: for the API you're proposing, I'll need to generate an error for
-things like:
+diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
+index d4e50e394e0b..3be741b9b461 100644
+--- a/arch/x86/include/asm/cpuid/api.h
++++ b/arch/x86/include/asm/cpuid/api.h
+@@ -393,7 +393,7 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
+ 	((struct cpuid_regs *)(cpuid_leaf(_cpuinfo, _leaf)))
+ 
+ #define __cpuid_assert_leaf_has_dynamic_subleaves(_cpuinfo, _leaf)	\
+-	static_assert(ARRAY_SIZE((_cpuinfo)->cpuid.leaves.leaf_ ## _leaf ## _0) > 1);
++	static_assert(ARRAY_SIZE((_cpuinfo)->cpuid.leaves.leaf_ ## _leaf ## _n) > 1);
+ 
+ /**
+  * cpuid_subleaf_index() - Access parsed CPUID data at runtime subleaf index
+@@ -415,7 +415,7 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
+  *
+  * Example usage::
+  *
+- *	const struct leaf_0x4_0 *l4;
++ *	const struct leaf_0x4_n *l4;
+  *
+  *	for (int i = 0; i < cpuid_subleaf_count(c, 0x4); i++) {
+  *		l4 = cpuid_subleaf_index(c, 0x4, i);
+@@ -432,7 +432,10 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
+ #define cpuid_subleaf_index(_cpuinfo, _leaf, _idx)			\
+ ({									\
+ 	__cpuid_assert_leaf_has_dynamic_subleaves(_cpuinfo, _leaf);	\
+-	__cpuid_table_subleaf_idx(&(_cpuinfo)->cpuid, _leaf, 0, _idx);	\
++	BUILD_BUG_ON(__builtin_constant_p(_idx) &&			\
++		     ((_idx) < CPUID_LEAF_ ## _leaf ## _N_FIRST ||	\
++		      (_idx) > CPUID_LEAF_ ## _leaf ## _N_LAST));	\
++	__cpuid_table_subleaf_idx(&(_cpuinfo)->cpuid, _leaf, n, _idx);	\
+ })
+ 
+ /**
+@@ -464,7 +467,7 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
+ #define cpuid_subleaf_count(_cpuinfo, _leaf)				\
+ ({									\
+ 	__cpuid_assert_leaf_has_dynamic_subleaves(_cpuinfo, _leaf);	\
+-	__cpuid_leaves_subleaf_info(&(_cpuinfo)->cpuid.leaves, _leaf, 0).nr_entries; \
++	__cpuid_leaves_subleaf_info(&(_cpuinfo)->cpuid.leaves, _leaf, n).nr_entries; \
+ })
+ 
+ /*
+diff --git a/arch/x86/include/asm/cpuid/leaf_defs.h b/arch/x86/include/asm/cpuid/leaf_defs.h
+new file mode 100644
+index 000000000000..bb3d744939c2
+--- /dev/null
++++ b/arch/x86/include/asm/cpuid/leaf_defs.h
+@@ -0,0 +1,12 @@
++CPUID_LEAF(0x0,                 0)
++CPUID_LEAF(0x1,                 0)
++CPUID_LEAF(0x2,                 0)
++CPUID_LEAF_N(0x4,               0,      7)
++CPUID_LEAF(0xd,                 0)
++CPUID_LEAF(0xd,                 1)
++CPUID_LEAF_N(0xd,               2,      63)
++CPUID_LEAF(0x16,                0)
++CPUID_LEAF(0x80000000,          0)
++CPUID_LEAF(0x80000005,          0)
++CPUID_LEAF(0x80000006,          0)
++CPUID_LEAF_N(0x8000001d,        0,      7)
+\ No newline at end of file
+diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
+index c044f7bc7137..2a0d30e13b71 100644
+--- a/arch/x86/include/asm/cpuid/types.h
++++ b/arch/x86/include/asm/cpuid/types.h
+@@ -153,7 +153,7 @@ struct leaf_query_info {
+ 
+ /**
+  * __CPUID_LEAF() - Define CPUID output storage and query info entry
+- * @_name:	Struct type name of the CPUID leaf/subleaf (e.g. 'leaf_0x4_0').
++ * @_name:	Struct type name of the CPUID leaf/subleaf (e.g. 'leaf_0x4_n').
+  *		Such types are defined at <cpuid/leaf_types.h>, and follow the
+  *		format 'struct leaf_0xN_M', where 0xN is the leaf and M is the
+  *		subleaf.
+@@ -183,19 +183,19 @@ struct leaf_query_info {
+  *
+  * The example invocation for CPUID(0x4) storage::
+  *
+- *	__CPUID_LEAF(leaf_0x4_0, 8);
++ *	__CPUID_LEAF(leaf_0x4_n, 8);
+  *
+  * generates storage entries in the form:
+  *
+- *	struct leaf_0x4_0		leaf_0x4_0[8];
+- *	struct leaf_query_info		leaf_0x4_0_info;
++ *	struct leaf_0x4_n		leaf_0x4_n[8];
++ *	struct leaf_query_info		leaf_0x4_n_info;
+  *
+- * where the 'leaf_0x4_0[8]' storage array can accommodate the output of
++ * where the 'leaf_0x4_n[8]' storage array can accommodate the output of
+  * CPUID(0x4) subleaves 0->7, since they all have the same output format.
+  */
+ #define __CPUID_LEAF(_name, _count)				\
+ 	struct _name		_name[_count];			\
+-	struct leaf_query_info	_name##_info
++	struct leaf_query_info	_name##_info;
+ 
+ /**
+  * CPUID_LEAF() - Define a CPUID storage entry in 'struct cpuid_leaves'
+@@ -205,23 +205,30 @@ struct leaf_query_info {
+  *
+  * Convenience wrapper around __CPUID_LEAF().
+  */
+-#define CPUID_LEAF(_leaf, _subleaf, _count)			\
+-	__CPUID_LEAF(leaf_ ## _leaf ## _ ## _subleaf, _count)
++#define CPUID_LEAF(_leaf, _subleaf)			\
++	__CPUID_LEAF(leaf_ ## _leaf ## _ ## _subleaf, 1)
++
++#define CPUID_LEAF_N(_leaf, _first, _last)		\
++	__CPUID_LEAF(leaf_ ## _leaf ## _n, _last - _first + 1)
++
++
+ 
+ /*
+  * struct cpuid_leaves - Structured CPUID data repository
+  */
+ struct cpuid_leaves {
+-	/*         leaf		subleaf		count */
+-	CPUID_LEAF(0x0,		0,		1);
+-	CPUID_LEAF(0x1,		0,		1);
+-	CPUID_LEAF(0x2,		0,		1);
+-	CPUID_LEAF(0x4,		0,		8);
+-	CPUID_LEAF(0x16,	0,		1);
+-	CPUID_LEAF(0x80000000,	0,		1);
+-	CPUID_LEAF(0x80000005,	0,		1);
+-	CPUID_LEAF(0x80000006,	0,		1);
+-	CPUID_LEAF(0x8000001d,	0,		8);
++#include "leaf_defs.h"
++};
++
++#undef CPUID_LEAF
++#undef CPUID_LEAF_N
++#define CPUID_LEAF(_leaf, _subleaf)
++#define CPUID_LEAF_N(_leaf, _first, _last)		\
++	CPUID_LEAF_ ## _leaf ## _N_FIRST = _first,	\
++	CPUID_LEAF_ ## _leaf ## _N_LAST  = _last,
++
++enum cpuid_dynamic_leaf_ranges {
++#include "leaf_defs.h"
+ };
+ 
+ /*
 
-    cpuid_subleaf_n(c, 0xd, 0);
-    cpuid_subleaf_n(c, 0xd, 1);
-
-which could not have happened in the API I proposed earlier.  But... I
-can let the XML files generate some symbols in the form:
-
-    LEAF_0x4_n_MIN_SUBLEAF	0
-    LEAF_0xd_n_MIN_SUBLEAF	2
-
-and generate an error (once) if the passed subleaf is less than the
-minimum.  I can also generate that error (once) at compile-time if the
-given subleaf was a compile-time constant.
-
-Maybe there's a cleaner way for detecting this subleaf lower-bound error,
-I will see; what's important now is the API implementation feasibility...
-
-=> Then, we can have:
-
-API Summary
-~~~~~~~~~~~
-
-For CPUID leaves with static subleaves:
-
-    cpuid_leaf(_cpuinfo, _leaf)
-    cpuid_subleaf(_cpuinfo, _leaf, _subleaf)
-
-For CPUID leaves with dynamic subleaves:
-
-    cpuid_subleaf_n(_cpuinfo, _leaf, _idx)
-
-New SGX snippet
-~~~~~~~~~~~~~~~
-
-At arch/x86/kernel/cpu/sgx/main.c:
-
-    const struct leaf_0x12_n *l;
-
-    for (int i = 0; i < ARRAY_SIZE(sgx_epc_sections); i++) {
-
-        l = cpuid_subleaf_n(0x12, i + SGX_CPUID_EPC);
-
-	// Use l->subleaf_type, etc. as appropriate
-    }
-
-New KVM snippet
-~~~~~~~~~~~~~~~
-
-At arch/x86/kvm/cpuid.c:
-
-    const struct leaf_0xd_n *l;
-
-    for (int i = XFEATURE_YMM; i < ARRAY_SIZE(xstate_sizes); i++) {
-
-	l = cpuid_subleaf_n(c, 0xd, i);
-
-        // Use l->xsave_sz, l->xsave_offset, etc. as appropriate
-    }
-
-This looks much better indeed; for both KVM and SGX :-)
-
-Thanks a lot!
-
+base-commit: 2f267fb52973ddf5949127628a4338d4d976ff11
 --
-Ahmed S. Darwish
-Linutronix GmbH
