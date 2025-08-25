@@ -1,53 +1,46 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FD73002AA
-	for <x86-cpuid@lists.linux.dev>; Mon, 25 Aug 2025 14:18:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E78AD21
+	for <x86-cpuid@lists.linux.dev>; Mon, 25 Aug 2025 14:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756131511; cv=none; b=IbGnnhxXd3zswdxTAbh036fdl0zl7eHi+tXO5NmIRXBI/1zMxuG+NuP2BZWpwuAfv1EVIfJ7K7CyAT0YFv6YoxL/KINzdEuoM8XCXSlqpy9ghvw8kzcmL0/iZ/Em6wmeB3Zul5+JMHRYhDXGeI8Z8Sor4KFzRM7kmW4pW7b6sNo=
+	t=1756133773; cv=none; b=luvw0ma2XegcBTOttxl3Na11lDmsnZ8CDmgtO6JkxXKzwIlgujKqv7jHi3unCN2O1glZTyZUm/lM0KzrLkJ/43vzIrpSangh6KSm+MR7cPZJEMWkgY90iE8b2riXR1g2WSpzGwRe0GUDCmC9eGFC9iLxqW4MCWSU/GmbGsVrmyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756131511; c=relaxed/simple;
-	bh=ItsVxMcWxDYHVWBaWDDZhd2R5FcKHvQsQp7/GQCZDWw=;
+	s=arc-20240116; t=1756133773; c=relaxed/simple;
+	bh=lzG5ztffWAmxTgcoF6EAknDcfDopOHWkXJTGfrHmOPM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k2vpNdycwoJGXq81iOhyKUrLkKrJ1afjpO8JWIAL8PE/rX43myKt8mABB118cXmBznDTiwetktB/gkvdCFj2/SjfPy7NVX1mEvGBITuc+pbmpmF+jy3HeuQdGnP9/3rfpX4sISujE6WLAB+D722P4c2UwMk0GDLS0tFht7+lxxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=KwL9n18l; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=LVEDI6JYs2FDq8V0J2djjP1Jw91zeb+DcOzVR9CzRtVlQNlUWj48TcEGASPoYpqck2x61+u0GvHUfatZO68Pt4hdE2C7+i8ZEIEdVwAo7p5PvycWpQigETTPTxEvwct3fwPJQhZ/O495wavcG5hFgW6zd1Mx3BlTC0i34N4meFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=f6ycLc+c; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=4zN5pQ6+; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="KwL9n18l"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 1673040E0217;
-	Mon, 25 Aug 2025 14:18:27 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id tKpbBpDqu4bX; Mon, 25 Aug 2025 14:18:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1756131503; bh=bqdY0WhAtvp8cHP6dvUMlzIPIRxwctMFGQtIjBRr3tw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KwL9n18lowcfxL+hq0zpvEiRvyns+GLJ2fVosu7qUKagAwdDxr722tgM+wkwtV7WK
-	 2SFOwUaChmHZDGMP2xFlZFzXWBErO4V18BKW86xt6q8bHMvUmt9/egxS6Vk4MCU+Ro
-	 emQ/G3ZQvUoRNvFrtrB0Ypm3D3RmXSIZuLgnAw7ZBOtjVz4ltgXP9JIwPdsQ8b/a4T
-	 hMQbtiTpwN7XLSQoIQv0rcbztDwvBP8jv8PyEwaO8NE+2PX2hyw0O+jpLJd0ROT7BN
-	 W2CTpQmTvcJ47zb7oU1x3rFFTC0a4rNxYDxs1+8VRLYS136z9kIgnIi8AYQNqc1Yog
-	 +5DeAxmscx9e/9qN9UglMzWw3OpX1hQeRR8HEBR5dlhp3pnD1EwQq/kycYQBSkp++b
-	 CFPKmLqhkDthq0WA7MC1vWNkci9qHMpZx1dnJMMOHIfpoh7SM8JVgF6edi5nzgh+lf
-	 pOs7BVKbTLzc4C7u6g8T9rZeC+0R/1tHjRxDnsNxkEdsUuXlHsCdSAHcvMz/iV4tVz
-	 zjzh7AdmYdWEdv2flWY6Dk31yzjGkQ5KEnQkFj8cs4REK92PuZesTHZLsufd77l9z1
-	 9kGvl1vdr1YMsSipmwlx2u53qRVEQAkK0wcvVm6JC0D/32e5938aqImXe8DPKDAmHA
-	 5iB7/7e43xMKOQfoFSYyj4LM=
-Received: from zn.tnic (pd953092e.dip0.t-ipconnect.de [217.83.9.46])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 903D140E0202;
-	Mon, 25 Aug 2025 14:18:09 +0000 (UTC)
-Date: Mon, 25 Aug 2025 16:18:03 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="f6ycLc+c";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="4zN5pQ6+"
+Date: Mon, 25 Aug 2025 16:56:08 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1756133770;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qwgA88EWTFhd52yR0KS4Tya5c3yeMbixjFO2en//4I0=;
+	b=f6ycLc+ccZewfUYXs381T6wG69W1URTNV0n0okdxE9eYaaN9LXhRT3oH1Q1P5DVBYlCgn2
+	ZdZneVP5/orfnlkIVwmHFCKTL9s750J3y9mNhAwXZTQr6ReGYWxdApTEQf+ZLIhgUK0V4k
+	VaEYup6V0CK4ThO8yaJVAJRm5f69CurSWsv2ZAcC+BGlS1GxVPYMDehyNehFYProCz6PbG
+	BsJ2ueHvI5jMqz0b0TZ6Czt7/G3bjryzqEN6ioi9QdoGgZZtlSjS9fhtOgMtvivXsajFnG
+	JkCpdfeCYOf4Cct5Atq9bumMP3Ejl+hturHOPcqBZL+MCv52R6CtuGprAgl5vA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1756133770;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qwgA88EWTFhd52yR0KS4Tya5c3yeMbixjFO2en//4I0=;
+	b=4zN5pQ6+SCMy9m9z4yvmOJSd2mEtuAX5oxD9YrgIK3giIj4HdyNAUdKExvqNeowsq818zB
+	MUBkImWWu3z3WkDw==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Borislav Petkov <bp@alien8.de>
 Cc: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -60,9 +53,10 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v4 06/34] x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
-Message-ID: <20250825141803.GUaKxwm1lAAugFJHVQ@fat_crate.local>
+Message-ID: <aKx5iFEXVGlzWETl@lx-t490>
 References: <20250815070227.19981-1-darwi@linutronix.de>
  <20250815070227.19981-7-darwi@linutronix.de>
+ <20250825141803.GUaKxwm1lAAugFJHVQ@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -71,44 +65,87 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250815070227.19981-7-darwi@linutronix.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250825141803.GUaKxwm1lAAugFJHVQ@fat_crate.local>
 
-On Fri, Aug 15, 2025 at 09:01:59AM +0200, Ahmed S. Darwish wrote:
-> +struct leaf_0x1_0 {
-> +	// eax
-> +	u32	stepping			:  4, // Stepping ID
+Hi Boris,
 
-All those bit names in all those leafs: are they taken from the official
-documentation?
+On Mon, 25 Aug 2025, Borislav Petkov wrote:
+>
+> On Fri, Aug 15, 2025 at 09:01:59AM +0200, Ahmed S. Darwish wrote:
+> > +struct leaf_0x1_0 {
+> > +	// eax
+> > +	u32	stepping			:  4, // Stepping ID
+>
+> All those bit names in all those leafs: are they taken from the official
+> documentation?
+>
 
-They should be.
+Yes, I've built the 86-cpuid-db XML database from the official sources.
 
-...
+Intel:
 
-> +/*
-> + * Leaf 0x5
-> + * MONITOR/MWAIT instructions enumeration
-				 ^^^^^^^^^^^
+    Intel® 64 and IA-32 Architectures Software Developer's Manual
+    Intel® Architecture Instruction Set Extensions and Future Features
+    Intel® CPUID Enumeration and Architectural MSRs
+    Intel® X86-S External Architectural Specification
+    Intel® Key Locker Specification
+    Intel® Architecture Memory Encryption Technologies Specification
+    Intel® Trust Domain CPU Architectural Extensions
+    Intel® Architecture Specification: Intel® Trust Domain Extensions (TDX)
+    Intel® Flexible Return and Event Delivery (FRED) Specification
 
-Let's drop all those tautologies - it is absolutely clear that it is an
-enumeration so no need for it. Just keep the minimum text that is needed to
-describe the bit. People can always use that to find the official
-documentation of they need more info.
+AMD:
 
-...
+    AMD64 Architecture Programmer’s Manual, Volumes 1–5
+    Preliminary Processor Programming Reference (PPR) for AMD Family 19h
+    Model 11h, Revision B1 Processors
+    Open-Source Register Reference For AMD Family 17h Processors Models 00h-2Fh
 
-> +/*
-> + * Leaf 0x18
+Transmeta:
+
+    Processor Recognition, Transmeta Corporation (2002/05/07)
+
+This is also listed under the 'References' section of the project:
+
+    https://gitlab.com/x86-cpuid.org/x86-cpuid-db
+
+There are some bitfields contributed by Intel and AMD developers that are
+not yet in the official documentation.  In such cases, I trusted that
+such info is posted from developers within Intel and/or AMD.
+
+>
+> > +/*
+> > + * Leaf 0x5
+> > + * MONITOR/MWAIT instructions enumeration
+> 				 ^^^^^^^^^^^
+> Let's drop all those tautologies - it is absolutely clear that it is an
+> enumeration so no need for it. Just keep the minimum text that is needed to
+> describe the bit. People can always use that to find the official
+> documentation of they need more info.
+>
+
+will do.
+
+>
+> > +/*
+> > + * Leaf 0x18
+> > + * Intel determenestic address translation (TLB) parameters
+>
 > + * Intel determenestic address translation (TLB) parameters
+> Unknown word [determenestic] in comment.
+> Suggestions: ['deterministic',...
+>
+> spellchecker please.
+>
 
-+ * Intel determenestic address translation (TLB) parameters
-Unknown word [determenestic] in comment.
-Suggestions: ['deterministic',...
+will do.
 
-spellchecker please.
+[ I have a spellcheck CI pipeline for the XML database, but somehow I
+  missed checking the leaf description field :( ]
 
--- 
-Regards/Gruss,
-    Boris.
+Thanks!
 
-https://people.kernel.org/tglx/notes-about-netiquette
+--
+Ahmed S. Darwish
+Linutronix GmbH
