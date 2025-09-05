@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4584634F46D
-	for <x86-cpuid@lists.linux.dev>; Fri,  5 Sep 2025 12:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B07434F498
+	for <x86-cpuid@lists.linux.dev>; Fri,  5 Sep 2025 12:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757074535; cv=none; b=JpT7oe3w/ioeMv2oUJtKm+CfQoByv4/qsNLUKwdiL/7niS6QyUcrXg60Q0At895TF7TLNfSsHFST+GWrTfctxMtIp+GrfIxImbkNBg5PfpYt8gmFDFJ/5RAmk2NoPjvC7f19CX/LJvK4li38aJgSjSQlZ1k84MGoNaptxWRDf14=
+	t=1757074540; cv=none; b=UODhUl3Ykc3HrNUEsrIEaIhBNC9oImamq27bZ1B/4qx9lOyGle5buE7GfrqbOumAoq7hJ0R7rtIO/RwHM/WAv6zawAcfNlprJQM0fxYihi0fcBYUy1CQoo/ZI6Jl/m/p+bPVHEB5moyJVAxnFW5vUcuvIfIKFTYcIEQTwjtOlGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757074535; c=relaxed/simple;
-	bh=E54gyw0AGLBY5Iv7Mdbwe+8baprlamI06AECAPTiiIU=;
+	s=arc-20240116; t=1757074540; c=relaxed/simple;
+	bh=Ha8n4UGVQ8iAPIKbr1RkFgZ4t1VhsTiE1tiK68g30+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOJwoz7mAI6A1zeaO1gZU3/y5wsWiiZaDkjb01BDX/8MYeHLpsMP8gngt+/Zv6Y+1v9Bcy5JQMMomjSEoNX5AUkAxPESp/oaKfs0IXlZgKZ8cw0x5InkvB0d3Ucacz3hUO38faAj2sabeL3qvyPRpT86pTHVGIVB6PdzpG6kcPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=qiRCjuFV; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=EVkLMxg1; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=MXTod6Bape7XXSKumlr6Ht3Ex6FsLVf5PXQgu9WDwX6VkzCJlZubhRpG2X1BeeCJ1qShd3nsn+8zf389Fo97GbPT+fau8ZRBi/3zmY+gr2cx69H//ImsVDVHC4sPx1ByuiCjVohcwzdTEuZHFbFoG6Qc1K2KvJ43QFkM186tk3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=o4WJh9Zz; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=pEJXjxL4; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="qiRCjuFV";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="EVkLMxg1"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="o4WJh9Zz";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="pEJXjxL4"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1757074532;
+	s=2020; t=1757074535;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=cfexTI82Y9dSPh8MK3LjQNX70lfzP/67Ss1JC9lednk=;
-	b=qiRCjuFV4eqUDx6bmPFaepZPhPVp1ce/Z3+MK35n/wrx+S5owoPELDeFJBlvHlbA/rzzvE
-	mfSYI3kQLP71bvx996nzAovD1A1r2c5dne5Eq7EMw50dbi++b3hfbRFtlOEedmv16oDQKO
-	qSAFWwTLzHiG7pBH4a6vC33FY43HQswxQEWZTaJ1mAWzTI1sSa+LZmU8dFze30huO5wC7X
-	Ik1lpUPsl07slPcVXyvnj5DQWgYALweRaX5ii8CPSmqqWTdnMVvROedmTrGo0P/9ZGc04u
-	0zNzF+W6oc18mCsZ4JvqRvD5EX2kDU4DC1na3QoIUP1xTD4d5obR5P/BG2NdYQ==
+	bh=6fdxarbMldtZEadRNUal90N3QLS36tZpJv/UAmJIjwA=;
+	b=o4WJh9Zzwkdho0yCpxmI/HSGuqVH8JPfMaasA9OMhI0AjyY/sCfcw4WvT9a/FGbeKdbczk
+	I3f/j0cW8FqXJw+VO+KTlv2Al8KQlcBG+qLikNtEURsLsINN2J+XHnW03OFT0xaDVD5C1U
+	Tf5ivg19vhBDHU3dsAXKhU9JrKckJWi+J5AwVOs800CkAgNgKvxx/RiJhI8kuj036itmHb
+	DdvnU8mC063uAN6Gcc09Y+OaPt0HGmC8N3r4UrdYNdYs+occwDxqAmVKURsb3Ay1v42yR6
+	qsc879LtOcSxGzTScwQnY9A98Sh8PxTzpOdVmgj92mV7HMZSfwvB3G7xNORZ8Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1757074532;
+	s=2020e; t=1757074535;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=cfexTI82Y9dSPh8MK3LjQNX70lfzP/67Ss1JC9lednk=;
-	b=EVkLMxg1/MZ6myFVxG1ORkUgwUEebUIOH5pEOQzXfsXckyFrruvjslzJJMm9anO7N3UpA8
-	ExxUDKVnviw/m0Bw==
+	bh=6fdxarbMldtZEadRNUal90N3QLS36tZpJv/UAmJIjwA=;
+	b=pEJXjxL4XU6/UYkR5NB1L/Q0ENOMrBRRl+6qlqtKA7Bm6mSZTEDJlKePAxkZa9vckd4W4T
+	9WUaowkSNBS7N9CQ==
 To: Borislav Petkov <bp@alien8.de>,
 	Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>
@@ -54,9 +54,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v5 04/35] x86/cpuid: Rename cpuid_leaf()/cpuid_subleaf() APIs
-Date: Fri,  5 Sep 2025 14:14:44 +0200
-Message-ID: <20250905121515.192792-5-darwi@linutronix.de>
+Subject: [PATCH v5 05/35] x86/cpu/cacheinfo: Simplify cacheinfo_amd_init_llc_id() using _cpuid4_info
+Date: Fri,  5 Sep 2025 14:14:45 +0200
+Message-ID: <20250905121515.192792-6-darwi@linutronix.de>
 In-Reply-To: <20250905121515.192792-1-darwi@linutronix.de>
 References: <20250905121515.192792-1-darwi@linutronix.de>
 Precedence: bulk
@@ -67,102 +67,121 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A new CPUID model will be added where its APIs will be designated as the
-"official" CPUID API.  Free the cpuid_leaf() and cpuid_subleaf() function
-names for that model.  Rename them accordingly to cpuid_read() and
-cpuid_read_subleaf().
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-Note, for kernel/cpuid.c, rename its local file operations read function
-from cpuid_read() to cpuid_read_f() so that it does not conflict with the
-new names.
+struct _cpuid4_info has the same layout as the CPUID leaf 0x8000001d.
+Use the encoded definition and amd_fill_cpuid4_info(), get_cache_id()
+helpers instead of open coding masks and shifts to calculate the llc_id.
 
-No functional change.
+cacheinfo_amd_init_llc_id() is only called on AMD systems that support
+X86_FEATURE_TOPOEXT and amd_fill_cpuid4_info() uses the information from
+CPUID leaf 0x8000001d on all these systems which is consistent with the
+current open coded implementation.
 
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+While at it, avoid reading  cpu_data() every time get_cache_id() is
+called and instead pass the APIC ID necessary to return the
+_cpuid4_info.id from get_cache_id().
+
+No functional changes intended.
+
+  [ bp: do what Ahmed suggests: merge into one patch, make id4 ptr
+    const. ]
+
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Ahmed S. Darwish <darwi@linutronix.de>
+Link: https://lore.kernel.org/20250821051910.7351-2-kprateek.nayak@amd.com
 ---
- arch/x86/include/asm/cpuid/api.h   | 6 +++---
- arch/x86/kernel/cpu/topology_amd.c | 2 +-
- arch/x86/kernel/cpu/topology_ext.c | 2 +-
- arch/x86/kernel/cpuid.c            | 5 ++---
- 4 files changed, 7 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/cacheinfo.c | 48 +++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 27 deletions(-)
 
-diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
-index 44fa82e1267c..2b9750cc8a75 100644
---- a/arch/x86/include/asm/cpuid/api.h
-+++ b/arch/x86/include/asm/cpuid/api.h
-@@ -131,12 +131,12 @@ static inline void __cpuid_read(u32 leaf, u32 subleaf, u32 *regs)
- 	__cpuid(regs + CPUID_EAX, regs + CPUID_EBX, regs + CPUID_ECX, regs + CPUID_EDX);
+diff --git a/arch/x86/kernel/cpu/cacheinfo.c b/arch/x86/kernel/cpu/cacheinfo.c
+index adfa7e8bb865..51a95b07831f 100644
+--- a/arch/x86/kernel/cpu/cacheinfo.c
++++ b/arch/x86/kernel/cpu/cacheinfo.c
+@@ -289,6 +289,22 @@ static int find_num_cache_leaves(struct cpuinfo_x86 *c)
+ 	return i;
  }
  
--#define cpuid_subleaf(leaf, subleaf, regs) {		\
-+#define cpuid_read_subleaf(leaf, subleaf, regs) {	\
- 	static_assert(sizeof(*(regs)) == 16);		\
- 	__cpuid_read(leaf, subleaf, (u32 *)(regs));	\
- }
- 
--#define cpuid_leaf(leaf, regs) {			\
-+#define cpuid_read(leaf, regs) {			\
- 	static_assert(sizeof(*(regs)) == 16);		\
- 	__cpuid_read(leaf, 0, (u32 *)(regs));		\
- }
-@@ -228,7 +228,7 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
++/*
++ * The max shared threads number comes from CPUID(0x4) EAX[25-14] with input
++ * ECX as cache index. Then right shift apicid by the number's order to get
++ * cache id for this cache node.
++ */
++static unsigned int get_cache_id(u32 apicid, const struct _cpuid4_info *id4)
++{
++	unsigned long num_threads_sharing;
++	int index_msb;
++
++	num_threads_sharing = 1 + id4->eax.split.num_threads_sharing;
++	index_msb = get_count_order(num_threads_sharing);
++
++	return apicid >> index_msb;
++}
++
+ /*
+  * AMD/Hygon CPUs may have multiple LLCs if L3 caches exist.
   */
- static inline void cpuid_leaf_0x2(union leaf_0x2_regs *regs)
- {
--	cpuid_leaf(0x2, regs);
-+	cpuid_read(0x2, regs);
+@@ -312,18 +328,11 @@ void cacheinfo_amd_init_llc_id(struct cpuinfo_x86 *c, u16 die_id)
+ 		 * Newer families: LLC ID is calculated from the number
+ 		 * of threads sharing the L3 cache.
+ 		 */
+-		u32 eax, ebx, ecx, edx, num_sharing_cache = 0;
+ 		u32 llc_index = find_num_cache_leaves(c) - 1;
++		struct _cpuid4_info id4 = {};
  
- 	/*
- 	 * All Intel CPUs must report an iteration count of 1.	In case
-diff --git a/arch/x86/kernel/cpu/topology_amd.c b/arch/x86/kernel/cpu/topology_amd.c
-index 42d91aa9b23a..0e48509301c8 100644
---- a/arch/x86/kernel/cpu/topology_amd.c
-+++ b/arch/x86/kernel/cpu/topology_amd.c
-@@ -80,7 +80,7 @@ static bool parse_8000_001e(struct topo_scan *tscan, bool has_topoext)
- 	if (!boot_cpu_has(X86_FEATURE_TOPOEXT))
- 		return false;
- 
--	cpuid_leaf(0x8000001e, &leaf);
-+	cpuid_read(0x8000001e, &leaf);
- 
- 	/*
- 	 * If leaf 0xb/0x26 is available, then the APIC ID and the domain
-diff --git a/arch/x86/kernel/cpu/topology_ext.c b/arch/x86/kernel/cpu/topology_ext.c
-index eb915c73895f..60dfaa02ffd0 100644
---- a/arch/x86/kernel/cpu/topology_ext.c
-+++ b/arch/x86/kernel/cpu/topology_ext.c
-@@ -71,7 +71,7 @@ static inline bool topo_subleaf(struct topo_scan *tscan, u32 leaf, u32 subleaf,
- 	default: return false;
+-		cpuid_count(0x8000001d, llc_index, &eax, &ebx, &ecx, &edx);
+-		if (eax)
+-			num_sharing_cache = ((eax >> 14) & 0xfff) + 1;
+-
+-		if (num_sharing_cache) {
+-			int index_msb = get_count_order(num_sharing_cache);
+-
+-			c->topo.llc_id = c->topo.apicid >> index_msb;
+-		}
++		if (!amd_fill_cpuid4_info(llc_index, &id4))
++			c->topo.llc_id = get_cache_id(c->topo.apicid, &id4);
  	}
- 
--	cpuid_subleaf(leaf, subleaf, &sl);
-+	cpuid_read_subleaf(leaf, subleaf, &sl);
- 
- 	if (!sl.num_processors || sl.type == INVALID_TYPE)
- 		return false;
-diff --git a/arch/x86/kernel/cpuid.c b/arch/x86/kernel/cpuid.c
-index cbd04b677fd1..b55fe9c7359a 100644
---- a/arch/x86/kernel/cpuid.c
-+++ b/arch/x86/kernel/cpuid.c
-@@ -59,8 +59,7 @@ static void cpuid_smp_cpuid(void *cmd_block)
- 	complete(&cmd->done);
  }
  
--static ssize_t cpuid_read(struct file *file, char __user *buf,
--			  size_t count, loff_t *ppos)
-+static ssize_t cpuid_read_f(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- {
- 	char __user *tmp = buf;
- 	struct cpuid_regs_done cmd;
-@@ -120,7 +119,7 @@ static int cpuid_open(struct inode *inode, struct file *file)
- static const struct file_operations cpuid_fops = {
- 	.owner = THIS_MODULE,
- 	.llseek = no_seek_end_llseek,
--	.read = cpuid_read,
-+	.read = cpuid_read_f,
- 	.open = cpuid_open,
- };
+@@ -598,27 +607,12 @@ int init_cache_level(unsigned int cpu)
+ 	return 0;
+ }
  
+-/*
+- * The max shared threads number comes from CPUID(0x4) EAX[25-14] with input
+- * ECX as cache index. Then right shift apicid by the number's order to get
+- * cache id for this cache node.
+- */
+-static void get_cache_id(int cpu, struct _cpuid4_info *id4)
+-{
+-	struct cpuinfo_x86 *c = &cpu_data(cpu);
+-	unsigned long num_threads_sharing;
+-	int index_msb;
+-
+-	num_threads_sharing = 1 + id4->eax.split.num_threads_sharing;
+-	index_msb = get_count_order(num_threads_sharing);
+-	id4->id = c->topo.apicid >> index_msb;
+-}
+-
+ int populate_cache_leaves(unsigned int cpu)
+ {
+ 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
+ 	struct cacheinfo *ci = this_cpu_ci->info_list;
+ 	u8 cpu_vendor = boot_cpu_data.x86_vendor;
++	u32 apicid = cpu_data(cpu).topo.apicid;
+ 	struct amd_northbridge *nb = NULL;
+ 	struct _cpuid4_info id4 = {};
+ 	int idx, ret;
+@@ -628,7 +622,7 @@ int populate_cache_leaves(unsigned int cpu)
+ 		if (ret)
+ 			return ret;
+ 
+-		get_cache_id(cpu, &id4);
++		id4.id = get_cache_id(apicid, &id4);
+ 
+ 		if (cpu_vendor == X86_VENDOR_AMD || cpu_vendor == X86_VENDOR_HYGON)
+ 			nb = amd_init_l3_cache(idx);
 -- 
 2.50.1
 
