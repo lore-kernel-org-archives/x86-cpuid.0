@@ -1,46 +1,57 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9BA308F0D
-	for <x86-cpuid@lists.linux.dev>; Thu, 18 Sep 2025 13:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749EB302150
+	for <x86-cpuid@lists.linux.dev>; Thu, 16 Oct 2025 10:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758201365; cv=none; b=UUSDygSO+GhdhZWFuf6Xqu2qqLuT7mXQ81PdMGUOwDZTu3InEKJ52uWl9QgRcZPbwuD+TfHTjHqw0uC941P7BdzuQ/LfNuW/G1M0TtWVrqtFe0XShcaZxGmwJYWEC5R0DxlawKCFPiJfxSDoUJmyMtARIZiXwZy3BvOIb/l+Nmc=
+	t=1760612313; cv=none; b=FnetXmEa8I5w3Y5A/sSxLcOEifv9mnef90Lt630XsIe3U/+Z0xgn1gCwilW9uG5Ri2mxHaliZQ5j4mrTgJsRx/xYrFflNxvaxULIbliQykxcN/4FJlcBr4EBOuACVuU1w6ARtysp+5rOxj83VF2z7ESwsPbEFh6IAxOqDR/XxwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758201365; c=relaxed/simple;
-	bh=o31y49SfOz1zzDeXlwC3LGsLmhzXDfMciiKmJfbYODI=;
+	s=arc-20240116; t=1760612313; c=relaxed/simple;
+	bh=G5YIzlM0wW45iOdOfOR7wWJBmL7Lgrcc8f2jbTPM22E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e7jDPD7HlZfWb/jfj7uHtACYM5pSG4LS25O4PnR77dVF+o4xtY8IuzvLm30fVPmZTpOa91/dyE9MLVwgFZZAJwV7P96jt4we3n2YBakEd4JRrDOmRTzS0r3U39lao5H+q7qBDQA+WfSJCKrLVpuYEPU+lraFKuUMkwo00D8v+HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=jMukja3X; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=keCR8TzQ; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=JycHJ6B4Kk6j+Fe1d6vHHAyusPZzHtlxVIzJ17dDQ6P5UIvJdnCnTRrpZGddczE/2I27+pUSD9foqHzJ4STsGDqurTNLj+B0utxEZwgSNeVpDTAoGl4Lnv8k17Zu0A64KvS47JRu/7YPwp9DeSGDv83FFYCinmzLiCpy8U4aSw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=FPZ1AnBM; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="jMukja3X";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="keCR8TzQ"
-Date: Thu, 18 Sep 2025 15:15:58 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1758201361;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=25kJklno+agO++8IqSq2aLV4AxGk+lui9rOAwcO0s+Y=;
-	b=jMukja3XOJ3dATz9P6EGzMCQW/u6WOV8vIV+LGIrfQYxGTrkhCjzIKfauhHfjt5/5sm9Dm
-	RIBUHsCoTGYR1Z2ZbCFsiZaAAKMHNPDwOmJtakSZpkTvW4lb1ATMOGUa2hUWDakZ2f82ev
-	70oPyZUe9KCLv9kEarEXfqD6G0xS9CeIPTWoa/fXJW5buNm/oew5AeS/wC3qnxdhAzNQy0
-	oaGI9hm2O0QOXPZnPwOIhy7BkVrKeKhCdXTNUP+QkYqgM6ueeWntFH1EtwjEIYI+MyI0FB
-	XBBE8AUbzDpfAf1o8JC2QtHN7yEyWDsOMz//n46ew0VADrII7FHKK89zxR92RQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1758201361;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=25kJklno+agO++8IqSq2aLV4AxGk+lui9rOAwcO0s+Y=;
-	b=keCR8TzQs4Io7DMmXcCvlVQP04DhsSY+KOy3F8fF9vwMVsbj/Zf1CUsmbKV8nVjBkIbe46
-	nPXduyGjYpBr2dBQ==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="FPZ1AnBM"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id AF2C340E01A5;
+	Thu, 16 Oct 2025 10:58:26 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id H3F_11x1GYkR; Thu, 16 Oct 2025 10:58:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1760612302; bh=cLAm2KZbcUMyv3Nykzzh+blygKDExFAFcPx/1H0Hto0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FPZ1AnBMLzWN3gC/Gf8oC+xPZnSOsHILd7rdmywbZYi1fx/C6g7Oo9/xbTgXCLICK
+	 avBK1uzfruRje0qZ9aAWGt3FhexI9arjvQTYu5wXUlmWFijiDwi/UiU3H26beBeHl1
+	 ubBVVlBJmk2AIIcm1a8KaJvfmNqdtvibRhZOV3lWWJKKYYZ8LGKOJpo2V+/2cYhi7U
+	 BtP9zHYpgg2dUiWN5qSe+zWjVNuXF5UrU54/hm7l5/ZH94kW401Mgxg72d+ua4KfUj
+	 QiLNwPv6Hbq8dPK5wxeQpE+t67c2z2Jc2Wr83mIdX8MesmQ4kd9LLf9gZxRlCn/bu3
+	 PNtGvtFFaC9N6CZ+VeImrsvBOT1ejhhFsdKMKWrHTz51aiMgcfMrZcbF9aW8WrNh+G
+	 t6KSGgg0sAKfX+/7/SZe/xtAW4RbRe2biZyzKsHwP7sJ9xpuE9MaEtSJ7neMm2x1S9
+	 QTAjSU9UHVKkITvVjIBAt6yh1oHgf3RmuTgSgZi231zw0i98jpzbDYN7Ug7kULo2OG
+	 yVMYdVqxQRWt8bhL+Whg6r10tcXTa2rgn7gaH+OrMd1T7sU/eepYzP/AvN/9eTV5HO
+	 oGJ7Opl3ejfSYV5pGsokRoFsXc7As8XF2y8ZV7ZE2EI4dkB6UwjaEAKGlf+1AQB4Yp
+	 uan2LaXdq9kM5oqqGjUJn2Is=
+Received: from zn.tnic (pd9530da1.dip0.t-ipconnect.de [217.83.13.161])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id 44B0C40E016E;
+	Thu, 16 Oct 2025 10:58:06 +0000 (UTC)
+Date: Thu, 16 Oct 2025 12:57:56 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>,
+	Cezary Rojewski <cezary.rojewski@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Sean Christopherson <seanjc@google.com>,
 	David Woodhouse <dwmw2@infradead.org>,
@@ -48,46 +59,98 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 08/35] x86/cpuid: Introduce a centralized CPUID parser
-Message-ID: <aMwGDk4nLq_RZ134@lx-t490>
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>,
+	linux-sound@vger.kernel.org
+Subject: Re: [PATCH v5 01/35] ASoC: Intel: avs: Include CPUID header at file
+ scope
+Message-ID: <20251016105514.GCaPDPEu016XyDocfY@fat_crate.local>
 References: <20250905121515.192792-1-darwi@linutronix.de>
- <20250905121515.192792-9-darwi@linutronix.de>
+ <20250905121515.192792-2-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250905121515.192792-9-darwi@linutronix.de>
+In-Reply-To: <20250905121515.192792-2-darwi@linutronix.de>
 
-On Fri, 05 Sep 2025, Ahmed S. Darwish wrote:
->
->  /**
-> - * cpuid_leaf_regs() - Access parsed CPUID data in raw format
-> + * cpuid_leaf_raw() - Access parsed CPUID data in raw format
-...
-> -#define cpuid_leaf_regs(_cpuinfo, _leaf)					\
-> +#define cpuid_leaf_raw(_cpuinfo, _leaf)					\
->  	((const struct cpuid_regs *)(cpuid_leaf(_cpuinfo, _leaf)))
-...
->  /**
-> - * cpuid_subleaf_n_regs() - Access parsed CPUID data for leaf with dynamic subleaf range
-> + * cpuid_subleaf_n_raw() - Access parsed CPUID data for leaf with dynamic subleaf range
-...
-> -#define cpuid_subleaf_n_regs(_cpuinfo, _leaf, _subleaf)				\
-> +#define cpuid_subleaf_n_raw(_cpuinfo, _leaf, _subleaf)				\
->  	((const struct cpuid_regs *)cpuid_subleaf_n(_cpuinfo, _leaf, _subleaf))
->
+On Fri, Sep 05, 2025 at 02:14:41PM +0200, Ahmed S. Darwish wrote:
+> +#ifdef CONFIG_X86
+> +#include <asm/cpuid/api.h>
+> +static unsigned int intel_crystal_freq_hz(void)
+> +{
+> +	return cpuid_ecx(CPUID_LEAF_TSC);
+> +}
+> +#else
+> +static unsigned int intel_crystal_freq_hz(void)
+> +{
+> +	return 0;
+> +}
+> +#endif /* !CONFIG_X86 */
 
-That snippet should've been folded into the previous patch.
+Why are we even bothering with !CONFIG_X86?
 
-Rest of the PQ stays as-is.
+Because this thing has || COMPILE_TEST in Kconfig.
 
-I'll not spam the list with a v6 just for this, since the next iteration
-should include the X86_FEATURE adaptation mentioned in the cover.
+But this thing gets enough compile testing on x86 already so why not simply
+drop the whole unnecessary gunk?
 
-Thanks,
-Ahmed
+---
+
+diff --git a/sound/soc/intel/Kconfig b/sound/soc/intel/Kconfig
+index 412555e626b8..63367364916a 100644
+--- a/sound/soc/intel/Kconfig
++++ b/sound/soc/intel/Kconfig
+@@ -95,7 +95,7 @@ config SND_SOC_INTEL_KEEMBAY
+ 
+ config SND_SOC_INTEL_AVS
+ 	tristate "Intel AVS driver"
+-	depends on X86 || COMPILE_TEST
++	depends on X86
+ 	depends on PCI
+ 	depends on COMMON_CLK
+ 	select ACPI_NHLT if ACPI
+diff --git a/sound/soc/intel/avs/tgl.c b/sound/soc/intel/avs/tgl.c
+index afb066516101..d920488d24b1 100644
+--- a/sound/soc/intel/avs/tgl.c
++++ b/sound/soc/intel/avs/tgl.c
+@@ -11,7 +11,7 @@
+ #include "debug.h"
+ #include "messages.h"
+ 
+-#define CPUID_TSC_LEAF 0x15
++#include <asm/cpuid/api.h>
+ 
+ static int avs_tgl_dsp_core_power(struct avs_dev *adev, u32 core_mask, bool power)
+ {
+@@ -44,18 +44,15 @@ static int avs_tgl_config_basefw(struct avs_dev *adev)
+ {
+ 	struct pci_dev *pci = adev->base.pci;
+ 	struct avs_bus_hwid hwid;
++	unsigned int freq;
+ 	int ret;
+-#ifdef CONFIG_X86
+-	unsigned int ecx;
+ 
+-#include <asm/cpuid/api.h>
+-	ecx = cpuid_ecx(CPUID_TSC_LEAF);
+-	if (ecx) {
+-		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(ecx), &ecx);
++	freq = cpuid_ecx(CPUID_LEAF_TSC);
++	if (freq) {
++		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(freq), &freq);
+ 		if (ret)
+ 			return AVS_IPC_RET(ret);
+ 	}
+-#endif
+ 
+ 	hwid.device = pci->device;
+ 	hwid.subsystem = pci->subsystem_vendor | (pci->subsystem_device << 16);
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
