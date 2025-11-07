@@ -1,106 +1,120 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD1E1D9663
-	for <x86-cpuid@lists.linux.dev>; Tue, 28 Oct 2025 17:51:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14239AD2C
+	for <x86-cpuid@lists.linux.dev>; Fri,  7 Nov 2025 07:16:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761673866; cv=none; b=fn2EUQvRYJzHSoEvxA/wVfPwdfnWfUtLzIJG7JfJgu43zhWJ1bP1Cq23mECgVh9BTRufgwNsQPkTt7Gad2FFnaqcfP/6nDM/jSpxa3F9z76GQQD4WuOBGr7XTOb7dZpAfiqcxCv7eopyfWIO8KzQ/Q7bUwnIud10gu7W4VIS7wU=
+	t=1762499799; cv=none; b=mqHOHK7mtt64sJcEiUeLtv/ZuDZx4BOPBagzi+WiLt4D/kFy6nhswrqL8xDKsxUlEtyvPVtKH738CNxEFDWZDkj6UCCtxiQFWE3XQiDtpXyBrLN8hGkrgnuECqK2m/oOeppF3anPVXBC5utakHVU8wwk+nhpAJWYNMYoC+ajR1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761673866; c=relaxed/simple;
-	bh=OR5hyWguXhFi+vK9n485+xoRTtPsJ9pKkAHM4sjOqUA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b8ky9i6JQWEcaPHorIkkB+LiB/6r+5r+GY1pOmh/qCROeIfd/K562FL9SpaX/cx40RGrAbU3/H6iQ9MVZtfu0OuPpwvivhYsajg4uEnYUD+WwfWxi6v0SL4Sq8IZricc7kuxzvicX0+0uLjO0UdhHk3JlAZ2H6IslUGIBcKoJfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=BbDk9LW2; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1762499799; c=relaxed/simple;
+	bh=ZE4zGX/pGY4FSG36edklVAt8h82wW/pMxO8mJJ9/9w0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=a0RQBt8UXYSRAMs0P5BAwHNdIFuubge6y+PajPveR2aXzGzoi10beE+6kUelUT9Elo1vnYmwWIKZ+fRsKDI6BvkKODLtBX/dKMwwcTsZYQZnF8zE6Vx0O8HbGwOl1e+TWFTNs6SDz9s1QMwV9nLBlgGO2Pjbqi/kCTRLmXn34HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TNPerWzf; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="BbDk9LW2"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 494D640E0200;
-	Tue, 28 Oct 2025 17:51:00 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 526wgh75SGto; Tue, 28 Oct 2025 17:50:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1761673855; bh=oz3I0r0/Uv0Hig7MsmFlrgD+dOXSKw2vNqensbSzaSU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BbDk9LW2AfJgFUUhU7QSNGi8GLRhgkSyLMyse1gy/TH6xPMwcQKKPKwwtj/OvQpBL
-	 OwdS1SJ+RIlEW8tQjDmDgK5OVhWkpIGC34c0y5tELF0vIgA0FrsgLQWT/v6NorYEeN
-	 IrsYB4H747CjBWuQP53cOzRWsZ+soz28YnFjRjnXGHpFCU56nof+mPLA10JRRQGCZ4
-	 sADYdukju4igDy9zy19c7JsTQCQ4Tbpj+IDe5E0Ai8DKKEtjqJbMZci+SCyhVI3SzG
-	 qXTAO8r2pwKTyFTZENLd4+GbjUGnC6uqAonWNdF63GNCWwYkGwFuUWabP/LGpyOwMq
-	 7wKKlXu7Qbl3I0fZLzhXkyclU4dv4hE0F39h0uRiiXUKD+1gyE8RfwlCROo6B3dx3E
-	 6rJ+vFf37DhYaD04hFhKN0Z93hoNxkd7XiSmmjWaRa65GRjnCeIg6qVgyCjmMdRc6T
-	 oZw82kWTzXGN1zrPbyBPyc7hdk0zvTn459GBi8m2Zd+dkbChEn5SQE6k+5aUgq9yoY
-	 znxVCeXuvbz/dw0MzXZ+aoI+bTNLK6QoJY8CSz3j+Z0UHLdpr7uMWV+GqBvHFdfwWU
-	 5myGbbW8kOG34l5X0ZpyRUSEsdPsw7gOMM70QpQRlIc7lioLIqCUkf3vuhBEyvYzRK
-	 LSPu4AoztyF1CTQQoVsbYsFc=
-Received: from zn.tnic (pd9530da1.dip0.t-ipconnect.de [217.83.13.161])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id B67F440E00DA;
-	Tue, 28 Oct 2025 17:50:40 +0000 (UTC)
-Date: Tue, 28 Oct 2025 18:50:39 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Sean Christopherson <seanjc@google.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 04/35] x86/cpuid: Rename cpuid_leaf()/cpuid_subleaf()
- APIs
-Message-ID: <20251028175039.GCaQECb5EqT1_pwqX3@fat_crate.local>
-References: <20250905121515.192792-1-darwi@linutronix.de>
- <20250905121515.192792-5-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TNPerWzf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762499797; x=1794035797;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ZE4zGX/pGY4FSG36edklVAt8h82wW/pMxO8mJJ9/9w0=;
+  b=TNPerWzfhS1C1X9gkDdjy0kA6Z0IiUIHL+jfGAVja3BRn4B9DFQNBA3a
+   uamgnmFNV1EmRlSb9T4L5JVNHJj226Ik8nV4qZbg0Kghh10EekAbqG+b0
+   ihX/NL+4QvNBRybE+Dvxb8eXgDuJxuPq8mIA7xNa9plvaLmGXUBjIMzmm
+   yZsdnALt/l5AqPSGXWiSZSQJj8aVUCIIqqX55f6gXh5lUIqpyqOH9+iIo
+   PVPrlUgh2o2SMj8v+NuMOpiqUxJbg/hvhM+6vzKGcXij5sm0ewC+znkXf
+   cippYgh6VO1/ZZKs85fbj2iFshcd0sjBV4MzrewZhbhkZBXhN2iLoX/AM
+   Q==;
+X-CSE-ConnectionGUID: LOCYnJGRT5WOzyH/kgG3Cw==
+X-CSE-MsgGUID: xK7uz/6JR+K/sWgINYrLjA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11605"; a="68508428"
+X-IronPort-AV: E=Sophos;i="6.19,286,1754982000"; 
+   d="scan'208";a="68508428"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2025 23:16:36 -0800
+X-CSE-ConnectionGUID: lF80zo7vRSSrUsCSJWoP0A==
+X-CSE-MsgGUID: +IyYTQYnRF2jheWbIgv7Mg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,286,1754982000"; 
+   d="scan'208";a="187812303"
+Received: from baandr0id001.iind.intel.com ([10.66.253.151])
+  by fmviesa006.fm.intel.com with ESMTP; 06 Nov 2025 23:16:33 -0800
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+To: bp@alien8.de,
+	tglx@linutronix.de,
+	x86@kernel.org,
+	darwi@linutronix.de,
+	nathan@kernel.org,
+	nick.desaulniers+lkml@gmail.com,
+	morbo@google.com,
+	justinstitt@google.com
+Cc: x86-cpuid@lists.linux.dev,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Subject: [PATCH] tools/x86: Support clang compilation for Android
+Date: Fri,  7 Nov 2025 12:44:24 +0530
+Message-Id: <20251107071424.746477-1-kaushlendra.kumar@intel.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250905121515.192792-5-darwi@linutronix.de>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 05, 2025 at 02:14:44PM +0200, Ahmed S. Darwish wrote:
-> diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
-> index 44fa82e1267c..2b9750cc8a75 100644
-> --- a/arch/x86/include/asm/cpuid/api.h
-> +++ b/arch/x86/include/asm/cpuid/api.h
-> @@ -131,12 +131,12 @@ static inline void __cpuid_read(u32 leaf, u32 subleaf, u32 *regs)
->  	__cpuid(regs + CPUID_EAX, regs + CPUID_EBX, regs + CPUID_ECX, regs + CPUID_EDX);
->  }
->  
-> -#define cpuid_subleaf(leaf, subleaf, regs) {		\
-> +#define cpuid_read_subleaf(leaf, subleaf, regs) {	\
->  	static_assert(sizeof(*(regs)) == 16);		\
->  	__cpuid_read(leaf, subleaf, (u32 *)(regs));	\
->  }
->  
-> -#define cpuid_leaf(leaf, regs) {			\
-> +#define cpuid_read(leaf, regs) {			\
+Add missing stdint.h include and replace compiler-gcc.h with
+compiler.h to fix clang compilation errors on Android builds.
+Change u64 typedef to use standard uint64_t with header guards
+to maintain backward compatibility with existing Linux builds.
 
-Are we getting rid of that "cpuid_read" thing eventually?
+This resolves clang build failures where uint64_t is undefined and
+ensures the tool compiles on both Android NDK and Linux toolchains.
 
-Because with CPUID the only thing you can do is read - no write.
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+---
+ tools/arch/x86/kcpuid/kcpuid.c       | 5 ++++-
+ tools/include/linux/compiler_types.h | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-That can be sorted out when the dust settles...
-
-
+diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
+index 7dc6b9235d02..5243b49556be 100644
+--- a/tools/arch/x86/kcpuid/kcpuid.c
++++ b/tools/arch/x86/kcpuid/kcpuid.c
+@@ -7,6 +7,7 @@
+ #include <stdbool.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <stdint.h>
+ #include <string.h>
+ 
+ #define ARRAY_SIZE(x)	(sizeof(x) / sizeof((x)[0]))
+@@ -14,7 +15,9 @@
+ #define __noreturn	__attribute__((__noreturn__))
+ 
+ typedef unsigned int u32;
+-typedef unsigned long long u64;
++#ifndef u64
++#define u64 uint64_t
++#endif
+ 
+ char *def_csv = "/usr/share/misc/cpuid.csv";
+ char *user_csv;
+diff --git a/tools/include/linux/compiler_types.h b/tools/include/linux/compiler_types.h
+index d09f9dc172a4..0333c234fe3d 100644
+--- a/tools/include/linux/compiler_types.h
++++ b/tools/include/linux/compiler_types.h
+@@ -33,7 +33,7 @@
+ 
+ /* Compiler specific macros. */
+ #ifdef __GNUC__
+-#include <linux/compiler-gcc.h>
++#include <linux/compiler.h>
+ #endif
+ 
+ #ifndef asm_goto_output
 -- 
-Regards/Gruss,
-    Boris.
+2.34.1
 
-https://people.kernel.org/tglx/notes-about-netiquette
