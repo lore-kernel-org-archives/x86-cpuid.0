@@ -1,53 +1,46 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E6832A3D7
-	for <x86-cpuid@lists.linux.dev>; Wed, 21 Jan 2026 21:46:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A19332ECF
+	for <x86-cpuid@lists.linux.dev>; Mon, 26 Jan 2026 13:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769031989; cv=none; b=mqrSuzfLhBKit+X4CTCoPwR65zNEh+zjDaYRuacL471GoqOGDDFLMjmyRLHtKWTU/D2IXyQ/LbMoIO+7MPbyx7NDk2RewDd3s/MkLJnFL77LmTznUjsAkiVPSF6w1u2TFtuDEDbrVc4JR4syYXGNAkXJUKPVJkgyFi7aaric65c=
+	t=1769432697; cv=none; b=q5lqgj1W3bOKA4IsffOaNMAb1N7Pz+MQVLKiKtcgyOT/fSbHDbXoAXZab+yqiDLMBf1Xxo/Dv+KnS3hA8dDygfVqNeKzfVVUYkaYZ5R6yIqykYJJB8Y/DgFlA3wj7SZal59fK4bzMBhknbF0jyvRPhGzeTkz8xdoNtCVJSyJ4Pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769031989; c=relaxed/simple;
-	bh=RxjkAe1lc6tpq2Vh1ZR69JDa2+qfbAphUA3sQxEiZH4=;
+	s=arc-20240116; t=1769432697; c=relaxed/simple;
+	bh=FIohAIWbJoi+po/LYA4O3trTwCFTJH+gqpzLIi2G1E4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t+6d1JW6ro3a7rz5pBkxyVadVTmqbUGoJzQ8xLKOHeO3UyXYfNgtOlBrEPZOvYBQDkJ0CpQUTh8uYzqWV1n/9lvait5Wa7F703sbAo1PlIvncpI53/U4NzTgOdseFpGAKyhHedVzKyNSNyvAq83bcvG7biALkRamVmlDWw0qoug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=F+Nq/SlN; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=ukP9GvwJ9Odi0Pq0PvBwUOFj9fwZ7oT0jaCe9Tkv2CchK0e17Ol4O/IAVcA39HhgwP+ha4l49cg02mg4yT/pcDG6gIqSOkpkfhc1qIU43PNp/Ub/m4AgJ2tJUwNJ2o+TVCTjLdY97UB8LBvaLYfjzmMEOFTUzZG2aTRetUqe0YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=abekFbCS; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=LdqZRO24; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="F+Nq/SlN"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id DB84E40E02D3;
-	Wed, 21 Jan 2026 21:46:24 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id mDuTENFC6xHa; Wed, 21 Jan 2026 21:46:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1769031981; bh=dWr2zp0aG5f1cpN7YYQL7Bo7b6KnwOXRZc/9W8kh5yY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F+Nq/SlN7nCmd2KRvONNCzz/BOaTgtBCYlAN4CddpHoOziuCclzinJxUgmhwBt1Og
-	 66ED6Lzj/r+rWAVCLjTLaK0ZCwDpzTxdLazLMRwhxI2akyILnyWmOtkwN9iz1bHrmQ
-	 fQMeMth7iiYZCtl0L74/wjMiNTGVCruu2nKcUUsylt+J9R38tAdfkuNIE5lBmWn3PM
-	 DKZHYmxPPTlcgjw4EN7Jmz9dMKtEpSAwoMFN3ElWMrheRWAcg4X/2UQsmDf1RUpiFP
-	 YPyJk0ZxefVP7K8ACQuURqXQozkTYzrbah5lP0a5/OM5hAisxK3lVgcrUzWq5J04Jr
-	 /8/R2iCha6YZgOh0eKsvpHCijEfaZ0QuyX7lLwwapU//HZId1mPBzFBlFwlBKra4fp
-	 xnBEjJ4CxUSK8Ei9EJiUsNkN3ddY6NEt05Ma/1UMJvU992Qh3Fp/qXq35R3sOakGUe
-	 p6FKrHL0mzB/HagzvhBLqMIYKCxyeJvdD5yNTDTN/p6RndIIUFRKsUmmiV+E3h0ERC
-	 oW9m4sy1/mLOpMhClRPXXq4QLPkNpOSgFlZtqpDyldLNOvykin6bZuREz9k22wR9P7
-	 K29R7FLt2XUCtIwDdNz3/cpdkfA1ZN/Gvo/0JnQol91ogTyCiQZgdhMZO3ykiJgN3X
-	 rCayaN+e0jGaKyApxdBOcq9o=
-Received: from zn.tnic (pd953023b.dip0.t-ipconnect.de [217.83.2.59])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id F197740E027A;
-	Wed, 21 Jan 2026 21:46:06 +0000 (UTC)
-Date: Wed, 21 Jan 2026 22:45:59 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="abekFbCS";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="LdqZRO24"
+Date: Mon, 26 Jan 2026 14:04:51 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1769432694;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XjfZVf8/cR6lQ2qWTY3ygE7xzL2RWv2cAyNdDuwb9Zc=;
+	b=abekFbCSQp+afFAAbgwHBVyoZQHRrbPcluxpVghaxSEhFYg9WVVCgNnexGu0DBqtkHHtG8
+	BsnUWW9aROJsDV/g97rELpVGJ9O+sJZHtD7z57glB5CCjnll/qp/FHaZUdCUnLvmwDlTEf
+	PdTNWusGSLJ73WMYAbROw83qrkFcVjIXOmL3lKeyOiZX0Hb7rAd9kgVh9HWcg95fZ4R1AU
+	BOpZEuaPqQYNRI2NKqriyUzW82dFXL/3ku9KyoNnMWmCgcIbv8cidoL7XwxOds7neHAvgS
+	qNhzpJDrKAVgdqItg14eK9/WPnhWQhedSbEcmMkhiLHCYFcma1mkvBKu/3X/Fg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1769432694;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XjfZVf8/cR6lQ2qWTY3ygE7xzL2RWv2cAyNdDuwb9Zc=;
+	b=LdqZRO24Tqz65TV9beDWrqD8/+IvHLc+tJh4027NoZtoD/2Vkyfz/Jclte+tbuh+nef8Gk
+	N7G39ZX9gimtQiCw==
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+To: Borislav Petkov <bp@alien8.de>
 Cc: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -59,10 +52,11 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 08/35] x86/cpuid: Introduce a centralized CPUID parser
-Message-ID: <20260121214559.GEaXFJF-EXVBvyMCtm@fat_crate.local>
+Subject: Re: [PATCH v5 07/35] x86: Introduce a centralized CPUID data model
+Message-ID: <aXdmc6F5wLthVDEU@lx-t490>
 References: <20250905121515.192792-1-darwi@linutronix.de>
- <20250905121515.192792-9-darwi@linutronix.de>
+ <20250905121515.192792-8-darwi@linutronix.de>
+ <20260116203117.GAaWqgFYTv1bHLxKV_@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -71,29 +65,117 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250905121515.192792-9-darwi@linutronix.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260116203117.GAaWqgFYTv1bHLxKV_@fat_crate.local>
 
-On Fri, Sep 05, 2025 at 02:14:48PM +0200, Ahmed S. Darwish wrote:
-> diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-> index 34a054181c4d..43582d7e167d 100644
-> --- a/arch/x86/kernel/cpu/common.c
-> +++ b/arch/x86/kernel/cpu/common.c
-> @@ -1729,6 +1729,7 @@ static void __init early_identify_cpu(struct cpuinfo_x86 *c)
->  
->  	/* cyrix could have cpuid enabled via c_identify()*/
->  	if (cpuid_feature()) {
-> +		cpuid_parser_scan_cpu(c);
+Hi Boris,
 
-Or simply
+On Fri, 16 Jan 2026, Borislav Petkov wrote:
+>
+> Btw, why are we calling them dynamic?
+>
+> This is confusing. Those leafs simply have multiple subleafs specified
+> in ECX.
+>
+> Let's please not invent our own things here but simply stick to the
+> nomenclature in the vendor docs.
+>
+> This is a very simple explanation IMO:
+>
+> "The information is accessed by (1) selecting the CPUID function setting
+> EAX and optionally ECX for some functions,"
+>
+>
+> and there's no talk about dynamic and whatnot.
+>
+...
+>
+> This is where the problem lies: you're calling static leaves those which
+> have one subleaf and dynamic those which have multiple.
+>
+> But if one "static" leaf starts adding subleafs, the "static" one
+> becomes "dynamic". And that's confusing. Nothing dynamic about it. You
+> simply have CPUID leafs with 1 or more subleafs. And that should be the
+> nomenclature we use.
+>
 
-cpu_parse_cpuid()
+Due to the differing leaf/subleaf output formats, at
+arch/x86/include/asm/cpuid/leaf_types.h we have the storage types:
 
-:-)
+    struct leaf_0x4_n	{ ... };	// CPUID(0x4),  subleaves 0 -> n
 
-Plain and simple.
+    struct leaf_0xd_0	{ ... };	// CPUID(0xd),  subleaf 0
+    struct leaf_0xd_1	{ ... };	// CPUID(0xd),  subleaf 1
+    struct leaf_0xd_n	{ ... };	// CPUID(0xd),  subleaves 2 -> n
 
--- 
-Regards/Gruss,
-    Boris.
+    struct leaf_0x10_0	{ ... };	// CPUID(0x10), subleaf 0
+    struct leaf_0x10_n	{ ... };	// CPUID(0x10), subleaves 1 -> n
 
-https://people.kernel.org/tglx/notes-about-netiquette
+where "n" is known at runtime.
+
+Then, for CPUID(0xd) subleaf 0 and 1 call sites we have:
+
+    /*
+     * "Static" access
+     */
+
+    const struct leaf_0xd_0 *ld_0;
+    const struct leaf_0xd_1 *ld_1;
+
+    ld_0 = cpuid_subleaf(c, 0xd, 0);
+//                       |   |   └────────┐
+//                       |   └─────────┐  |
+//                       *             *  *
+//  ld_0 =              &c.cpuid.leaf_0xd_0[0];
+
+    ld_1 = cpuid_subleaf(c, 0xd, 1);
+//                       |   |   └────────┐
+//                       |   └─────────┐  |
+//                       *             *  *
+//  ld_1 =              &c.cpuid.leaf_0xd_1[0];
+
+And for CPUID(0xd) subleaves 2 to n, we have:
+
+    /*
+     * "Dynamic" access
+     */
+
+    const struct leaf_0xd_n *ld;
+    for (int i = XFEATURE_SSE; i < XFEATURE_MAX; i++) {
+	ld = cpuid_subleaf_n(c, 0xd, i);
+//                           |   |   └──────────┐
+//                           |   └─────────┐    |
+//                           *             *    *
+//      ld =                &c.cpuid.leaf_0xd_n[i];
+    }
+
+Similarly, for CPUID(0x4) call sites we have:
+
+    /*
+     * "Dynamic" CPUID(0x4) subleaf access, 0 -> n
+     */
+
+    const struct leaf_0x4_n *l4;
+    for (int i = 0; i < cpuid_subleaf_count(c, 0x4); i++) {
+
+	l4 = cpuid_subleaf_n(c, 0x4, i);
+//                           |   |   └──────────┐
+//                           |   └─────────┐    |
+//                           *             *    *
+//      l4 =                &c.cpuid.leaf_0xd_n[i];
+    }
+
+So the root-cause of all these "static" vs. "dynamic" distinctions was to
+catch call sites, at compile-time, when using the wrong CPUID storage
+output type relative to the requested leaf/subleaf.
+
+I'll get rid of this static/dynamic terminology and think of something
+better.
+
+(and an ACK for all the other snipped remarks.)
+
+Thanks!
+
+--
+Ahmed S. Darwish
+Linutronix GmbH
