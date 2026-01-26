@@ -1,44 +1,42 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A19332ECF
-	for <x86-cpuid@lists.linux.dev>; Mon, 26 Jan 2026 13:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04A4338586
+	for <x86-cpuid@lists.linux.dev>; Mon, 26 Jan 2026 13:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769432697; cv=none; b=q5lqgj1W3bOKA4IsffOaNMAb1N7Pz+MQVLKiKtcgyOT/fSbHDbXoAXZab+yqiDLMBf1Xxo/Dv+KnS3hA8dDygfVqNeKzfVVUYkaYZ5R6yIqykYJJB8Y/DgFlA3wj7SZal59fK4bzMBhknbF0jyvRPhGzeTkz8xdoNtCVJSyJ4Pg=
+	t=1769433258; cv=none; b=AIE6jxr2uKHzCGAJ7wS9iE1f3FrKB4LiTGshF2qINrQz2PdgZj0g2dT5ZPcZ6QT5f07S/5EMu0fOEbI3E6LUl/WRHduK4ac7FhlupebE4Z5xGGouXou3G2NBe4j6YmVKNF2JYr5eSCET+W74dgtVIdBNBSedRAt52zwUVZM2KLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769432697; c=relaxed/simple;
-	bh=FIohAIWbJoi+po/LYA4O3trTwCFTJH+gqpzLIi2G1E4=;
+	s=arc-20240116; t=1769433258; c=relaxed/simple;
+	bh=bdUAafXY3PHvlpajqBI4SdJYaC5G/mVLPRKPG0g6c4g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ukP9GvwJ9Odi0Pq0PvBwUOFj9fwZ7oT0jaCe9Tkv2CchK0e17Ol4O/IAVcA39HhgwP+ha4l49cg02mg4yT/pcDG6gIqSOkpkfhc1qIU43PNp/Ub/m4AgJ2tJUwNJ2o+TVCTjLdY97UB8LBvaLYfjzmMEOFTUzZG2aTRetUqe0YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=abekFbCS; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=LdqZRO24; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=qAKg2GOZN7CesiT+QlpDQ5l/n6jcnXWJ+PpMJHafJizhI2vruN96Fv/sjF996//X9ySBWeDCDfzz3i28wGnBlw5hEmEYYAeBw9QxjuRzUDqErBUqGYJ3rNYnLQZRWSaAr3kPgHekXv1yPrOdHn1hvT78bhnaggz+fU/xL2i5eX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=oeTP+8xK; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=h0RVX9HF; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="abekFbCS";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="LdqZRO24"
-Date: Mon, 26 Jan 2026 14:04:51 +0100
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="oeTP+8xK";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="h0RVX9HF"
+Date: Mon, 26 Jan 2026 14:14:14 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1769432694;
+	s=2020; t=1769433256;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=XjfZVf8/cR6lQ2qWTY3ygE7xzL2RWv2cAyNdDuwb9Zc=;
-	b=abekFbCSQp+afFAAbgwHBVyoZQHRrbPcluxpVghaxSEhFYg9WVVCgNnexGu0DBqtkHHtG8
-	BsnUWW9aROJsDV/g97rELpVGJ9O+sJZHtD7z57glB5CCjnll/qp/FHaZUdCUnLvmwDlTEf
-	PdTNWusGSLJ73WMYAbROw83qrkFcVjIXOmL3lKeyOiZX0Hb7rAd9kgVh9HWcg95fZ4R1AU
-	BOpZEuaPqQYNRI2NKqriyUzW82dFXL/3ku9KyoNnMWmCgcIbv8cidoL7XwxOds7neHAvgS
-	qNhzpJDrKAVgdqItg14eK9/WPnhWQhedSbEcmMkhiLHCYFcma1mkvBKu/3X/Fg==
+	bh=bcXxhJ5BEIGFwGCIzfTOX/Mm0FyU8IfiGEn5b0S4XuY=;
+	b=oeTP+8xKj4KNrH6zaGXWG1o/Wnoi4BvQ2LzOBAYXmz1sIc/xaMIQVRqDsJIEhFTsSXbihU
+	kMg0SenLV2Aj8IAbXIrNg96J+MtkKR/JDT2GtDWX1OpedKB2WL7URauF55A4rftDr+nKju
+	TOdiiMMDYKbdUm/6RfjHWi6lmWmuFnSzA8FDwLeVxfjqhQ4kVLV+VtBF5BssPC6egSlJdS
+	DUB3sFMiFdzAiq3E4Jr3R6DCKDQ5mEfAFwu/rUGj6OTC3OXgnl3orCw32mVxuZkJdhlw09
+	/U/91tUDM0KJmoVmeppgVlgsAA05gs/9f5QUymMjrmDH9qTOZKhAsbAxMLzdyQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1769432694;
+	s=2020e; t=1769433256;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=XjfZVf8/cR6lQ2qWTY3ygE7xzL2RWv2cAyNdDuwb9Zc=;
-	b=LdqZRO24Tqz65TV9beDWrqD8/+IvHLc+tJh4027NoZtoD/2Vkyfz/Jclte+tbuh+nef8Gk
-	N7G39ZX9gimtQiCw==
+	bh=bcXxhJ5BEIGFwGCIzfTOX/Mm0FyU8IfiGEn5b0S4XuY=;
+	b=h0RVX9HF4VD7xIMl/KpnMUAW8sVe8lkfVFcA5ifEeTw5D7rcJz0gzj2dCA59dso/0KVaK/
+	4VZajWWbYXJmaEAw==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 To: Borislav Petkov <bp@alien8.de>
 Cc: Ingo Molnar <mingo@redhat.com>,
@@ -52,130 +50,49 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 07/35] x86: Introduce a centralized CPUID data model
-Message-ID: <aXdmc6F5wLthVDEU@lx-t490>
+Subject: Re: [PATCH v5 08/35] x86/cpuid: Introduce a centralized CPUID parser
+Message-ID: <aXdopscvpd1_wnEx@lx-t490>
 References: <20250905121515.192792-1-darwi@linutronix.de>
- <20250905121515.192792-8-darwi@linutronix.de>
- <20260116203117.GAaWqgFYTv1bHLxKV_@fat_crate.local>
+ <20250905121515.192792-9-darwi@linutronix.de>
+ <20260121214559.GEaXFJF-EXVBvyMCtm@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260116203117.GAaWqgFYTv1bHLxKV_@fat_crate.local>
+In-Reply-To: <20260121214559.GEaXFJF-EXVBvyMCtm@fat_crate.local>
 
-Hi Boris,
-
-On Fri, 16 Jan 2026, Borislav Petkov wrote:
+On Wed, 21 Jan 2026, Borislav Petkov wrote:
 >
-> Btw, why are we calling them dynamic?
+> On Fri, Sep 05, 2025 at 02:14:48PM +0200, Ahmed S. Darwish wrote:
+> > diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+> > index 34a054181c4d..43582d7e167d 100644
+> > --- a/arch/x86/kernel/cpu/common.c
+> > +++ b/arch/x86/kernel/cpu/common.c
+> > @@ -1729,6 +1729,7 @@ static void __init early_identify_cpu(struct cpuinfo_x86 *c)
+> >
+> >  	/* cyrix could have cpuid enabled via c_identify()*/
+> >  	if (cpuid_feature()) {
+> > +		cpuid_parser_scan_cpu(c);
 >
-> This is confusing. Those leafs simply have multiple subleafs specified
-> in ECX.
+> Or simply
 >
-> Let's please not invent our own things here but simply stick to the
-> nomenclature in the vendor docs.
+> cpu_parse_cpuid()
 >
-> This is a very simple explanation IMO:
+> :-)
 >
-> "The information is accessed by (1) selecting the CPUID function setting
-> EAX and optionally ECX for some functions,"
->
->
-> and there's no talk about dynamic and whatnot.
->
-...
->
-> This is where the problem lies: you're calling static leaves those which
-> have one subleaf and dynamic those which have multiple.
->
-> But if one "static" leaf starts adding subleafs, the "static" one
-> becomes "dynamic". And that's confusing. Nothing dynamic about it. You
-> simply have CPUID leafs with 1 or more subleafs. And that should be the
-> nomenclature we use.
->
+> Plain and simple.
 
-Due to the differing leaf/subleaf output formats, at
-arch/x86/include/asm/cpuid/leaf_types.h we have the storage types:
+Haha, ACK.
 
-    struct leaf_0x4_n	{ ... };	// CPUID(0x4),  subleaves 0 -> n
+I'll just shuffle that to cpuid_parse_cpu(), to keep the now-standardized
+cpuid prefix for all CPUID APIs:
 
-    struct leaf_0xd_0	{ ... };	// CPUID(0xd),  subleaf 0
-    struct leaf_0xd_1	{ ... };	// CPUID(0xd),  subleaf 1
-    struct leaf_0xd_n	{ ... };	// CPUID(0xd),  subleaves 2 -> n
-
-    struct leaf_0x10_0	{ ... };	// CPUID(0x10), subleaf 0
-    struct leaf_0x10_n	{ ... };	// CPUID(0x10), subleaves 1 -> n
-
-where "n" is known at runtime.
-
-Then, for CPUID(0xd) subleaf 0 and 1 call sites we have:
-
-    /*
-     * "Static" access
-     */
-
-    const struct leaf_0xd_0 *ld_0;
-    const struct leaf_0xd_1 *ld_1;
-
-    ld_0 = cpuid_subleaf(c, 0xd, 0);
-//                       |   |   └────────┐
-//                       |   └─────────┐  |
-//                       *             *  *
-//  ld_0 =              &c.cpuid.leaf_0xd_0[0];
-
-    ld_1 = cpuid_subleaf(c, 0xd, 1);
-//                       |   |   └────────┐
-//                       |   └─────────┐  |
-//                       *             *  *
-//  ld_1 =              &c.cpuid.leaf_0xd_1[0];
-
-And for CPUID(0xd) subleaves 2 to n, we have:
-
-    /*
-     * "Dynamic" access
-     */
-
-    const struct leaf_0xd_n *ld;
-    for (int i = XFEATURE_SSE; i < XFEATURE_MAX; i++) {
-	ld = cpuid_subleaf_n(c, 0xd, i);
-//                           |   |   └──────────┐
-//                           |   └─────────┐    |
-//                           *             *    *
-//      ld =                &c.cpuid.leaf_0xd_n[i];
-    }
-
-Similarly, for CPUID(0x4) call sites we have:
-
-    /*
-     * "Dynamic" CPUID(0x4) subleaf access, 0 -> n
-     */
-
-    const struct leaf_0x4_n *l4;
-    for (int i = 0; i < cpuid_subleaf_count(c, 0x4); i++) {
-
-	l4 = cpuid_subleaf_n(c, 0x4, i);
-//                           |   |   └──────────┐
-//                           |   └─────────┐    |
-//                           *             *    *
-//      l4 =                &c.cpuid.leaf_0xd_n[i];
-    }
-
-So the root-cause of all these "static" vs. "dynamic" distinctions was to
-catch call sites, at compile-time, when using the wrong CPUID storage
-output type relative to the requested leaf/subleaf.
-
-I'll get rid of this static/dynamic terminology and think of something
-better.
-
-(and an ACK for all the other snipped remarks.)
+  https://lore.kernel.org/lkml/20250508150240.172915-1-darwi@linutronix.de
+  https://lore.kernel.org/lkml/20250515202143.34448-1-darwi@linutronix.de
 
 Thanks!
-
---
-Ahmed S. Darwish
-Linutronix GmbH
+Ahmed
