@@ -1,44 +1,53 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32507287263
-	for <x86-cpuid@lists.linux.dev>; Thu, 29 Jan 2026 17:16:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C833B7B7B
+	for <x86-cpuid@lists.linux.dev>; Wed,  4 Mar 2026 14:59:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769706970; cv=none; b=fh9lZCVVKRQkRJd81znau26seaTH18X//1KcNqMMmyP8psMmcBluSaiOvozI8CI6PNsT9bg+gVWv3plPrtVyD7j9MGbSb3PVI9BrvLsyva/GqSPPYhTvUDaxf2k5cRsoAgyco9GMJZ7tii7PUpM65lPfgx1vSGgCjZOVjauA4sA=
+	t=1772636352; cv=none; b=tDX+kfVGt/AR/5SheUr/TtDp8ng/Mezm+UyCWlritFXy5NSf2viJg857eCShwvPEkOb3ZwGy7ZUym0V7ek3fNlOJMNLj+E5YGrmpgG+4t1m8hkFizwDKJrhboldekqMkA7vZnLUHcqm4rsqOHPKmtq8PBiTaP8UWJVFHiVEU/YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769706970; c=relaxed/simple;
-	bh=O3acQOB10H+ccAZkd5nS2GKf2XGVJKAJLYd1KGeshwI=;
+	s=arc-20240116; t=1772636352; c=relaxed/simple;
+	bh=Mu5PIqxnTAmW/dLgRZx164CcFgRZp6eV+r8aG0ZpIsc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RJtghWleDEYWgaQdeGtoXNNGb8iTkCbzSYfanjQjAnkDE1hjavzEwRbEgzBsYXSyJ/PAuknaI3LjuPyj8VLjdVYtT/IVh9l10k3WUtoaMH8qhK5WVCEGT8kJGgq2uFYV/mdgfi9zI2BvH4c5X3lWblQmPEy6QMwfCo36cMUxAhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=cZttp0Ok; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=mB88WkRQ; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=kemBh95QkvLsW6Vrq3l8vf0VOPfXsmMzl3dCXetkfpqzW6qvyviKj//Ol0NafYfEGKx7asc0qlLMhU5YMkCK4ysf/xIWblGk10fs/cuPfFNNQBtCafPPBgMzf5/uNB394ftLeaDTY89HdAvkNojDdn8mWKY5jA7zR7u2db1F1TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=JNfvrQof; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="cZttp0Ok";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="mB88WkRQ"
-Date: Thu, 29 Jan 2026 18:16:04 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1769706967;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=O3acQOB10H+ccAZkd5nS2GKf2XGVJKAJLYd1KGeshwI=;
-	b=cZttp0OkF3sC/sHIWyyAaHsO8pLJ0Lr+1eedhWxWEAFw2RbpiVX3hAzWCm6YNIPOEAj2Tk
-	5eD+5tMvl5tGWIn5nzBtJrNMJWjfrdZQ32XoTfDv16NxkFq6y3zjNpS4uOAIYT77hxrZyr
-	Owrof8b9ilOND7weyfMCMSZ6o6leCXinUU1PMBByl47pXHhDJ5q8gEHvLF1ah3MLg0QQtO
-	UwiqolJEAIM/Zw7Ithlm5fGJHHTQx9dZ3Z8t/ihm6y2iXRUXUmcucEzOCJKs6jO84Bmm/z
-	CsfkYnhLU6wG4NJC9rwjrsf5DaIvyArciGRRDgPWBTpxndeCnLbRf7h8zwKZng==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1769706967;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=O3acQOB10H+ccAZkd5nS2GKf2XGVJKAJLYd1KGeshwI=;
-	b=mB88WkRQi5AxHY+bav06FqIL/FdZw7e2TLekNEbdQNNK7WyOS+UINfrPewk+545Mph8n5R
-	knLHgMeyh6Rh5mBw==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Borislav Petkov <bp@alien8.de>
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="JNfvrQof"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 3206B40E00DE;
+	Wed,  4 Mar 2026 14:59:07 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id FImgFe2BXaeO; Wed,  4 Mar 2026 14:59:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1772636342; bh=WfRe2RIWfIybtxHl8v4WYbjFeZ+ENfjD3tSTCZw3PVY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JNfvrQofhRc4Dc7ao5zpAYmI5Pil7Dg/4stgvWb/yeCvH7yxQ7AmuBIkjtQduM6Gi
+	 shF9enKbLJRCXF0MPAfwuSPf2yoYLPFUGbshZgmaG6tWWd6LB6CJ8mL9Rvrev1TAes
+	 cZ3FtIBAvYkMwHuUOAqFxve1wwH/Sf8KHnZGG4ShTjlSlkyq0KgK21Vn3J+0IUvrGl
+	 r9TGHGsM2+jVvh0UCsDgBSPiewl405+dN0lze87JhLMiulJCriJ6vo1JcW1jUPgQFk
+	 8CXfIB0H7QfxGjDZPO419WH/ONLL7Qv1Cub09vWIGsJw0+bpToUr4zeLeKT8rILHCp
+	 LeZL15zdNMILMl9HR2gLvkcQU+479USzBjBJnNCfjcKa5NDTl7NdGPDbEp+0dUeoGs
+	 z9rJTy2c30l0jIm1LPR+8kQnBzfb49JXFimrO6HOSBRRAgOQjUsFOsdC4QfldCFIMg
+	 uWyUz+QIleLN40GBC9yv68g8JzUW33sCU74dicVJ6CZH2CHaoxKuXB0MwH23c9U/vW
+	 xxFaedL85bvsL79edtao/YFtdRONz1M1P7ROnnQuZgOSsI98ws9feW9P0QXPZGwfZL
+	 vOM90YC/0BMqveezD5FJo5Xf4Vmpf+W4v9VFfgbAQ2ZQap8jLnmU9VONe21TEYxnGm
+	 TmEgZRI460M7zk6IMWOsVn/Q=
+Received: from zn.tnic (pd9530d5e.dip0.t-ipconnect.de [217.83.13.94])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id C79B840E0184;
+	Wed,  4 Mar 2026 14:58:47 +0000 (UTC)
+Date: Wed, 4 Mar 2026 15:58:40 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
 Cc: Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -50,35 +59,27 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 07/35] x86: Introduce a centralized CPUID data model
-Message-ID: <aXuV1IQYiMyn34ps@lx-t490>
+Subject: Re: [PATCH v5 09/35] x86/cpu: Use parsed CPUID(0x0)
+Message-ID: <20260304145840.GCaahIoOvMjf5_z03n@fat_crate.local>
 References: <20250905121515.192792-1-darwi@linutronix.de>
- <20250905121515.192792-8-darwi@linutronix.de>
- <20260116203117.GAaWqgFYTv1bHLxKV_@fat_crate.local>
- <aXdmc6F5wLthVDEU@lx-t490>
- <20260129160709.GSaXuFreAkumbetUYJ@fat_crate.local>
+ <20250905121515.192792-10-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260129160709.GSaXuFreAkumbetUYJ@fat_crate.local>
+In-Reply-To: <20250905121515.192792-10-darwi@linutronix.de>
 
-On Thu, 29 Jan 2026, Borislav Petkov wrote:
->
-> But this is not about static and dynamic - you simply have different
-> subleaf layouts. And I guess you don't have to call them anything. You
-> simply have different struct types: leaf_0xd_0, leaf_0xd_1, leaf_0xd_n,
-> ...
->
-> And that's fine.
->
-> The point being: we want our definitions to be as close to the hw spec
-> definition as possible. Not invent new things. Just use what the SDM
-> says and that's it.
->
+On Fri, Sep 05, 2025 at 02:14:49PM +0200, Ahmed S. Darwish wrote:
+> Use parsed CPUID(0x0) access instead of a direct CPUID query.
 
-ACK.
+s/access //.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
