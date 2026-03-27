@@ -1,53 +1,53 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E10B37FF46;
-	Fri, 27 Mar 2026 20:36:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073C9391504;
+	Fri, 27 Mar 2026 20:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774643785; cv=none; b=TuYy+Tu+ynWFVL9CgTstuAT4wyj67+S137BwR0tPM1CXzncu1v3qfaORnOSU9FSPMF0oI03CHCnhjKewRfxRnb8MvdPU3Zps6Ps3kbuFCvGBtgHzf1FdX4MEfs+3c8O+dCftsJtu3AXHd84xu03gvsLvy7e25yWmOAdJCyrHlyg=
+	t=1774645143; cv=none; b=nyD/9PeIivPaholbndwfL4ISm46X4o331EAKzKLZ/rGHynPRcmtkBfg8+JWF8ciXjAyK3zNIkOCDIUf0Cumj1gmDFCpucWIq50/ZkOn1hJUDUP2HZtp/VsffE6BflCp81q9V5yj+Qr6g5b+yW54MmVdVSTSUJ328IUyYJ3ZIHwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774643785; c=relaxed/simple;
-	bh=K+3x6PtritfWk9C1nQwD73Ya4/x0FXHq0EqkCD8gGFY=;
+	s=arc-20240116; t=1774645143; c=relaxed/simple;
+	bh=JJOOXqCVOd6mcldHJfUPNs4DwLXJnmnqs72a5d3LhDk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PAmvcbkresI5vPvaoXDA8GdZiGCuAQBDzupwe8/UW3ON16RsgzTD9RysmTlHsKc50kzgC3/hKDWZ6vr4QtxVwRWK5JfxhAQF1qkgJKqedbNfV/Oa1TL/jnE2ApfuiQMzYoUYJjeNafluggrFKVfiW/RSr4kPldctUz6m+eOLTxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bwpxDlR9; arc=none smtp.client-ip=192.198.163.15
+	 Content-Type:Content-Disposition:In-Reply-To; b=skI19pATK4+maV3KI6FqhcW5+o+leUp+J8kocnx0xnIEmC9O39MQaS5tH390FqIcOojPe5N7Op0hhIfcIH4LN2DkgaHIRv2LS3FyuVUwvhhYAotiXlOLhXASgKaOebLAI/VG5tw+UTiWbZZzCdHu/3d0bX4B+dLZaN1qfeQDgSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Y4tZQns7; arc=none smtp.client-ip=198.175.65.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bwpxDlR9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Y4tZQns7"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774643783; x=1806179783;
+  t=1774645142; x=1806181142;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=K+3x6PtritfWk9C1nQwD73Ya4/x0FXHq0EqkCD8gGFY=;
-  b=bwpxDlR9YMcSmsqGmgmUt2npDtVxrGI2rYYKftzAkivpAHbKlCu2WOHC
-   duNrK4Jj9n1CwOuzCFePxcDN864fZEZccjPwx02/hZCoONF54tUeuIFR8
-   nIfja1qblNXnZp2MyN4bR0nBd3CkyWWNqF4EEbCjqRXttPnypGBQ8p2x9
-   ytYixxZjogJ5xN+nIv0ALXfM/OAClQao18IYN1CeqNP6wUhnmxzHdi6cF
-   RA41rR3DZVQrYGfb4HLDSQFXro7SrTGvNjIXuo5M/9EOf1Kzy06bnXGwI
-   kVt4FyHlzU3hXiK+tFebspnji3JwTK1EpoTCRMwNBfvx5s+wPjBYNPGoy
-   Q==;
-X-CSE-ConnectionGUID: Z4WDEqmJT0CU/ubVYF+y3w==
-X-CSE-MsgGUID: Lf1i62LJRgGZkoVFyO4iBQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11742"; a="75837767"
+  bh=JJOOXqCVOd6mcldHJfUPNs4DwLXJnmnqs72a5d3LhDk=;
+  b=Y4tZQns7qHUde46XClqJQbgcNaLCCHLPrNZEe9JIGQGw6kxD5dVmYSj9
+   EBFs3E4CRFBYDVKnIAE6NGTt6k327Lb6cCY0u9B/hl6nMJzRssWDY2mdv
+   p4JiK8hkVQ6otgSsTjGww0l2LSq9o06p1q6oejvG8oDuocL+X5RDRF6sZ
+   eklDBlmJrJBsAbMn20EcYLNeQfBKfdp+AkSDgucWJZlV3/asW7obPpKET
+   ssCtorbGP/Mw4g/TgqyLNz2hWvdSQvqS4LVlOCi/RFomrn568NJq/6kby
+   0dSAXO/TWFkPOxQ/ay8CRmj5PB++uQC6JNtjNaoo0uoMx6bW9BGdKLUuN
+   g==;
+X-CSE-ConnectionGUID: wIWG8HBfTReJl9g8Z0pkgw==
+X-CSE-MsgGUID: su8AC+HST+WwuzMf9zEKWA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11742"; a="79332724"
 X-IronPort-AV: E=Sophos;i="6.23,144,1770624000"; 
-   d="scan'208";a="75837767"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2026 13:36:23 -0700
-X-CSE-ConnectionGUID: 5h9g+1yxSHCGjuLUf+1o7w==
-X-CSE-MsgGUID: /t6mi/JvTl6RnRPEiOcDLA==
+   d="scan'208";a="79332724"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2026 13:59:01 -0700
+X-CSE-ConnectionGUID: gLMdbSD2RymdAO6zRaqdPQ==
+X-CSE-MsgGUID: 4ZUXigKaR5uaNyN9fsTYXg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,144,1770624000"; 
-   d="scan'208";a="222544307"
-Received: from lkp-server01.sh.intel.com (HELO 3905d212be1b) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 27 Mar 2026 13:36:19 -0700
-Received: from kbuild by 3905d212be1b with local (Exim 4.98.2)
+   d="scan'208";a="227024194"
+Received: from igk-lkp-server01.igk.intel.com (HELO 9958d990ccf2) ([10.211.93.152])
+  by fmviesa004.fm.intel.com with ESMTP; 27 Mar 2026 13:58:56 -0700
+Received: from kbuild by 9958d990ccf2 with local (Exim 4.98.2)
 	(envelope-from <lkp@intel.com>)
-	id 1w6Dui-00000000Air-0iAE;
-	Fri, 27 Mar 2026 20:36:16 +0000
-Date: Sat, 28 Mar 2026 04:35:55 +0800
+	id 1w6EGc-000000007Y9-1aXL;
+	Fri, 27 Mar 2026 20:58:54 +0000
+Date: Fri, 27 Mar 2026 21:58:14 +0100
 From: kernel test robot <lkp@intel.com>
 To: "Ahmed S. Darwish" <darwi@linutronix.de>,
 	Borislav Petkov <bp@alien8.de>,
@@ -66,7 +66,7 @@ Cc: oe-kbuild-all@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
 Subject: Re: [PATCH v6 86/90] x86/cpu/transmeta: Remove x86_capability[]
  CPUID initialization
-Message-ID: <202603280449.C5WZiJry-lkp@intel.com>
+Message-ID: <202603272110.n460HyzQ-lkp@intel.com>
 References: <20260327021645.555257-87-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
@@ -88,14 +88,14 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Ahmed-S-Darwish/ASoC-Inte
 base:   c369299895a591d96745d6492d4888259b004a9e
 patch link:    https://lore.kernel.org/r/20260327021645.555257-87-darwi%40linutronix.de
 patch subject: [PATCH v6 86/90] x86/cpu/transmeta: Remove x86_capability[] CPUID initialization
-config: i386-buildonly-randconfig-006-20260328 (https://download.01.org/0day-ci/archive/20260328/202603280449.C5WZiJry-lkp@intel.com/config)
+config: i386-allnoconfig-bpf (https://download.01.org/0day-ci/archive/20260327/202603272110.n460HyzQ-lkp@intel.com/config)
 compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260328/202603280449.C5WZiJry-lkp@intel.com/reproduce)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260327/202603272110.n460HyzQ-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603280449.C5WZiJry-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603272110.n460HyzQ-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
