@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4E435F616
-	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9620B33689E
+	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774578121; cv=none; b=jofp7bh/+IWs9imtBTUgg1SebdnKmqSkBqC+VFXIZRdSIE7y9Kgt+8iRbKlOvVI+iYxboqr0Yo8Ec+wIYtKJwlTcLgn43faSgPtT1W0AIQgLym6ht63KSRQIkYlIDjtwAfBVq5SuYz2gE2t/tfHP1qfpLgyVjm8jiTZ8NjCPYsc=
+	t=1774578125; cv=none; b=br/uHPQv/I+dA5Fm75VPf1kAEyP7rqVFSEa1tt+eqznHk1l+PSCQmrvN4LfxHO0bjdvMr6dE/l4qc0lW4HNSUt5r6y5rRPFGCnO7sRlMy+vBV8Fh4f+ppjxzrKi3mrEtChB2uj+eA3s1X1iUuuPDlDVFWiDpyMhMmqjYLkDKkXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774578121; c=relaxed/simple;
-	bh=s1f3pyf+/i5IW706fn6yTdIIunq0yuSWr/ay+LNfuFo=;
+	s=arc-20240116; t=1774578125; c=relaxed/simple;
+	bh=jM6IyPtqSl0Z/qb+GWetwbBK0Q5qGgMBAsPTAYXFv64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhK1r577YY4WeB6QIhXoaQ6wsPxs5PSTScp7PQzeLINnOv5K3w6DN4HDMJONg+2QChDb/vLY9Ds93aobkxG2yGPfFGAMQWm6lXs3oiVP/+vFShrDdUYIN/+KveWKasDAGW/REb+HiRBN7JkH+D3gT9nnX40kFBydB/mgzjYKCYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Q69I9Vl4; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=MEvB2xdi; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=pjeFybss58GJzwzdAkqeRVdXqr5xRGMiL5VF5irwMCWxAvWO2oqdKZFsR8RcoGqsL/boV6sM610zf5AkVLTmRicL9bNd2MCfpvFh6Cd9LLtKJ5vZjQOJGmNKn7ETIlrJaphUE7hzE3OZ8T5PLJO+x2X06Qk3IWhCUUNRzAqQDBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=W4KS8TML; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=6m7ZH0Q4; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Q69I9Vl4";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="MEvB2xdi"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="W4KS8TML";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="6m7ZH0Q4"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774578119;
+	s=2020; t=1774578122;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B1/dj0aiJxPrVtjeZ/PwDKekOoP3+cq3AouSDZ8vkV4=;
-	b=Q69I9Vl4ufRub2ZemEWv35dy9KTO4JDnTjicg9NqfJjzYf7igbLdNDfm3A6sK7YtOwbfnK
-	rzVipmjv0ntjIqy+5J+pH3qI/ecrT3bpOjuhInXQ7a+d1P1CM4tG/PrJ7LpR2rVo0BZigP
-	qkq8cvEOPJUnfN7xg25K3r4iorgIKCsJZ0NWwWYv1KFd89QRmJf0Hs335zT+FaGyJPjTnU
-	CouR21YF2W/wVYBZlYjkebIWCO+J16Uhc4WUDzg5iOWQTay1U9jrfok6297rsmLZ9C/Raq
-	5BZSFmTgsIPGSQS8Q9h5hzE/gHBn78ebCKHPTAyBX/YYx6+P+6aLREMQu17jHQ==
+	bh=3AvHztOH2N1gnVwaEaY4sQY0Ui0R/lMvPlZuC+Cycvk=;
+	b=W4KS8TMLqUtaebF21Y9fVNf33/AkeMxalcKSGBXoq2OzEnH+LrMOaqrKTjQR2S057hz3bG
+	LDcyyoANWl7uZ1AGDUJsvRNKsQYigNwjLUd/eOjX9vptIPCov2M7EO/bocGp8TO8KU2kVg
+	RpVs5oS8nQFjCf5gIGRKy9ClJwXmy4zq2ii1AwuQiJOTgAMkEvHvn80znEf1XmvdU3BxD4
+	6Rj89pXeEI996xujY56wFd8iCNz2W5CDtlXCrwtzE6wCgGAthJF9UQcf52DafrEeTYtIAq
+	H47MwT7gSJ+YGgQWbckgHwg650XjNTnbkdiB370HkyEh6xqctCaJHdXRNaS7nw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774578119;
+	s=2020e; t=1774578122;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B1/dj0aiJxPrVtjeZ/PwDKekOoP3+cq3AouSDZ8vkV4=;
-	b=MEvB2xdiYu4THBCPpBZ+LNmEpKg8HjNwz0Bf5t8k7xp05epRUWh+5P1IP85pXkZI5CU95Z
-	vm6cK0Go1z5IGVBg==
+	bh=3AvHztOH2N1gnVwaEaY4sQY0Ui0R/lMvPlZuC+Cycvk=;
+	b=6m7ZH0Q4kRzOXjJVoI2VcOlr6HTxnkYnQGAw2czwojtzBDXDbv3EzXy0BRfOOTS7tlQ+md
+	geODGQSqqdYJVRDQ==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -55,9 +55,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v6 76/90] x86/microcode: Allocate cpuinfo_x86 snapshots on the heap
-Date: Fri, 27 Mar 2026 03:16:30 +0100
-Message-ID: <20260327021645.555257-77-darwi@linutronix.de>
+Subject: [PATCH v6 77/90] x86/cpuid: Parse leaves backing X86_FEATURE words
+Date: Fri, 27 Mar 2026 03:16:31 +0100
+Message-ID: <20260327021645.555257-78-darwi@linutronix.de>
 In-Reply-To: <20260327021645.555257-1-darwi@linutronix.de>
 References: <20260327021645.555257-1-darwi@linutronix.de>
 Precedence: bulk
@@ -68,98 +68,130 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-load_late_stop_cpus() snapshots CPU capabilities before a late microcode
-update, while microcode_check() snapshots the capabilities again after the
-update.
+Add CPUID parser support for:
 
-Both functions allocate their struct cpuinfo_x86 snapshots on the stack.
+    CPUID(0x6)
+    CPUID(0x7)
+    CPUID(0x7).1
+    CPUID(0xd).1
+    CPUID(0x80000001)
+    CPUID(0x8000000a)
+    CPUID(0x8000001f)
+    CPUID(0x80000021)
 
-Meanwhile, cpuinfo_x86 contains the parsed CPUID tables where more leaves
-will be added; resulting in "stack frame length exceeded" warnings.
+where one or more of these leaves output registers back the X86_FEATURE
+words at <asm/cpufeatures.h>.
 
-Allocate the before/after cpuinfo_x86 snapshots on the heap.
+Handle CPUID(0x7).1 via a custom reader.  Its availability depends on the
+subleaf count reported by CPUID(0x7).0, so check that first.
 
-For load_late_stop_cpus(), do the memory allocation before the microcode
-staging step.  This leaves no leaked or stale microcode state in -ENOMEM
-failure modes.
+Do not use a custom reader for CPUID(0xd).1.  Per the Intel SDM regarding
+CPUID(0xd)'s subleaf availability: "sub-leafs 0 and 1 are always valid".
+
+Note, this prepares for later changes that will route X86_FEATURE queries
+from cpuinfo_x86::x86_capability[] to the system's CPUID tables.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/common.c         | 11 ++++++++---
- arch/x86/kernel/cpu/microcode/core.c |  9 ++++++---
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/cpuid/types.h |  8 ++++++++
+ arch/x86/kernel/cpu/cpuid_parser.c | 13 +++++++++++++
+ arch/x86/kernel/cpu/cpuid_parser.h |  8 ++++++++
+ 3 files changed, 29 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 2beb53f6bed7..ece5a59124f5 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2543,15 +2543,20 @@ void store_cpu_caps(struct cpuinfo_x86 *curr_info)
-  */
- void microcode_check(struct cpuinfo_x86 *prev_info)
- {
--	struct cpuinfo_x86 curr_info;
-+	struct cpuinfo_x86 *curr_info __free(kfree) = kmalloc_obj(*curr_info);
- 
- 	perf_check_microcode();
- 
- 	amd_check_microcode();
- 
--	store_cpu_caps(&curr_info);
-+	if (!curr_info) {
-+		pr_warn("x86/CPU: Microcode update CPU capability changes check was skipped (ENOMEM)\n");
-+		return;
-+	}
-+
-+	store_cpu_caps(curr_info);
- 
--	if (!memcmp(&prev_info->x86_capability, &curr_info.x86_capability,
-+	if (!memcmp(&prev_info->x86_capability, &curr_info->x86_capability,
- 		    sizeof(prev_info->x86_capability)))
- 		return;
- 
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 56d791aeac4e..7a00671540bc 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -588,16 +588,19 @@ static int load_cpus_stopped(void *unused)
- 
- static int load_late_stop_cpus(bool is_safe)
- {
-+	struct cpuinfo_x86 *prev_info __free(kfree) = kmalloc_obj(*prev_info);
- 	unsigned int cpu, updated = 0, failed = 0, timedout = 0, siblings = 0;
- 	unsigned int nr_offl, offline = 0;
- 	int old_rev = boot_cpu_data.microcode;
--	struct cpuinfo_x86 prev_info;
- 
- 	if (!is_safe) {
- 		pr_err("Late microcode loading without minimal revision check.\n");
- 		pr_err("You should switch to early loading, if possible.\n");
- 	}
- 
-+	if (!prev_info)
-+		return -ENOMEM;
-+
- 	/*
- 	 * Pre-load the microcode image into a staging device. This
- 	 * process is preemptible and does not require stopping CPUs.
-@@ -617,7 +620,7 @@ static int load_late_stop_cpus(bool is_safe)
- 	 * Take a snapshot before the microcode update in order to compare and
- 	 * check whether any bits changed after an update.
- 	 */
--	store_cpu_caps(&prev_info);
-+	store_cpu_caps(prev_info);
- 
- 	if (microcode_ops->use_nmi)
- 		static_branch_enable_cpuslocked(&microcode_nmi_handler_enable);
-@@ -666,7 +669,7 @@ static int load_late_stop_cpus(bool is_safe)
- 		       num_online_cpus() - (updated + siblings));
- 	}
- 	pr_info("revision: 0x%x -> 0x%x\n", old_rev, boot_cpu_data.microcode);
--	microcode_check(&prev_info);
-+	microcode_check(prev_info);
- 
- 	return updated + siblings == num_online_cpus() ? 0 : -EIO;
+diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
+index 6180acd35f59..204d6277c8cd 100644
+--- a/arch/x86/include/asm/cpuid/types.h
++++ b/arch/x86/include/asm/cpuid/types.h
+@@ -212,7 +212,11 @@ struct cpuid_leaves {
+ 	CPUID_LEAF   (	0x1,		0  );
+ 	CPUID_LEAF   (  0x2,		0  );
+ 	CPUID_LEAF_N (  0x4,		8  );
++	CPUID_LEAF   (  0x6,		0  );
++	CPUID_LEAF   (  0x7,		0  );
++	CPUID_LEAF   (  0x7,		1  );
+ 	CPUID_LEAF   (  0xa,		0  );
++	CPUID_LEAF   (  0xd,		1  );
+ 	CPUID_LEAF   (  0x1c,		0  );
+ 	CPUID_LEAF   (	0x16,		0  );
+ 	CPUID_LEAF   (  0x23,		0  );
+@@ -222,6 +226,7 @@ struct cpuid_leaves {
+ 	CPUID_LEAF   (  0x23,		4  );
+ 	CPUID_LEAF   (  0x23,		5  );
+ 	CPUID_LEAF   (  0x80000000,	0  );
++	CPUID_LEAF   (  0x80000001,	0  );
+ 	CPUID_LEAF   (  0x80000002,	0  );
+ 	CPUID_LEAF   (  0x80000003,	0  );
+ 	CPUID_LEAF   (  0x80000004,	0  );
+@@ -229,7 +234,10 @@ struct cpuid_leaves {
+ 	CPUID_LEAF   (  0x80000006,	0  );
+ 	CPUID_LEAF   (  0x80000007,	0  );
+ 	CPUID_LEAF   (  0x80000008,	0  );
++	CPUID_LEAF   (  0x8000000a,	0  );
+ 	CPUID_LEAF_N (  0x8000001d,	8  );
++	CPUID_LEAF   (  0x8000001f,	0  );
++	CPUID_LEAF   (  0x80000021,	0  );
+ 	CPUID_LEAF   (  0x80000022,	0  );
+ 	CPUID_LEAF   (  0x80860000,	0  );
+ 	CPUID_LEAF   (  0x80860001,	0  );
+diff --git a/arch/x86/kernel/cpu/cpuid_parser.c b/arch/x86/kernel/cpu/cpuid_parser.c
+index de11fb4116f2..b3bf4141db15 100644
+--- a/arch/x86/kernel/cpu/cpuid_parser.c
++++ b/arch/x86/kernel/cpu/cpuid_parser.c
+@@ -99,6 +99,19 @@ cpuid_read_0x2(const struct cpuid_parse_entry *e, const struct cpuid_read_output
+ 	output->info->nr_entries = 1;
  }
+ 
++static void
++cpuid_read_0x7_1(const struct cpuid_parse_entry *e, const struct cpuid_read_output *output)
++{
++	struct leaf_0x7_0 l7;
++
++	cpuid_read_subleaf(0x7, 0, &l7);
++	if (l7.leaf7_n_subleaves == 0)
++		return;
++
++	cpuid_read_subleaf(e->leaf, e->subleaf, output->regs);
++	output->info->nr_entries = 1;
++}
++
+ /*
+  * Shared read function for Intel CPUID(0x4) and AMD CPUID(0x8000001d), as both have
+  * the same subleaf enumeration logic and register output format.
+diff --git a/arch/x86/kernel/cpu/cpuid_parser.h b/arch/x86/kernel/cpu/cpuid_parser.h
+index c81f76c1c077..f6a620a03312 100644
+--- a/arch/x86/kernel/cpu/cpuid_parser.h
++++ b/arch/x86/kernel/cpu/cpuid_parser.h
+@@ -146,7 +146,11 @@ struct cpuid_parse_entry {
+ 	/*			Leaf		Subleaf		Reader function */		\
+ 	CPUID_PARSE_ENTRY   (	0x2,		0,		0x2			),	\
+ 	CPUID_PARSE_ENTRY_N (	0x4,				deterministic_cache	),	\
++	CPUID_PARSE_ENTRY   (	0x6,		0,		generic			),	\
++	CPUID_PARSE_ENTRY   (	0x7,		0,		generic			),	\
++	CPUID_PARSE_ENTRY   (	0x7,		1,		0x7_1			),	\
+ 	CPUID_PARSE_ENTRY   (	0xa,		0,		generic			),	\
++	CPUID_PARSE_ENTRY   (	0xd,		1,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x1c,		0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x16,		0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x23,		0,		generic			),	\
+@@ -156,6 +160,7 @@ struct cpuid_parse_entry {
+ 	CPUID_PARSE_ENTRY   (	0x23,		4,		0x23_4			),	\
+ 	CPUID_PARSE_ENTRY   (	0x23,		5,		0x23_5			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000000,	0,		0x80000000		),	\
++	CPUID_PARSE_ENTRY   (	0x80000001,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000002,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000003,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000004,	0,		generic			),	\
+@@ -163,7 +168,10 @@ struct cpuid_parse_entry {
+ 	CPUID_PARSE_ENTRY   (	0x80000006,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000007,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000008,	0,		generic			),	\
++	CPUID_PARSE_ENTRY   (	0x8000000a,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY_N (	0x8000001d,			deterministic_cache	),	\
++	CPUID_PARSE_ENTRY   (	0x8000001f,	0,		generic			),	\
++	CPUID_PARSE_ENTRY   (	0x80000021,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000022,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80860000,	0,		0x80860000		),	\
+ 	CPUID_PARSE_ENTRY   (	0x80860001,	0,		generic			),	\
 -- 
 2.53.0
 
