@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5C53559E8
-	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D140A33F384
+	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774577938; cv=none; b=tPccLd6oWlmj8stouwa7HgJyHJjtBqZz6NT+cBz78Ix5B9tUlBluIfm8PfAtGLuKRhSEfSqKlgqqtfLuGL/xfWD3wCyZ3Cv6twcClsvdv308a4uXQ5VetDdQELMI7SA5sZARjsdV9Zi8NV0xyLc9vEPNt/LMaEyn/2952ToN7zM=
+	t=1774577943; cv=none; b=YMjnb5SOsPiWM5XK7YMrEMo5+Pairm+ntqorriQgWfM+ADFGFkR3dqun9+MEjSKzVGnxsbH3b0yB2J7UuW9UNVM9hfBDuq0O2wqGillWdGybb7SSQJ+fns/MGqTcRKp4QQYC0R63AaRRQ8IVa7hibgVdpMs6lbuXBlC/K28cr7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774577938; c=relaxed/simple;
-	bh=YXIZRbiNEUcf/NLpSpEEoo7dx4ESB3wWm393N+Ot7ro=;
+	s=arc-20240116; t=1774577943; c=relaxed/simple;
+	bh=jANKbqzBtZEK8LBdgBr9e53YS7Dh3TDy93qhGqKX2x0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8Kx2Nqbfh+wDj5Tx1qBIDVwtWNv8IgoHUG/HhxF1Tv5pCAX7vhTiKFe3w0PX9wQyo8CQRi7kEkKpyg4HP6UbM8+BcfJzJfC7/e2MJQkru4xaYN8xY3nxBS0xnjqPFCeF720WvTTSGFbbjVKjNS4O3kj4YkFEeqdlxOirTdym0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=FxXNn+yc; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=YPhRPxq+; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=sxvYAlPA/g7FEj4tHU8H3lut/KCLgWUmibYYmup3tmu780lH5qWF44dpl765lwM+HJYCUjmZFx3rDF4gCTbZYkGi53mYdZzaRctZAa5iDCSqLnpNp53dT4l+8/RLj3AgX7HbDnJbuPHhe4FLzMzc0N3DLg4oG09gAltAGabswbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=06dDE2LI; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=/3cNmJ9G; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="FxXNn+yc";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="YPhRPxq+"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="06dDE2LI";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="/3cNmJ9G"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774577935;
+	s=2020; t=1774577938;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B4eBStrXtvEmpr4VJLjsismDwKU/t5nMSjoRqRmqOzQ=;
-	b=FxXNn+ycrlEQVOiRNtmv+WPfC1ELUGs+e4pDutCC0/zeZdpT6KwCEGzCD83uw5pOH4CXme
-	gaDFWXSf4cFXAquB8+VAJNEvpdT3kD1t1G+rylhTzXWxy+fK9/YnkhSdx3u9ZhHRfErwMs
-	F2tqFiUNOgJXZYC8uyapA5tOLFiA8GI/WvsX8GrpJYd9RKz38cNKb883sYopMYMoOHKDKS
-	Z2gz7QX2XjkGuI74BLUSfNuSqc66+Z2RGlKsrqDAYuuSr1lZJpEz1Mk0SLf5L4rptAOjt9
-	ryoDT2Art8Zbp9IFhE9050Y4c8e1BtY8ep8csQWe1adzOyh4zdRTD4Wkl+THsA==
+	bh=k6RexfKn63PVkV40YkO5QUPdJNYkFm5PzRZKkuBaxtE=;
+	b=06dDE2LINebR3R871GYXU9Yoc35wmmPAdyWXO04zbCXL3pqOiigRM+jYoJhFgnmSuDyRFe
+	4RHf3iRX5fA3zcuyEaRtvg8AMYE+oOZ5600x/+qrm3/7JkfvmlJUy3x1+O9lQu4dUX4aUC
+	xY3cqkkX4Nu/DjUwzVmX3GBy4TaDagaSBRFBUUomnn63S3xmt2UzSCAPFKBr7+2/EK+y3g
+	sn/w14jjZ5Z6xAoLNUFAw0E/0e8uLkH2E4gPjHJ0iFEqo4J/4ReMYffr/ZOMwTGtAjVkot
+	R6BhPuoutNFIEHvDrsEfKntHUzNqyyMSkRhs9KtEBNEEKQSWbz/WSBtVLJcj6Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774577935;
+	s=2020e; t=1774577938;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B4eBStrXtvEmpr4VJLjsismDwKU/t5nMSjoRqRmqOzQ=;
-	b=YPhRPxq+JLQZnRuUdoUPQSMOUI/W1UwoyCeCaJrOkJU5dOINUk/oDCuVy2MjnLBhgDscXC
-	MxKh4r+6+T1rG2AQ==
+	bh=k6RexfKn63PVkV40YkO5QUPdJNYkFm5PzRZKkuBaxtE=;
+	b=/3cNmJ9G1FPF1OlirO3vxQmUPL2+jumGfbsWxbZEMQIFGS1uRDUDFNDljymvVzrXmLjsw4
+	MNoPyut9ReSG35Cg==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -55,9 +55,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v6 27/90] x86/cpu: transmeta: Refactor CPU information printing
-Date: Fri, 27 Mar 2026 03:15:41 +0100
-Message-ID: <20260327021645.555257-28-darwi@linutronix.de>
+Subject: [PATCH v6 28/90] x86/cpu: centaur: Use parsed CPUID(0xc0000001)
+Date: Fri, 27 Mar 2026 03:15:42 +0100
+Message-ID: <20260327021645.555257-29-darwi@linutronix.de>
 In-Reply-To: <20260327021645.555257-1-darwi@linutronix.de>
 References: <20260327021645.555257-1-darwi@linutronix.de>
 Precedence: bulk
@@ -68,74 +68,68 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Now that the Transmeta init code has been converted to the CPUID API,
-refactor it into two separate functions for readability.
+Use parsed CPUID(0xc0000001).
 
-No functional change.
+Beside the CPUID parser centralization benefits, this allows using the
+auto-generated x86-cpuid-db data types, and their full C99 bitfields,
+instead of doing ugly bitwise operations on the CPUID output.
+
+Keep the x86_capability[] CPUID(0xc0000001).EDX assignment.  It will be
+removed once X86_FEATURE translation is integrated into the CPUID model.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/transmeta.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/centaur.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/transmeta.c b/arch/x86/kernel/cpu/transmeta.c
-index 4b77dc1a7d9e..991e11d5c28a 100644
---- a/arch/x86/kernel/cpu/transmeta.c
-+++ b/arch/x86/kernel/cpu/transmeta.c
-@@ -27,19 +27,10 @@ static bool is_legacy_revision(const struct leaf_0x80860001_0 *l1)
- 		 l1->cpu_rev_mask_major == 0 && l1->cpu_rev_mask_minor == 0);
- }
+diff --git a/arch/x86/kernel/cpu/centaur.c b/arch/x86/kernel/cpu/centaur.c
+index a97e38fa6a9f..5f09bce3aaa7 100644
+--- a/arch/x86/kernel/cpu/centaur.c
++++ b/arch/x86/kernel/cpu/centaur.c
+@@ -12,34 +12,27 @@
  
--static void init_transmeta(struct cpuinfo_x86 *c)
-+static void print_cpu_revision(struct cpuinfo_x86 *c)
+ #include "cpu.h"
+ 
+-#define ACE_PRESENT	(1 << 6)
+-#define ACE_ENABLED	(1 << 7)
+ #define ACE_FCR		(1 << 28)	/* MSR_VIA_FCR */
+-
+-#define RNG_PRESENT	(1 << 2)
+-#define RNG_ENABLED	(1 << 3)
+ #define RNG_ENABLE	(1 << 6)	/* MSR_VIA_RNG */
+ 
+ static void init_c3(struct cpuinfo_x86 *c)
  {
- 	const struct leaf_0x80860001_0 *l1 = cpuid_leaf(c, 0x80860001);
- 	const struct leaf_0x80860002_0 *l2 = cpuid_leaf(c, 0x80860002);
--	const struct leaf_0x80860003_0 *l3 = cpuid_leaf(c, 0x80860003);
--	const struct leaf_0x80860004_0 *l4 = cpuid_leaf(c, 0x80860004);
--	const struct leaf_0x80860005_0 *l5 = cpuid_leaf(c, 0x80860005);
--	const struct leaf_0x80860006_0 *l6 = cpuid_leaf(c, 0x80860006);
--	unsigned int cap_mask, uk;
+-	u32  lo, hi;
 -
--	early_init_transmeta(c);
--
--	cpu_detect_cache_sizes(c);
+-	/* Test for Centaur Extended Feature Flags presence */
+-	if (cpuid_eax(0xC0000000) >= 0xC0000001) {
+-		u32 tmp = cpuid_edx(0xC0000001);
++	const struct leaf_0xc0000001_0 *l1 = cpuid_leaf(c, 0xc0000001);
++	u32 lo, hi;
  
- 	if (l1 && is_legacy_revision(l1)) {
- 		pr_info("CPU: Processor revision %u.%u.%u.%u, %u MHz\n",
-@@ -59,6 +50,14 @@ static void init_transmeta(struct cpuinfo_x86 *c)
- 			l2->cms_rev_mask_1, l2->cms_rev_mask_2,
- 			l2->cms_rev_mask_3);
- 	}
-+}
-+
-+static void print_cpu_info_string(struct cpuinfo_x86 *c)
-+{
-+	const struct leaf_0x80860003_0 *l3 = cpuid_leaf(c, 0x80860003);
-+	const struct leaf_0x80860004_0 *l4 = cpuid_leaf(c, 0x80860004);
-+	const struct leaf_0x80860005_0 *l5 = cpuid_leaf(c, 0x80860005);
-+	const struct leaf_0x80860006_0 *l6 = cpuid_leaf(c, 0x80860006);
+-		/* enable ACE unit, if present and disabled */
+-		if ((tmp & (ACE_PRESENT | ACE_ENABLED)) == ACE_PRESENT) {
++	if (l1) {
++		/* Enable ACE unit, if present and disabled */
++		if (l1->ace && !l1->ace_en) {
+ 			rdmsr(MSR_VIA_FCR, lo, hi);
+-			lo |= ACE_FCR;		/* enable ACE unit */
++			lo |= ACE_FCR;
+ 			wrmsr(MSR_VIA_FCR, lo, hi);
+ 			pr_info("CPU: Enabled ACE h/w crypto\n");
+ 		}
  
- 	if (l3 && l4 && l5 && l6) {
- 		u32 info[] = {
-@@ -70,6 +69,17 @@ static void init_transmeta(struct cpuinfo_x86 *c)
- 		};
- 		pr_info("CPU: %s\n", (char *)info);
- 	}
-+}
-+
-+static void init_transmeta(struct cpuinfo_x86 *c)
-+{
-+	unsigned int cap_mask, uk;
-+
-+	early_init_transmeta(c);
-+	cpu_detect_cache_sizes(c);
-+
-+	print_cpu_revision(c);
-+	print_cpu_info_string(c);
- 
- 	/* Unhide possibly hidden capability flags */
- 	rdmsr(0x80860004, cap_mask, uk);
+-		/* enable RNG unit, if present and disabled */
+-		if ((tmp & (RNG_PRESENT | RNG_ENABLED)) == RNG_PRESENT) {
++		/* Enable RNG unit, if present and disabled */
++		if (l1->rng && !l1->rng_en) {
+ 			rdmsr(MSR_VIA_RNG, lo, hi);
+-			lo |= RNG_ENABLE;	/* enable RNG unit */
++			lo |= RNG_ENABLE;
+ 			wrmsr(MSR_VIA_RNG, lo, hi);
+ 			pr_info("CPU: Enabled h/w RNG\n");
+ 		}
 -- 
 2.53.0
 
