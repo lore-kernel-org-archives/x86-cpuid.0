@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DED137881D
-	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607673793A4
+	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774578078; cv=none; b=uamqt9TgymyQM1Yt3OaQ0lbswcc/66UwTJOGJeKbqvC6NxVM9f3fpQQb1HakuiIzIRruSCRNdndh41Azik69xjLqJm3nxr7cviZN+nMGTydWYjbvFY7NH6DINf9IxDX3IXsrJUXPDppVKql1utKTF7rt7dhd558zK+Sgm8xzQiU=
+	t=1774578080; cv=none; b=FtQBvW4EHglT/tqQCzMrxpalGbcDDQmgNCPRWybzSTzXNZUuq1Fgb/JXE7So/pIfy0jes++NkNwJH96KrWL+ichZlSjt5roDPARMT53TWlI9VvvTBJL0skbi/xdICkqODSz1BbyolyKNARPC4wGfA3YXK/jIIndDLJakO66/fww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774578078; c=relaxed/simple;
-	bh=ovhabgDaeLBh5tLODILOf2FcnOFvJ3VNWS+CYFg/nLA=;
+	s=arc-20240116; t=1774578080; c=relaxed/simple;
+	bh=8ndB3DIFPKBfBfZP2miEw/UAtOu/NCJBk3wQ78WJPxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5fJd2biCp2TZt8PYneJEeQwYPLJN1hJCsJwtMYfZnYvAiPEIJVmnEt0MGjrhXuqbSxSCzuD+Ij3+8a+Lcz6KVUr0O8BmCzNf7YmaTjnZH7sn/8gNSWIDavpIMFV7d1vLQAJXNCjCVKRZ+I7iv9lQ2pXybr8Z/JEbY0qz3Q+h0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=CHZJe229; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=JaqvGKQe; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=J+6QSKnCXnmEm1vqp9GV42FQ260w+Qc8mUj0uIFBIxkVLmB+4/7d5bdjAGVHfulyNI0/efNJ5Cz+H2TV00jg2e9OJ6FrQ65jIKsxQqPX8qgFh9mRIjeNU9f0gAYM9OU6tcg1QEyAQEKzj8xO8FrLIiYs0/EMEra1V5HPVBpf6g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=wnkfb0yW; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Tzeho6t0; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="CHZJe229";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="JaqvGKQe"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wnkfb0yW";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Tzeho6t0"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774578075;
+	s=2020; t=1774578078;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=K4GqYQ5Tw5CZMsMEp8f7ZB9CQ3ZDVkkEFMMlY4JZHt8=;
-	b=CHZJe229vHADz+AH22jgppKpeYMyPdI6zkcZunkv4WpqQlOGkAlqx/MimXscmR0ej8grdx
-	JR9z4H57Ud2ZmLqCgZ+l3kgAoYnaUHPYJYhdCTiCzRfikp6IggPQhrMwjADTPU6HPfUdbJ
-	4ExVF2mA7NNjMuKdEA/1oUEnLAstLVn647wrhclo3m8gOVmV3tJNe7pMVLX4toFN91Yh8g
-	LQRCBm6GKoyUOR18CHaBnH5lJa0z2wFOWcDiY4Z1JedXWvDB6n9cdQBX0wnkFhIfJSpQ3a
-	hd3QEQ6kAjCUdFP5ABx5jjcKolqKdSWeAhGJrv0nfFtCwv2vdBzQMxHimJfg2Q==
+	bh=Pr0cNu6rZmuw9gMObI8KBiaV8/2gOXHSOkaRxwPz7dM=;
+	b=wnkfb0yWx/AUKCELwUGwON8wPGi7Dzoye7W1qZGl2wtcWzzo5dg8BSM/TLAraj2d39rRIa
+	x0x33xI/mA0Igo8cd3G3tT6R6WYTGZUFI/QUAcxEr4OTbWh7jt5NOKKq8XM6/tvdhwAv7C
+	35GzQLOTnw43skUit5t1jJ7UmoQvDaC0Z4lXP7ob/+rt49LlsjrdWKEEjxTERpdO864FQU
+	aR8vAIje3kyjpgPVwtTOHb8ko4G06IqM9VhyU7EkvtcdH4jj4L7Z4iEQhMoty0drD61/wE
+	Z1I1zpuJB3goijxPwMVFFUDbDLysSpq6g67lZVQbk64Ke6w3askt2sSjc81nVg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774578075;
+	s=2020e; t=1774578078;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=K4GqYQ5Tw5CZMsMEp8f7ZB9CQ3ZDVkkEFMMlY4JZHt8=;
-	b=JaqvGKQeXFVZZEkXA6voQidC/Jj2NMDdlQfuj5OFGrS9u6NlTpKUZ44WwtPy0EUHOiko25
-	VhsAzIL/R/9Dx+Cg==
+	bh=Pr0cNu6rZmuw9gMObI8KBiaV8/2gOXHSOkaRxwPz7dM=;
+	b=Tzeho6t0rWIZDvjkavr9WK1DRJs0XNBdRz9GdkqHQ95njCJkxsZX3eVGuerMDOOcXhhiUP
+	SrJD7Ph6m8+N3rAw==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -55,9 +55,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v6 64/90] perf/x86/intel: Use parsed per-CPU CPUID(0x23)
-Date: Fri, 27 Mar 2026 03:16:18 +0100
-Message-ID: <20260327021645.555257-65-darwi@linutronix.de>
+Subject: [PATCH v6 65/90] perf/x86/intel: Remove custom CPUID(0x23) types
+Date: Fri, 27 Mar 2026 03:16:19 +0100
+Message-ID: <20260327021645.555257-66-darwi@linutronix.de>
 In-Reply-To: <20260327021645.555257-1-darwi@linutronix.de>
 References: <20260327021645.555257-1-darwi@linutronix.de>
 Precedence: bulk
@@ -68,120 +68,68 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For Intel PMU capabilities, use parsed CPUID(0x23) instead of direct CPUID
-queries and custom perf CPUID(0x23) data types.
+All CPUID(0x23) call sites have been converted to the CPUID API and its
+auto generated x86-cpuid-db data types.
 
-Replace manual subleaves availability checks with checking whether the
-CPUID APIs return NULL.  This is sufficient since the CPUID parser
-validates all the leaves and subleaves beforehand.
+Remove the custom CPUID(0x23) types from perf.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/events/intel/core.c | 62 +++++++++++++++++-------------------
- 1 file changed, 30 insertions(+), 32 deletions(-)
+ arch/x86/include/asm/perf_event.h | 38 +------------------------------
+ 1 file changed, 1 insertion(+), 37 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 20dece48b994..6eee7fbcef9e 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -5891,51 +5891,49 @@ static inline void __intel_update_large_pebs_flags(struct pmu *pmu)
+diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+index c57e6c9231aa..5aa07710af12 100644
+--- a/arch/x86/include/asm/perf_event.h
++++ b/arch/x86/include/asm/perf_event.h
+@@ -157,46 +157,10 @@
+ /* Steal the highest bit of pebs_data_cfg for SW usage */
+ #define PEBS_UPDATE_DS_SW	BIT_ULL(63)
  
- #define counter_mask(_gp, _fixed) ((_gp) | ((u64)(_fixed) << INTEL_PMC_IDX_FIXED))
+-/*
+- * Intel "Architectural Performance Monitoring extension" CPUID
+- * detection/enumeration details:
+- */
+-#define ARCH_PERFMON_EXT_LEAF			0x00000023
+-#define ARCH_PERFMON_NUM_COUNTER_LEAF		0x1
+-#define ARCH_PERFMON_ACR_LEAF			0x2
++// _CPUID_TODO_: Remove subleaf 4 and 5 after defining them
+ #define ARCH_PERFMON_PEBS_CAP_LEAF		0x4
+ #define ARCH_PERFMON_PEBS_COUNTER_LEAF		0x5
  
--static void update_pmu_cap(struct pmu *pmu)
--{
--	unsigned int eax, ebx, ecx, edx;
--	union cpuid35_eax eax_0;
--	union cpuid35_ebx ebx_0;
-+static void update_pmu_cap(struct pmu *pmu, int cpu)
-+{
-+	struct cpuinfo_x86 *cpuinfo = is_hybrid() ? &cpu_data(cpu) : &boot_cpu_data;
-+	const struct leaf_0x23_0 *sl0 = cpuid_subleaf(cpuinfo, 0x23, 0);
-+	const struct leaf_0x23_1 *sl1 = cpuid_subleaf(cpuinfo, 0x23, 1);
-+	const struct leaf_0x23_2 *sl2 = cpuid_subleaf(cpuinfo, 0x23, 2);
-+	const struct leaf_0x23_4 *sl4 = cpuid_subleaf(cpuinfo, 0x23, 4);
-+	const struct leaf_0x23_5 *sl5 = cpuid_subleaf(cpuinfo, 0x23, 5);
-+	u64 pdists_mask = 0;
- 	u64 cntrs_mask = 0;
- 	u64 pebs_mask = 0;
--	u64 pdists_mask = 0;
- 
--	cpuid(ARCH_PERFMON_EXT_LEAF, &eax_0.full, &ebx_0.full, &ecx, &edx);
-+	if (!sl0)
-+		return;
- 
--	if (ebx_0.split.umask2)
-+	if (sl0->unitmask2)
- 		hybrid(pmu, config_mask) |= ARCH_PERFMON_EVENTSEL_UMASK2;
--	if (ebx_0.split.eq)
-+	if (sl0->eq)
- 		hybrid(pmu, config_mask) |= ARCH_PERFMON_EVENTSEL_EQ;
--	if (ebx_0.split.rdpmc_user_disable)
-+	if (sl0->rdpmc_user_disable)
- 		hybrid(pmu, config_mask) |= ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE;
- 
--	if (eax_0.split.cntr_subleaf) {
--		cpuid_count(ARCH_PERFMON_EXT_LEAF, ARCH_PERFMON_NUM_COUNTER_LEAF,
--			    &eax, &ebx, &ecx, &edx);
--		hybrid(pmu, cntr_mask64) = eax;
--		hybrid(pmu, fixed_cntr_mask64) = ebx;
--		cntrs_mask = counter_mask(eax, ebx);
-+	if (sl1) {
-+		hybrid(pmu, cntr_mask64) = sl1->gp_counters;
-+		hybrid(pmu, fixed_cntr_mask64) = sl1->fixed_counters;
-+		cntrs_mask = counter_mask(sl1->gp_counters, sl1->fixed_counters);
- 	}
- 
--	if (eax_0.split.acr_subleaf) {
--		cpuid_count(ARCH_PERFMON_EXT_LEAF, ARCH_PERFMON_ACR_LEAF,
--			    &eax, &ebx, &ecx, &edx);
-+	if (sl2) {
- 		/* The mask of the counters which can be reloaded */
--		hybrid(pmu, acr_cntr_mask64) = counter_mask(eax, ebx);
-+		hybrid(pmu, acr_cntr_mask64) = counter_mask(sl2->acr_gp_reload, sl2->acr_fixed_reload);
- 		/* The mask of the counters which can cause a reload of reloadable counters */
--		hybrid(pmu, acr_cause_mask64) = counter_mask(ecx, edx);
-+		hybrid(pmu, acr_cause_mask64) = counter_mask(sl2->acr_gp_trigger, sl2->acr_fixed_trigger);
- 	}
- 
--	/* Bits[5:4] should be set simultaneously if arch-PEBS is supported */
--	if (eax_0.split.pebs_caps_subleaf && eax_0.split.pebs_cnts_subleaf) {
--		cpuid_count(ARCH_PERFMON_EXT_LEAF, ARCH_PERFMON_PEBS_CAP_LEAF,
--			    &eax, &ebx, &ecx, &edx);
--		hybrid(pmu, arch_pebs_cap).caps = (u64)ebx << 32;
-+	/* Both subleaves should be available if arch-PEBS is supported */
-+	if (sl4 && sl5) {
-+		const struct cpuid_regs *sl4_regs = (const struct cpuid_regs *)sl4;
-+
-+		hybrid(pmu, arch_pebs_cap).caps = (u64)sl4_regs->ebx << 32;
- 
--		cpuid_count(ARCH_PERFMON_EXT_LEAF, ARCH_PERFMON_PEBS_COUNTER_LEAF,
--			    &eax, &ebx, &ecx, &edx);
--		pebs_mask   = counter_mask(eax, ecx);
--		pdists_mask = counter_mask(ebx, edx);
-+		pebs_mask   = counter_mask(sl5->pebs_gp, sl5->pebs_fixed);
-+		pdists_mask = counter_mask(sl5->pebs_pdist_gp, sl5->pebs_pdist_fixed);
- 		hybrid(pmu, arch_pebs_cap).counters = pebs_mask;
- 		hybrid(pmu, arch_pebs_cap).pdists = pdists_mask;
- 
-@@ -6038,7 +6036,7 @@ static bool init_hybrid_pmu(int cpu)
- 		goto end;
- 
- 	if (this_cpu_has(X86_FEATURE_ARCH_PERFMON_EXT))
--		update_pmu_cap(&pmu->pmu);
-+		update_pmu_cap(&pmu->pmu, cpu);
- 
- 	intel_pmu_check_hybrid_pmus(pmu);
- 
-@@ -8452,7 +8450,7 @@ __init int intel_pmu_init(void)
- 	 * when a new type is online.
- 	 */
- 	if (!is_hybrid() && boot_cpu_has(X86_FEATURE_ARCH_PERFMON_EXT))
--		update_pmu_cap(NULL);
-+		update_pmu_cap(NULL, 0);
- 
- 	if (x86_pmu.arch_pebs) {
- 		static_call_update(intel_pmu_disable_event_ext,
+-union cpuid35_eax {
+-	struct {
+-		unsigned int	leaf0:1;
+-		/* Counters Sub-Leaf */
+-		unsigned int    cntr_subleaf:1;
+-		/* Auto Counter Reload Sub-Leaf */
+-		unsigned int    acr_subleaf:1;
+-		/* Events Sub-Leaf */
+-		unsigned int    events_subleaf:1;
+-		/* arch-PEBS Sub-Leaves */
+-		unsigned int	pebs_caps_subleaf:1;
+-		unsigned int	pebs_cnts_subleaf:1;
+-		unsigned int	reserved:26;
+-	} split;
+-	unsigned int            full;
+-};
+-
+-union cpuid35_ebx {
+-	struct {
+-		/* UnitMask2 Supported */
+-		unsigned int    umask2:1;
+-		/* EQ-bit Supported */
+-		unsigned int    eq:1;
+-		/* rdpmc user disable Supported */
+-		unsigned int    rdpmc_user_disable:1;
+-		unsigned int	reserved:29;
+-	} split;
+-	unsigned int            full;
+-};
+-
+ /*
+  * AMD "Extended Performance Monitoring and Debug" CPUID
+  * detection/enumeration details:
 -- 
 2.53.0
 
