@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607673793A4
-	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A9937A4AF
+	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774578080; cv=none; b=FtQBvW4EHglT/tqQCzMrxpalGbcDDQmgNCPRWybzSTzXNZUuq1Fgb/JXE7So/pIfy0jes++NkNwJH96KrWL+ichZlSjt5roDPARMT53TWlI9VvvTBJL0skbi/xdICkqODSz1BbyolyKNARPC4wGfA3YXK/jIIndDLJakO66/fww=
+	t=1774578083; cv=none; b=Wj0lAhNzuWpG7TRW6v4D5278AIellYzSZRVhTID55aVSAfmozGCU2vD+b7ehU7D1Z0mzYucVAk4sniE72WgXqelknbLQEXnD6JyXrxri8kdDvlLvclwCU4tqNJeyBjl76CN3oGptsmnT6AJ3kS/8Bh0NoJSKYN6hXs+wkYaSgzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774578080; c=relaxed/simple;
-	bh=8ndB3DIFPKBfBfZP2miEw/UAtOu/NCJBk3wQ78WJPxM=;
+	s=arc-20240116; t=1774578083; c=relaxed/simple;
+	bh=r3JSn1+HEA3ajw2VPnamJpdfIFaiDQcAloOf66/dtKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+6QSKnCXnmEm1vqp9GV42FQ260w+Qc8mUj0uIFBIxkVLmB+4/7d5bdjAGVHfulyNI0/efNJ5Cz+H2TV00jg2e9OJ6FrQ65jIKsxQqPX8qgFh9mRIjeNU9f0gAYM9OU6tcg1QEyAQEKzj8xO8FrLIiYs0/EMEra1V5HPVBpf6g0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=wnkfb0yW; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Tzeho6t0; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=JHKRIYoBG3Qg42godz9kI8v/drG4GIK4tpzTk7kIgsZLKeNkYOeczYeARCnMsi1Ph5upbD0ssz7vo/D+An1Ot/lV11n09JV3LC3HCvFWQqtbWkZr7FxwQqR3L4qScUmhXI8HfQA8edD/Scl5Z6LIIaX89Gl8mIMGaMKlKwWYD7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=sAxtdWOr; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=QAscarOZ; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wnkfb0yW";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Tzeho6t0"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="sAxtdWOr";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="QAscarOZ"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774578078;
+	s=2020; t=1774578081;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Pr0cNu6rZmuw9gMObI8KBiaV8/2gOXHSOkaRxwPz7dM=;
-	b=wnkfb0yWx/AUKCELwUGwON8wPGi7Dzoye7W1qZGl2wtcWzzo5dg8BSM/TLAraj2d39rRIa
-	x0x33xI/mA0Igo8cd3G3tT6R6WYTGZUFI/QUAcxEr4OTbWh7jt5NOKKq8XM6/tvdhwAv7C
-	35GzQLOTnw43skUit5t1jJ7UmoQvDaC0Z4lXP7ob/+rt49LlsjrdWKEEjxTERpdO864FQU
-	aR8vAIje3kyjpgPVwtTOHb8ko4G06IqM9VhyU7EkvtcdH4jj4L7Z4iEQhMoty0drD61/wE
-	Z1I1zpuJB3goijxPwMVFFUDbDLysSpq6g67lZVQbk64Ke6w3askt2sSjc81nVg==
+	bh=ppk0/jYqr8dqJV5JRSY9GhFkYl4GLYVf87y+tfWguGA=;
+	b=sAxtdWOrbxEJ/sDf5uJu4OkO1AUbGEBaZKGDkwBOh+3LpVGjTqueaD8PzuLqBFOITb6NVo
+	N/+cFBUkG8MZ4NSp0Aek8t9+pj9A6ktfyX+RUCiu5+SVtVvn1ZHJCs0cMJBeqkhGwRrMss
+	+qWfxw2ZEaMvITheeS+PvtbqAeE4fM3OFYLSKDddtviAyMmLgiaAaLbc+Xsqif/T3NLs31
+	mqEUBjxHmoQZ6NkZxIsU2O9mlyP/KqUj3fb+4ZcK6N7ZCsACVIPoQv8zBwQ/toxRzGXPkG
+	O614HylantsZxE2EjgOemy2P9MoiX0fihPFEtoijzT8I+BZWwMoW49bAZGbuVw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774578078;
+	s=2020e; t=1774578081;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Pr0cNu6rZmuw9gMObI8KBiaV8/2gOXHSOkaRxwPz7dM=;
-	b=Tzeho6t0rWIZDvjkavr9WK1DRJs0XNBdRz9GdkqHQ95njCJkxsZX3eVGuerMDOOcXhhiUP
-	SrJD7Ph6m8+N3rAw==
+	bh=ppk0/jYqr8dqJV5JRSY9GhFkYl4GLYVf87y+tfWguGA=;
+	b=QAscarOZHSqpa3rWbeEgJB4sbkQtj+aGTqwDCvVo19rdLWwobKOO87rtQTLIJKxUFvkxSf
+	MRkd3c9ERSgPPBAg==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -55,9 +55,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v6 65/90] perf/x86/intel: Remove custom CPUID(0x23) types
-Date: Fri, 27 Mar 2026 03:16:19 +0100
-Message-ID: <20260327021645.555257-66-darwi@linutronix.de>
+Subject: [PATCH v6 66/90] x86/cpuid: Parse CPUID(0x80000022)
+Date: Fri, 27 Mar 2026 03:16:20 +0100
+Message-ID: <20260327021645.555257-67-darwi@linutronix.de>
 In-Reply-To: <20260327021645.555257-1-darwi@linutronix.de>
 References: <20260327021645.555257-1-darwi@linutronix.de>
 Precedence: bulk
@@ -68,68 +68,48 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-All CPUID(0x23) call sites have been converted to the CPUID API and its
-auto generated x86-cpuid-db data types.
+Parse CPUID(0x80000022).
 
-Remove the custom CPUID(0x23) types from perf.
+Add AMD and Hygon vendor tags as it is only supported on these CPUs.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/include/asm/perf_event.h | 38 +------------------------------
- 1 file changed, 1 insertion(+), 37 deletions(-)
+ arch/x86/include/asm/cpuid/types.h | 1 +
+ arch/x86/kernel/cpu/cpuid_parser.h | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
-index c57e6c9231aa..5aa07710af12 100644
---- a/arch/x86/include/asm/perf_event.h
-+++ b/arch/x86/include/asm/perf_event.h
-@@ -157,46 +157,10 @@
- /* Steal the highest bit of pebs_data_cfg for SW usage */
- #define PEBS_UPDATE_DS_SW	BIT_ULL(63)
- 
--/*
-- * Intel "Architectural Performance Monitoring extension" CPUID
-- * detection/enumeration details:
-- */
--#define ARCH_PERFMON_EXT_LEAF			0x00000023
--#define ARCH_PERFMON_NUM_COUNTER_LEAF		0x1
--#define ARCH_PERFMON_ACR_LEAF			0x2
-+// _CPUID_TODO_: Remove subleaf 4 and 5 after defining them
- #define ARCH_PERFMON_PEBS_CAP_LEAF		0x4
- #define ARCH_PERFMON_PEBS_COUNTER_LEAF		0x5
- 
--union cpuid35_eax {
--	struct {
--		unsigned int	leaf0:1;
--		/* Counters Sub-Leaf */
--		unsigned int    cntr_subleaf:1;
--		/* Auto Counter Reload Sub-Leaf */
--		unsigned int    acr_subleaf:1;
--		/* Events Sub-Leaf */
--		unsigned int    events_subleaf:1;
--		/* arch-PEBS Sub-Leaves */
--		unsigned int	pebs_caps_subleaf:1;
--		unsigned int	pebs_cnts_subleaf:1;
--		unsigned int	reserved:26;
--	} split;
--	unsigned int            full;
--};
--
--union cpuid35_ebx {
--	struct {
--		/* UnitMask2 Supported */
--		unsigned int    umask2:1;
--		/* EQ-bit Supported */
--		unsigned int    eq:1;
--		/* rdpmc user disable Supported */
--		unsigned int    rdpmc_user_disable:1;
--		unsigned int	reserved:29;
--	} split;
--	unsigned int            full;
--};
--
- /*
-  * AMD "Extended Performance Monitoring and Debug" CPUID
-  * detection/enumeration details:
+diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
+index 70ccd52a6848..deddb534486a 100644
+--- a/arch/x86/include/asm/cpuid/types.h
++++ b/arch/x86/include/asm/cpuid/types.h
+@@ -229,6 +229,7 @@ struct cpuid_leaves {
+ 	CPUID_LEAF   (  0x80000006,	0  );
+ 	CPUID_LEAF   (  0x80000008,	0  );
+ 	CPUID_LEAF_N (  0x8000001d,	8  );
++	CPUID_LEAF   (  0x80000022,	0  );
+ 	CPUID_LEAF   (  0x80860000,	0  );
+ 	CPUID_LEAF   (  0x80860001,	0  );
+ 	CPUID_LEAF   (  0x80860002,	0  );
+diff --git a/arch/x86/kernel/cpu/cpuid_parser.h b/arch/x86/kernel/cpu/cpuid_parser.h
+index 46f06792afb1..59a4d562320a 100644
+--- a/arch/x86/kernel/cpu/cpuid_parser.h
++++ b/arch/x86/kernel/cpu/cpuid_parser.h
+@@ -163,6 +163,7 @@ struct cpuid_parse_entry {
+ 	CPUID_PARSE_ENTRY   (	0x80000006,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000008,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY_N (	0x8000001d,			deterministic_cache	),	\
++	CPUID_PARSE_ENTRY   (	0x80000022,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80860000,	0,		0x80860000		),	\
+ 	CPUID_PARSE_ENTRY   (	0x80860001,	0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80860002,	0,		generic			),	\
+@@ -211,6 +212,7 @@ struct cpuid_vendor_entry {
+ 	CPUID_VENDOR_ENTRY(0x1c,	X86_VENDOR_INTEL),				\
+ 	CPUID_VENDOR_ENTRY(0x23,	X86_VENDOR_INTEL),				\
+ 	CPUID_VENDOR_ENTRY(0x8000001d,	X86_VENDOR_AMD, X86_VENDOR_HYGON),		\
++	CPUID_VENDOR_ENTRY(0x80000022,	X86_VENDOR_AMD, X86_VENDOR_HYGON),		\
+ 	CPUID_VENDOR_ENTRY(0x80860000,	X86_VENDOR_TRANSMETA),				\
+ 	CPUID_VENDOR_ENTRY(0x80860001,	X86_VENDOR_TRANSMETA),				\
+ 	CPUID_VENDOR_ENTRY(0x80860002,	X86_VENDOR_TRANSMETA),				\
 -- 
 2.53.0
 
