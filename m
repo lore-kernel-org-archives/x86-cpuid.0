@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDD9372EDF
-	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B460A37474E
+	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774578058; cv=none; b=Xe+2gid6gMKke5+yA1MwpNmDCdUqTPhkNu+H22BE63NL8gV9+4BLtjOsCK4A/m/Y0GzoM7Ylb8xTRDMjckexB4AnUMmso3oikOoWDs4ljHm6NPEclqyv8hrGrvPQq52Pgbkv4W3PxxrMWu/ODxw3I1lrlQRq4BcWL5dyk3sq3G8=
+	t=1774578061; cv=none; b=hCr6MW27eC7BxgNPa4cg/TIMFmpRTIKYVIpikME1uEL7CFC9iP1mT0CRV7JMqAYEWhqg+9JxXJ7sCZTiImYdm9t8hDgPwKshW3aR99U9vKyRohHTix+VQqNS2spiduZfIE7uIiRDFXgH+syq/tc+/8vf898/r4Sq/O5kYBaAszI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774578058; c=relaxed/simple;
-	bh=PsTllU6sNA+kea6As9e7l++xqbcFkRXHRpyiRFTUg+I=;
+	s=arc-20240116; t=1774578061; c=relaxed/simple;
+	bh=3EwSVXzKb38A0kXx3OdyT4KXgnLusic6Pcj2rho7Nrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBKqpn+muvzt+K5vo5kPneFSWzsMBudCBXFMzpUIa30sXsbpzZ0wlyCR7NKr0YClBWl5IUv3ta+8EtAGLPxguLkLQvs/pUJod9ICFc7TY8JFBIveR7ZO/nXEqIqRQR8SbZpeO/sSmVf7VdX0lwIy0agTBBVUGDsHgbaGu6ouJeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=wBP8Eb9e; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Yy+Tlxvt; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=B6HjaqxaRo9qbAeYV0THx7la2Qx6Gyezot3WramYQtWzMcA+px2tmbpWiSQlVAMqKTvJwflh4AQMRrE/IBpGW+ByvCyqXhB39Zspm8/umJNQDp9vpu21P70rAzJ5Xo9l072BKt7ZKYLAhe+EBGsHdtH9pBQEV3QSVbyDD31CV0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=gjc4v5XP; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=3Vs7OAVx; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wBP8Eb9e";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Yy+Tlxvt"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="gjc4v5XP";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="3Vs7OAVx"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774578055;
+	s=2020; t=1774578058;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kO+BQ4fERUyR/doqb1nb45u/9n2WJ1LYDd/Hl6t97Hk=;
-	b=wBP8Eb9ecI+9s/BizsyIP4HiSolbZMxVm0DoOWiwaXhWmOanzedBXihOAUZ3m+vV2Vh47I
-	ulOv/gzoVyGqVpQ1hqnUiLCMjo+JuMANptvvYjdbWf1g4QjXUTCdNMqbVPzNMq2tOUgTIr
-	UF1FbFXb1JGX4kpXdYCqn2tgrLLEY/+56wAhyTpqYBQZKrP7as5J7zRrtqCYclh/zSTdtX
-	fUpp+LreZVwtC4eeClbGTDzBKkw+lTuBuHu8wpfFjHU26ZgaR58rKLvOpnqCejGCHJ3BiT
-	S4+jo3F/kPSvYb7qRxJQE7hBPGA65jWB7gZGPFF4ZkWf66D8cGM1Co/tIndrwg==
+	bh=RRSX54I0iJeSrYG1pJupkqNr+r3Vka+Wq09nGaVn1Sg=;
+	b=gjc4v5XP6a+fJlAj5JOeZf3OqlGpbc6eE7X6UE9XwZB86siXFfAyb/aNyj7gCrAgDiTkG+
+	l3bbOkqXDDsKqdz5Kjdlay1+NS1MUuXt7VTgn8ZW7zKHQ7CaVtdbPb+bKqdplRodKPvk6o
+	86F4AzzXyfoHIF31YzF5xd69p30c98l0doc3BKjfGHqFxtODigITpWivytpsMaRiWJWz0z
+	FFQwUqYlBhixWmOk4vdCpxvpZ1Ya7BCquImhenPmtO7D53O1owgl1dXjhE5WjtFsX0kKr9
+	xubuHN5VIy9PBCC5Lr0yr8dnq7AXZ/wo2MLlElJDGQuZMw/r2W/eFw+CTmwW3w==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774578055;
+	s=2020e; t=1774578058;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kO+BQ4fERUyR/doqb1nb45u/9n2WJ1LYDd/Hl6t97Hk=;
-	b=Yy+TlxvtvVbku4q4FrQjwnMkMG0ya20jprYizkoE/HEpA+Vlf017WZosiRZPg1FhFGsFCw
-	p9S15RHd+zBU9OCg==
+	bh=RRSX54I0iJeSrYG1pJupkqNr+r3Vka+Wq09nGaVn1Sg=;
+	b=3Vs7OAVxiNn+RgHe9I/qcRVk3kqvV8Blj9W/EXBitKkHP11n85dxywX95w3GiFV7N11qc3
+	lpCJAkUUm6NA3nCA==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -55,9 +55,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v6 58/90] KVM: x86: Use standard CPUID(0xa) types
-Date: Fri, 27 Mar 2026 03:16:12 +0100
-Message-ID: <20260327021645.555257-59-darwi@linutronix.de>
+Subject: [PATCH v6 59/90] KVM: x86/pmu: Use standard CPUID(0xa) types
+Date: Fri, 27 Mar 2026 03:16:13 +0100
+Message-ID: <20260327021645.555257-60-darwi@linutronix.de>
 In-Reply-To: <20260327021645.555257-1-darwi@linutronix.de>
 References: <20260327021645.555257-1-darwi@linutronix.de>
 Precedence: bulk
@@ -68,60 +68,76 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For KVM guest CPUID build-up, use the auto-generated CPUID(0xa) types from
+For KVM PMU refresh, use the auto-generated CPUID(0xa) types from
 x86-cpuid-db instead of relying on the custom perf types.
 
 The latter types are in process of getting removed from the kernel.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kvm/cpuid.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ arch/x86/kvm/vmx/pmu_intel.c | 31 +++++++++++++------------------
+ 1 file changed, 13 insertions(+), 18 deletions(-)
 
-diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
-index 8137927e7387..16ed4c001c79 100644
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -1503,28 +1503,28 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
- 		}
- 		break;
- 	case 0xa: { /* Architectural Performance Monitoring */
--		union cpuid10_eax eax = { };
--		union cpuid10_edx edx = { };
-+		struct leaf_0xa_0 l = { };
-+		struct cpuid_regs *regs = (struct cpuid_regs *)&l;
+diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
+index 74e0b01185b8..e0aeb1bc04ca 100644
+--- a/arch/x86/kvm/vmx/pmu_intel.c
++++ b/arch/x86/kvm/vmx/pmu_intel.c
+@@ -493,8 +493,8 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
+ 	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
+ 	struct lbr_desc *lbr_desc = vcpu_to_lbr_desc(vcpu);
+ 	struct kvm_cpuid_entry2 *entry;
+-	union cpuid10_eax eax;
+-	union cpuid10_edx edx;
++	struct leaf_0xa_0 l = { };
++	struct cpuid_regs *regs = (struct cpuid_regs *)&l;
+ 	u64 perf_capabilities;
+ 	u64 counter_rsvd;
  
- 		if (!enable_pmu || !static_cpu_has(X86_FEATURE_ARCH_PERFMON)) {
- 			entry->eax = entry->ebx = entry->ecx = entry->edx = 0;
- 			break;
- 		}
+@@ -515,21 +515,18 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
+ 	if (!entry)
+ 		return;
  
--		eax.split.version_id = kvm_pmu_cap.version;
--		eax.split.num_counters = kvm_pmu_cap.num_counters_gp;
--		eax.split.bit_width = kvm_pmu_cap.bit_width_gp;
--		eax.split.mask_length = kvm_pmu_cap.events_mask_len;
--		edx.split.num_counters_fixed = kvm_pmu_cap.num_counters_fixed;
--		edx.split.bit_width_fixed = kvm_pmu_cap.bit_width_fixed;
-+		l.pmu_version		= kvm_pmu_cap.version;
-+		l.num_counters_gp	= kvm_pmu_cap.num_counters_gp;
-+		l.bit_width_gp		= kvm_pmu_cap.bit_width_gp;
-+		l.events_mask_len	= kvm_pmu_cap.events_mask_len;
-+		l.num_counters_fixed	= kvm_pmu_cap.num_counters_fixed;
-+		l.bitwidth_fixed	= kvm_pmu_cap.bit_width_fixed;
+-	eax.full = entry->eax;
+-	edx.full = entry->edx;
++	regs->eax = entry->eax;
++	regs->edx = entry->edx;
  
- 		if (kvm_pmu_cap.version)
--			edx.split.anythread_deprecated = 1;
-+			l.anythread_deprecation = 1;
+-	pmu->version = eax.split.version_id;
++	pmu->version = l.pmu_version;
+ 	if (!pmu->version)
+ 		return;
  
--		entry->eax = eax.full;
-+		entry->eax = regs->eax;
- 		entry->ebx = kvm_pmu_cap.events_mask;
- 		entry->ecx = 0;
--		entry->edx = edx.full;
-+		entry->edx = regs->edx;
- 		break;
- 	}
- 	case 0x1f:
+-	pmu->nr_arch_gp_counters = min_t(int, eax.split.num_counters,
+-					 kvm_pmu_cap.num_counters_gp);
+-	eax.split.bit_width = min_t(int, eax.split.bit_width,
+-				    kvm_pmu_cap.bit_width_gp);
+-	pmu->counter_bitmask[KVM_PMC_GP] = BIT_ULL(eax.split.bit_width) - 1;
+-	eax.split.mask_length = min_t(int, eax.split.mask_length,
+-				      kvm_pmu_cap.events_mask_len);
+-	pmu->available_event_types = ~entry->ebx & (BIT_ULL(eax.split.mask_length) - 1);
++	pmu->nr_arch_gp_counters	= min_t(int, l.num_counters_gp, kvm_pmu_cap.num_counters_gp);
++	l.bit_width_gp			= min_t(int, l.bit_width_gp, kvm_pmu_cap.bit_width_gp);
++	pmu->counter_bitmask[KVM_PMC_GP]= BIT_ULL(l.bit_width_gp) - 1;
++	l.events_mask_len		= min_t(int, l.events_mask_len, kvm_pmu_cap.events_mask_len);
++	pmu->available_event_types	= ~entry->ebx & (BIT_ULL(l.events_mask_len) - 1);
+ 
+ 	entry = kvm_find_cpuid_entry_index(vcpu, 7, 0);
+ 	if (entry &&
+@@ -552,11 +549,9 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
+ 	if (pmu->version == 1)
+ 		return;
+ 
+-	pmu->nr_arch_fixed_counters = min_t(int, edx.split.num_counters_fixed,
+-					    kvm_pmu_cap.num_counters_fixed);
+-	edx.split.bit_width_fixed = min_t(int, edx.split.bit_width_fixed,
+-					  kvm_pmu_cap.bit_width_fixed);
+-	pmu->counter_bitmask[KVM_PMC_FIXED] = BIT_ULL(edx.split.bit_width_fixed) - 1;
++	pmu->nr_arch_fixed_counters = min_t(int, l.num_counters_fixed, kvm_pmu_cap.num_counters_fixed);
++	l.bitwidth_fixed	    = min_t(int, l.bitwidth_fixed, kvm_pmu_cap.bit_width_fixed);
++	pmu->counter_bitmask[KVM_PMC_FIXED] = BIT_ULL(l.bitwidth_fixed) - 1;
+ 
+ 	intel_pmu_enable_fixed_counter_bits(pmu, INTEL_FIXED_0_KERNEL |
+ 						 INTEL_FIXED_0_USER |
 -- 
 2.53.0
 
