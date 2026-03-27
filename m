@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10733351C37
-	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8123537CA
+	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774578020; cv=none; b=uQvWumVwr6GVWCQVCZ9rJLPGnL1q9m+jD7RRDWpB2IlCacvy9OMYPShNNy9RLoQ8q+SIQAU3K81xy9J5/LZip6vDDTt6HK7IgNJlECW80JN07rpmZMss8/36/hKBhVxDmoYzG8IR61Ex0s61cFtVaWXMI4q0edO4ogMQsaU1BA8=
+	t=1774578024; cv=none; b=QeJIR9ZQDNOnupJ7nD784fAV4MlmkFW1WDbkk5SBqhjw/OxxHJ2PmDjz9s3UCLi1l4r+WQc9loghpRDSIhZByEHmB68HruH8SXVslCD3JxqC7WmMbKlOpupCrP+yPrUSLb93pYn/ztWGbhFjVhcl0xfs1R5G0QAjlCYX/wS/e4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774578020; c=relaxed/simple;
-	bh=H+R2ySs/TeQzqZ7gQrEkYaY8Hq+9Sz0DVaRsgl9tZCs=;
+	s=arc-20240116; t=1774578024; c=relaxed/simple;
+	bh=K5QV4Csrx/OJgyOr6M7gAmcH7YP/aauAzE3ym9oi7oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mr5K8OxRzOxhbEiIYBvgBWD0bYGKyOfN22zKAKQp+PMpou25k3XQc8R1g2oGuzAiWbACjE82Ump/KNMMcfooOQCcQlGz2Ka2c3gXDUlID3pPzZ63NeT4wB+5ORhizr/WfmDLw4Vk9yP1K3TG6FnGam8jfyG0pNk1lzno+O2vyHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=G6NiLS0h; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=+gG9hqto; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=Iw65iIR35eNF2kV+6Toe+YMewzmL70Z3qrkmcBFDwDTnbhB6OjiGU1BOFNW0BDhjRgiPDZLQYfojRkun6iUxQC4XWNxdjpgHBl39OVH+NR9tUrAaIB/PQGzc6bZfQyPI4Hv23imBpAx92HOWZr2qjciZTd1YaKmPDX3niOMxRrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=iQLT82Nj; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=EcACkX58; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="G6NiLS0h";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="+gG9hqto"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="iQLT82Nj";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="EcACkX58"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774578016;
+	s=2020; t=1774578020;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HgrzqW4QpmSH8CxJtBsKbOfhYo0PtEXJs5Ip5zjfkJw=;
-	b=G6NiLS0hqHd+Ran2DwC/q9GIncyeXYt1mGAqK8H0cV4/gfhRtRJHWX4GmWe8lQi+Ggorit
-	GgzMRyXlCZ1d9iCJARhuwW9bZxb8b9YT14xm9r0JLd7jboJ9HUHYDejTIoYfC3F42TPnfb
-	03jymB0LY5NyYU/75+beG/Y1SG4PH4ZJsqCHvBjIfoEVFWdUS5hdU4rsfuQsVO8Rwpg2n9
-	omtpm8560YEwCOpBQwWSQLpnjk+dwRuCCj93FAOg/rzWxD8gLCIm25l79iO0LhtJic8DlP
-	kPsGvLKZxYV7I5QLYWtUoUK/dKmIFFEuMAJiP2RUVlxdawtVzXPQXMmLQiRdQQ==
+	bh=X49npTsIRUaGG3MII35rGUtLXF7646imzEvEVZkLaaU=;
+	b=iQLT82NjPOdLoyJJoAbdxKPzoyjBhAu4rQhXpVdDYwhtNHVM076HJeXgb2AZX5v1EDFaL2
+	eSJGR/uE8jJaPZssYaKSKerNjMQVDE3Ib6xxSCKLVFV/VB/oggvZ6gT3gNDymkBVuCQf8/
+	73AY5SFKNfvTihHjjk5GxLlAZisnm1hAIZ08wVL1MYIyvpHqtcZVVzW8aUl9esa/MLBtLB
+	jUgQHGeofxJHPsGW9JqVORSqzFQFPoGQDhN23R1IKsGt2uEVm+wQ6SKPh57Pi0QC4XyFTt
+	bKI+3tL+7Ncj1jg6gmFTKSfBbUyi9FF7+voKiFRiyOerqUbtLxLBAMiK+lrlsQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774578016;
+	s=2020e; t=1774578020;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HgrzqW4QpmSH8CxJtBsKbOfhYo0PtEXJs5Ip5zjfkJw=;
-	b=+gG9hqtocrGYXMUWAazUvwRUwz2GurYjOuzQnN5hxIEQByNMmc9ZCZtb8u4dRUEs7uDb5K
-	Y6lK4hlQDJYd35AA==
+	bh=X49npTsIRUaGG3MII35rGUtLXF7646imzEvEVZkLaaU=;
+	b=EcACkX58oWlxHR7oQ7vQniZDsLlXVRmvgzcd5gdciDs94Lxlqim9xPTW/Co2a9v+LAcKeq
+	XYKKJBc2+2sCv3Aw==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -55,9 +55,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v6 48/90] x86/cpu/hygon: Use parsed CPUID(0x80000005) and CPUID(0x80000006)
-Date: Fri, 27 Mar 2026 03:16:02 +0100
-Message-ID: <20260327021645.555257-49-darwi@linutronix.de>
+Subject: [PATCH v6 49/90] x86/cpu/centaur: Use parsed CPUID(0x80000005)
+Date: Fri, 27 Mar 2026 03:16:03 +0100
+Message-ID: <20260327021645.555257-50-darwi@linutronix.de>
 In-Reply-To: <20260327021645.555257-1-darwi@linutronix.de>
 References: <20260327021645.555257-1-darwi@linutronix.de>
 Precedence: bulk
@@ -68,72 +68,49 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For Hygon init, use parsed CPUID(0x80000005) and CPUID(0x80000006) instead
-of direct CPUID queries and ugly bitwise operations.
-
-Consolidate all comments; the code has now clear logic and bitfield names.
+Use parsed CPUID(0x80000005) instead of issuing a CPUID query and doing
+ugly bitwise operations.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/hygon.c | 35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+ arch/x86/kernel/cpu/centaur.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/hygon.c b/arch/x86/kernel/cpu/hygon.c
-index 3e8891a9caf2..4a63538c2b3f 100644
---- a/arch/x86/kernel/cpu/hygon.c
-+++ b/arch/x86/kernel/cpu/hygon.c
-@@ -229,35 +229,32 @@ static void init_hygon(struct cpuinfo_x86 *c)
- 	clear_cpu_cap(c, X86_FEATURE_APIC_MSRS_FENCE);
- }
- 
-+/*
-+ * For DTLB/ITLB 2M-4M detection, fall back to L1 if L2 is disabled
-+ */
- static void cpu_detect_tlb_hygon(struct cpuinfo_x86 *c)
+diff --git a/arch/x86/kernel/cpu/centaur.c b/arch/x86/kernel/cpu/centaur.c
+index 5f09bce3aaa7..895cf00919d3 100644
+--- a/arch/x86/kernel/cpu/centaur.c
++++ b/arch/x86/kernel/cpu/centaur.c
+@@ -107,11 +107,11 @@ static void early_init_centaur(struct cpuinfo_x86 *c)
+ static void init_centaur(struct cpuinfo_x86 *c)
  {
--	u32 ebx, eax, ecx, edx;
--	u16 mask = 0xfff;
+ #ifdef CONFIG_X86_32
+-	char *name;
 +	const struct leaf_0x80000005_0 *el5 = cpuid_leaf(c, 0x80000005);
-+	const struct leaf_0x80000006_0 *el6 = cpuid_leaf(c, 0x80000006);
- 
--	if (c->extended_cpuid_level < 0x80000006)
-+	if (!el5 || !el6)
- 		return;
- 
--	cpuid(0x80000006, &eax, &ebx, &ecx, &edx);
-+	tlb_lld_4k = el6->l2_dtlb_4k_nentries;
-+	tlb_lli_4k = el6->l2_itlb_4k_nentries;
- 
--	tlb_lld_4k = (ebx >> 16) & mask;
--	tlb_lli_4k = ebx & mask;
-+	if (el6->l2_dtlb_2m_4m_nentries)
-+		tlb_lld_2m = el6->l2_dtlb_2m_4m_nentries;
-+	else
-+		tlb_lld_2m = el5->l1_dtlb_2m_4m_nentries;
- 
--	/* Handle DTLB 2M and 4M sizes, fall back to L1 if L2 is disabled */
--	if (!((eax >> 16) & mask))
--		tlb_lld_2m = (cpuid_eax(0x80000005) >> 16) & 0xff;
-+	if (el6->l2_itlb_2m_4m_nentries)
-+		tlb_lli_2m = el6->l2_itlb_2m_4m_nentries;
- 	else
--		tlb_lld_2m = (eax >> 16) & mask;
-+		tlb_lli_2m = el5->l1_itlb_2m_4m_nentries;
- 
--	/* a 4M entry uses two 2M entries */
-+	/* A 4M TLB entry uses two 2M entries */
- 	tlb_lld_4m = tlb_lld_2m >> 1;
--
--	/* Handle ITLB 2M and 4M sizes, fall back to L1 if L2 is disabled */
--	if (!(eax & mask)) {
--		cpuid(0x80000005, &eax, &ebx, &ecx, &edx);
--		tlb_lli_2m = eax & 0xff;
--	} else
--		tlb_lli_2m = eax & mask;
--
- 	tlb_lli_4m = tlb_lli_2m >> 1;
- }
- 
++	u32  lo, hi, newlo;
+ 	u32  fcr_set = 0;
+ 	u32  fcr_clr = 0;
+-	u32  lo, hi, newlo;
+-	u32  aa, bb, cc, dd;
++	char *name;
+ #endif
+ 	early_init_centaur(c);
+ 	init_intel_cacheinfo(c);
+@@ -181,13 +181,8 @@ static void init_centaur(struct cpuinfo_x86 *c)
+ 		/* Set 3DNow! on Winchip 2 and above. */
+ 		if (c->x86_model >= 8)
+ 			set_cpu_cap(c, X86_FEATURE_3DNOW);
+-		/* See if we can find out some more. */
+-		if (cpuid_eax(0x80000000) >= 0x80000005) {
+-			/* Yes, we can. */
+-			cpuid(0x80000005, &aa, &bb, &cc, &dd);
+-			/* Add L1 data and code cache sizes. */
+-			c->x86_cache_size = (cc>>24)+(dd>>24);
+-		}
++		if (el5)
++			c->x86_cache_size = el5->l1_dcache_size_kb + el5->l1_icache_size_kb;
+ 		sprintf(c->x86_model_id, "WinChip %s", name);
+ 	}
+ #endif
 -- 
 2.53.0
 
