@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BA133B6E4
-	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1D333D4E9
+	for <x86-cpuid@lists.linux.dev>; Fri, 27 Mar 2026 02:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774577884; cv=none; b=Py8UqUnXqMN5fw5MwfQW7ICAhofxgTp8L90wCvokHO0gQ+Bb2NK8Bb1CE79qSygYcXd0yT0BS50tFY5UQspYz8FEzMSF6VVKenoNn+dasrfbWgxQppmJaZyHp/ew2fdm49rmPJzsLYZFCukLeJ8toy6uqJqf/lI2oukLHgMBosY=
+	t=1774577889; cv=none; b=kCi7X8FEfNIMZVQIsbIOfX7n+xE90k9TBOSAtdm7lw3nyDVpIRG5qMhLUGqXHvxtsYcGwr3UThIOGnI1hhY/Go7C+33Lj3iHjT1562e1+y607lk+lyzxZceGo1PIjNellNg3fyBtLchlkATsVqWDpaMafc4BHFtW4933IHGR+N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774577884; c=relaxed/simple;
-	bh=RoP2lKI84iP9j0jV0ffR/MG7Quj+LKMigM9fxgmDHAM=;
+	s=arc-20240116; t=1774577889; c=relaxed/simple;
+	bh=vS1LWMmypAy8nihrfer1FMBqTVZgK2kYFbyeCeGwTSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uv0jmxPGkcA8OGCN2UzQZWWm96gFEVxZDVV7GuzAvZMD//rQhYBYt66uH/IiK+VhjoOSEsXPYNBRJEjAVp0hGIzsIljCnleF5OJTb4E2irBQbhr1507hN4YAHhyIEc9ouGwFcCEu5BbNrjT3LNEuex0vNd+XIuOWWrrUAvI53vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=wRiLpzNB; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=XIdVUW1l; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=YuOl+H1HhP7oNED96t0KDAwEqPBoabz+E/1lsn2Msnnc3r55hIicrJGzB21FXsZrxf2qr/PGsrYufWVJMI3aZRhSW2Wk41w5GALCDB79HrbgByI37EXkhZqs/0Ck566hYPakJVZkKa3j4Je1LGf6dMJWUI+YIBZRSMMbiIL6wJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Xb8Ppheh; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=1Ka4FE2g; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wRiLpzNB";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="XIdVUW1l"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Xb8Ppheh";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="1Ka4FE2g"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774577881;
+	s=2020; t=1774577885;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Sml/7Y54i5S3ALNBOmu5um8G3+0GTHqkR9Tkf95GOBA=;
-	b=wRiLpzNBpDKR4ZmA1hjGdV978BTnZargKD51BilK/ocjhuZiYkbKlmc4tpjW3w4HJiMRoa
-	V8eYlI312N4nG0R4XWhNJ+TsvOUNLn8lderAldcYq5UIDK63Y9A5TCyTqirYASFFW5hCcm
-	YVzxer8Css48JP1qerI6GWap5f8cnzfqrfV7GlrrnRlVyVNRfgPi+1yqZkyclg/Y7m+7x2
-	+Gh/wrZS3XFHfI9DmeyA2cpsWyvpHD8VcdzbeY6aWQFAHR7NFrTxY0Xk573CP7JUHJUURp
-	NknGHgBBXzJ0nhY/Mo9IFAi3cmF4tSD/JNJg7ZnDmR7eerUj+iJTVRPZ1I63DQ==
+	bh=IAp+kfoshU4h8p4hqAmtOn1a7SUaBK7HvvMUmE8dfwc=;
+	b=Xb8PphehIJ1qyZe/4TxIu4pqR5UHIzSlFT366NmPYVRLGVMW6fzxxkCsfl+t2paOQY1kW+
+	N2ooCkDRH47fB46A+ZysmpRsNuUy6M0xDtE5+dT+bGf1uoZhMf0+fUmurexcm2AvyLGyNr
+	7cUcispYTBesZ6C+sLkfJ2W5iZLB3wVOizAYHKxUc4dOGyLNX+6KWsbUsLUs1QRMk3SZiS
+	i1jyJI8sTYExOCqar7bKBp5/XLBECFqiC1a+4kmlFu0AHjAROFTZFeQ08CDf8KUvXrX0+Y
+	wKSV2jC86LtTTAaVFN78fabjOA62d5D9NsMIF8L5TuZhzY4LlF8cr8tfp2eKAQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774577881;
+	s=2020e; t=1774577885;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Sml/7Y54i5S3ALNBOmu5um8G3+0GTHqkR9Tkf95GOBA=;
-	b=XIdVUW1lJgyZl4ZaJeB093rl7gS0tckXKob42smyRsK2Z72sIPwrgLqt8k65WH667MydCS
-	i5tq0QGUqf20A1DA==
+	bh=IAp+kfoshU4h8p4hqAmtOn1a7SUaBK7HvvMUmE8dfwc=;
+	b=1Ka4FE2gxsrtjKWvhBsCl2T+T2TMyrLvdNDpcnRBEQUShk/VGeqgl+WNFiISWff3/24O5d
+	MtqBN75c8RXcLLBA==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -55,9 +55,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v6 11/90] x86/cpu: centaur/zhaoxin: Rescan CPUID(0xc0000001) after MSR writes
-Date: Fri, 27 Mar 2026 03:15:25 +0100
-Message-ID: <20260327021645.555257-12-darwi@linutronix.de>
+Subject: [PATCH v6 12/90] x86/cpu/transmeta: Rescan CPUID(0x1) after capability unhide
+Date: Fri, 27 Mar 2026 03:15:26 +0100
+Message-ID: <20260327021645.555257-13-darwi@linutronix.de>
 In-Reply-To: <20260327021645.555257-1-darwi@linutronix.de>
 References: <20260327021645.555257-1-darwi@linutronix.de>
 Precedence: bulk
@@ -68,51 +68,32 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Force-enabling Centaur/Zhaoxin CPU features through MSR writes leads to the
-CPUID(0xc0000001) EDX feature flags getting changed.
+Transmeta CPUs allow masking CPUID(0x1).EDX feature flags via MSR writes.
+If a bit is cleared in the 0x80860004 MSR, its corresponding feature flag
+is not reported by CPUID.
 
-Rescan CPUID(0xc0000001) in that case.
+Refresh the CPUID parser's CPUID(0x1) cache while all of that MSR bits are
+unmasked.
+
+Note, the MSR 0x80860004 semantics are documented at the "BIOS Programmer's
+Guide: Transmeta Crusoe Processor", dated June 14, 2002.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/centaur.c | 6 ++++--
- arch/x86/kernel/cpu/zhaoxin.c | 5 +++--
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/transmeta.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/cpu/centaur.c b/arch/x86/kernel/cpu/centaur.c
-index 681d2da49341..a97e38fa6a9f 100644
---- a/arch/x86/kernel/cpu/centaur.c
-+++ b/arch/x86/kernel/cpu/centaur.c
-@@ -44,9 +44,11 @@ static void init_c3(struct cpuinfo_x86 *c)
- 			pr_info("CPU: Enabled h/w RNG\n");
- 		}
- 
--		/* store Centaur Extended Feature Flags as
--		 * word 5 of the CPU capability bit array
-+		/*
-+		 * Force-enabling CPU features affects the CPUID(0xc0000001)
-+		 * EDX feature bits.  Refresh the leaf.
- 		 */
-+		cpuid_refresh_leaf(c, 0xc0000001);
- 		c->x86_capability[CPUID_C000_0001_EDX] = cpuid_edx(0xC0000001);
- 	}
- #ifdef CONFIG_X86_32
-diff --git a/arch/x86/kernel/cpu/zhaoxin.c b/arch/x86/kernel/cpu/zhaoxin.c
-index 761aef5590ac..55bc656aaa95 100644
---- a/arch/x86/kernel/cpu/zhaoxin.c
-+++ b/arch/x86/kernel/cpu/zhaoxin.c
-@@ -46,9 +46,10 @@ static void init_zhaoxin_cap(struct cpuinfo_x86 *c)
- 		}
- 
- 		/*
--		 * Store Extended Feature Flags as word 5 of the CPU
--		 * capability bit array
-+		 * Force-enabling CPU features affects the CPUID(0xc0000001)
-+		 * EDX feature bits.  Refresh the leaf.
- 		 */
-+		cpuid_refresh_leaf(c, 0xc0000001);
- 		c->x86_capability[CPUID_C000_0001_EDX] = cpuid_edx(0xC0000001);
- 	}
+diff --git a/arch/x86/kernel/cpu/transmeta.c b/arch/x86/kernel/cpu/transmeta.c
+index 1fdcd69c625c..d9e0edb379b8 100644
+--- a/arch/x86/kernel/cpu/transmeta.c
++++ b/arch/x86/kernel/cpu/transmeta.c
+@@ -88,6 +88,7 @@ static void init_transmeta(struct cpuinfo_x86 *c)
+ 	/* Unhide possibly hidden capability flags */
+ 	rdmsr(0x80860004, cap_mask, uk);
+ 	wrmsr(0x80860004, ~0, uk);
++	cpuid_refresh_leaf(c, 0x1);
+ 	c->x86_capability[CPUID_1_EDX] = cpuid_edx(0x00000001);
+ 	wrmsr(0x80860004, cap_mask, uk);
  
 -- 
 2.53.0
