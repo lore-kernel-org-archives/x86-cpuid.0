@@ -1,106 +1,127 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289AA2BE642
-	for <x86-cpuid@lists.linux.dev>; Mon, 30 Mar 2026 20:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067223B893B
+	for <x86-cpuid@lists.linux.dev>; Mon, 30 Mar 2026 23:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774902132; cv=none; b=kYIvcAsDiA4KuJLcavi+2OR0tGkw4wuJtyWit1LFUgExaz8SNLk3GWzKy8poT9Wq8R/1kTGJROctRtG3CncFohQWlieHZxPOsdfdjnoI/nv2mZndy/DCk1AaI+PS/Scnn5i52DOWNDNSNh2HVhYWt8XCJAZdQFKF65B6x50MEwc=
+	t=1774912143; cv=none; b=hNFWxX5Jk1E+8QHoyb0B+2UAmR5FNseWIxbWPUXb6HALVi2OceBJHE7sWZnjA78CVopw9P9X0ElUk4y96MzdcXTNmUU4HGxSxhJbrdL9UvNKD942zKjI0lqd1MJcpD7UZ/JSZzTApshn8EksINMeCzVqUnQG4gYrg4tkLWUHIZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774902132; c=relaxed/simple;
-	bh=We4ZjVjNjOTol2XjP++h32vYdwZeglqE60eGXJG5PwM=;
+	s=arc-20240116; t=1774912143; c=relaxed/simple;
+	bh=sFYOtuad1VVTxX74ZlIcI4qNRWgsF9DRE8wGpEj3IGI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HR73Ufu6Ol9uPgYfAfWo9//wDhNqh1ipWKFRLOYGZJp7+v/NO/wwbuuoY0FiRul7NX3w2DgNxvugeUQdDPO0o2zyvir0PgoN3syUyu8+0Jo3ZkGLlOCp1P+xvjonBaC+1AY1/FZ0jsYuoH6qqt54ijWMbsTDd0P3CI6r3297WPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=adStxN+h; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=nKwo6gSf; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=tpriEUWubDAu3GOK3L74UbYwvnucP37GSu6N82RBRyB12P6q2pV6FIPINoOURu1Tn3TOcRhgWLBwRamP2NSN/GT0JW5IUnNSsxBP43lF1m0dH1q1eT3C1Mjdlz1Q+Uecpn4raQGJjd+h+3j+wV/4ljBjshaGQB3e/BNvlsXt2oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=fail (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=LMTrp0c5 reason="signature verification failed"; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="adStxN+h";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="nKwo6gSf"
-Date: Mon, 30 Mar 2026 22:22:06 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1774902129;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5A8tkX3YntkKwuWW7Ps0VVntxvwiR1iVI5TSScUuOdM=;
-	b=adStxN+hQ29rmhgXIMzRqEjqk2LyfAwHMDkgqs8Sze2WJuaJ1pkHPtFnREQ+uKdlAl+E0r
-	CTj5nTR41rV3H9m2oJ7APaZWDLLOmrwFaw4htl+6/fOaB9K75nOuvAfSy9687iMPAz9fQ5
-	C3+4GR+30JcFSSbaSWK55XxoE39Ep3TjrvaU0XhuWAPBnKfpYkwH/UYqWfKIU9xj53LjBj
-	2F/xrYWh10vdmbjUu98zwayv0SGn/dJ6JX8+CfO3GPOXze8sKB1yjVOp6R1R4OI2zGaX4s
-	Cik4vqTMwUFX5f6A0SCyKJpkpZjEQdBMYwbWF/JfW7EmaF4EwaoQiSRN2sGXAA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1774902129;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5A8tkX3YntkKwuWW7Ps0VVntxvwiR1iVI5TSScUuOdM=;
-	b=nKwo6gSfHDSv1pGjUwH3JPw+uCGwILmmgQS7xMLT2ibA7+YKDMQmzXB4i5I2yZNfGIMc2M
-	m8t5NWMuPMCHZ/Dg==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="LMTrp0c5"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 6AF4940E015B;
+	Mon, 30 Mar 2026 23:08:55 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=fail (4096-bit key)
+	reason="fail (body has been altered)" header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id m9Si9mqNDTzq; Mon, 30 Mar 2026 23:08:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1774912132; bh=LNLyhlbmqu0/V6D08kBVZ8JPwV4pIbVhyHjsWHUO2EU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LMTrp0c5MAlkQ8+T/NXBhqvaRxYRVTMpA2FjLZNeZrKmQGeeaDm2B3dP5X/RNpfRL
+	 Xx2hcHqmP6Mh6XJJ9kchquYGsdv3i2bRSMRhMZbyPGvZl6xJLqkcian6bw2tMMloce
+	 5GlhvpxXilZezJA3XMtXTYd8bvTPfm+Hg80IcrtJ9cV68UGI9mL/hoBcwQ3mmbAITL
+	 WDjJkkQF5ZZYv4li6DjTQ+k2DwNG8R6l5kNxEFLcmTsDwwAtd0cLoCihwj7pXOD8zq
+	 PP/9RquE7zWePOuvZQh/lCH2EDkhBr8Pzuw7oqfdjR1PHt4qpXijKlrFfDBi0MB0KS
+	 Hgo+fPNJtpcVayu4MLBrozbEnAIWdL16qpBf0DU1rKhThc7HwTraW4M5n33DWkWtcy
+	 63gtL6qI9xBj21tf9TgQENoyPsq2+dxc3yfL8Koen2kgagxYsJJo9JplkmPfKz2Cm6
+	 SSBqlk0sRT+f5nbZlgmzUZeNREHpQUdaNIbb+o9ojJsBYqIbZpKMwObMKpHPVWGlSG
+	 YQoxUtCYGDDrZhMzxu2CkVDXrGUfcf1l/9U4ygW8dPYQfcu4wq6IWVl1nq7idL7QuC
+	 3FvytLR4jvlL8rV9dMZSnTsfjdlZswOqQX57/8DYBnpMqZ69kvxb+UeCzLntSu1BLY
+	 jVjF+k/JcPKebmBdfNYE8fd8=
+Received: from zn.tnic (p5de8e020.dip0.t-ipconnect.de [93.232.224.32])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id E884740E0299;
+	Mon, 30 Mar 2026 23:08:36 +0000 (UTC)
+Date: Tue, 31 Mar 2026 01:08:36 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Sean Christopherson <seanjc@google.com>,
+	David Woodhouse <dwmw2@infradead.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Christian Ludloff <ludloff@gmail.com>,
 	Sohil Mehta <sohil.mehta@intel.com>,
-	Maciej Wieczor-Retman <m.wieczorretman@pm.me>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [ANNOUNCE] x86-cpuid-db: Release v3.0
-Message-ID: <acrbbpXFiTsbiX5B@lx-t490>
-References: <acX0Drk_6qD97nbq@lx-t490>
- <646c19398708901454c7336e408d80f8695060fe.camel@infradead.org>
+Subject: Re: [PATCH v6 00/90] x86: Introduce a centralized CPUID data model
+Message-ID: <20260330230836.GLacsCdDkVu0H3XU4l@fat_crate.local>
+References: <20260327021645.555257-1-darwi@linutronix.de>
+ <20260327152354.GBacahCioljpw5QqUc@fat_crate.local>
+ <acrBBFyU_vi4zFOx@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <646c19398708901454c7336e408d80f8695060fe.camel@infradead.org>
+In-Reply-To: <acrBBFyU_vi4zFOx@lx-t490>
+Content-Transfer-Encoding: quoted-printable
 
-Hi!
+On Mon, Mar 30, 2026 at 08:29:24PM +0200, Ahmed S. Darwish wrote:
+> There is an important difference with this series though: all hardware
+> backed X86_FEATURE words do not consume extra space.  They are redirect=
+ed,
+> at compile-time, to their respective entries in the CPUID tables.
+>=20
+> It is the synthetic X86_FEATURE words which now consume extra space, as=
+ a
+> unique 4-byte entry in the CPUID tables is required for them.
 
-On Fri, 27 Mar 2026, David Woodhouse wrote:
->
-> It still doesn't iterate over the hypervisor blocks at 0x4000_0x00 and
-> find all of them. Both Xen and KVM will advertise the Hyper-V leaves at
-> 0x4000_0000 and then their own get shifted to 0x4000_0100. And now we
-> can host HyperV-enlightened Xen guests under KVM, perhaps we could do
-> HyperV, then Xen, then KVM at 0x4000_0200?
->
-> I was checking to see if it has all the ways to detect the Extended
-> Destination ID enlightenment documented in the last page ("Hypervisor
-> detection via CPUID") of https://david.woodhou.se/ExtDestId.pdf
->
-> I think I see the Xen and KVM bits there, and I guess reporting them
-> with different strings in feature.c is kind of OK? The Bhyve and
-> Viridian bits are missing.
->
-> Also, the leaf at 0x40000010 isn't necessarily VMware-specific; it's
-> seen elsewhere too. At least EC2 exposes it under KVM. See thread at
-> about https://lore.kernel.org/all/aLDo3F3KKW0MzlcH@google.com/
->
+Well, since the goal is to have *all* CPUID leaves available to the kerne=
+l,
+then we *technically* don't need the synthetic ones anymore with the exce=
+ption
+of a handful ones which we defined for ourselves, like X86_FEATURE_ALWAYS=
+, for
+example.
 
-Yes, it's in the plan.
+But *all* synthetic bits which have correspondence to real CPUID leaves -=
+ and
+they're synthetic because we wanted to save space... i.e., all those bits=
+ in
+arch/x86/kernel/cpu/scattered.c, they don't need synthetic flags anymore
+because the corresponding full leafs (damn spelling of Bl=C3=A4tter eh!) =
+are there.
 
-The priority is to get the CPUID model into the kernel:
+Then, I'm thinking, we can reorder all the remaining really-synthetic one=
+s
+into the unique 4-byte entries and then not even expose them in any db an=
+d not
+make them available in anything because we will have to cast them in ston=
+e
+then.
 
-  [PATCH v6 00/90] x86: Introduce a centralized CPUID data model
-  https://lore.kernel.org/lkml/20260327021645.555257-1-darwi@linutronix.de
+But we don't have to - they're kernel-only and no one needs to know which=
+ bits
+they occupy.
 
-including its newly-introduced X86_FEATURE synthetic and hardware-backed
-words routing to the CPUID tables.
+Something to that effect I'd say...
 
-Then, convert the remaining call sites invoking CPUID, then begin tackling
-the guest code querying leaves at the 0x4000 range.
+But we'll get to it eventually.
 
-Thanks,
-Ahmed
+Thx.
+
+--=20
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
