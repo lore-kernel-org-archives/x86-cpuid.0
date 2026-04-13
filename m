@@ -1,47 +1,46 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05BD3D3CF5
-	for <x86-cpuid@lists.linux.dev>; Mon, 13 Apr 2026 14:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39633CE4A9
+	for <x86-cpuid@lists.linux.dev>; Mon, 13 Apr 2026 14:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776089047; cv=none; b=uhoQpfcB38V4f8OYnzFTaDwnOMEY92kDVReVZkS78qFYRLc5WDE2BTLIHBdD48w7IPuVRFkZugmKPUNb1otB5tomSmRZ+9HPCXl7nq+URJ9vyaWpMGJPDvF+MLDQyMMIC539Gc21TdGaX9cFDVv/ELlFYkDdsJnA3Dosx7YMLj0=
+	t=1776091116; cv=none; b=O1Ao9KDhAURT8z2fQOUVTgtPghbDysm/QiQUCOwz9Qj09LzXroKZ+IJEmj3ohy8AfZiLxfbq34pvLnObY13WD94lU/7P7hlgjeU0fsiWRONRwvjQY6E0F79iJySQ3+In7ivSt8+UBA0xBwh/WNFwwtMb5H1hSEQYkwyWGIgeLMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776089047; c=relaxed/simple;
-	bh=0XmGHg9S44+y10KfivGmGkIFlI+XOrx5liBw6WqhfqQ=;
+	s=arc-20240116; t=1776091116; c=relaxed/simple;
+	bh=eA81z93bj04vsEWs+MvN6yFwndktGFxlLgusCmAzjas=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mWqHrVoMbNF1FgZZH6+OrKjx+PSzM2ea5lr7WXdd3A9rqy9IpNVbqOyj2ZnFbjhB3H8yUWbBr94bG+BIuaO/9nWqtTerMa8ofjjDUvzBh8e5IyUUlDmxim+7SC8AFJQxPRIxaWGv49XHEMG3yvDvzEzK0S8NEMlXC1J0R8kImkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=EaXpdEH2; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=8JtVdUk8; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z9DA/wYCClg2JcVfy5zwU2dyez+H2tpfAd9z6uhQLKL72BJW5oNxaTZcQuTC042cvWMtvk+mN9bb6tyzsd18fomjNuJzrD02GaX57hk/slLTCizATnbHpsX0M0uUdZ8AxrJdVFJn1eL6NiBbuBF9sgeXFEI4CYGYKQ1rsKpSP8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=zX3FufTH; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=qrr9vnOe; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="EaXpdEH2";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="8JtVdUk8"
-Date: Mon, 13 Apr 2026 16:03:59 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="zX3FufTH";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="qrr9vnOe"
+Date: Mon, 13 Apr 2026 16:38:31 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1776089042;
+	s=2020; t=1776091113;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0XmGHg9S44+y10KfivGmGkIFlI+XOrx5liBw6WqhfqQ=;
-	b=EaXpdEH2FW1t0YTo8KR2Nqk1OkjMlRQCA1EKPJY4S9yr3y5B/Bvr8xcrEoSaCOytt+2kFC
-	+udFDTVgrEMWl3LWDxog/Mr1+mSana0g/g4LTRQquWQyhkjNhoMWo5V/GKy7v/X/4kMCJa
-	nabXUo93FtF7A8sE5A376E8dFkgk4/cZYIM7nxwZw/rrdVxNobKdWp7aPas2qpGSDiX7Ko
-	6hwpnCrUEQ12xq0Rd0oWImZMa1BUBTVa9ctdAJM2xTXweiwqfSHuA+EOyiKxU/yEEauslb
-	pTCpOk97OTGOJX7V1yCnxLaFpSMV+lYusyx9Lw8RIjpb0zApzdyaxruaH/CEQQ==
+	bh=eA81z93bj04vsEWs+MvN6yFwndktGFxlLgusCmAzjas=;
+	b=zX3FufTHQBiJlNRTWGwgkzbVUfxWpcU9nWsHOq1G5pl3lSaQqpSS1XCcsYfJef4nmYhQMA
+	EnYVygmx94x9t4yHCZ0DUgy/eK3TVO8WqCLib5TkKa/GyxqGjZeRnI13aNm8Yxj44gx1ZW
+	V91NdqZfdwnWuEKp2mdLaY7WmTE33ZX+eVd7fo6D+JIm5Gt018/Gc+zR77nhvYd3LuvALa
+	f3imY6zS2WBzYbdt0v7O+QyFb0Dm+BIZnHnLhjJjujTUHw5wt8nE/s7mGce5sAJMn3U7TG
+	ganb9lDFJQ88FPNGBP6vNEtmxfyOdYm/TCGpMQRtrC1sUwp1jKIbFAGJII/QCQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1776089042;
+	s=2020e; t=1776091113;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0XmGHg9S44+y10KfivGmGkIFlI+XOrx5liBw6WqhfqQ=;
-	b=8JtVdUk8mTyybj5lVhxgKh1vwj11qmMp6UE79Ly8+LBKdhyUPxgjGiHweEJXYpSuU2ZZjx
-	JjDZ/sczeoKZYfDA==
+	bh=eA81z93bj04vsEWs+MvN6yFwndktGFxlLgusCmAzjas=;
+	b=qrr9vnOev782+Ou7BCA+ZiupbmGKyindZSLPu5iqsv9Hy24PV6brjJu2IGVP3jqS6E/G7B
+	l+VgvCD6La23PTDw==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>,
+To: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
@@ -54,49 +53,54 @@ Cc: Dave Hansen <dave.hansen@linux.intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v6 00/90] x86: Introduce a centralized CPUID data model
-Message-ID: <adz3z_MaWJr_GOtc@lx-t490>
+Message-ID: <adz_584vlKivaECq@lx-t490>
 References: <20260327021645.555257-1-darwi@linutronix.de>
- <20260327152354.GBacahCioljpw5QqUc@fat_crate.local>
- <acrBBFyU_vi4zFOx@lx-t490>
- <20260330230836.GLacsCdDkVu0H3XU4l@fat_crate.local>
+ <adTWx9JxGt2hUpC-@wieczorr-mobl1.localdomain>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260330230836.GLacsCdDkVu0H3XU4l@fat_crate.local>
+In-Reply-To: <adTWx9JxGt2hUpC-@wieczorr-mobl1.localdomain>
 
-Hi!
+Hi Maciej,
 
-On Tue, 31 Mar 2026, Borislav Petkov wrote:
+On Tue, 07 Apr 2026, Maciej Wieczor-Retman wrote:
 >
-> Well, since the goal is to have *all* CPUID leaves available to the kernel,
-> then we *technically* don't need the synthetic ones anymore with the exception
-> of a handful ones which we defined for ourselves, like X86_FEATURE_ALWAYS, for
-> example.
->
-> But *all* synthetic bits which have correspondence to real CPUID leaves - and
-> they're synthetic because we wanted to save space... i.e., all those bits in
-> arch/x86/kernel/cpu/scattered.c, they don't need synthetic flags anymore
-> because the corresponding full leafs (damn spelling of Blätter eh!) are there.
->
-> Then, I'm thinking, we can reorder all the remaining really-synthetic ones
-> into the unique 4-byte entries and then not even expose them in any db and not
-> make them available in anything because we will have to cast them in stone
-> then.
+> Hi, very cool rework! So far I didn't notice any problems while testing.
 >
 
-I guess that's a very sensible plan.
+Thanks a lot for testing!
 
-The X86_FEATURE integration and synthetic bits work is covered by the late
-part of the queue (patches #77 => #90), so I'll rework 'em to do the above.
+I will appreciate then adding a Tested-by tag on v7, where the interesting
+bits will hopefully start to get merged.
 
-Can I get some review feedback for the patches on top (patches #04 => #76)?
-They shouldn't be affected by the requested X86_FEATURE changes.
+>
+> Buy anyway I wanted to ask if you thought about including the cpuid_deps[] or
+> cpuid_dependent_features[] into the new cpuid API ecosystem?
+>
+> Or if not (since this patchset is quite long already :b ), then do you have any
+> idea where best it could fit in? During discussion on [1] you mentioned the
+> feature depenedency should be encoded in x86-cpuid-db. I assume you meant it
+> would need to be first patched into there, then parsed by Kconfig?
+>
+> [1] https://lore.kernel.org/all/acruJf-pyld-fTh1@lx-t490/
+>
 
-Thanks,
+Sorry, I'm just back from Easter vacations; that's why I didn't answer your
+question in that other thread.
+
+x86-cpuid-db will encode all the feature dependencies in its XML database.
+Then it can generate all the necessary dependency structures, in a way that
+is easy to parse for all kernel phases; including the kconfig build phase.
+
+Then, what you want to do can be cleanly added on top.
+
+P.S. I'm already removing <asm/cpufeatures.h> in the next iteration, along
+with its ugly "/proc/cpuinfo names inside multi-line C comments" hack.
+
+Kind regards,
 Ahmed
