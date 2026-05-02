@@ -1,86 +1,107 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD07730E0CC
-	for <x86-cpuid@lists.linux.dev>; Wed, 29 Apr 2026 10:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D73B2F690F
+	for <x86-cpuid@lists.linux.dev>; Sat,  2 May 2026 22:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777457360; cv=none; b=jcOt6/h+ZuM192FqPXRAIqb45i0qYlSyyQBF2eEolIaycVWwCdKMeQJArjIDXLASXXbvKZr6LL5h9sw6vi1cnaxKUtbA3wcvNaOUyoZmMkTOJOrCdf5XteibXYze9L91aQxnVK35SRA8I4o/K2hYFrpz33PUZCMApFancd+ozt8=
+	t=1777759837; cv=none; b=rLlQktppY399GD7UCC/tEQqLBTVGWr5fi3lg2/Uvh8trz4LH0Q3IxD7TREhGG0nT6kufATV4814r0cA8gL7/dDHPSTKtSnp+Co1JGPqllu2PUaWsqV44sT037yS11O08gT2gvsUa0SeK+o66DUK3oc8ybl/d7oCoprl0E2ZVIYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777457360; c=relaxed/simple;
-	bh=jWwwXdwY7SKPrJVqtovp+ft34717z7wOSVIERf+x+u0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d8g5rkfbdTk+IKEj/ZN/G4I+0oDY3Licw9IdJbvnPSF9ZZwCt7SuDcOD9g03XVt1vJBZ6ttx3E9M8iJlgKjPT/w3gx0EwM2FyyDQEbxj3A5v9o/W0jazHs3fkJ/z3GNYF5d2XMXC2suQvUBqJTH2ve6A99qeM5e0xqmmI9++JPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Ie2XFEiv; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=68deSn8H; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1777759837; c=relaxed/simple;
+	bh=wEmaTSfAAmqLY0e5lzZCFR1s2aWwPm5zfhxxiUCw4tY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tDOYTGy58ymAeJrRlTzkN4B7YZ81+Ljle0xUg8PjsbKXG8CNc2lj4fxb1B7IHulDU/csLT4C37ah7pq8N6Hy2lPaerSIF2uSZXWW5hFA/Sv7iCXgvxVwFcFe231ezeO1iPG0+uOaS/K3gtENYzKkzlhFnbHxC9rqWE0RxXcAQ5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C0eE+BgR; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Ie2XFEiv";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="68deSn8H"
-Date: Wed, 29 Apr 2026 12:09:15 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1777457357;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jWwwXdwY7SKPrJVqtovp+ft34717z7wOSVIERf+x+u0=;
-	b=Ie2XFEivhaZKVgFlV3ITbeM5+eiKa/MCB57iApTVz648FmPF7Fre+ZpVAFA943/wMyQc1t
-	XavPBPksGe5zoJ4wcCI9aYFBrG9oWtNRLuzxXlnYFBES6RzzSqqXAxlNQbOT+tzbu6AVlC
-	KgKXX3bTLXS9d1Kqz1lnObgnNj9yCUKnMiKJG3WWMe1NI8cScbJPjKVZCzsu7X+N7+FXBU
-	b92QOmBBCAicKz/xwxLZ4ZUu646/Ro6ZgJe1CS7DM31ZWsHFNKpui/xl/CfhJJF9dWBYlf
-	yX8uH2vaKHIhd4LDfKbgVvXHvl+QsVPyVkKiGgCzNX/olwoiPhAwwdgmPNjwyA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1777457357;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jWwwXdwY7SKPrJVqtovp+ft34717z7wOSVIERf+x+u0=;
-	b=68deSn8H8xnwZ1nGIrSUCE1NuJz2ErdMBIk0X0ozqSubgW9nHSZZA9vQJSjkj9CG+AjcR2
-	7ZXDp4IbEHnuf1CQ==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Sean Christopherson <seanjc@google.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Christian Ludloff <ludloff@gmail.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v6 00/90] x86: Introduce a centralized CPUID data model
-Message-ID: <afHYy7oN-412CmKt@lx-t490>
-References: <20260327021645.555257-1-darwi@linutronix.de>
- <aeeu5hUusoPXN-vc@wieczorr-mobl1.localdomain>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C0eE+BgR"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7b6ae2ea4a1so27371517b3.2
+        for <x86-cpuid@lists.linux.dev>; Sat, 02 May 2026 15:10:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777759835; x=1778364635; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BtyC2HwxjEku3oE5Tx+mZC+Fd1YZppncyqkwce1J8qU=;
+        b=C0eE+BgRWoG3wAOt3Jr2bz1/O9Ob/31ehQ7UAM0c1oUWHlpZlmlTZIDtWek2bZRT+1
+         qHzgM6cYLSQNoa0caoUS0PUL8LMGRe9GnlIJnYwVUhdOksptQTlNDB5QRdH5wGiqbURI
+         Vid09yJUhB1UyT4nGTy/AFo3OzrAHEMQMBElxyuhBEdYIPOWOpPHlZ08HOfGYINafKem
+         s2sWl2lAztZReW4V164dY8i3+HLa0vlVP532i0OT4eHNHDFWAheaQ5uiaIq9zpgDdvDc
+         61PDJk0/7tB0PNqmYJhdsl+XnnpXBAEkUpcyw7ARp4G0E300Is0Jw1zZg/zxUEpYuYrN
+         JuSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777759835; x=1778364635;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BtyC2HwxjEku3oE5Tx+mZC+Fd1YZppncyqkwce1J8qU=;
+        b=lfsNI5gmQAmdHX/gS1yuKibXIGSKdy1n4B2wNoHJFcsrCbEhqJJyaYlS45kyNGWRet
+         CgOxbQaEx5tAsOmJXOctLjheKsUFCCiDysecmW3DxnmAkXdkFYslLoWjroE73PgQBzUT
+         fJO3lZL0G0aNXGrvA+QYQ6ND1Gnu2ObM96nYvd2OP24zXZpTbc5Bf5yXqmRB7E5WKkWz
+         ha1tPaNe0TLT6g4V6j5pMOmjq0IL32mkIQkjVc9TVVk6y9dTTfWbUi9W4uTnkHfwveWU
+         Q/ypdNownNhQAzQzvCswg9xDpQm4pNdzwPPAjGr9mLmbc7sByzUN5yGI7QUYDRz3EAMw
+         fm7w==
+X-Forwarded-Encrypted: i=1; AFNElJ+iDVbnBZ2/wFCpFjj2pdFROGKjs1AkAV1xfnrJYe92ssEQICHADVMeIReATMB3cGR2M2de3YFNThM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyBD4rWTCYaac/AoZQ0UeJduvwCBFUDD8TTgloNlpuK1urqktzL
+	31DjZm5k3M6lmtkMGBnHYrrWkiD/46S71Fv2CAsn34yaB0oqKXRqBiF4
+X-Gm-Gg: AeBDiet//3PuI+5i2yhjr87fg8aChkMUL7LBh25z3YwGHzWfxA3xqEGO0eUaNIVUFWy
+	HoqGe9kR99b5dk4p3PHuDOVF0Igsj5FK68smnH964XGrC95cQAHewGIRyfuelwepPh82+XWlg7k
+	N/4BlolcndX9GqsGTmhCpMoTgr7gT8V+0bqMoFbzChWuUWy8yprEFSdJr+mAzheDpQDR/HQRdPF
+	fYvr3yZ+OrsFHwAKQLSqio9NCM6sinDzVE+adS4a/QBsECbAE3pijxYYhObIsWA5XyoXef2+ptX
+	uL8qn/fenO2F6BaVzMGiRRroPJBUxC5eoILsvbXtOR9RWdXhlJbkNMZX1rLZp/xl5OEAgJfM7rN
+	gdV3gOjSxqa5wceHSgekCeFjhTlu+Y79Ig0YrP88tcM1+J9bcbQO6eMkqH6xBpqAFZFtXGPUQZ2
+	VF3svh2oRic579ISR842SxcPWnR/EinNmEbCyETYoKJ7JloGvKpP2KIwx0l6G3h9Fbcqox7pxzp
+	sQawUVKpR/cTGRKMxRpEL2zYj0ONQRVjg1/J8rqQg==
+X-Received: by 2002:a05:690c:f08:b0:79f:3b8c:a7fc with SMTP id 00721157ae682-7bd77144b29mr47963097b3.39.1777759834912;
+        Sat, 02 May 2026 15:10:34 -0700 (PDT)
+Received: from tradnomic.. (162-196-88-40.lightspeed.frokca.sbcglobal.net. [162.196.88.40])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd6655d954sm28853537b3.18.2026.05.02.15.10.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 May 2026 15:10:34 -0700 (PDT)
+From: rafad900 <rafad900@gmail.com>
+X-Google-Original-From: rafad900 <19312533+rafad900@users.noreply.github.com>
+To: rafad900@gmail.com,
+	bp@alien8.de,
+	tglx@kernel.org,
+	skhan@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org,
+	x86-cpuid@lists.linux.dev,
+	rafad900 <19312533+rafad900@users.noreply.github.com>
+Subject: [PATCH] tools/x86/kcpuid: bound CSV field copies to avoid overflow
+Date: Sat,  2 May 2026 15:10:30 -0700
+Message-ID: <20260502221030.1081829-1-19312533+rafad900@users.noreply.github.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aeeu5hUusoPXN-vc@wieczorr-mobl1.localdomain>
+Content-Transfer-Encoding: 8bit
 
-On Tue, 21 Apr 2026, Maciej Wieczor-Retman wrote:
->
-> I've now read through every patch and cross checked most things with the
-> docs so I think everything plugs in where it should (aside from that
-> transmeta.c thing that the kernel bot reported).
->
+I added bounded copies of the bit descriptions to avoid possible
+overflows. I tested by compiling the tool and scp into qemu along with
+the .csv file. Then ran the tool and saw no errors
 
-Thanks a lot!
+Signed-off-by: rafad900 <19312533+rafad900@users.noreply.github.com>
+---
+ tools/arch/x86/kcpuid/kcpuid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->
-> Only left comments on some code formatting stuff, typoes etc.
->
+diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
+index 7dc6b9235d02..c17dbcf453eb 100644
+--- a/tools/arch/x86/kcpuid/kcpuid.c
++++ b/tools/arch/x86/kcpuid/kcpuid.c
+@@ -415,8 +415,8 @@ static void parse_line(char *line)
+ 
+ 		bdesc->end = bit_end;
+ 		bdesc->start = bit_start;
+-		strcpy(bdesc->simp, strtok(tokens[4], " \t"));
+-		strcpy(bdesc->detail, tokens[5]);
++		strncpy(bdesc->simp, strtok(tokens[4], " \t"), sizeof(bdesc->simp) - 1);
++		strncpy(bdesc->detail, tokens[5], sizeof(bdesc->detail) - 1);
+ 	}
+ 	return;
+ 
+-- 
+2.43.0
 
-I'm in-progress rebasing the patch queue over -rc1 and have included all
-your points.
-
-Kind regards,
-Ahmed
