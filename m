@@ -1,177 +1,103 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D35C21ABD7
-	for <x86-cpuid@lists.linux.dev>; Wed,  6 May 2026 23:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778108638; cv=pass; b=VZLT505VSf7/a0JLJwcK8EwMGQxEAOP0vBdoyzU3VPGfPy4TW6QMkxQBNedM8/PN863tgoXYgiLY+9w0/BSDbhZdzWHzZvOW658XKIN93LoiUWYnI7mjwEEQOQAkN6rsdPxi35PAB8qpwUWC4SBppTOsrN5MA3CvleQC1nxLE38=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778108638; c=relaxed/simple;
-	bh=lY449Yat7j/EgfSC4QI2jMgIs3epqp1fmPaXu+43hgE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=shXk3uliFPGpmlgI4O4PfGCOFBbfqpNX1ZDyYIxnEyLI9rqs0T//Sa/gfnYpZ8BCNLQcdAKfUCd+axyORO0WQR8Usw5jI7BmB1y5Xhyma8XLmls44EH5HC5hkn+CpHXlZdkFeD6t5TmwvDFjwlOE8BHymhs3CArXXRdWTDLDI2s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gbjlvR6l; arc=pass smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0930B3E6DDB
+	for <x86-cpuid@lists.linux.dev>; Thu,  7 May 2026 10:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778149090; cv=none; b=jX9KLuHZINkfkTHlkVyBhwGlDPadp4r9KP4p33h1lAmw6yawvPoD26zaG/Y9NGR5v2uG5A9VyQUGo/vGrMqcpLGOU+boAjSdCTUpqkXOM1gMjd+lBSkG9UafWBu38zGRVLgyrrBRyqmO1QQiaeBdw3QiXOcrQJ6UkzxKdhbvELg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778149090; c=relaxed/simple;
+	bh=Rrl7YFQPHji1N60FPl2P8oJxoTeNNeiqKAUJwI0BsrI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=accWOPiXfrhI0TyiFUwgx2Kc15VuvQgR6HOdLwY5GlXl8AwcCfmFbC+SSIX1NzrK6oXQY/FXfYC1Mg4vTbEPiPwNiCUBRcqcoawEJtru9OFk/QdJ36GCBAwN+vEC4djiEYFravA0xt/b9zS7sLhqhyPwyLiqiBb3IaczAr194pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=B9VexACI; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gbjlvR6l"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b9358bc9c50so28350566b.1
-        for <x86-cpuid@lists.linux.dev>; Wed, 06 May 2026 16:03:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778108635; cv=none;
-        d=google.com; s=arc-20240605;
-        b=dwoy3AKwHzZdVTlyEaJk9s5PqTxKjgPHVn3POyiCK3HLOEsN43oDTGaU/7ee5p76e3
-         vttvK11/4EK1eSnRw3WOkq0z9rK7hPgGPzdvuteozr78mA9N/MuGpq4TB+ocdU5fxIQt
-         yGmhChqYWDfrqZt4nYSktBXJUUL3bLzHjgDMOVq60BB93PPZrLW9rFfj4NknjEz1inXX
-         ZainmKH8ld1l+EWV3XmTo45PnRuH8C2m+/I6WYZooIzHwIKwhy6xmTotGhBD2geR6CMe
-         /LruuwFVJaDIW5P3Rvja9OYAwX7kAOfEz8stmZlMqfzp1+JKEcjPaBC6FsChFgmISia8
-         AqAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:dkim-signature;
-        bh=Rdgp3TEU/YVFg1GLMybRVPIGIQdeJ6+uFtURofHkl8A=;
-        fh=+qm2lIa6LguYdCP8vrp7uoAtW2BvIU5jC6o75k4qzsc=;
-        b=TYEvWSugIy08kUHgYvJRT/vAAhc7LpUFiNQyBllytIX7cc24acQbMUmSiNzzxmfAfr
-         vQwXaKNht0jdI/bd119SCSVGKs/hZARgcBONH+NS2U/5xsCpTyV4UUsIwIMEIrCIHJTi
-         q616ZwHZRIMhUV84ILu4d2lYZn1Vc+mtkEw1dlol6clgTKm5vpqaO8+eK3D3+Jcila8K
-         H+uH6zn4Ie51iqxn1WPO/c8+reYKfMvOwhacqdzqqzrPjYKmOTrq7ofGMGYjtEw1/G2B
-         DGgAafJlGaRuAbcdXCaGKs4mcqUQp1L+FN4d8b1+B+6+5j0DNVB+MyltFuH5Lm1jy5yK
-         Ogqg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778108635; x=1778713435; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Rdgp3TEU/YVFg1GLMybRVPIGIQdeJ6+uFtURofHkl8A=;
-        b=gbjlvR6lRLCDgYQqYYTYUywujQBI0TkpgOX5GHEpNbzoUUPQEk+7vEZWHit4H69ypJ
-         Yey8h5gDNTuspGDjPOXTkHyycbG+EKfhb10NQ4iVA+sinJ/qqFjzIxKcKgVVbtz5tHF1
-         ukO/45MSTxK48ZduCsqd0N2enImDLk1QVFKh2NcnFmoQBtF/MLi+0an5UwPqByJtizno
-         JAlwVRznbaxymSAggmNafrnP3EV43sFubVzKpxmJ5mm6OqKqfEKtErjfnLdZAXc/pAj4
-         +IXqkY/jdz4QgSJFiSfJmQ2QdrtXUs1NWQvZDx1o8Va56uD0930Gr4jblBCTj/OJ1d6O
-         Sw/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778108635; x=1778713435;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rdgp3TEU/YVFg1GLMybRVPIGIQdeJ6+uFtURofHkl8A=;
-        b=NQHiBY4aeo1CXh7K2g+0b1ZIsVncnJ/bAgxern9dFW1SSUDBSiDGbqxwQfZ1q8cIa/
-         9KmSUVwYIHaXvDqOHL4hWsmGyUlJhY5v8SlWpVN5HE1W47lilWVUattUUt96RhyuTBLr
-         OPyoihoZowLWtqwjAxJgYRel+CHNV+al0gjCMC8435XmcYXoqVAflop9UzHiaaKwuhIb
-         VZ9Iu4bwSEoFU3NqPvsw+LQJeBjw6eH/Ze6sMTDYu5TIV3qhCqv3tFEJ3k0ucImFxJHa
-         vKsEgIKhIUYcxkF5kqiw4Ir78OAkjjvSSfQOHlvWzoFj4sPZ0GrEEGcNYk8fFhIjgZ5L
-         JzHw==
-X-Forwarded-Encrypted: i=1; AFNElJ89+lwESR3O3kVHk4WLqkpu8vxZU4kZ26rKD1D4Oe0/GZhyn0MJ76AfDfau4qNH97RcxQRPSMtYYcU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyeLt9ibqrktPFvNw8pu8BUkK0B660c0x6wirtN30pKqBLSRF6o
-	lzlI27dyy/DmW4OIgO3QMx7uLMUVjUwBl9nz1Xq98p8I6kIBEkPwoLftyb18i9YtFs52BbXaSwX
-	2pki8dp9X21fWrm7kDjEzgojKCQbc9t4=
-X-Gm-Gg: AeBDiesGzMyGEHf7tN8OCu9gVptu6laBfK69ShaQQfM7VUwY1dobV1Tr/YgFY7VCuSy
-	DcTX/2m7Z95fxR37QvB8fPSnpBfjE+sS6Ly4w6eAQAiez3vyTBX/17m2b6SVj1ndgdnZ45PFvAj
-	X1+lsiylrVX/4ONW6Z3Dnswzxpl3nXPhY0TeszFs0zJfFbwNVf5cBT9JASzyS3znrEIRrL1gzdw
-	SukKZ9oIqMdTk7pWJoo8hgd36aeHpLw1QFeEjG4O4voTXKAs7zGVPqOk9/mWNIu6bvTgmLCK3FC
-	PH93vcLYepXwcPXzZI1O37jcpC8njP5wQBj6n0DFzuP9SRiqKOI=
-X-Received: by 2002:a17:907:3cc7:b0:bc4:aafa:65cf with SMTP id
- a640c23a62f3a-bc56c92bfc1mr314777766b.16.1778108634646; Wed, 06 May 2026
- 16:03:54 -0700 (PDT)
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="B9VexACI"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 3B1B940E01A1;
+	Thu,  7 May 2026 10:18:05 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id GQXZjmtNNkwJ; Thu,  7 May 2026 10:17:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1778149075; bh=o8TTg/JyM55QMa2Cx4aPzfxYc2gu3QuobyetBo2VxZQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B9VexACIx2z2+lq0AhAFm9V0RjuXpzQxH7g7wUo8uJhyNSz4hQGv2pRJNt1o5p/6a
+	 vi5nTFm7wfqYVbnSdpLSsk7cGlK/jit0I7denVfrstbmVH+b8avMFBaFi74HgPLUF+
+	 73mdKnNoVL7oX7wy5VcX8mqFeVVEVkqQx2m/fy0td6sBLSWYu3lZ2Mu5cmUTkua/ms
+	 IjoVPhncZDXaOOvIJ2WJBSHbPXWI4mYDMbJmch0wG51flJoiWwe+yU8twTEWQg5bNC
+	 QUD1NN5A+oDsFS4Gmgqgz3AuRY9sqGczSmAm9SbYakv2w6N99qeFBOybiyPRjeXwgk
+	 GcNyqwvltza8lFRUQj2xiuEt6b4uYw/9c3TwkFBSPqv3I0WAT0TH23c/xfGx+rQuUe
+	 0WiCZfyU3J4D71Lu3vCjn29acVcT+HqoNw4pBk9GSmb74Wpe44Z5gypu+cssx5tKpC
+	 cJtVbve2jlM3fGAva4E9kqr2fSDR4lbTcARqfBtS6chTDSRuuH8KxKmBcjvNee/gXe
+	 EeHzU+npqioiTxS+p+tBvFEzwW/xpxtVp7ORoX1htiy2b2pqP1VLSJHok3udkCk5e4
+	 PrA5shbfkhq7NYwBDTiIn94JquFXMAtWMXmuaeFSaDbHizOV1/jNM0iNg+mXhupeaG
+	 3qzaQpn7OooiIJ4G2Pan73mU=
+Received: from zn.tnic (pd953014d.dip0.t-ipconnect.de [217.83.1.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id 15BA240E0140;
+	Thu,  7 May 2026 10:17:40 +0000 (UTC)
+Date: Thu, 7 May 2026 12:17:32 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Sean Christopherson <seanjc@google.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Christian Ludloff <ludloff@gmail.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v6 00/90] x86: Introduce a centralized CPUID data model
+Message-ID: <20260507101732.GAafxmvEcQ3W3UHE1j@fat_crate.local>
+References: <20260327021645.555257-1-darwi@linutronix.de>
+ <20260327152354.GBacahCioljpw5QqUc@fat_crate.local>
+ <acrBBFyU_vi4zFOx@lx-t490>
+ <20260330230836.GLacsCdDkVu0H3XU4l@fat_crate.local>
+ <adz3z_MaWJr_GOtc@lx-t490>
+ <ae-uw9836AJScRsq@lx-t490>
+ <20260505133350.GAafnxvtgFxJHth8WB@fat_crate.local>
+ <20260505151242.GDafoI6oOOs9hknrrK@fat_crate.local>
+ <afup8Zf9cmmACdoh@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260327021645.555257-1-darwi@linutronix.de> <20260327152354.GBacahCioljpw5QqUc@fat_crate.local>
- <acrBBFyU_vi4zFOx@lx-t490> <20260330230836.GLacsCdDkVu0H3XU4l@fat_crate.local>
- <adz3z_MaWJr_GOtc@lx-t490> <ae-uw9836AJScRsq@lx-t490> <20260505133350.GAafnxvtgFxJHth8WB@fat_crate.local>
- <20260505151242.GDafoI6oOOs9hknrrK@fat_crate.local> <CAKSQd8UvY2iLew9gFYEs0MCgPa9R8RiQLP+kJUb6Cw8BYo=yBA@mail.gmail.com>
- <afu5QIInX1POppSl@lx-t490> <20260506221822.GGafu-Lnfw9I8PxOKQ@fat_crate.local>
-In-Reply-To: <20260506221822.GGafu-Lnfw9I8PxOKQ@fat_crate.local>
-Reply-To: ludloff@gmail.com
-From: Christian Ludloff <ludloff@gmail.com>
-Date: Wed, 6 May 2026 16:03:42 -0700
-X-Gm-Features: AVHnY4KndPEbrHnXRwHI84uV3TSQO9UcfULE2H0Mbq3quO0ktvIkbG08mrk7m1k
-Message-ID: <CAKSQd8ViM3JRa47RS-VWawz-yhZ2Pw_+2cD+t3fQ0jb-UC3mHQ@mail.gmail.com>
-Subject: Re: [PATCH v6 00/90] x86: Introduce a centralized CPUID data model
-To: Borislav Petkov <bp@alien8.de>
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Ingo Molnar <mingo@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>, 
-	Sean Christopherson <seanjc@google.com>, David Woodhouse <dwmw2@infradead.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Sohil Mehta <sohil.mehta@intel.com>, 
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org, x86-cpuid@lists.linux.dev, 
-	LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <afup8Zf9cmmACdoh@lx-t490>
 
-On Wed, May 6, 2026 at 3:18=E2=80=AFPM Borislav Petkov <bp@alien8.de> wrote=
-:
-> On Wed, May 06, 2026 at 11:57:20PM +0200, Ahmed S. Darwish wrote:
-> > > Second, the number of words reported in 0001h and 0002h
-> > > should be enumerated, in case the list grows, and so that a
-> > > program can tell between all-zero and not-present. (ECX>0
-> > > sub leaves, basically.)
-> > >
-> > > Since 0001h has already used up all four registers, it can't
-> > > report a max sub leaf in EAX =E2=80=93 so maybe e.g. 0000h EBX
-> > > has to do the job instead: it could do e.g. two byte fields, to
-> > > report the number of words instead, i.e. 0000h BL =3D> 0001h
-> > > words, and 0001h BH =3D> 0002h words. (Or wider fields... if
-> > > you expect more future growth for words.)
-> > >
-> >
-> > For both CPUID(0x4c780001) and CPUID(0x4c780002), I can still reserve
-> > their EAX for that.  Something like:
-> >
-> > <leaf id=3D"0x4c780001">
-> >   <subleaf id=3D"0">
->
-> Can we slow down here please?
->
-> If we're going to deal with maxleaves, then I'd say that ship has already
-> sailed looong time ago.
->
-> Because up until now there's no maxleaf for those Linux-defined words. So=
- you
-> *still* have to know which kernel you're looking at to know which words a=
-re
-> defined, and which words are reserved zeros.
->
-> The only thing you have is the database we're building here.
->
-> And since it'll be append-only for the Linux leaves, if it is not in the
-> database, it does not exist.
->
-> If you want to use it and decypher feature words, you still need to know =
-which
-> kernel we're talking about. Because cpufeatures.h has the number of
-> Linux-specific words which this particular kernel knows about.
->
-> And if we're going to differentiate between defined and reserved, then we=
- need
-> to save the kernel version from which onwards those bits actually have
-> a meaning.
->
-> And that would be ugly.
->
-> So if you see word X, bit Y set, then that is a synthetic word bit and it=
- is
-> enabled. If it is not set, it is not present or not enabled but again, wi=
-thout
-> kernel version you don't know anyway.
+On Wed, May 06, 2026 at 10:52:01PM +0200, Ahmed S. Darwish wrote:
+> For the /current/ scattered feature bits, the array which maps them to
+> their hardware backing:
+> 
+>     static const struct cpuid_bit cpuid_bits[] = {
+> 	{ X86_FEATURE_APERFMPERF,	CPUID_ECX,  0, 0x00000006, 0 },
+> 	{ X86_FEATURE_EPB,		CPUID_ECX,  3, 0x00000006, 0 },
+> 	{ ... },
+>     }
+> 
+> is needed.
 
-In the end, it is a bit string.
+My assumption is that at the end of the patchset, scattered.c is gone because
+we have *all* hw CPUID functions present.
 
-So maybe report the max
-bit that is being reported?
+-- 
+Regards/Gruss,
+    Boris.
 
-And yes, 'version' is hard.
-
-You sort of need the hash
-of cpufeatures.h so a pull
-of kernel x.y.z plus a mod
-around flag or bug words
-doesn't just say x.y.z, still.
-
---
-C.
+https://people.kernel.org/tglx/notes-about-netiquette
