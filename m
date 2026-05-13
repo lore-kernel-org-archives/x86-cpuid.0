@@ -1,44 +1,53 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E94D49551B
-	for <x86-cpuid@lists.linux.dev>; Wed, 13 May 2026 17:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48D3ECBF9
+	for <x86-cpuid@lists.linux.dev>; Wed, 13 May 2026 17:39:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778693129; cv=none; b=Y6RN12ytReAkNwHsjXmB5ihydOCZn0gpiblOyBglfDZwGIhSF9qL9rTjnIn+q0lrfMceuqcZGrSQ3fmuS9oVycz09DS12qmMwYd25rf/iC2q/V5HwmebyRdI/A3oUbYh3duhpr8wDN0pUlk7pUCNHyHEBd5ARtBhyy7KfY6/ktk=
+	t=1778693956; cv=none; b=uujeV/mJr3LKKyQFmhHkPGf3mvgS5AAnakshAmE1DtvtpnEeN10PS72D5vj4lnHKcW8DXY4tbtYF/UdaYEmU6bHgZbrMc5l2Z9slhsNVkwAym62fRhZ1OIMEZW1MKrEWtPoGr5QOoi+TIbFXSiLlA1v2kO+qgGAywnKG+XBVhuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778693129; c=relaxed/simple;
-	bh=ZUDrRVCUDxyZdJv9kOkV9i+CwocEPVMRZrSbjbhpzWk=;
+	s=arc-20240116; t=1778693956; c=relaxed/simple;
+	bh=6URQ7Ufe2dbTGOPS3QaVBZrDEkAp4Jt05D+0cJuI744=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dJwSRsGnRyi/w2Ci5jvN76NMh3nd2HHQ4pG6AQTkQWH7jtc+LajQ4cEWiLdCnwaa7uOfsezI2zOUBIXwjY4bPIh8FrmM8kNo6XgEAwFYeZuggtkIRP67FPTfR0lxsL0fFylgaywG2xAEUCIkV+KFNd6TW6+/Tw42l9Vr4ZsW5/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=aYZmBFCZ; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=bJUBZpWe; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=bJrY8CK5o2B0fda9apnuS5DgTaH21Ygx+SRAbHwiXkCOG76c8sf8yuAYgd3jvouHzY3S0irLDWAsjiAiqyD4QBUUeYSzdezHX5nc8GUsOzUau1lvorxkhDp5RhrRSWiweHVy0ZVSc/MBa47YhZsxSxmPpc4EhFnbPbI8fNf6M7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=MC48tk0Y; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="aYZmBFCZ";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="bJUBZpWe"
-Date: Wed, 13 May 2026 19:25:23 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1778693125;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=HKtYwdVefZxNBQXiLs0Aqn8qUteSeGr/CL5KNeOCjo0=;
-	b=aYZmBFCZzoQKcarxcBiHaOrNwOESz1tpR/+YjqbxTv3yCbz9Tap9KoWTOvnLINWC2/r60U
-	F+RQ74/MfILdQqnVActLuMiQBhlJFJ/4t+ph4m19gucZ8U0H9bnOL2V/OX8aQvH3r12Z8U
-	1e0fO3SVidnU5VjNAprt7YcemgxHN1PpudrzofThsVi91rq6M3kSj+ENX8uRgGKfuhlhKq
-	uS9g/uXvOCiYG8YY2s6JneosXFH8dBXms7lRVyxuxl0W8V9EuedzQOQ9hjQYuF/03geMlU
-	68jzogZyJ0MyKtkECiu2SBOE+4afFFYl2hDbLqAICHM8kGvG9O+v8jrI6W2vGA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1778693125;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=HKtYwdVefZxNBQXiLs0Aqn8qUteSeGr/CL5KNeOCjo0=;
-	b=bJUBZpWeaN+cxH0AWZyhEbp1vMIy4PosgJIcareED41EpC0u5qtRg+I9SvB9AY0/vgjHyr
-	KjA2llHPnK2DGbAw==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Borislav Petkov <bp@alien8.de>
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="MC48tk0Y"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 984CB40E01A1;
+	Wed, 13 May 2026 17:39:13 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 8qN29dT2UXpR; Wed, 13 May 2026 17:39:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1778693943; bh=bwFLRs6xGxqy1dtfN2cTv6yTIyT6TRac6yLqZtyM6G4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MC48tk0YHry3u89Pk+eEoiK7Z3fvBkiXzhf7CDWBDqpHz5Md1IA8FTplAOq3BiyFI
+	 36r8Pc6UxbHz0cQrjT+xWFHLAtxglNAKSuuS4hNYCVjr7h+YLr3VpFoGoEGSeBqhMH
+	 6lV+id6Wew7/uvuR8hn/VOkH4NMNRFI4kwTLWUkWvQ9mXWKBiq/AJQ/mA5q8v7N3it
+	 4RLnkiZ/3SbX84oKRMWqXNNFyDVkwrPo5qtu5T7uP1yK8u9AvgD97VdMzsUK1PINJI
+	 J1dVY//jZhvXNGKF3hVv8CN9cppfy4iYETlqNaGQYqq4svnaQSeY5bHbKOBLgdg43U
+	 hkXz1tCsmX2UpNeWRVSMhQ5x/Os8anz2ydVAYoFEkKsR40nnj0TEbAZ9VH5y8HCrxM
+	 8kvnunnUWh+KLh/yZIRjrqr5mN0tpXOMeU4ACW2P5imcibpl1788iLWMAUZuTMEF0l
+	 LagYhSF3hc+ysu58tu2CpkKy3zDStWaoaSZcE5Kby1+Qt4+IslQogNWv3bbXCYD50h
+	 yUcmFFKHxIYfkdfUX2XAID2yqCiN88XwpNf0oFJLv5oEnezM4yiq03sZcSTv8Gd9yo
+	 jjnkGV57UJdoDoaJkkHoKrOlNqKdiV2RCoO0+TGUBhsjzVNi6HWq0OLW3ApJkJ4GLW
+	 pVZBP1dMk95kTKnZkExsWhmE=
+Received: from zn.tnic (pd953014d.dip0.t-ipconnect.de [217.83.1.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id 7C31A40E00BA;
+	Wed, 13 May 2026 17:38:48 +0000 (UTC)
+Date: Wed, 13 May 2026 19:38:42 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
 Cc: Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -52,7 +61,7 @@ Cc: Dave Hansen <dave.hansen@linux.intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v6 10/90] x86/cpu: Rescan CPUID table after disabling PSN
-Message-ID: <agS0A2pRhz_qCPce@lx-t490>
+Message-ID: <20260513173842.GJagS3InAztdvoiPGl@fat_crate.local>
 References: <20260327021645.555257-1-darwi@linutronix.de>
  <20260327021645.555257-11-darwi@linutronix.de>
  <20260511200032.GAagI1YMP51EzCo7dn@fat_crate.local>
@@ -61,85 +70,40 @@ References: <20260327021645.555257-1-darwi@linutronix.de>
  <20260513152742.GDagSYbheCBWwNeVj-@fat_crate.local>
  <agShjbCo_HSs9YOf@lx-t490>
  <20260513165128.GFagSsEPFCogQu7n5t@fat_crate.local>
+ <agS0A2pRhz_qCPce@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260513165128.GFagSsEPFCogQu7n5t@fat_crate.local>
+In-Reply-To: <agS0A2pRhz_qCPce@lx-t490>
 
-On Wed, 13 May 2026, Borislav Petkov wrote:
->
-> I think you mean whatever has done clear_cpu_cap() which doesn't use the
-> cpu_caps_cleared/set arrays.
->
+On Wed, May 13, 2026 at 07:25:23PM +0200, Ahmed S. Darwish wrote:
+> If we can track the clear_cpu_cap() bits above, then AFAIK a reliable
+> solution would be to just re-initialize the whole CPUID table whole sale
+> and then invoke apply_forced_caps().
 
-Exactly.
+Maybe... later...
 
-There are almost a 100 call sites which directly do a set_cpu_cap():
+Right now the *only* thing we wanna do *first* is the conversion. Which is
+a huuge undertaking in itself.
 
-    git grep 'set_cpu_cap(c, X86' arch/x86/
+So please no more unrelated changes and "it would be good to do this and
+that." That can be done later.
 
-And none of those goes through the cpu_caps_set[] array, and thus into the
-apply_forced_caps() thing.  The bit is just directly set through bitops.
+If we find a bug while doing so then it is very likely an existing bug which
+we'll fix immeditely and continue with the conversion.
 
-So, resetting the CPUID table whole sale will drastically alter the x86
-subystem behavior here.
+Once everything has been converted and the dust settles, *then* w can do
+improvements ontop.
 
-> > I'm sending another patch queue iteration shortly that have a new API
-> > function abstracting this min_t() logic in its own parser function, along
-> > with better documentation:
-> >
-> >     https://lkml.kernel.org/agSfWTxs9pRPHJxl@lx-t490/
->
-> And I don't want to pay attention to which ranges I've parsed and which I
-> haven't. That's too fragile. I want to simply rescan the whole thing and
-> be up-to-date.
+Thx.
 
-Yes, but AFAIK this changes kernel behavior to (what is at least to me) a
-now-unknown behavior.
+-- 
+Regards/Gruss,
+    Boris.
 
->
-> Also, what guarantees that this thing:
->
-> 	rescan_from = min_t(int, l0->max_std_leaf, c->cpuid_level) + 1;
-> 	cpuid_refresh_range(c, rescan_from, CPUID_BASE_END);
->
-> doesn't overwrite some unrelated ranges?
->
-> Also, in your example:
->
-> * First case:
->
->          leaf 0x0
-> 	   leaf 0x1
-> 	   leaf 0x2     <- Old max CPUID
-> 	   leaf 0x3
-> 	   leaf 0x4
-> 	   leaf 0x5
-> 	   leaf 0x6
-> 	   leaf 0x7
-> 	   leaf 0x9     <- *New* max CPUID
->
-> when you rescan and overwrite [2-9], what guarantees that you don't overwrite
-> an already set or cleared bit in those new leafs, say in leaf 5?
->
-> Neither set_cpu_cap() nor clear_cpu_cap() pay attention to the max base leaf
-> value?
-
-Hmmm, that's a valid point.
-
-So, clear_cpu_cap() logs the cleared bits to cpu_caps_cleared[].
-
-Is there a reason why set_cpu_cap(), supposedly its parallel function,
-totally ommits cpu_caps_set[]?
-
-If we can track the clear_cpu_cap() bits above, then AFAIK a reliable
-solution would be to just re-initialize the whole CPUID table whole sale
-and then invoke apply_forced_caps().
-
-Thanks,
-Ahmed
+https://people.kernel.org/tglx/notes-about-netiquette
