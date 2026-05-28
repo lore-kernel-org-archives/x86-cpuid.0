@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB7E3FE36D
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3483FF1CB
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779982825; cv=none; b=VRuw7DiT6rGLTQ01qYiv8jHJ4SVnFtAslXSacKJp05NyRCKpbUaWoRvvCTdHS6H/t2uEt/yFy+yGHR8lPBEu7xpu/wEjuOfeSzZuUqdCAC8Zmeb86d88y983e9ROyROhiGSZKmb6+WElx7vyhdr6JIbXqdZ3QWsa5cv3GqC2nl4=
+	t=1779982830; cv=none; b=OGOLBkF2so0NOeyYNZzbHF/KNWadZN3tLxinBC68p9nP6avZ9QmE/B6ZiQ+VjNT14651UkprIxPzIKE6kIiv3JR3pDlPZMcHKuL9abELUU+Elb4Ytxva7sGWnPgojNfS5/hICqxYECMCC+bdzb+EneD7fqOlLGo1Rnx2DELwtmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779982825; c=relaxed/simple;
-	bh=sl6C0wJhIFidfHLcpnMa5hAhYTKn2SOK2ff5l5LU10A=;
+	s=arc-20240116; t=1779982830; c=relaxed/simple;
+	bh=1HCZ5l9RxCU3IUPSCzTHfvMvvUidzbrY6BQsFnBw3Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXCGrhm1nq4SmqDdGNttbjpMkSZBdHthpoPROytm6+AQ1qwuBcx9e83dNerUZr0H4mczRENh+SU496iPfm/gPhTW/QQ+4fh8PoKQbhjkMg27D6NQajmpQ0bS5JoGKAAhoWdGoHgi/XPvKa6bhG9hk/luLLU2H9e4SVAMvWjD2Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=bB0YzQFt; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=R/3HlCOm; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=MdAwevMb+wKCX4lbWUD1Gd4Pg8FqMf+/zcEzq2MCZeODgjyJp9dyh49XFva0Dq0Gw1ohHdbQ3gdL+s+aLQYE9d7lr5lqwRee1lih5/U2XYKK3q4kdW3ckQMsC10wbiSUmSDOMkKsHb3a8uB8b6zoSwg+pAoPf4YQCJnMRrxCyXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=QQBE3Izy; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=GsnZ4KZb; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="bB0YzQFt";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="R/3HlCOm"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="QQBE3Izy";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="GsnZ4KZb"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779982822;
+	s=2020; t=1779982826;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=zTVNWRQPCqzGBrFVhtMiodywZ6GPWl7y/Gu9wWG7slI=;
-	b=bB0YzQFtoxGXwmw7S5Sxhwbr6otQ55bYW6p3myNVhhhfiqn++aKmonL7/MGnBZagT7Ncvi
-	nsL1RGLP5ec/1a3yb4IDFHiAEFEu6121sgCkp3hZUmDIfTNBHZ7MA+daTgZmjUEEi3Jtr2
-	JjCXiTT04b5PuNKDi/ZA+5D8YZ8ImmPzjm6EAQ4zV3JM/QmKxyLE3T6rhILsxapjsEW+S7
-	+r7LP2+GbHsK6ZpLw3YwjaqfkjYZPUQQNjpiDEu9r+sS83RFHjr2nyJZkT3MigkxXQ8zbZ
-	RubxARf87QV5zBK3OBv6DEeer0xKXgMz5r4fMmLxcryj2l8jShfR3cUAim9ONw==
+	bh=Enkiw++N0BixPy49r1hKo68/Y20Z8aSvogyYQ0bhJhE=;
+	b=QQBE3IzyKnPRTAM+AxAdP6A6QLd6E1Y95N8R2iPs6CS3oHqFeWpM7Z0XLcQUZ0qklJ0oxN
+	jrwzT5VdO/J3vFFZMNCVyfDXoTrVgNIyK5EzMz5o6oKClpMwcunOHhYrVFNkFAI9MCc5JN
+	qY5xJREmTHRRwUTOf9TnAWaefrN1zrP9Gze59pVlR8QUB7PVIAdd0yD4lYAA11dqnZSmCW
+	OpiJLlJSXSQv/CmITyRu/Ny9+JpXvPYCGSr8gnN1PchPs4O643lqVGmkae43x/X/vNFrCT
+	VClPNfPJ84CBFClqgyJZ3oRHlPXtlhsJGJs2azMXiAgrPYWpR5uf8DtfZY7kjQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779982822;
+	s=2020e; t=1779982826;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=zTVNWRQPCqzGBrFVhtMiodywZ6GPWl7y/Gu9wWG7slI=;
-	b=R/3HlCOmL9Gi/Ul3Jx1Ykp1LyyBQ+5kRWnnVtSGH8EG6X/7ZC7OgAm21HBkSkBg27d9gkm
-	J1sZl5DJL7QMPkAg==
+	bh=Enkiw++N0BixPy49r1hKo68/Y20Z8aSvogyYQ0bhJhE=;
+	b=GsnZ4KZbl+0ukePd6N8CuBirzDBaFBDBldRxwBGCuI3xHwNu+JRPl8honR8GQRbVJ7B3J3
+	QVnwE5gTTWqaI6Aw==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 013/120] x86/cpu: Use parsed CPUID(0x80000000)
-Date: Thu, 28 May 2026 17:37:35 +0200
-Message-ID: <20260528153923.403473-14-darwi@linutronix.de>
+Subject: [PATCH v7 014/120] x86/cpuid: Parse CPUID(0x80000002) to CPUID(0x80000004)
+Date: Thu, 28 May 2026 17:37:36 +0200
+Message-ID: <20260528153923.403473-15-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,62 +66,43 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-At early boot code, use parsed CPUID(0x80000000) instead of invoking a
-direct CPUID query.
+Add CPUID(0x80000002) => CPUID(0x80000004) support to the CPUID parser.
 
-The original code has the check:
-
-    extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
-
-to protect against Intel 32-bit machines without an extended range, where a
-CPUID(0x80000000) query will repeat the output of the max-valid standard
-CPUID leaf output.
-
-A similar check is already done at the CPUID parser's own CPUID(0x80000000)
-read function:
-
-    if (CPUID_RANGE(el0->max_ext_leaf) != CPUID_EXT_START) {
-        // Handle error
-    }
-
-Thus, for the call-site, the parsed CPUID NULL check below:
-
-    el0 = cpuid_leaf(c, 0x80000000);
-    extended_cpuid_level = el0 ? el0->max_ext_leaf : 0;
-
-is sufficient.
+This allows converting their call sites to the CPUID API next.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/common.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/cpuid/types.h | 3 +++
+ arch/x86/kernel/cpu/cpuid_parser.h | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 257808609ef5..9b05a747161f 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1019,6 +1019,7 @@ static void init_speculation_control(struct cpuinfo_x86 *c)
+diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
+index c020fb8fed59..8be2c2ba874a 100644
+--- a/arch/x86/include/asm/cpuid/types.h
++++ b/arch/x86/include/asm/cpuid/types.h
+@@ -207,6 +207,9 @@ struct cpuid_leaves {
+ 	CPUID_LEAF   (	0x0,		0  );
+ 	CPUID_LEAF   (	0x1,		0  );
+ 	CPUID_LEAF   (  0x80000000,	0  );
++	CPUID_LEAF   (  0x80000002,	0  );
++	CPUID_LEAF   (  0x80000003,	0  );
++	CPUID_LEAF   (  0x80000004,	0  );
+ };
  
- void get_cpu_cap(struct cpuinfo_x86 *c)
- {
-+	const struct leaf_0x80000000_0 *el0 = cpuid_leaf(c, 0x80000000);
- 	u32 eax, ebx, ecx, edx;
+ /*
+diff --git a/arch/x86/kernel/cpu/cpuid_parser.h b/arch/x86/kernel/cpu/cpuid_parser.h
+index 7d41bde0c0ec..3e11e13fa76c 100644
+--- a/arch/x86/kernel/cpu/cpuid_parser.h
++++ b/arch/x86/kernel/cpu/cpuid_parser.h
+@@ -117,5 +117,8 @@ struct cpuid_parse_entry {
+ 	CPUID_PARSE_ENTRY   (	0x0,		0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x1,		0,		generic			),	\
+ 	CPUID_PARSE_ENTRY   (	0x80000000,	0,		0x80000000		),	\
++	CPUID_PARSE_ENTRY   (	0x80000002,	0,		generic			),	\
++	CPUID_PARSE_ENTRY   (	0x80000003,	0,		generic			),	\
++	CPUID_PARSE_ENTRY   (	0x80000004,	0,		generic			),	\
  
- 	/* Intel-defined flags: level 0x00000001 */
-@@ -1054,12 +1055,7 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
- 		c->x86_capability[CPUID_D_1_EAX] = eax;
- 	}
- 
--	/*
--	 * Check if extended CPUID leaves are implemented: Max extended
--	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
--	 */
--	eax = cpuid_eax(0x80000000);
--	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
-+	c->extended_cpuid_level = el0 ? el0->max_ext_leaf : 0;
- 
- 	if (c->extended_cpuid_level >= 0x80000001) {
- 		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
+ #endif /* _ARCH_X86_CPUID_PARSER_H */
 -- 
 2.54.0
 
