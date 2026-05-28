@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F7040245F
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DDC478851
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779983080; cv=none; b=OATc5dfufYUTUwSXbez9zshmmOC3FpVatp1wxp2fGZ/G9d7svquIpZp7WxaHbXcCfeLj9Q0ovd07oRknkO7FBlIjHVBnpJdOk4j/ELM2FoIT5pRbPqIoR4q/zW0dIex69DMp0Ugs9rm+NO51uUQCpY3mTLs8omoVzZvqXUqFWT8=
+	t=1779983085; cv=none; b=GmcDy2YG5+F37iMZwXc4vXEefhEbEwF5caoUiKoR2lSYV9A9wiSqys4c/8zQfwJeVmLozsIE7iV27TIbeLzUamHfFBiqn7cVtZYzod2cqhhNjkFh5Tyi4fG+oOGmzoQAbRtkdksgBCjPqr1Eo3cc8UZcPxTHRZbzSQH6xL+R4Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779983080; c=relaxed/simple;
-	bh=YVgTt8HIIwTAp+Pa5a6iVUPNemV47ySAcssRH68JK+I=;
+	s=arc-20240116; t=1779983085; c=relaxed/simple;
+	bh=NnO7/noqKNFe+3JsdizDXVc5KUWBSnOHU7OfJH/J9Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pHmvhhbVpmbgj1f0Dkroy65lz4M5GALR7xl7T/Xv0GcGVWtAy90x2GK+rC1o+JsoLry2fDeQW7ySjbqje1I1hAk5CbT5BwppxQFrcBJhxcOPWO/nC6GygjXzaHGPvJg9uYuMMyQrYs+1eyl+SjuL+d2hNfcU6RPzw6BsiuJbsrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=YrPvGbcq; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=EvsuuunP; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=HLFZZU6yhcnLygIkpA2YEaKpIeLthFSEVND3R3saxkBjFVaQdj7j83FayvLINWX8a45ISZrLoNDpGgqKl1Nn+ZIFIa5NzpXTCZgLKEDO6HMiEO4JT2FDlTRI7zV5zH1w0hwgZLGpOwYUeRKGToqtECY3Nx0xo9g65+bsR/myNQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=zOpQFxOk; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=c2wQATmv; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="YrPvGbcq";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="EvsuuunP"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="zOpQFxOk";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="c2wQATmv"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779983075;
+	s=2020; t=1779983078;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=/Ga/F62UWiylqt22ElnnYk+f5snfpub5VnpyZuFiaDI=;
-	b=YrPvGbcq9xTPE4XI1NkSpTNBedkSD9VwbHuNgKLBb3Ymby2S1Ak8IOMvYG1EP7VNzu1GBW
-	GauItKoCsuSTDB7coLdRiRUwugG+tlpDP/8mrSsOXPZfL6q9OV19gFOZclg4WyL9embB4B
-	McE5v5RnL0u729nqS2M6XrGGmh5BrIlbYE66kEZIpgsGf92Hp5rqRw+vEysSVUEtaC1QeL
-	wxPvGTnuFu46jez2jNby0b5i9n89lDUv6ftOh8PbEq52GEidjQ6mfahAHG9Kpi7DfmKghg
-	InESFzfeCeUNS3FD3LUh8/1AO2kVse9WjNyYMYoHbIK8RQZPhJMnzHn3p7nWQQ==
+	bh=oweeJd31OFo+A+nUfcK3yCZwyXozLa5TrlFjLLvORW4=;
+	b=zOpQFxOkqPdhe9Rv5bUL/jtRaYrRGqL+/NmC1URu4Qy+LbPH2UzWgkMEai8aY+pzwbcQGF
+	Q5amHCXxi3XNm7VtYBMgNapJMQqsbubIy5rN4Uoavos4aJ/L2q6x04QKSQLjGPo1hMQtWu
+	oDv1kj7cL6Mf+KiAY0QOeYa737WmyvvLcTYkdWA1vj8EPeoIdlWDbu7o5XCRT/JGBZCXRw
+	RYk+SttVy38lnY35WQyW+Ler9elswLQndgDFHK8fcs8yK7uzKR6H1+dFtcGlz3VIL226wn
+	MQcM75msiPnYc65MJMgn1BpXQEow7nHUWxne1yzpDU2b8ChQ5rim5Ky/vtu4qA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779983075;
+	s=2020e; t=1779983078;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=/Ga/F62UWiylqt22ElnnYk+f5snfpub5VnpyZuFiaDI=;
-	b=EvsuuunPCixGtuKYdY5GSfiGfoNQxOBaRRDvtUgxgmKRgrupk3P3NczUB5GBxyacRLhT82
-	bW55UUZWm/JN1VDg==
+	bh=oweeJd31OFo+A+nUfcK3yCZwyXozLa5TrlFjLLvORW4=;
+	b=c2wQATmvusWD/N6PP5zpP8c0m+r5F2yn+2CWqD48eVz2il4rppm+3FGWR+JG6FLcoK+d9g
+	/1FNmTwkKekzmYDQ==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 087/120] x86/xen: Use parsed CPUID(0xa)
-Date: Thu, 28 May 2026 17:38:49 +0200
-Message-ID: <20260528153923.403473-88-darwi@linutronix.de>
+Subject: [PATCH v7 088/120] KVM: x86: Use standard CPUID(0xa) types
+Date: Thu, 28 May 2026 17:38:50 +0200
+Message-ID: <20260528153923.403473-89-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,67 +66,60 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For Xen PMU, use parsed CPUID(0xa) instead of a direct CPUID query and ugly
-bitwise operations.
+For KVM guest CPUID build-up, use the auto-generated CPUID(0xa) types from
+x86-cpuid-db instead of relying on the custom perf types.
 
-Remove the PMU_{GENERAL,FIXED}_NR macros as they are no longer needed.
+The latter types are in process of getting removed from the kernel.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/xen/pmu.c | 26 +++++---------------------
- 1 file changed, 5 insertions(+), 21 deletions(-)
+ arch/x86/kvm/cpuid.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/xen/pmu.c b/arch/x86/xen/pmu.c
-index 5f50a3ee08f5..b0ef35f2bad3 100644
---- a/arch/x86/xen/pmu.c
-+++ b/arch/x86/xen/pmu.c
-@@ -48,18 +48,6 @@ static __read_mostly int amd_num_counters;
- #define MSR_TYPE_ARCH_COUNTER       3
- #define MSR_TYPE_ARCH_CTRL          4
+diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
+index e69156b54cff..706903ad6628 100644
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -1504,28 +1504,28 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
+ 		}
+ 		break;
+ 	case 0xa: { /* Architectural Performance Monitoring */
+-		union cpuid10_eax eax = { };
+-		union cpuid10_edx edx = { };
++		struct leaf_0xa_0 l = { };
++		struct cpuid_regs *regs = (struct cpuid_regs *)&l;
  
--/* Number of general pmu registers (CPUID.EAX[0xa].EAX[8..15]) */
--#define PMU_GENERAL_NR_SHIFT        8
--#define PMU_GENERAL_NR_BITS         8
--#define PMU_GENERAL_NR_MASK         (((1 << PMU_GENERAL_NR_BITS) - 1) \
--				     << PMU_GENERAL_NR_SHIFT)
--
--/* Number of fixed pmu registers (CPUID.EDX[0xa].EDX[0..4]) */
--#define PMU_FIXED_NR_SHIFT          0
--#define PMU_FIXED_NR_BITS           5
--#define PMU_FIXED_NR_MASK           (((1 << PMU_FIXED_NR_BITS) - 1) \
--				     << PMU_FIXED_NR_SHIFT)
--
- /* Alias registers (0x4c1) for full-width writes to PMCs */
- #define MSR_PMC_ALIAS_MASK          (~(MSR_IA32_PERFCTR0 ^ MSR_IA32_PMC0))
+ 		if (!enable_pmu || !static_cpu_has(X86_FEATURE_ARCH_PERFMON)) {
+ 			entry->eax = entry->ebx = entry->ecx = entry->edx = 0;
+ 			break;
+ 		}
  
-@@ -70,6 +58,8 @@ static __read_mostly int intel_num_arch_counters, intel_num_fixed_counters;
+-		eax.split.version_id = kvm_pmu_cap.version;
+-		eax.split.num_counters = kvm_pmu_cap.num_counters_gp;
+-		eax.split.bit_width = kvm_pmu_cap.bit_width_gp;
+-		eax.split.mask_length = kvm_pmu_cap.events_mask_len;
+-		edx.split.num_counters_fixed = kvm_pmu_cap.num_counters_fixed;
+-		edx.split.bit_width_fixed = kvm_pmu_cap.bit_width_fixed;
++		l.pmu_version		= kvm_pmu_cap.version;
++		l.num_counters_gp	= kvm_pmu_cap.num_counters_gp;
++		l.bit_width_gp		= kvm_pmu_cap.bit_width_gp;
++		l.events_mask_len	= kvm_pmu_cap.events_mask_len;
++		l.num_counters_fixed	= kvm_pmu_cap.num_counters_fixed;
++		l.bitwidth_fixed	= kvm_pmu_cap.bit_width_fixed;
  
- static void xen_pmu_arch_init(void)
- {
-+	const struct leaf_0xa_0 *leaf_a = cpuid_leaf(&boot_cpu_data, 0xa);
-+
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD) {
+ 		if (kvm_pmu_cap.version)
+-			edx.split.anythread_deprecated = 1;
++			l.anythread_deprecation = 1;
  
- 		switch (boot_cpu_data.x86) {
-@@ -98,15 +88,9 @@ static void xen_pmu_arch_init(void)
- 		amd_ctrls_base = MSR_K7_EVNTSEL0;
- 		amd_msr_step = 1;
- 		k7_counters_mirrored = 0;
--	} else {
--		uint32_t eax, ebx, ecx, edx;
--
--		cpuid(0xa, &eax, &ebx, &ecx, &edx);
--
--		intel_num_arch_counters = (eax & PMU_GENERAL_NR_MASK) >>
--			PMU_GENERAL_NR_SHIFT;
--		intel_num_fixed_counters = (edx & PMU_FIXED_NR_MASK) >>
--			PMU_FIXED_NR_SHIFT;
-+	} else if (leaf_a) {
-+		intel_num_arch_counters = leaf_a->num_counters_gp;
-+		intel_num_fixed_counters = leaf_a->num_counters_fixed;
+-		entry->eax = eax.full;
++		entry->eax = regs->eax;
+ 		entry->ebx = kvm_pmu_cap.events_mask;
+ 		entry->ecx = 0;
+-		entry->edx = edx.full;
++		entry->edx = regs->edx;
+ 		break;
  	}
- }
- 
+ 	case 0x1f:
 -- 
 2.54.0
 
