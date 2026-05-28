@@ -1,134 +1,280 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA022F8E81
-	for <x86-cpuid@lists.linux.dev>; Thu, 14 May 2026 04:47:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778734081; cv=pass; b=XPmthcVWYyhFYU8upznhizbIEvlH7dr9mJ3G2fDitgC3msHF/Qpgo+QaNvUOup6WDal8bZQpbqmhrS+dBetEPOWJxnhHY8xSxnzPRDZHiY78i5aw5Hopb9geX4Ivdn5bi3hkLoPaSX/9oOmBv5mwvcETX/kQwA/mQ/5Hd+FmAPw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778734081; c=relaxed/simple;
-	bh=3sy7VcnpJEtsk6RzmSyuP9jP9vfgfCYvJvLEzbvWY6s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZorRDSDm43Dg5Aht/z/sLot807iMC13BM80dmeWCBCiWc3LrCItCbcQtedlcMMQdtIYn9UN07blkYxQbjF4xiFJWhDEYBZeOm4c/B1CxV71PYl6mMCgFgpqwNGxSFts0Wwv0E8Po0mC8H/15mHrwR2qQqu9fwhFHz8INUeVtqZQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ti1hcYPk; arc=pass smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3766D305669
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779982781; cv=none; b=TsaszzQrGC2UDPIJ8FNG36SIeneLwXrhdUneaEkZE7+TToDuhKHEdhPiV+OW/i7NQ1/AypD6ArrxMkQcU3+GBh5GxHjmw2Q0ahoZHia+1YeP7BP3Q6WG7PnFIAVFkU3u1VpBF2NXnM25tS1Dlu4AzODj+DShf2S/vxEoikFijm4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779982781; c=relaxed/simple;
+	bh=bkoeg5r2NxxiZRdMMYlcQ8MXQhRsTAY/sU7LTAeHv5s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qS/YaQLbvw2Hbdq4downBi5wf56+FxHl9ne6DCF6/dlRNszpOvYZd7xs9o0t/a5e3W2/MyTUux4NA+N5NKBPKRWqvBht6RHox+z1eP6u0kJ25bFDLZXIHK8BeFNYKEGwC7GI+tvhNHkA4h4FGsMWouQO//o4qw/WNsqcc0ozyDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=l29KIQJ1; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=3A2hc1e8; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ti1hcYPk"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-67cd93d8affso9119035a12.2
-        for <x86-cpuid@lists.linux.dev>; Wed, 13 May 2026 21:47:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778734078; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kyRI85NOIzcRhuSn9qieTUk3fv8OmphukfzelZ8NcD/rOroXC1PzZacRCUBiOFFKxa
-         +gLvrqx1uHGYBm0rTVbAJd8a2bm0ECYCGxnHUFOXulrJMN7iV6ixUTrJvjzChVt5bt6Q
-         qanhC8L5YJzxB2bSOa92BouTaLf1SNbJ540Uhkfbzmdo9y9rGmClSubY87S9uFW6YJU0
-         JFRkld+KJPwGoc3dKgkGA7IMQF8brhdCRLlwoVD3H+QzDU7XBD7qEhAO64lfJFn83C4a
-         aTd8ipkkAORYTbZnTbMkePUXB02QJhSZIMb6UXCoyaUHg3XlAcDSeFyqFLkA1Diq4Vud
-         mbMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:dkim-signature;
-        bh=3sy7VcnpJEtsk6RzmSyuP9jP9vfgfCYvJvLEzbvWY6s=;
-        fh=c9SIVtEbiM0R08MAyEbuh76WZXpdWWvxoBGkpeCZGOY=;
-        b=ZSbsIuSrPXf0TQC+GB6XBqlpgKwWoY+2ypABR+iwFHAFtsReXibDS6VeRoQbWfCQoz
-         GCLWSJVYHVK/rv9jVLUlvv8VuLW1mmoyGchwFhCs1G7Bqm2kN/mjJSZ0jswbOOjI+AXL
-         Qhy8T1Ka0cIBgRAqlpaWweLrgpCu7MV4Q8yqPIp4GPvpd6VpycVUEiL0FcRlwtbXFzrJ
-         sC29WiRLXmFWFTYfHwZhu6ujEr9h2WnEcFdB6o65/Yt4ImUyaUiBiX96tpwK7DBjk1EO
-         0+gRIABjPGth6+78sICUBwjkyab76yi9Oa5D3lwPjIfXJnFU1g5p6c6jWMUWRILfkkuG
-         daow==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778734078; x=1779338878; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3sy7VcnpJEtsk6RzmSyuP9jP9vfgfCYvJvLEzbvWY6s=;
-        b=Ti1hcYPklJpUGGz0ejJZIAef9dy6RKe9H/prgMwHwdMD3V5sQ+CHfGcIWw1IaUOKoZ
-         5qOqUHxIE6kIeBSe5HPeQZd0Xw+ejhRzgLRwQT4TulCgRz2JNdd2dDDlIsGZ5gXqJpf1
-         3urEfWASQ7g9g/ct3NebgGv0VxplfBT9uiam8QcVqU8HGf21I4Bo6kfVcWK/nGcO46gz
-         GKVbxqHsrHA13U0EWahTcLv6mc1XBqlEqD8K+poLlPFhaOfqAq1AgSOmRU8Rdn/CSN/a
-         jtONqQPjrcISwliifUMjpvuioZOu7RWYL8OSuqyd1QXbdhAnnkrsEWWKUYgGqbEEe2Fr
-         LkUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778734078; x=1779338878;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3sy7VcnpJEtsk6RzmSyuP9jP9vfgfCYvJvLEzbvWY6s=;
-        b=HA6P13iLHrzcf1FqXJ8RxWWydctGZ3CNf/CN85V7VuPJaol8dxs3SGGvMfZLRd1e3Q
-         aUIf6i9S4TsjQ49wn4n+wNCX2iUNKOg3LqE8rIO8wwZgsvvRVYGMuGXvueC8FF03+j4b
-         15yfNgmFbDGe3Oz82pVw5tX+f1JtwxHV0uH06nGb3Lf1kKc6EQvpOwGGmJv02T2NMZ/3
-         lIndTrgoXF/gSXKMufH2//woiHgG+pAaOFfRa9sCrjc/JGeSMdIUy7Tpuw9TDXh/IYuY
-         H7huGGiWj/4BYjU/EEuKIqVZHUnEeriJzTJmYK15sEAdoKJlevnVMnY5QLzawyv17H6a
-         aoWA==
-X-Forwarded-Encrypted: i=1; AFNElJ8LkHKYZjDcXRxAph6EddHeB90UZTfsyYTn7KgKpNSrB66BZbnU6pou9KbTPoMUurK08q7gRp7ACK0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw9powPzp3vTb+209bz/GnKZ47/fb8GMQVIBBxj/TNXQdqEulke
-	51LIH/3bk54fWU0uTg4WeqoVQGNCru4bwUO+vOUQsENVIVSnZkbNk4utm8PGDZ9reBmjhhyk4PB
-	J8pRVG8MHK+RTNmaif089dtFT0AG8rDE=
-X-Gm-Gg: Acq92OGRCxfCKth5K6Simnij2Mx8SKJkQbZgWj3/FPEg2dctTT4Qn346GFXmDAfVPDB
-	XTTbOMdsQfaFJgGq41O0UC3HCEWxGvqtJAmbUF9JDg5fAi6fwIO9ky/pwPU6tivJU89L3B+QifU
-	3Uf3+H9UbU715DbkePbmySG0C0MK3dml9gZWTSxElcG3z00q0A8ximjvOLz/S7oiN7nAa3/WVHr
-	1twKSKCvouTTidaFThcs2i8w+4E1/HAm2J9QNubm5Wb/SgkQKt9zmAn6BD2AqTlx/myscrmzpiE
-	N9pIxJFXep4A6BLpsqBHckPU8MZ3G3LrKIp+p5FQ
-X-Received: by 2002:a17:906:f59a:b0:bd4:e5bf:1ed1 with SMTP id
- a640c23a62f3a-bd4e5bf1ee4mr197447966b.15.1778734077966; Wed, 13 May 2026
- 21:47:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="l29KIQJ1";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="3A2hc1e8"
+From: "Ahmed S. Darwish" <darwi@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1779982779;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=d12xHy1LaKmymE8Xt3YGf35FrormXZcihTWwwyKnWsA=;
+	b=l29KIQJ1fMBvGBw936V8sv5IFJRenyDQlcOxcP6Wki4bxqQUKyUJUvMMbxh4wxVNmQ+51b
+	9kekPWp/vze7+4OPSqekuTX0/ZFADbgrsWXNsXUVJNw6N+2XzDD40ksgHpAmKUlMf5T0pr
+	qWaY7eCr+Wy3dsV0VKNAvASgA0r4gZ2JamPW4uBWsEuWzo3Ye82G3wnvoJAUumuTVgF3lp
+	6QnW2Nx851wSeoUO6VBB5zbSXagxqaAl1y3Crxn/PblnzGCo9tjTeb9hpwvlfZvoGrCE9C
+	/8xDqab7PRVZRzy+2eVNVehXM6qpZySBfycxxlVkxSuu9Vr/ES+smdxaKFAnAg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1779982779;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=d12xHy1LaKmymE8Xt3YGf35FrormXZcihTWwwyKnWsA=;
+	b=3A2hc1e8uwQ+xQAkTYt0H0hZovDVl4xmw2Pn9uCFQr7gj1r4Wp6kP/FfjcxHFCnXqt8be3
+	O0O6HPbcO7+8wmCA==
+To: Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Christian Ludloff <ludloff@gmail.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	x86@kernel.org,
+	x86-cpuid@lists.linux.dev,
+	LKML <linux-kernel@vger.kernel.org>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>
+Subject: [PATCH v7 000/120] x86: Introduce a centralized CPUID data model
+Date: Thu, 28 May 2026 17:37:22 +0200
+Message-ID: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260327021645.555257-1-darwi@linutronix.de> <20260327021645.555257-11-darwi@linutronix.de>
- <20260511200032.GAagI1YMP51EzCo7dn@fat_crate.local> <agLS2Y7smYRHyiHf@lx-t490>
- <20260512143412.GDagM6ZLBpvt6X3jzq@fat_crate.local> <20260513152742.GDagSYbheCBWwNeVj-@fat_crate.local>
- <agShjbCo_HSs9YOf@lx-t490> <20260513165128.GFagSsEPFCogQu7n5t@fat_crate.local>
- <agS0A2pRhz_qCPce@lx-t490> <20260513173842.GJagS3InAztdvoiPGl@fat_crate.local>
-In-Reply-To: <20260513173842.GJagS3InAztdvoiPGl@fat_crate.local>
-Reply-To: ludloff@gmail.com
-From: Christian Ludloff <ludloff@gmail.com>
-Date: Wed, 13 May 2026 21:47:46 -0700
-X-Gm-Features: AVHnY4I0ox11LIHBzjmBXz1ZuoJmh9bmKxmoJIbuW9iMOYtEpQoZT_Vn2hCzhFk
-Message-ID: <CAKSQd8XM6p7TTVih9fg9fmUAkzNchPCT7B-6qzVuja=3hg_u+A@mail.gmail.com>
-Subject: Re: [PATCH v6 10/90] x86/cpu: Rescan CPUID table after disabling PSN
-To: Borislav Petkov <bp@alien8.de>
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Ingo Molnar <mingo@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>, 
-	Sean Christopherson <seanjc@google.com>, David Woodhouse <dwmw2@infradead.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Sohil Mehta <sohil.mehta@intel.com>, 
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org, x86-cpuid@lists.linux.dev, 
-	LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 13, 2026 at 10:39=E2=80=AFAM Borislav Petkov <bp@alien8.de> wro=
-te:
-> Maybe... later...
->
-> Right now the *only* thing we wanna do *first* is the conversion. Which i=
-s
-> a huuge undertaking in itself.
->
-> So please no more unrelated changes and "it would be good to do this and
-> that." That can be done later.
->
-> If we find a bug while doing so then it is very likely an existing bug wh=
-ich
-> we'll fix immeditely and continue with the conversion.
->
-> Once everything has been converted and the dust settles, *then* w can do
-> improvements ontop.
+Hi,
 
-When deciding what the code shall do for mutable CPUID bits,
-you really want to have an exhaustive list of events that trigger
-changes =E2=80=93 think Intel SDM vol1 21.1.5 as a starting point; then
-made exhaustive for all events, for Intel and the other vendors.
+Introduce a centralized x86 CPUID model, tables, and API.
 
-(Besides on/off bits spread all over the place, microcode loads
-at runtime come to mind as... uhm... interesting...)
+Rationale for this work can be found at:
 
---
-C.
+    https://lore.kernel.org/lkml/874ixernra.ffs@tglx
+    https://gitlab.com/x86-cpuid.org/x86-cpuid-db
+
+Refactor and convert ~85% of the kernel CPUID call sites to the model.
+
+By the end of this series, route all X86_FEATURE queries to the CPUID
+tables and remove x86_capability[].
+
+Please note that the top 6 patches are already in tip:x86/cpu. They are
+here to keep a clean queue over -rc5 so that the bots can do their work.
+
+Special thanks to Maciej for testing the previous iteration.
+
+The series is divided as:
+
+# Header disentanglement (<asm/processor.h> <==> <asm/cpuid/api.h>)
+
+     1	treewide: Explicitly include the x86 CPUID headers
+     2	x86/cpu: <asm/processor.h>: Do not include the CPUID API header
+     3	x86/cpuid: Rename cpuid_leaf()/cpuid_subleaf() APIs
+
+# CPUID Model
+
+     4	x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
+     5	x86/cpu: Introduce a centralized CPUID data model
+     6	x86/cpuid: Introduce a centralized CPUID parser
+     7	x86/cpu: centaur/zhaoxin: Rescan CPUID(0xc0000001) after MSR writes
+     8	x86/cpu/transmeta: Rescan CPUID(0x1) after capability unhide
+
+# CPUID(0x0), CPUID(0x1), CPUID(0x80000000), CPUID(0x8000000[234])
+
+     9	x86/cpu: Use parsed CPUID(0x0)
+    10	x86/lib: Add CPUID(0x1) family and model calculation
+    11	x86/cpu: Use parsed CPUID(0x1)
+    12	x86/cpuid: Parse CPUID(0x80000000)
+    13	x86/cpu: Use parsed CPUID(0x80000000)
+    14	x86/cpuid: Parse CPUID(0x80000002) to CPUID(0x80000004)
+    15	x86/cpu: Use parsed CPUID(0x80000002) to CPUID(0x80000004)
+
+# CPUID Model: x86 vendor discernment + debugfs support
+
+    16	x86/cpuid: Split parser tables and add vendor-qualified parsing
+    17	x86/cpuid: Introduce a parser debugfs interface
+
+# CPUID(0x16), Transmeta CPUID(0x8086000[0123456]), Centaur CPUID(0xc000000[01])
+
+    18	x86/cpuid: Parse CPUID(0x16)
+    19	x86/tsc: Use parsed CPUID(0x16)
+    20	x86/cpuid: Parse Transmeta and Centaur extended ranges
+    21	x86/cpu/transmeta: Use parsed CPUID(0x80860000)->CPUID(0x80860006)
+    22	x86/cpu/transmeta: Refactor CPU information printing
+    23	x86/cpu/centaur: Use parsed CPUID(0xc0000001)
+    24	x86/cpu/zhaoxin: Use parsed CPUID(0xc0000001)
+
+# Intel cache descriptors; CPUID(0x2)
+
+    25	x86/cpuid: Parse CPUID(0x2)
+    26	x86/cpuid: Warn once on invalid CPUID(0x2) iteration count
+    27	x86/cpuid: Introduce parsed CPUID(0x2) API
+    28	x86/cpu: Use parsed CPUID(0x2)
+    29	x86/cacheinfo: Use parsed CPUID(0x2)
+    30	x86/cpuid: Remove direct CPUID(0x2) query helpers
+
+# Intel/AMD deterministic cache; CPUID(0x4), CPUID(0x8000001d)
+
+    31	x86/cpuid: Parse deterministic cache parameters CPUID leaves
+    32	x86/cacheinfo: Pass a 'struct cpuinfo_x86' reference to CPUID(0x4) code
+    33	x86/cacheinfo: Use parsed CPUID(0x4)
+    34	x86/cacheinfo: Use parsed CPUID(0x8000001d)
+
+# Cache/TLB/mm info; CPUID(0x8000000[568])
+
+    35	x86/cpuid: Parse CPUID(0x80000005), CPUID(0x80000006), CPUID(0x80000008)
+    36	x86/cacheinfo: Use auto-generated data types
+    37	x86/cacheinfo: Use parsed CPUID(0x80000005) and CPUID(0x80000006)
+    38	x86/cacheinfo: Use parsed CPUID(0x80000006)
+    39	x86/cpu: Use parsed CPUID(0x80000005) and CPUID(0x80000006)
+    40	x86/cpu/amd: Use parsed CPUID(0x80000005)
+    41	x86/cpu/amd: Refactor TLB detection code
+    42	x86/cpu/amd: Use parsed CPUID(0x80000005) and CPUID(0x80000006)
+    43	x86/cpu/hygon: Use parsed CPUID(0x80000005) and CPUID(0x80000006)
+    44	x86/cpu/centaur: Use parsed CPUID(0x80000005)
+    45	x86/cpu: Use parsed CPUID(0x80000008)
+
+# Remaining CPUID(0x1) sites
+
+    46	x86/apic: Use parsed and refreshed CPUID(0x1)
+    47	x86/cpu/amd: Refactor CPUID(0x1) level calculation
+    48	x86/mce: core: Use parsed CPUID(0x1)
+    49	x86/mce: inject: Use parsed CPUID(0x1)
+    50	x86/microcode/amd: Use standard CPUID(0x1) types
+    51	x86/microcode/amd: rdrand: Use standard CPUID(0x1) types
+    52	x86/microcode/intel: Explain CPUID parser APIs unavailability
+    53	x86/mm/pti: Use standard CPUID(0x1) types
+    54	x86/xen: Use parsed CPUID(0x1)
+    55	x86/xen: Use standard CPUID(0x1) types
+    56	agp/efficeon: Use parsed CPUID(0x1)
+    57	dmaengine: ioatdma: Remove custom UP local APID IC code
+    58	RAS/AMD/FMPM: Use parsed CPUID(0x1)
+
+# MONITOR/MWAIT: CPUID(0x5)
+
+    59	x86/cpuid: Parse CPUID(0x5)
+    60	x86/acpi/cstate: Remove superfluous retval logic
+    61	x86/acpi/cstate: Clarify unsupported MWAIT hint warning
+    62	x86/acpi/cstate: Use MWAIT helper macros
+    63	x86/acpi: Use parsed CPUID(0x5)
+    64	x86/process: Use parsed CPUID(0x5)
+    65	x86/hpet: Use parsed CPUID(0x5)
+    66	ACPI: PAD: Use Parsed CPUID(0x5)
+    67	intel_idle: Use parsed CPUID(0x5)
+    68	x86/idle: Remove unused CPUID(0x5) symbols
+
+# Misc: CPUID(0x6), CPUID(0x9), CPUID(0x15)
+
+    69	x86/cpuid: Parse CPUID(0x6), CPUID(0x9), and CPUID(0x15)
+    70	thermal: intel: hfi: Use parsed CPUID(0x6)
+    71	dmaengine: ioatdma: Use parsed CPUID(0x9)
+    72	ASoC: Intel: avs: Use parsed CPUID(0x15)
+    73	perf/x86/intel: Use parsed CPUID(0x15)
+
+# Intel SGX: CPUID(0x12)
+
+    74	x86/cpuid: Introduce cpuid_subleaf_raw()
+    75	x86/cpuid: Parse CPUID(0x12)
+    76	x86/sgx/driver: Use parsed CPUID(0x12)
+    77	x86/sgx: Use parsed CPUID(0x12)
+    78	KVM: x86: Use parsed CPUID(0x12)
+    79	KVM: VMX: Use standard CPUID(0x12) types
+    80	x86/sgx: Move unused CPUID(0x12) symbols
+
+# Perfmon: CPUID(0xa), CPUID(0x1c), CPUID(0x23), CPUID(0x80000022)
+
+    81	x86/cpuid: Parse CPUID(0xa) and CPUID(0x1c)
+    82	x86/cpu/intel: Use parsed CPUID(0xa)
+    83	x86/cpu/centaur: Use parsed CPUID(0xa)
+    84	x86/cpu/zhaoxin: Use parsed CPUID(0xa)
+    85	perf/x86/intel: Use parsed CPUID(0xa)
+    86	perf/x86/zhaoxin: Use parsed CPUID(0xa)
+    87	x86/xen: Use parsed CPUID(0xa)
+    88	KVM: x86: Use standard CPUID(0xa) types
+    89	KVM: x86/pmu: Use standard CPUID(0xa) types
+    90	perf/x86: Remove custom CPUID(0xa) types
+    91	perf/x86/lbr: Use parsed CPUID(0x1c)
+    92	perf/x86/lbr: Remove custom CPUID(0x1c) types
+    93	x86/cpuid: Parse CPUID(0x23)
+    94	perf/x86/intel: Use parsed per-CPU CPUID(0x23)
+    95	perf/x86/intel: Remove custom CPUID(0x23) types
+    96	x86/cpuid: Parse CPUID(0x80000022)
+    97	perf/x86/amd/lbr: Use parsed CPUID(0x80000022)
+    98	perf/x86/amd: Use parsed CPUID(0x80000022)
+    99	KVM: x86: Use standard CPUID(0x80000022) types
+   100	perf/x86: Remove custom CPUID(0x80000022) types
+
+# Power management flags: CPUID(0x80000007).EBX
+
+   101	x86/cpuid: Parse CPUID(0x80000007)
+   102	x86/cpu: Use parsed CPUID(0x80000007)
+   103	x86/cpu: amd/hygon: Use parsed CPUID(0x80000007)
+   104	x86/cpu: cpuinfo: Use parsed CPUID(0x80000007)
+   105	KVM: x86: Use parsed CPUID(0x80000007)
+
+# CPUID Model: X86_FEATURE routing
+
+   106	x86/microcode: Allocate cpuinfo_x86 snapshots on the heap
+   107	x86/cpuid: Parse leaves backing X86_FEATURE words
+   108	x86/cpuid: Parse Linux synthetic CPUID leaves
+   109	x86/cpuid: Introduce a compile-time X86_FEATURE word map
+   110	x86/cpuid: Introduce X86_FEATURE and CPUID word APIs
+   111	x86/percpu: Add offset argument to x86_this_cpu_test_bit()
+   112	x86/cpufeature: Factor out a __static_cpu_has() helper
+   113	x86/asm/32: Cache CPUID(0x1).EDX in cpuid_table
+   114	x86: Route all feature queries to the CPUID tables
+
+# cpuinfo_x86::x86_capability[] Removal
+
+   115	x86/cpu: Remove x86_capability[] and x86_power initialization
+   116	x86/cpu/transmeta: Remove x86_capability[] CPUID initialization
+   117	x86/cpu: centaur/zhaoxin: Remove x86_capability[] initialization
+   118	KVM: x86: Remove BUILD_BUG_ON() x86_capability[] check
+   119	x86/cpu: Remove x86_capability[] and x86_power
+
+# Finally
+
+   120	MAINTAINERS: Extend x86 CPUID DATABASE file coverage
+
+Changelogs
+==========
+
+* v7
+
+- Per Boris feedback, drop for now the legacy sites CPUID table rescans
+- Fix the wording issues pointed by Maciej
+- Convert all remaining CPUID(0x1) sites
+- Convert CPUID(0x5), CPUID(0x6), CPUID(0x9), and CPUID(0x12) sites
+
+* Previous iterations changelogs
+
+- https://lore.kernel.org/lkml/20260327021645.555257-1-darwi@linutronix.de
+- https://lore.kernel.org/lkml/20250905121515.192792-1-darwi@linutronix.de
+
+Thank you,
+Ahmed
+
+8<-----
+
+base-commit: e7ae89a0c97ce2b68b0983cd01eda67cf373517d
+-- 
+2.54.0
+
