@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92924477999
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACE240242F
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779983069; cv=none; b=EOpKOVEIw8Tz+jVedYw+grU/s6S972wDpdV3yCBSHzjPik8wFfSa0fgxc8Rqjw+3knC6oUfM32BWaR0k0WP8LKhGYby1dA4Tkf1DKUimPBV0vT26Q+JihWefUsMPdjMu6EnthkFrKFrlnjRHzMxyDLgFl7418krgSpZCtXlIJDA=
+	t=1779983074; cv=none; b=pbXI6HqpgACjxGvyGV91/PKsuaL5he0UTzWxNkwh6fJ3YKNBWFyJcpbX/PJST+Oqd6rQ2/KwahK2jZA/7VHKIb7A8A5dClE1v/JFs5I8kxpy8S/ZTnxjP2/Ufhu/cOFSsfCT9bPvaKWdvHFKd40uPQdD11mCYocxynzjfv6vDmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779983069; c=relaxed/simple;
-	bh=ZwVJ6pp+lyRC77pJoa3ltQw2exv/jl+UBJqpTaFCBjI=;
+	s=arc-20240116; t=1779983074; c=relaxed/simple;
+	bh=NUOCGS99Vck8biaCr0xWLcUa5k7xD/Y6THW6wi3/q+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJ2sTRiexj8tf5phhgh7ItB+deEqVJdygBu0D6azidilcUhXI1epfncocYzX2Rb9J84Bpd9+2hbuJ52SyqLcrmWXgHj/mAmOYFXzBfCc/KKDal62DI+JY3LTZsvpCz35ncSVhWJal8md3CwO/K/uQeTkALTL6oU3ZTEoZT7yAoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=u7IgP+QT; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=vG/w7Q/p; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=Fwrfs/Lmf/RK1L5tdkihGFt+q15UWMWT7g07PU8fLDAl3W6Yj9wDNifckMQhHBaNur7jcUHFpA6PlyOEO1GWQlG4hF77ht2m1WJ24fMMxJHMp6mAp4SCpH1/Oau4P/0PgUrqOU0ji7qi0lUK4P3xZFF0e8NcUOvM9E++4hQoKKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=xzUu2mtl; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=GZIVkNnU; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="u7IgP+QT";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="vG/w7Q/p"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="xzUu2mtl";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="GZIVkNnU"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779983066;
+	s=2020; t=1779983069;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=omxTm3xXvQxj0iNQGH6ByRIK7ce+ms9b+rbAsmHGgh8=;
-	b=u7IgP+QTu8IPTjDGoymH+dwmQWAnZBUggE4wc6CHKs4fevyduQuCLWbl4/1kl4r3t2pmjD
-	PSSc83oahCVSjpdU7vGKhodJmnoq10qsJ4TwnnnxS+cPWc5m7v298Eux7vTQWSFkBTdA4L
-	6ro5cwQR9sOQ19A0n7Vlai4oH14UlBoGaLn/2YB6Bw4KP736grnUWVzp/VktRoFymt9V7U
-	aV/A93lYavnOZ/vcGX0KKT2DW/5zb/OBH9Rp3WDJ6kc5Q9rookIXduWXRf74YJFlH/gQT0
-	jnKUQkWw4FTRUzp+vYq2Rksj/oOco9/5XlwNv6UYYUTmL5ynxCbefgBblUf86w==
+	bh=mhCjCJni4mRVwiJTlRqiqt97Sj2p2flgvvbNsg5HUIc=;
+	b=xzUu2mtlETX6cH75ur5q6oAL0L0gKLOeF4OFJIgzrtmAotWzrPVw0KDy+1lG9uYjQ51OAH
+	3kUSPs5p2H8DQvg3TxbN4aSoEHGIGhq47K5C1i3bFRRXt0X87qhAwkvG2HoAtdWYdgxc88
+	efEkcsJvqp/QEU1LeFvC7N/QEmQctLdRRUQIqSGAbHcUZzv+22z4F+978W1zIZDwbIGsp5
+	qbnnWfwiVsy6Elr2HMI/LdNPdqo8Ee1hvplU96qLK62eNXYg9Wjt+uIpPM6eSNWyT1Jl0b
+	vaQFscpwQaOfEXITpX7rTmEyvsdyFRafYS3DUMM4bEbvGpDAIuJSVvFFYMxvTQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779983066;
+	s=2020e; t=1779983069;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=omxTm3xXvQxj0iNQGH6ByRIK7ce+ms9b+rbAsmHGgh8=;
-	b=vG/w7Q/p2MwZfrUk1czSmkw/udHanFcoLM0/yWlr7tzwLAMtEgTwpFD3oS0ArUyiChtlT2
-	GYBg9joXH/3apMAA==
+	bh=mhCjCJni4mRVwiJTlRqiqt97Sj2p2flgvvbNsg5HUIc=;
+	b=GZIVkNnUMs2/bepVkTY0GD1ZX8ROLveZuMeHUzwbGMqmYAUnCVk8+QPSZs79fSEGSVy8OJ
+	0gwI19zJIlqs9wBw==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 084/120] x86/cpu/zhaoxin: Use parsed CPUID(0xa)
-Date: Thu, 28 May 2026 17:38:46 +0200
-Message-ID: <20260528153923.403473-85-darwi@linutronix.de>
+Subject: [PATCH v7 085/120] perf/x86/intel: Use parsed CPUID(0xa)
+Date: Thu, 28 May 2026 17:38:47 +0200
+Message-ID: <20260528153923.403473-86-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,45 +66,121 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For Zhaoxin's PMU enumeration, use parsed CPUID(0xa) instead of a direct
-CPUID query and ugly bitwise operations.
-
-Remove comments; the generated bitfield names already make everything clear.
+For Intel perfmon, use parsed CPUID(0xa) instead of issuing CPUID queries
+and defining custom CPUID output data types.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/zhaoxin.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ arch/x86/events/intel/core.c | 41 ++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/zhaoxin.c b/arch/x86/kernel/cpu/zhaoxin.c
-index ea76e9594453..b068922efed9 100644
---- a/arch/x86/kernel/cpu/zhaoxin.c
-+++ b/arch/x86/kernel/cpu/zhaoxin.c
-@@ -61,20 +61,13 @@ static void early_init_zhaoxin(struct cpuinfo_x86 *c)
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index ea7507bb7047..53c614c61531 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -6612,10 +6612,11 @@ static __init void intel_arch_events_quirk(void)
  
- static void init_zhaoxin(struct cpuinfo_x86 *c)
+ static __init void intel_nehalem_quirk(void)
  {
-+	const struct leaf_0xa_0 *la = cpuid_leaf(c, 0xa);
+-	union cpuid10_ebx ebx;
++	struct leaf_0xa_0 l = { };
++	struct cpuid_regs *regs = (struct cpuid_regs *)&l;
+ 
+-	ebx.full = x86_pmu.events_maskl;
+-	if (ebx.split.no_branch_misses_retired) {
++	regs->ebx = x86_pmu.events_maskl;
++	if (l.no_br_misses_retired) {
+ 		/*
+ 		 * Erratum AAJ80 detected, we work it around by using
+ 		 * the BR_MISP_EXEC.ANY event. This will over-count
+@@ -6623,8 +6624,8 @@ static __init void intel_nehalem_quirk(void)
+ 		 * architectural event which is often completely bogus:
+ 		 */
+ 		intel_perfmon_event_map[PERF_COUNT_HW_BRANCH_MISSES] = 0x7f89;
+-		ebx.split.no_branch_misses_retired = 0;
+-		x86_pmu.events_maskl = ebx.full;
++		l.no_br_misses_retired = 0;
++		x86_pmu.events_maskl = regs->ebx;
+ 		pr_info("CPU erratum AAJ80 worked around\n");
+ 	}
+ }
+@@ -7558,15 +7559,13 @@ static __always_inline void intel_pmu_init_arw(struct pmu *pmu)
+ 
+ __init int intel_pmu_init(void)
+ {
++	const struct cpuid_regs *regs = cpuid_leaf_raw(&boot_cpu_data, 0xa);
++	const struct leaf_0xa_0 *leaf = cpuid_leaf(&boot_cpu_data, 0xa);
+ 	struct attribute **extra_skl_attr = &empty_attrs;
+ 	struct attribute **extra_attr = &empty_attrs;
+ 	struct attribute **td_attr    = &empty_attrs;
+ 	struct attribute **mem_attr   = &empty_attrs;
+ 	struct attribute **tsx_attr   = &empty_attrs;
+-	union cpuid10_edx edx;
+-	union cpuid10_eax eax;
+-	union cpuid10_ebx ebx;
+-	unsigned int fixed_mask;
+ 	bool pmem = false;
+ 	int version, i;
+ 	char *name;
+@@ -7590,27 +7589,29 @@ __init int intel_pmu_init(void)
+ 		return -ENODEV;
+ 	}
+ 
++	if (!leaf || !regs)
++		return -ENODEV;
 +
- 	early_init_zhaoxin(c);
- 	init_intel_cacheinfo(c);
+ 	/*
+ 	 * Check whether the Architectural PerfMon supports
+ 	 * Branch Misses Retired hw_event or not.
+ 	 */
+-	cpuid(10, &eax.full, &ebx.full, &fixed_mask, &edx.full);
+-	if (eax.split.mask_length < ARCH_PERFMON_EVENTS_COUNT)
++	if (leaf->events_mask_len < ARCH_PERFMON_EVENTS_COUNT)
+ 		return -ENODEV;
  
--	if (c->cpuid_level > 9) {
--		unsigned int eax = cpuid_eax(10);
--
--		/*
--		 * Check for version and the number of counters
--		 * Version(eax[7:0]) can't be 0;
--		 * Counters(eax[15:8]) should be greater than 1;
--		 */
--		if ((eax & 0xff) && (((eax >> 8) & 0xff) > 1))
--			set_cpu_cap(c, X86_FEATURE_ARCH_PERFMON);
--	}
-+	if (la && la->pmu_version && la->num_counters_gp > 1)
-+		set_cpu_cap(c, X86_FEATURE_ARCH_PERFMON);
+-	version = eax.split.version_id;
++	version = leaf->pmu_version;
+ 	if (version < 2)
+ 		x86_pmu = core_pmu;
+ 	else
+ 		x86_pmu = intel_pmu;
  
- 	if (c->x86 >= 0x6)
- 		init_zhaoxin_cap(c);
+ 	x86_pmu.version			= version;
+-	x86_pmu.cntr_mask64		= GENMASK_ULL(eax.split.num_counters - 1, 0);
+-	x86_pmu.cntval_bits		= eax.split.bit_width;
+-	x86_pmu.cntval_mask		= (1ULL << eax.split.bit_width) - 1;
++	x86_pmu.cntr_mask64		= GENMASK_ULL(leaf->num_counters_gp - 1, 0);
++	x86_pmu.cntval_bits		= leaf->bit_width_gp;
++	x86_pmu.cntval_mask		= (1ULL << leaf->bit_width_gp) - 1;
+ 
+-	x86_pmu.events_maskl		= ebx.full;
+-	x86_pmu.events_mask_len		= eax.split.mask_length;
++	x86_pmu.events_maskl		= regs->ebx;
++	x86_pmu.events_mask_len		= leaf->events_mask_len;
+ 
+ 	x86_pmu.pebs_events_mask	= intel_pmu_pebs_mask(x86_pmu.cntr_mask64);
+ 	x86_pmu.pebs_capable		= PEBS_COUNTER_MASK;
+@@ -7624,9 +7625,9 @@ __init int intel_pmu_init(void)
+ 		int assume = 3 * !boot_cpu_has(X86_FEATURE_HYPERVISOR);
+ 
+ 		x86_pmu.fixed_cntr_mask64 =
+-			GENMASK_ULL(max((int)edx.split.num_counters_fixed, assume) - 1, 0);
++			GENMASK_ULL(max((int)leaf->num_counters_fixed, assume) - 1, 0);
+ 	} else if (version >= 5)
+-		x86_pmu.fixed_cntr_mask64 = fixed_mask;
++		x86_pmu.fixed_cntr_mask64 = leaf->pmu_fcounters_bitmap;
+ 
+ 	if (boot_cpu_has(X86_FEATURE_PDCM)) {
+ 		u64 capabilities;
+@@ -7648,7 +7649,7 @@ __init int intel_pmu_init(void)
+ 	x86_add_quirk(intel_arch_events_quirk); /* Install first, so it runs last */
+ 
+ 	if (version >= 5) {
+-		x86_pmu.intel_cap.anythread_deprecated = edx.split.anythread_deprecated;
++		x86_pmu.intel_cap.anythread_deprecated = leaf->anythread_deprecation;
+ 		if (x86_pmu.intel_cap.anythread_deprecated)
+ 			pr_cont(" AnyThread deprecated, ");
+ 	}
 -- 
 2.54.0
 
