@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63D447F2EB
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EB147ECD4
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779983156; cv=none; b=pfkYgnh0iQwOqT2n1/m+x/5eht5YL5xcawbKbtoBfg2RD9a0fuIGdnOyqyVVIBXH/gv3W2SC97R7SHD8TywIGxtLd5bpzqQbB91aZER0MStRZg4s/MyxPZ4Gw5bdVe3sNruOkw9ynC1EZWXEywuVHOr49XcTHGZ421KqpFPHy7Y=
+	t=1779983158; cv=none; b=JQtCPZgzLLLlBmpvf7EvGXtX9EySlLHkWS2Pi7SzjhmMlV+wdW6xkDmlAeu4GvVMFaYFtyK3RUdU00CQF4DsYb81ZA9zlxnSGggcpZy4qJrdbH4HgLpE0briLlgWd9By+slJVu8pBNGrvF+EIU8Wjo2gmHWfeVq+NAFO/GkXxUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779983156; c=relaxed/simple;
-	bh=n4YCaxov80zZp1g8PIvOdTArsJf7jqweWh34brIBbJw=;
+	s=arc-20240116; t=1779983158; c=relaxed/simple;
+	bh=CrixgFgtmFg1mHoLKm5+K6Zcps4vf0dZAyqszPxBEbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgfLDWyoYRmMU8z+J/0dMQYoinbC3/5C0l4nR6G/42KcsE6/ubg8poKG71IVTb1dUe8dwcqrNcgjjG8OTnscnzE8IZ7mX5nkEzzk3vjG5pqMyY5KqNncNrGPQQ1frHBMVU+q4Q44NgHtb6A64YJiKH2Jw479MtRQyavf0uhMcrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=C1LidY6r; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=eC1nzp43; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=cbq4AcMK42eNyaqn6OvV39Gff3WBu/9ngJcHipXFsHbPAlg3Udk7Ic0fv4hfDlEVsYoJW18M7hx3JMSWTpfFCzuuWboh4bGp7nLjfRym2NS3EPb3cNsctaQdlpKTTbQLuFNnqFNtu+LziQmPI8ArVVLNkcIWxhqBwsKioq9SHjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=TGV1ik+y; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=JQ/1TW+V; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="C1LidY6r";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="eC1nzp43"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="TGV1ik+y";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="JQ/1TW+V"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779983146;
+	s=2020; t=1779983149;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=jYByR6a/NDdJzlNCvjaDl47BEyIrYg5KyzzduISgnRw=;
-	b=C1LidY6rDPxvvmAB1BpewA2EvPyC6SVPG9hFqt11YSTLRAmbzX6b7qFH5ckKnpsHG0VipL
-	8o+3qzW1rivZHZ+cJJxl9lvEZdfHzgXkyv1vEpN0unvaCnUeqepB08LVtp95lhotYNcEY9
-	IenEP0upJ64WMxEEXXqwtQ6M85Ubh+lDFUdqIT7aIceboozdiu0O+VSSeGGs7AzoU9voBY
-	61lJwegvrnK0GTRLrsI8Gg9GCSMu5VfO7MVAbXHRSpFSwpbJZ46rViqb+VLHZAnpflXqs4
-	oTH73V71p1pCJw36y/n9mKb0CuLSDJSAlHpOUK/i8lJGgFpHxljjuN5sp3Nt1g==
+	bh=lP6ersgMpmH4epNlmF/TFLHGTSSP8tAphSitkWlaXQ0=;
+	b=TGV1ik+yaKz8VbcQVZJx75Mv+S6YdpyzK401ciVwnqATtCG2s2sSyzR+n8WrF28eyBtNMR
+	b9pRw7EBwfrzOxTCYy+4QK9CXoWU9ffwaoiMrPC4pGfAcP1qP76XOQ7KaXmlcOTd26cpr/
+	TTUCNmlHcnQE1NkUhFPwLxog2sO858hdsxPWSDh0taeF/5vJntSu12SsYIsgE4ZdfYU2/d
+	xG3NYqLQCHiShnR0rE8nLfOHt0/AQfrt8oKoCa9NtQ56YBTTzzzpODHgcC3QzfdwebPVch
+	GdDVavGw80G9gVT+BTIBvKzzEgMa0IVsCCvuuigmxb9o25HI/NEuct+jVqzPKA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779983146;
+	s=2020e; t=1779983149;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=jYByR6a/NDdJzlNCvjaDl47BEyIrYg5KyzzduISgnRw=;
-	b=eC1nzp43Ywhe7x68/gO3DNb+MiQJX7+3LQvTwbr2FEOKB2Z6DxAoB8yyC2A4RO9Io+10QV
-	nRB63pAmwwpo61DQ==
+	bh=lP6ersgMpmH4epNlmF/TFLHGTSSP8tAphSitkWlaXQ0=;
+	b=JQ/1TW+V42xx6yyy/xL515whPZ0XJsy/xzt3agSDLfeo04MvA/cx7yTsQB/DkDt7wiPNtn
+	nfi1+u+wC1VP3pCg==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 109/120] x86/cpuid: Introduce a compile-time X86_FEATURE word map
-Date: Thu, 28 May 2026 17:39:11 +0200
-Message-ID: <20260528153923.403473-110-darwi@linutronix.de>
+Subject: [PATCH v7 110/120] x86/cpuid: Introduce X86_FEATURE and CPUID word APIs
+Date: Thu, 28 May 2026 17:39:12 +0200
+Message-ID: <20260528153923.403473-111-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,102 +66,158 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Prepare for routing X86_FEATURE queries to the CPUID tables instead of to
-cpuinfo_x86::x86_capability[].  The latter will be later removed to make
-the CPUID tables a "single source of Truth" for all x86 feature state.
+Introduce helper APIs to translate:
 
-Build a compile time map from an <asm/cpufeatures.h> X86_FEATURE word to
-its cached CPUID leaf/subleaf register output.
+  - X86_FEATURE symbols from <asm/cpufeatures.h>
+  - CPUID word indices from <asm/cpufeature.h>
 
-Use a compile time table to preserve the feature querying optimizations at
-<asm/cpufeature.h>.
+into offsets within the cached CPUID tables.
+
+These helpers will be used to route all X86_FEATURE and CPUID word querying
+into the centralized CPUID tables, instead of their current routing to
+cpuinfo_x86::x86_capability[].  Thus removing the latter from the kernel.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/include/asm/cpuid/types.h | 59 +++++++++++++++++++++++++++++-
- 1 file changed, 57 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/cpuid/api.h | 125 +++++++++++++++++++++++++++++++
+ 1 file changed, 125 insertions(+)
 
-diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
-index 27bcf4eea8dc..85be453834fd 100644
---- a/arch/x86/include/asm/cpuid/types.h
-+++ b/arch/x86/include/asm/cpuid/types.h
-@@ -168,9 +168,12 @@ struct leaf_parse_info {
-  * Use an array of storage entries to accommodate CPUID leaves with multiple subleaves
-  * having the same output format.  This is common for hierarchical enumeration; e.g.,
-  * CPUID(0x4), CPUID(0x12), and CPUID(0x8000001d).
-+ *
-+ * Align all CPUID outputs to unsigned long.  They're passed to bitops for X86_FEATURE
-+ * queries, which require the alignment.
-  */
- #define __CPUID_LEAF(_name, _count)				\
--	struct _name		_name[_count];			\
-+	struct _name		_name[_count] __aligned(sizeof(unsigned long));\
- 	struct leaf_parse_info	_name##_info
+diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
+index 1c0bb7ed4d45..efa1e924d6d3 100644
+--- a/arch/x86/include/asm/cpuid/api.h
++++ b/arch/x86/include/asm/cpuid/api.h
+@@ -535,6 +535,131 @@ static inline bool cpuid_amd_hygon_has_l3_cache(struct cpuinfo_x86 *c)
+ 	return el6 && el6->l3_assoc;
+ }
  
- /**
-@@ -273,9 +276,61 @@ struct cpuid_leaves {
-  *
-  * This is to be embedded inside 'struct cpuinfo_x86' to provide parsed and
-  * sanitized CPUID data per CPU.
-+ *
-+ * Align the leaves to unsigned long since their elements are passed to bitops
-+ * for X86_FEATURE querying.
-  */
- struct cpuid_table {
--	struct cpuid_leaves	leaves;
-+	struct cpuid_leaves	leaves __aligned(sizeof(unsigned long));
-+};
-+
 +/*
-+ * X86_FEATURE word mappings:
++ * X86_FEATURE mapping:
 + *
-+ * Build a compile-time mapping table from an <asm/cpufeatures.h> X86_FEATURE
-+ * word to its corresponding cached entry in a CPUID table.
++ * These macros are for the internal <asm/cpufeature.h> X86_FEATURE querying.
++ * Do everything at compile-time to preserve that header's query optimizations.
++ *
++ * @_feature: <asm/cpufeatures.h> X86_FEATURE symbol
 + */
 +
-+#define __BUG(n)	(NCAPINTS + (n))
++#define __feature_word(_feature)	((_feature) / 32)
++#define __feature_word_bit(_feature)	((_feature) % 32)
 +
-+struct cpuid_cpufeature {
-+	unsigned int	leaves_offset;	/* Offset from a struct cpuid_leaves instance */
-+	unsigned int	cpuid_reg;	/* Output register: CPUID_EAX -> CPUID_EDX */
- };
- 
-+#define __cpu_feature_word(_word, _leaf, _subleaf, _reg)				\
-+	[_word] = {									\
-+		.leaves_offset	= offsetof(struct cpuid_leaves, leaf_##_leaf##_##_subleaf),\
-+		.cpuid_reg	= _reg,							\
-+	}
++/*
++ * Return cached CPUID output offset for @_feature; within 'struct cpuid_leaves'.
++ */
++#define __feature_byte_offset(_feature)						\
++({										\
++	struct cpuid_cpufeature ____map[] = CPUID_FEATURE_WORDS_MAP;		\
++	unsigned int ____word = __feature_word(_feature);			\
++										\
++	____map[____word].leaves_offset;					\
++})
 +
-+#define CPUID_FEATURE_WORDS_MAP								\
-+{											\
-+	/*   X86_FEATURE word,		Leaf,		Subleaf,	Output reg */	\
-+	__cpu_feature_word(0,		0x1,		0,		CPUID_EDX),	\
-+	__cpu_feature_word(1,		0x80000001,	0,		CPUID_EDX),	\
-+	__cpu_feature_word(2,		0x80860001,	0,		CPUID_EDX),	\
-+	__cpu_feature_word(3,		0x4c780001,	0,		CPUID_EAX),	\
-+	__cpu_feature_word(4,		0x1,		0,		CPUID_ECX),	\
-+	__cpu_feature_word(5,		0xc0000001,	0,		CPUID_EDX),	\
-+	__cpu_feature_word(6,		0x80000001,	0,		CPUID_ECX),	\
-+	__cpu_feature_word(7,		0x4c780001,	0,		CPUID_EBX),	\
-+	__cpu_feature_word(8,		0x4c780001,	0,		CPUID_ECX),	\
-+	__cpu_feature_word(9,		0x7,		0,		CPUID_EBX),	\
-+	__cpu_feature_word(10,		0xd,		1,		CPUID_EAX),	\
-+	__cpu_feature_word(11,		0x4c780001,	0,		CPUID_EDX),	\
-+	__cpu_feature_word(12,		0x7,		1,		CPUID_EAX),	\
-+	__cpu_feature_word(13,		0x80000008,	0,		CPUID_EBX),	\
-+	__cpu_feature_word(14,		0x6,		0,		CPUID_EAX),	\
-+	__cpu_feature_word(15,		0x8000000a,	0,		CPUID_EDX),	\
-+	__cpu_feature_word(16,		0x7,		0,		CPUID_ECX),	\
-+	__cpu_feature_word(17,		0x4c780001,	1,		CPUID_EAX),	\
-+	__cpu_feature_word(18,		0x7,		0,		CPUID_EDX),	\
-+	__cpu_feature_word(19,		0x8000001f,	0,		CPUID_EAX),	\
-+	__cpu_feature_word(20,		0x80000021,	0,		CPUID_EAX),	\
-+	__cpu_feature_word(21,		0x4c780001,	1,		CPUID_EBX),	\
-+	__cpu_feature_word(__BUG(0),	0x4c780002,	0,		CPUID_EAX),	\
-+	__cpu_feature_word(__BUG(1),	0x4c780002,	0,		CPUID_EBX),	\
++/*
++ * Return CPUID output register for @_feature; i.e., CPUID_EAX -> CPUID_EDX.
++ */
++#define __feature_register(_feature)						\
++({										\
++	struct cpuid_cpufeature ____map[] = CPUID_FEATURE_WORDS_MAP;		\
++	unsigned int ____word = __feature_word(_feature);			\
++										\
++	____map[____word].cpuid_reg;						\
++})
++
++/*
++ * Return bit offset for @_feature.  This is for bitops, where the offset is
++ * relative to ((u8 *)&cpuid_leaves + __feature_byte_offset(@_feature)).
++ */
++#define __feature_bit_offset(_feature)						\
++({										\
++	32 * __feature_register(_feature) + __feature_word_bit(_feature);	\
++})
++
++/**
++ * cpuid_feature_byte_offset() - Return X86_FEATURE byte offset
++ * @_feature:	X86_FEATURE symbol from <asm/cpufeatures.h>
++ *
++ * Return CPUID table 'struct cpuid_leaves' byte offset, for @_feature.
++ */
++#define cpuid_feature_byte_offset(_feature)	__feature_byte_offset(_feature)
++
++/**
++ * cpuid_feature_bitmap() - Return X86_FEATURE bitmap
++ * @_cpuinfo:	CPU capability structure ('struct cpuinfo_x86')
++ * @_feature:	X86_FEATURE symbol from <asm/cpufeatures.h>
++ *
++ * Return CPUID table bitmap, within @_cpuinfo, for @_feature.  The returned
++ * bitmap is unsigned long aligned, for bitops access.
++ */
++#define cpuid_feature_bitmap(_cpuinfo, _feature)				\
++	(unsigned long *)((u8 *)&(_cpuinfo)->cpuid.leaves + __feature_byte_offset(_feature))
++
++/**
++ * cpuid_feature_bit_offset()
++ * @_feature:	X86_FEATURE symbol from <asm/cpufeatures.h>
++ *
++ * Return CPUID table bit offset, for @_feature, within the bitmap returned by
++ * cpuid_feature_bitmap().
++ */
++#define cpuid_feature_bit_offset(_feature)	__feature_bit_offset(_feature)
++
++/*
++ * CPUID word mapping:
++ */
++
++static inline u32 *__cpuid_word_address(struct cpuinfo_x86 *c, u16 word)
++{
++	u16 feature = word * 32;
++
++	return (u32 *)cpuid_feature_bitmap(c, feature) + __feature_register(feature);
 +}
 +
- #endif /* _ASM_X86_CPUID_TYPES_H */
++/**
++ * cpuid_word() - Return the CPUID word's raw u32 value
++ * @c:		CPU capability structure ('struct cpuinfo_x86')
++ * @word:	CPUID word number as defined at "enum cpuid_leafs"
++ */
++static inline u32 cpuid_word(struct cpuinfo_x86 *c, u16 word)
++{
++	return *__cpuid_word_address(c, word);
++}
++
++/**
++ * cpuid_word_set() - Set the CPUID word's raw u32 value
++ * @c:		CPU capability structure ('struct cpuinfo_x86')
++ * @word:	CPUID word number as defined at "enum cpuid_leafs"
++ * @val:	Raw u32 value to set the word to
++ */
++static inline void cpuid_word_set(struct cpuinfo_x86 *c, u16 word, u32 val)
++{
++	*__cpuid_word_address(c, word) = val;
++}
++
++/**
++ * cpuid_word_set_bits() - Set bits at CPUID word according to passed map
++ * @c:		CPU capability structure ('struct cpuinfo_x86')
++ * @word:	CPUID word number as defined at "enum cpuid_leafs"
++ * @map:	Map of bits to be set
++ */
++static inline void cpuid_word_set_bits(struct cpuinfo_x86 *c, u16 word, u32 map)
++{
++	*__cpuid_word_address(c, word) |= map;
++}
++
++/**
++ * cpuid_word_clear_bits() - Clear bits at CPUID word according to passed map
++ * @c:		CPU capability structure ('struct cpuinfo_x86')
++ * @word:	CPUID word number as defined at "enum cpuid_leafs"
++ * @map:	Map of bits to be cleared
++ */
++static inline void cpuid_word_clear_bits(struct cpuinfo_x86 *c, u16 word, u32 map)
++{
++	*__cpuid_word_address(c, word) &= ~map;
++}
++
+ /*
+  * CPUID parser exported APIs:
+  */
 -- 
 2.54.0
 
