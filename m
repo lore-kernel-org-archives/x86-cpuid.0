@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA73740962E
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E921240FDA2
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779982890; cv=none; b=ighGio0P+F+fjmLzoZQcCk5+W/UEtYRZfbR5J28hdew1RZUWLhc1BYWsacwGSzgffSmswTolwkyUzDhfIAudeiLL75CNaseVHKb5KU4Z0KE9ZgHa0YJZII8XQ06vCsIhrjWmq/ZBjOWuL4+CPLU58FzvlWsrC5aNcjkiJ/nO5EI=
+	t=1779982894; cv=none; b=eZ1JI1gsw6TfIep0tqAmdXnruQiV2gLjvt8XeZNN4RfKpb57Q/3v1RexLhv0St8A2wUmUkBbn2asuDT/D++h8lZ/77GcOIr5ig/T9lez2qz1TXU+PeJHbuz0PQbDaAXZ8ajAXJdZHiiKGrfiul++yfUEK4f7FWRq9BkmVykrPqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779982890; c=relaxed/simple;
-	bh=gugfPwIVW6Z23h4Zjwchn/ZC84hbXBcCOZsvKdU7KWA=;
+	s=arc-20240116; t=1779982894; c=relaxed/simple;
+	bh=asmsKTgbHE9koFljta6pJaueSFWxw/PmAgxd4HYmcy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OunMBCEsRHeETk8rKmjT+rlgDo8mnEb329r00s91osDx373x4oZhC03lFcz8ie2Ns+J9S+UxPc23R3toO8unTBghqlghZu4gEx8rkVmQgn5amxBRZ0pb0YXwmePGUgyH/ZrBhEcCkyp2uk8l7KBuRJ74rfpqFAzKrmccWXeCR2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=sp6o2zQT; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=nzRXI/Xp; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=WyeOrA9odzQJVA1L+tNduKzAhPIR/TRjvqfG0UEoaJno6HxE55bXtDlwXUtQcghWoDxLlItYnc/myb3IxgvuxflPx285V1y2aF3In5CKkhv9af20AF+e1E9MAi5aNTfvtQa+i5i/R/WrvWEaxSWHhb3hvjw4C7ZVCocIkRFciEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=sZpJr3ft; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=JwLYCOA1; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="sp6o2zQT";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="nzRXI/Xp"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="sZpJr3ft";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="JwLYCOA1"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779982886;
+	s=2020; t=1779982889;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=aW/+CALsoqbaO0yECpY9fnloQniYFrOWJkJUj7JZneo=;
-	b=sp6o2zQTaIW5tD5GC0yQ4nIyP2og6hJWTPfoPohGtDDQDrKR9eNrvxRc184GtL09Z0X/fj
-	hrG18YzoUM9TkOO/iqMcSgnmxcQBCAQD/9eNo1tCKfngkCpZoZDvoOu4bzn7n/5tZ5P+go
-	h96nm1j17tHluXdfPZ8Rw/UQ5k90R52HxmpNkn4kuGHdgKPjMELpF8g9CiI2HdOpl4LBKW
-	5cTc6PdoeMD6UO5zE8SPzvoTuZ8/yBTWN54jzUud3XOTIGaM/at/Fm18BwXfEK52raT960
-	+FBLWjCEjDUSvpomHMT98OCY2FmQh4gaAjjMRhIMlMRJt+6OS75KYpp74OGMkw==
+	bh=fc7etnUnxpviEWTMshgDDXsfeYrPyAO6HhpCwUqQOG0=;
+	b=sZpJr3ft5V6BHcTuwrkMHib1GfrtNgs1v3vgNYI/U99x4awDTupHJcG7tabgQdINahyA+b
+	KQx4qhwQFkxzC1evWnLjBpjs5aqJVjB5uxFe/qQczc3l+1eDDSZXRWQnmFBLjowqjRQirC
+	/xai0NovCTBsvYxWFa5EIk4pplJiT4KmhgYnVgQPKQJFNSaEH2yrR4JdcKAsxdYBfmudLZ
+	b4W86XlfeIS5VzP2XjgQVU4Bt7MnTHcWSLdBgypZwFkbuHrqj9AUAEO8k4u5Zj0U2N8MR9
+	+7T/8tEILTbxsemsPmjnw2YLVFgXo5UKmD/tU/+m+lBN9HNRzsjm7+Ceif/81g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779982886;
+	s=2020e; t=1779982889;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=aW/+CALsoqbaO0yECpY9fnloQniYFrOWJkJUj7JZneo=;
-	b=nzRXI/XpsQ5S+nu/XvyqxpKPc1eYyDNMYgszm+/pu7CJvlWgtsVjD401Rnrbdohqwj0+E6
-	BqmVgfptdY9092Ag==
+	bh=fc7etnUnxpviEWTMshgDDXsfeYrPyAO6HhpCwUqQOG0=;
+	b=JwLYCOA11dyrkoP1ebbzfjuDQ98ic3xEbyiCuV9nb2d6eVeMHXdTb6FYZs9MCjPfkllFaw
+	eHZiBnge118OhZBA==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 031/120] x86/cpuid: Parse deterministic cache parameters CPUID leaves
-Date: Thu, 28 May 2026 17:37:53 +0200
-Message-ID: <20260528153923.403473-32-darwi@linutronix.de>
+Subject: [PATCH v7 032/120] x86/cacheinfo: Pass a 'struct cpuinfo_x86' reference to CPUID(0x4) code
+Date: Thu, 28 May 2026 17:37:54 +0200
+Message-ID: <20260528153923.403473-33-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,135 +66,81 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Parse CPUID(0x4) and CPUID(0x8000001d).
+Prepare the CPUID(0x4) cache topology code for using the parsed CPUID API
+instead of invoking direct CPUID queries.
 
-Query CPUID(0x4) only for Intel, Centaur, and Zhaoxin as these are the x86
-vendors where it is supported.  Query CPUID(0x8000001d) for AMD and Hygon.
+Since the CPUID API requires a 'struct cpuinfo_x86' reference, trickle it
+from <linux/cacheinfo.h>'s populate_cache_leaves() x86 implementation down
+to fill_cpuid4_info() and its Intel-specific CPUID(0x4) code.
 
-Define a single CPUID parser read function for both leaves, as they have
-the same subleaf cache enumeration logic.
+No functional change intended.
 
-Introduce the macro
-
-    define_cpuid_read_function()
-
-to avoid code duplication between the CPUID parser default read function,
-cpuid_read_generic(), and the new CPUID(0x4)/CPUID(0x8000001d) logic.
-
+Suggested-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Link: https://lore.kernel.org/lkml/aBnEBbDATdE2LTGU@gmail.com
 ---
- arch/x86/include/asm/cpuid/types.h |  2 ++
- arch/x86/kernel/cpu/cpuid_parser.c | 40 ++++++++++++++++++++++--------
- arch/x86/kernel/cpu/cpuid_parser.h |  4 +++
- 3 files changed, 36 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/cacheinfo.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
-index c35de721f652..f77659303569 100644
---- a/arch/x86/include/asm/cpuid/types.h
-+++ b/arch/x86/include/asm/cpuid/types.h
-@@ -211,11 +211,13 @@ struct cpuid_leaves {
- 	CPUID_LEAF   (	0x0,		0  );
- 	CPUID_LEAF   (	0x1,		0  );
- 	CPUID_LEAF   (  0x2,		0  );
-+	CPUID_LEAF_N (  0x4,		8  );
- 	CPUID_LEAF   (	0x16,		0  );
- 	CPUID_LEAF   (  0x80000000,	0  );
- 	CPUID_LEAF   (  0x80000002,	0  );
- 	CPUID_LEAF   (  0x80000003,	0  );
- 	CPUID_LEAF   (  0x80000004,	0  );
-+	CPUID_LEAF_N (  0x8000001d,	8  );
- 	CPUID_LEAF   (  0x80860000,	0  );
- 	CPUID_LEAF   (  0x80860001,	0  );
- 	CPUID_LEAF   (  0x80860002,	0  );
-diff --git a/arch/x86/kernel/cpu/cpuid_parser.c b/arch/x86/kernel/cpu/cpuid_parser.c
-index bddd9937bb2b..ee34894c79ef 100644
---- a/arch/x86/kernel/cpu/cpuid_parser.c
-+++ b/arch/x86/kernel/cpu/cpuid_parser.c
-@@ -31,19 +31,33 @@ static const struct cpuid_vendor_entry cpuid_vendor_entries[] = {
-  * Leaf read functions:
-  */
- 
--/*
-- * Default CPUID read function
-- * Satisfies the requirements stated at 'struct cpuid_parse_entry'->read().
-+/**
-+ * define_cpuid_read_function() - Generate a CPUID parser read function
-+ * @suffix:	Generated function name suffix (full name becomes: cpuid_read_@suffix())
-+ * @_leaf_t:	Type to cast the CPUID output storage pointer
-+ * @_leaf:	Name of the CPUID output storage pointer
-+ * @_break_c:	Condition to break the CPUID parsing loop, which may reference @_leaf,
-+ *		and where @_leaf stores each iteration's CPUID output.
-+ *
-+ * Define a CPUID parser read function according to the requirements stated at
-+ * 'struct cpuid_parse_entry'->read().
-  */
--static void
--cpuid_read_generic(const struct cpuid_parse_entry *e, const struct cpuid_read_output *output)
--{
--	struct cpuid_regs *regs = output->regs;
--
--	for (int i = 0; i < e->maxcnt; i++, regs++, output->info->nr_entries++)
--		cpuid_read_subleaf(e->leaf, e->subleaf + i, regs);
-+#define define_cpuid_read_function(suffix, _leaf_t, _leaf, _break_c)				\
-+static void											\
-+cpuid_read_##suffix(const struct cpuid_parse_entry *e, const struct cpuid_read_output *output)	\
-+{												\
-+	struct _leaf_t *_leaf = (struct _leaf_t *)output->regs;					\
-+												\
-+	for (int i = 0; i < e->maxcnt; i++, _leaf++, output->info->nr_entries++) {		\
-+		cpuid_read_subleaf(e->leaf, e->subleaf + i, _leaf);				\
-+		if (_break_c)									\
-+			break;									\
-+	}											\
+diff --git a/arch/x86/kernel/cpu/cacheinfo.c b/arch/x86/kernel/cpu/cacheinfo.c
+index d933d58a5a61..07f7e7b667ed 100644
+--- a/arch/x86/kernel/cpu/cacheinfo.c
++++ b/arch/x86/kernel/cpu/cacheinfo.c
+@@ -252,7 +252,7 @@ static int amd_fill_cpuid4_info(int index, struct _cpuid4_info *id4)
+ 	return cpuid4_info_fill_done(id4, eax, ebx, ecx);
  }
  
-+/* cpuid_read_generic() */
-+define_cpuid_read_function(generic, cpuid_regs, ignored, false);
-+
- static void
- cpuid_read_0x2(const struct cpuid_parse_entry *e, const struct cpuid_read_output *output)
+-static int intel_fill_cpuid4_info(int index, struct _cpuid4_info *id4)
++static int intel_fill_cpuid4_info(struct cpuinfo_x86 *unused, int index, struct _cpuid4_info *id4)
  {
-@@ -83,6 +97,12 @@ cpuid_read_0x2(const struct cpuid_parse_entry *e, const struct cpuid_read_output
- 	output->info->nr_entries = 1;
+ 	union _cpuid4_leaf_eax eax;
+ 	union _cpuid4_leaf_ebx ebx;
+@@ -264,13 +264,13 @@ static int intel_fill_cpuid4_info(int index, struct _cpuid4_info *id4)
+ 	return cpuid4_info_fill_done(id4, eax, ebx, ecx);
  }
  
-+/*
-+ * Shared read function for Intel CPUID(0x4) and AMD CPUID(0x8000001d), as both have
-+ * the same subleaf enumeration logic and register output format.
-+ */
-+define_cpuid_read_function(deterministic_cache, leaf_0x4_n, l, l->cache_type == 0);
-+
- /*
-  * Define an extended range CPUID read function
-  *
-diff --git a/arch/x86/kernel/cpu/cpuid_parser.h b/arch/x86/kernel/cpu/cpuid_parser.h
-index 1de239370652..25ca9b19e8cf 100644
---- a/arch/x86/kernel/cpu/cpuid_parser.h
-+++ b/arch/x86/kernel/cpu/cpuid_parser.h
-@@ -145,11 +145,13 @@ struct cpuid_parse_entry {
- #define CPUID_COMMON_ENTRIES									\
- 	/*			Leaf		Subleaf		Reader function */		\
- 	CPUID_PARSE_ENTRY   (	0x2,		0,		0x2			),	\
-+	CPUID_PARSE_ENTRY_N (	0x4,				deterministic_cache	),	\
- 	CPUID_PARSE_ENTRY   (	0x16,		0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80000000,	0,		0x80000000		),	\
- 	CPUID_PARSE_ENTRY   (	0x80000002,	0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80000003,	0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80000004,	0,		generic			),	\
-+	CPUID_PARSE_ENTRY_N (	0x8000001d,			deterministic_cache	),	\
- 	CPUID_PARSE_ENTRY   (	0x80860000,	0,		0x80860000		),	\
- 	CPUID_PARSE_ENTRY   (	0x80860001,	0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80860002,	0,		generic			),	\
-@@ -192,7 +194,9 @@ struct cpuid_vendor_entry {
- #define CPUID_VENDOR_ENTRIES								\
- 	/*		   Leaf		Vendor list		    */			\
- 	CPUID_VENDOR_ENTRY(0x2,		X86_VENDOR_INTEL, X86_VENDOR_CENTAUR, X86_VENDOR_ZHAOXIN),\
-+	CPUID_VENDOR_ENTRY(0x4,		X86_VENDOR_INTEL, X86_VENDOR_CENTAUR, X86_VENDOR_ZHAOXIN),\
- 	CPUID_VENDOR_ENTRY(0x16,	X86_VENDOR_INTEL),				\
-+	CPUID_VENDOR_ENTRY(0x8000001d,	X86_VENDOR_AMD, X86_VENDOR_HYGON),		\
- 	CPUID_VENDOR_ENTRY(0x80860000,	X86_VENDOR_TRANSMETA),				\
- 	CPUID_VENDOR_ENTRY(0x80860001,	X86_VENDOR_TRANSMETA),				\
- 	CPUID_VENDOR_ENTRY(0x80860002,	X86_VENDOR_TRANSMETA),				\
+-static int fill_cpuid4_info(int index, struct _cpuid4_info *id4)
++static int fill_cpuid4_info(struct cpuinfo_x86 *c, int index, struct _cpuid4_info *id4)
+ {
+ 	u8 cpu_vendor = boot_cpu_data.x86_vendor;
+ 
+ 	return (cpu_vendor == X86_VENDOR_AMD || cpu_vendor == X86_VENDOR_HYGON) ?
+ 		amd_fill_cpuid4_info(index, id4) :
+-		intel_fill_cpuid4_info(index, id4);
++		intel_fill_cpuid4_info(c, index, id4);
+ }
+ 
+ static int find_num_cache_leaves(struct cpuinfo_x86 *c)
+@@ -443,7 +443,7 @@ static bool intel_cacheinfo_0x4(struct cpuinfo_x86 *c)
+ 		struct _cpuid4_info id4 = {};
+ 		int ret;
+ 
+-		ret = intel_fill_cpuid4_info(i, &id4);
++		ret = intel_fill_cpuid4_info(c, i, &id4);
+ 		if (ret < 0)
+ 			continue;
+ 
+@@ -612,17 +612,17 @@ int populate_cache_leaves(unsigned int cpu)
+ 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
+ 	struct cacheinfo *ci = this_cpu_ci->info_list;
+ 	u8 cpu_vendor = boot_cpu_data.x86_vendor;
+-	u32 apicid = cpu_data(cpu).topo.apicid;
++	struct cpuinfo_x86 *c = &cpu_data(cpu);
+ 	struct amd_northbridge *nb = NULL;
+ 	struct _cpuid4_info id4 = {};
+ 	int idx, ret;
+ 
+ 	for (idx = 0; idx < this_cpu_ci->num_leaves; idx++) {
+-		ret = fill_cpuid4_info(idx, &id4);
++		ret = fill_cpuid4_info(c, idx, &id4);
+ 		if (ret)
+ 			return ret;
+ 
+-		id4.id = get_cache_id(apicid, &id4);
++		id4.id = get_cache_id(c->topo.apicid, &id4);
+ 
+ 		if (cpu_vendor == X86_VENDOR_AMD || cpu_vendor == X86_VENDOR_HYGON)
+ 			nb = amd_init_l3_cache(idx);
 -- 
 2.54.0
 
