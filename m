@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F74481231
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC3F481236
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779983182; cv=none; b=Czo0Vrjl4I4aVG070jI0nbehEO7uXSuD5ZO+4aP8kVbE2xzkLYMdbSlGDEjkM3n3WB21xQC6W5j8RI4pSKAdVf0feEQ/dJ0rG53tM7AiWSYpWxpNaZ1ZSaUiAGXWuWl+JoyNLlB6bER1HcC5URpm2z/srOw1KwBYY2qqsQqmhPw=
+	t=1779983185; cv=none; b=jWD35UxB3ieGugsTpXDV/up3t6yBDyQKYwkj5KDRLoQNA+64SJE6td/Kge0V1wNWJaxYNanXh6pQnPNUq60baxw0gsFqUiW1oLjsz9RdNJBHmbR4TxZVTYKD0XJuINKI8+OjOqECYUlExlxRrd4cFgg7tf4E9Si4kp+u3IVtPXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779983182; c=relaxed/simple;
-	bh=W7U6wWe/I2+lT3vCDE2qREnRZ9fFkarc9o491wkV1xc=;
+	s=arc-20240116; t=1779983185; c=relaxed/simple;
+	bh=8Dysoy4GcAk7pdX2Dppk+9sUkzCkm3WjcIV7eAxf77c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2Ul8mB4WQqFlOEYeg7B6hKqH5yXdhClQlSivIKNMM5EJVycEf7v/fEJ7GFgT0f5xrGWm2DrBH2BkQHffGBeNxMoa3QhoErKp6qTSHyfPzb2M9juzAdPzU2QvH7OLOmdL9rdI57Jx7e3XYYiCYXG7ouYzkJoVcLTW6bPcbel91E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=z+CaIWz3; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UNJ94m7J; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=IK7TpqyCcaFX480jhEc8FTxFkjUeTEDQIaR/A+mSCQ0j4pou/YYK4DvkFEi3rohmeFuw76qlv00XMY1JH41d35hmYiPm6rKJnDqjuR3uA8xEN12TWFLl+3FVu2hQKA4q8vWYcbDVSaTBe5a+ycwJoDMDgKVm0XnR6ETKeSWW8RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=VsECp1uS; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=+4BjLC8G; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="z+CaIWz3";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UNJ94m7J"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="VsECp1uS";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="+4BjLC8G"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779983179;
+	s=2020; t=1779983182;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=OCsDXxYBoKdnZ5dXB3QihAcAs8Sqv94XNjh5VkbTMPk=;
-	b=z+CaIWz3QHqdpDY7NtcPPv2FgZJ9VNULwfL0oh4Y2rOpQlEXTNP1dCrc1bBbN5Io7EcH5b
-	qnwTu44YZjgUfpdAQhfTQnfs9t2b1mQ29CMJSPXZi+TSRiFwpFlJRorVDEz+rKH1xGqVvX
-	r5ZVkdnewdxgAMX1dzCM0r5RfBGwlzqASFbMaet/XzQGFb/jboxTTWsvz9i+8FzCIiDkUS
-	siSTJJF34twfndWcG0auAMrbt10qbeVZcldp8ium6tS0nQXZcb73o9QWqu8bJC3F81p5FR
-	4IFfeonEcqkW+JWX6J1bB+cbugI8/28Wg7PqKJsbmfzFj1dX2uXLqDh4V3Y0CA==
+	bh=g0uBWGq3OqkcYh6bkNnYpZN2OjwIrkUnZ89AV24E6zw=;
+	b=VsECp1uSBT8S+VBFVm242FpeJsn58PtuCQrCI5Q5YY4tQiXXRy44dZfiDsumaZvbN1BI76
+	JRqtMPSfn8V0Yv4surX8EcnLikCvIPaPVdwgOVTAJBLTyo0fAK4mhf2ULt6/Sd30hJ2MOQ
+	nv6S4Ku7HctzfI+v/r2MorLplinj3/NEy/yCl7IQgy7A76HjnWsaj1uHztwD2GJM7VAPKl
+	+i/4k3/Kak3Ay684zFUnVXozIA2Ck07uuC0Yg0lU7r9XuKq+81T5u26VHsfN0R7QX3xxe3
+	K63hkVMDX6S7/85cIysXUMWMWtRzdPiEXkW/+MT84AlVB+ryC1Q7gLvviVP1iw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779983179;
+	s=2020e; t=1779983182;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=OCsDXxYBoKdnZ5dXB3QihAcAs8Sqv94XNjh5VkbTMPk=;
-	b=UNJ94m7JlxfwqscX7BS8wZGBk+6TauXqTaiUiUUh7zbNqut0jOoHjVWoTPMOl1YVrXqSDg
-	HsyJcYbytUoHtuAg==
+	bh=g0uBWGq3OqkcYh6bkNnYpZN2OjwIrkUnZ89AV24E6zw=;
+	b=+4BjLC8GtBlxzaBcp4KzGJfnRyVJoyuFVLk/ezwNinqvOjg2hlMUOPobYsjsdCM2Fi0O61
+	HhbEQFcfd8JjqAAA==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 119/120] x86/cpu: Remove x86_capability[] and x86_power
-Date: Thu, 28 May 2026 17:39:21 +0200
-Message-ID: <20260528153923.403473-120-darwi@linutronix.de>
+Subject: [PATCH v7 120/120] MAINTAINERS: Extend x86 CPUID DATABASE file coverage
+Date: Thu, 28 May 2026 17:39:22 +0200
+Message-ID: <20260528153923.403473-121-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,112 +66,57 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-X86_FEATURE queries are now routed to the CPUID tables instead of to
-x86_capability[].
+Add
 
-x86_power call sites have all been converted to parsed CPUID(0x80000007)
-access.
+    arch/x86/include/asm/cpuid/
 
-Remove x86_capability[] and x86_power from struct cpuinfo_x86.
+since the new CPUID APIs are now at <asm/cpuid/types.h> and
+<asm/cpuid/api.h>.  The x86-cpuid-db C99 bitfields header is also under
+that folder.
+
+Add
+
+    arch/x86/include/asm/cpufeature.h
+
+since it has the X86_FEATURE word names listing, along with the X86_FEATURE
+APIs, which are now both routed to the CPUID API.
+
+Add
+
+    arch/x86/include/asm/cpufeatures.h
+
+since it has the X86_FEATURE bit listings, where by now new feature bits
+should only be appended to; never modified in-place.
+
+Add
+
+    arch/x86/kernel/cpu/cpuid_parser.{c,h}
+
+since they have the CPUID parser implementation.
+
+Adding these files ensures that myself and the x86-cpuid mailing list are
+CCed on related patches.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/include/asm/processor.h | 10 ----------
- arch/x86/kernel/asm-offsets.c    |  1 -
- arch/x86/kernel/cpu/common.c     |  5 -----
- arch/x86/kernel/head_32.S        |  2 --
- 4 files changed, 18 deletions(-)
+ MAINTAINERS | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
-index 70c414eab154..cdd6ba7e3e5c 100644
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -158,15 +158,6 @@ struct cpuinfo_x86 {
- 	__u32			extended_cpuid_level;
- 	/* Maximum supported CPUID level, -1=no CPUID: */
- 	int			cpuid_level;
--	/*
--	 * Align to size of unsigned long because the x86_capability array
--	 * is passed to bitops which require the alignment. Use unnamed
--	 * union to enforce the array is aligned to size of unsigned long.
--	 */
--	union {
--		__u32		x86_capability[NCAPINTS + NBUGINTS];
--		unsigned long	x86_capability_alignment;
--	};
- 	char			x86_vendor_id[16];
- 	char			x86_model_id[64];
- 	struct cpuinfo_topology	topo;
-@@ -178,7 +169,6 @@ struct cpuinfo_x86 {
- 	int			x86_cache_max_rmid;	/* max index */
- 	int			x86_cache_occ_scale;	/* scale to bytes */
- 	int			x86_cache_mbm_width_offset;
--	int			x86_power;
- 	unsigned long		loops_per_jiffy;
- 	/* protected processor identification number */
- 	u64			ppin;
-diff --git a/arch/x86/kernel/asm-offsets.c b/arch/x86/kernel/asm-offsets.c
-index 0bc36d617801..98d2cd03d0af 100644
---- a/arch/x86/kernel/asm-offsets.c
-+++ b/arch/x86/kernel/asm-offsets.c
-@@ -38,7 +38,6 @@ static void __used common(void)
- 	OFFSET(CPUINFO_x86_model, cpuinfo_x86, x86_model);
- 	OFFSET(CPUINFO_x86_stepping, cpuinfo_x86, x86_stepping);
- 	OFFSET(CPUINFO_cpuid_level, cpuinfo_x86, cpuid_level);
--	OFFSET(CPUINFO_x86_capability, cpuinfo_x86, x86_capability);
- 	OFFSET(CPUINFO_x86_vendor_id, cpuinfo_x86, x86_vendor_id);
- 	DEFINE(CPUINFO_CPUID_0x1_EDX,
- 	       offsetof(struct cpuinfo_x86, cpuid)		+
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 08e7c44dbc77..8c52503ae360 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1729,7 +1729,6 @@ static void __init cpu_parse_early_param(void)
-  */
- static void __init early_identify_cpu(struct cpuinfo_x86 *c)
- {
--	memset(&c->x86_capability, 0, sizeof(c->x86_capability));
- 	memset(&c->cpuid, 0, sizeof(c->cpuid));
- 	c->extended_cpuid_level = 0;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a0137a898927..5fe7150a542e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -28869,7 +28869,9 @@ R:	Ahmed S. Darwish <darwi@linutronix.de>
+ L:	x86-cpuid@lists.linux.dev
+ S:	Maintained
+ W:	https://x86-cpuid.org
+-F:	arch/x86/include/asm/cpuid/leaf_types.h
++F:	arch/x86/include/asm/cpufeature*.h
++F:	arch/x86/include/asm/cpuid/
++F:	arch/x86/kernel/cpu/cpuid_parser.*
+ F:	tools/arch/x86/kcpuid/
  
-@@ -1961,7 +1960,6 @@ static void identify_cpu(struct cpuinfo_x86 *c)
- 	c->x86_virt_bits = 32;
- #endif
- 	c->x86_cache_alignment = c->x86_clflush_size;
--	memset(&c->x86_capability, 0, sizeof(c->x86_capability));
- 	memset(&c->cpuid, 0, sizeof(c->cpuid));
- #ifdef CONFIG_X86_VMX_FEATURE_NAMES
- 	memset(&c->vmx_capability, 0, sizeof(c->vmx_capability));
-@@ -1989,9 +1987,6 @@ static void identify_cpu(struct cpuinfo_x86 *c)
- 	 * features a certain CPU supports which CPUID doesn't
- 	 * tell us, CPUID claiming incorrect flags, or other bugs,
- 	 * we handle them here.
--	 *
--	 * At the end of this section, c->x86_capability better
--	 * indicate the features this CPU genuinely supports!
- 	 */
- 	if (this_cpu->c_init)
- 		this_cpu->c_init(c);
-diff --git a/arch/x86/kernel/head_32.S b/arch/x86/kernel/head_32.S
-index 9c96fdf66aa9..8e90999fbf5b 100644
---- a/arch/x86/kernel/head_32.S
-+++ b/arch/x86/kernel/head_32.S
-@@ -41,7 +41,6 @@
- #define X86_STEPPING	new_cpu_data+CPUINFO_x86_stepping
- #define X86_HARD_MATH	new_cpu_data+CPUINFO_hard_math
- #define X86_CPUID	new_cpu_data+CPUINFO_cpuid_level
--#define X86_CAPABILITY	new_cpu_data+CPUINFO_x86_capability
- #define X86_VENDOR_ID	new_cpu_data+CPUINFO_x86_vendor_id
- #define X86_FEATUREFLAG	new_cpu_data+CPUINFO_CPUID_0x1_EDX
- 
-@@ -263,7 +262,6 @@ SYM_FUNC_START(startup_32_smp)
- 	movb %al,X86_MODEL
- 	andb $0x0f,%cl		# mask mask revision
- 	movb %cl,X86_STEPPING
--	movl %edx,X86_CAPABILITY
- 	movl %edx,X86_FEATUREFLAG
- 
- .Lis486:
+ X86 ENTRY CODE
 -- 
 2.54.0
 
