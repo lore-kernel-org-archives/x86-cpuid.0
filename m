@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B4547CC8E
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5835647D937
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779983113; cv=none; b=P0O9ugCW6J9Ykjb6LDex4v796OL+IQDfsZZXGIYr9TBrts2wXrDiiXpNk2CZTp0dWpaLpx7ZIrgcPFmBqVhNTEmpDQIoGAME5UZdrMeTAg3TyOg/Rz/RQ02B4jMej6PdJM1UE3cZkF/3UmKv4PFDsBqtgIHpV4MjHWY0SZdjUiM=
+	t=1779983117; cv=none; b=XJIbchPCkDhKBuWBHGex2m61nkgurOW3QotFEHVWmcdWsdw2dCJ7SDntvAqQrHGVGkdd3c2N7dPt/4vmkoiblbksi17n/OCkQSCZil4Od+kKQpJ6s5aNJUWNNOUO0V4a/r+jPbZBmcvwB8e+ZSXo9Ybbpw9G0sxmE0sYN+TG+Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779983113; c=relaxed/simple;
-	bh=AWsNKOvI9804PLzQZcZ51kJawuW7uwDaU9sjxjjRRU8=;
+	s=arc-20240116; t=1779983117; c=relaxed/simple;
+	bh=rNb/T4Zus7JiWIXVpMiWHgHM40BoYPMiYqxWRz6Z7ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yod+Cy/ekE6JZ3/AMHHiRqnr3I5NXtI1VRPFZelOA9uiFmWITDhzWBYW+kjJopDx7krkTHMM4LEGE5IlKKfJUYB+bJPs6/tChRY7u8rOrPGqufnZV6IvdaD6y0F83ktuo6gyVS8Jj/dndUJExEw8ksbRKpRkriCmF2i8lZ5uhsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=g7Z6nIho; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=nojQCU7w; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=fVdRRXb1NzI4HAbPBWM6V/qHKOXvMTko94jRYKA2n8/lL9I9rEx04yQEa6ec3RSt1Pn0ZkfCQuTtLK85ePopD/R+ehzWJoUga3MyFFEOAsHdBfrfCM6AeDe6KZXajpC6CCqO2eN5UWWbsasvTE9FADxmg4OamAXmm5hy2AWnmlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=zNOTUJUe; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=2z7fGsDr; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="g7Z6nIho";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="nojQCU7w"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="zNOTUJUe";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="2z7fGsDr"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779983104;
+	s=2020; t=1779983107;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=qelKDVVuZAtL+G162mjH24+v52Ue4liAmxcTECpMT/g=;
-	b=g7Z6nIhovybaqG5NJG6//CUuYR4lLrpUY5ulC4Su2J0Pa5vUIkXjXKbVc1HmCgD0aHjxHv
-	BVjks7xXWIuPvphXgrno4yAiSaS0CR0LoutvpuCYIe/Ou+B1h/O+mEr+i57dATItGWOHmi
-	c1qcjFAyva+ME5nEFRl3fKuK40rGyKoL7ph1NmNfHwn9lTUEoIH1nWpxmuavdeoQaC1LNx
-	YF6SYejqnt53OOlMJDbTqLdutCDbAFHULTy7e9XaTso7ioASoAUaYHjo5yTMGWa3L245o9
-	QfL/V6fA4e19nfid0wRBWLrEspBgbRat60ATwmqaKMuN4s0kFfey4l8OVOmbYQ==
+	bh=CC3FPCkBych/Q9MupCJVqCJWZ9FNhKO3UOw+uDEYWCc=;
+	b=zNOTUJUeW4HWVSKIiPcq4ZP2PtKPD1bg4M+3l3TWAzL9qWxd9j3+Y37P9Bn5gVuqbSUYlv
+	vagNC2E7odwnSTeoehJTjrRGdwXhCWCzAh12YS6GFhDCWuiObaJTPgWk65f71a9hNjzqhR
+	V1EiVj+cUtcBpEAx86iSIh6rdaUWRDXaOPdtZQDbhTQGxxjCfkzsYuGgA/4tPm1ZYL+aF3
+	V5zDORMu4Ohh/DrmFV2VbEtHbXgIPuErOxT8w7wzX8LZhqwUFzITP/PUfCX9LQZOclFSQm
+	8PpkLoOlc/OBpoIn326yWCMo7929B1rMK49ULlxnvxTP5qsjaLi4NzbdUNM0ZA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779983104;
+	s=2020e; t=1779983107;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=qelKDVVuZAtL+G162mjH24+v52Ue4liAmxcTECpMT/g=;
-	b=nojQCU7wAcVHaPhrHI7gZNPEeRtkfgnFPk7+KFgxEjPfQPPAJ539d9MsyCwX0xe2LdEwPk
-	HUX6694unUkQu/CQ==
+	bh=CC3FPCkBych/Q9MupCJVqCJWZ9FNhKO3UOw+uDEYWCc=;
+	b=2z7fGsDrgbkeuAoEhqqux/A8H0l5VuYvCwpQhNszuOE3hAq4CANxyTvTLupkFS9vG0hEtB
+	uCjVFShFe9sWMoBQ==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 096/120] x86/cpuid: Parse CPUID(0x80000022)
-Date: Thu, 28 May 2026 17:38:58 +0200
-Message-ID: <20260528153923.403473-97-darwi@linutronix.de>
+Subject: [PATCH v7 097/120] perf/x86/amd/lbr: Use parsed CPUID(0x80000022)
+Date: Thu, 28 May 2026 17:38:59 +0200
+Message-ID: <20260528153923.403473-98-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,48 +66,36 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Parse CPUID(0x80000022).
-
-Add AMD and Hygon vendor tags as it is only supported on these CPUs.
+For AMD LBR, use parsed CPUID(0x80000022) instead of a direct CPUID query
+and custom perf data types.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/include/asm/cpuid/types.h | 1 +
- arch/x86/kernel/cpu/cpuid_parser.h | 2 ++
- 2 files changed, 3 insertions(+)
+ arch/x86/events/amd/lbr.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
-index 08c338909506..a49b3df2bdf8 100644
---- a/arch/x86/include/asm/cpuid/types.h
-+++ b/arch/x86/include/asm/cpuid/types.h
-@@ -236,6 +236,7 @@ struct cpuid_leaves {
- 	CPUID_LEAF   (  0x80000006,	0  );
- 	CPUID_LEAF   (  0x80000008,	0  );
- 	CPUID_LEAF_N (  0x8000001d,	8  );
-+	CPUID_LEAF   (  0x80000022,	0  );
- 	CPUID_LEAF   (  0x80860000,	0  );
- 	CPUID_LEAF   (  0x80860001,	0  );
- 	CPUID_LEAF   (  0x80860002,	0  );
-diff --git a/arch/x86/kernel/cpu/cpuid_parser.h b/arch/x86/kernel/cpu/cpuid_parser.h
-index 6767923f86d9..2de27a86861d 100644
---- a/arch/x86/kernel/cpu/cpuid_parser.h
-+++ b/arch/x86/kernel/cpu/cpuid_parser.h
-@@ -170,6 +170,7 @@ struct cpuid_parse_entry {
- 	CPUID_PARSE_ENTRY   (	0x80000006,	0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80000008,	0,		generic			),	\
- 	CPUID_PARSE_ENTRY_N (	0x8000001d,			deterministic_cache	),	\
-+	CPUID_PARSE_ENTRY   (	0x80000022,	0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80860000,	0,		0x80860000		),	\
- 	CPUID_PARSE_ENTRY   (	0x80860001,	0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80860002,	0,		generic			),	\
-@@ -220,6 +221,7 @@ struct cpuid_vendor_entry {
- 	CPUID_VENDOR_ENTRY(0x1c,	X86_VENDOR_INTEL),				\
- 	CPUID_VENDOR_ENTRY(0x23,	X86_VENDOR_INTEL),				\
- 	CPUID_VENDOR_ENTRY(0x8000001d,	X86_VENDOR_AMD, X86_VENDOR_HYGON),		\
-+	CPUID_VENDOR_ENTRY(0x80000022,	X86_VENDOR_AMD, X86_VENDOR_HYGON),		\
- 	CPUID_VENDOR_ENTRY(0x80860000,	X86_VENDOR_TRANSMETA),				\
- 	CPUID_VENDOR_ENTRY(0x80860001,	X86_VENDOR_TRANSMETA),				\
- 	CPUID_VENDOR_ENTRY(0x80860002,	X86_VENDOR_TRANSMETA),				\
+diff --git a/arch/x86/events/amd/lbr.c b/arch/x86/events/amd/lbr.c
+index 5b437dc8e4ce..e5a16266545f 100644
+--- a/arch/x86/events/amd/lbr.c
++++ b/arch/x86/events/amd/lbr.c
+@@ -423,14 +423,13 @@ void amd_pmu_lbr_disable_all(void)
+ 
+ __init int amd_pmu_lbr_init(void)
+ {
+-	union cpuid_0x80000022_ebx ebx;
++	const struct leaf_0x80000022_0 *l = cpuid_leaf(&boot_cpu_data, 0x80000022);
+ 
+-	if (x86_pmu.version < 2 || !boot_cpu_has(X86_FEATURE_AMD_LBR_V2))
++	if (!l || x86_pmu.version < 2 || !boot_cpu_has(X86_FEATURE_AMD_LBR_V2))
+ 		return -EOPNOTSUPP;
+ 
+ 	/* Set number of entries */
+-	ebx.full = cpuid_ebx(EXT_PERFMON_DEBUG_FEATURES);
+-	x86_pmu.lbr_nr = ebx.split.lbr_v2_stack_sz;
++	x86_pmu.lbr_nr = l->lbr_v2_stack_size;
+ 
+ 	pr_cont("%d-deep LBR, ", x86_pmu.lbr_nr);
+ 
 -- 
 2.54.0
 
