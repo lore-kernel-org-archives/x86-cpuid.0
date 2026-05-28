@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6D7438FF5
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB033F7ABB
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779982967; cv=none; b=Up3BrqZPUSLWYueo5EkfSJThlA3Y3AKclnz+uskvASoj9Rg9melw3g6hg5NOg8lMve0BwNhe/jKP8pZgYxSLEuRdXGzp7mLEQ24DE0qUI6UtoFGV16rA1dTHoToB8lLfppYSoLYANzdEWAVWrGz/xYNcW7gUyYs6GPRB+txESsY=
+	t=1779982970; cv=none; b=lCeeyw5GjGGXGQbZynSY/wolmu40vxSIIjm+lCBzfak6XTpjJ9IsRcAqjjilgqBv49XiO19deUWn8AvS5oYjNVYXox8zlwj+S7XFkcCD5LhnbxjoS9Wp6oPrVKehnfIshTpn7/k4l4QL/cSqH2xIdyeeah5EDhMWYowgAqzikAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779982967; c=relaxed/simple;
-	bh=47zD+8J/8CbmBWJ5KTw468g0/eK/SOXKQkm9KaesEPA=;
+	s=arc-20240116; t=1779982970; c=relaxed/simple;
+	bh=6xUL5WMCAhMH7AxwEc+7wIL9NBviw4BJq67doOtj318=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAcPvoT/eKA9VF8zNSeVArIpYG89HKe6ZIprGS6YHNQxV3sizYjLnaQe1TiCOiVrolkj35+PR3X12kdvbNEFFP5fjE2JHcGo8geURmBOPvJoRu2Vjw6gcfW92ADn0YEEcuDWGCkd1jjn0AmRKaNihiipCLl1Rx7CV2YxHVkjJ/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=uY24mQ4a; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=vRMp24H6; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=SCPtFjifwWn2oUJjd3jb3Nk7zHL1uyMzxnt5om5sLKkw60hP69/sIrcgUIRjNcJ2/qMf51RdONNlddD5vSCDOIM5Cn76HBKnixX26AelDgPYaOiffF9j5CepU1JcIYoXMh5lIyROkolSQ7Pql6ppspu2JWG2amWbNss+oeJC4Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=IDAQZzuF; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=xk91rWWi; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="uY24mQ4a";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="vRMp24H6"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="IDAQZzuF";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="xk91rWWi"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779982957;
+	s=2020; t=1779982964;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=P92cwmICW7XddJY+iMJcvZ9lc5RFe5xb/yx8TGv/6yw=;
-	b=uY24mQ4aV2aHGOqkdVwxZTb14L7H5jb7WuFNRXVfh6Xbo2PLKmgl363gS8DHWKARUDuqva
-	tn2a3EhG6vKWNAq+SECOVl4D10xxQ+sjqaHgHMYvKnStFcm10UB0E7edpGDTRq0ewRS6oP
-	hh8mAkMg8mbTspTDH6OjmMZ1cFkBB4mlGhjN6iSFYV7k/XpvkTdF4UDSD3/2R8746B4H1E
-	0wLJkLxVtR/F+m+BytXKRBA1wdf9/N8bo+dyNbj90evFwR+eFrmrWNuTyX1jhTXQX3rRmt
-	we1bFPq3X0wrzKeMqGJ4FD+Bkpj6EB0+oxTSnpnZ9wVgC2i88L+TG3Fl8TXFjw==
+	bh=2Z/vIg9LVX8/DLgPonJDlTDUj6Wxqd64AUvq7JbaCko=;
+	b=IDAQZzuFW6QPQkx94CnrqRinyLf7tUd10fdmT5FJQMjEkMwPRP15dIprimj/D44Hv2FgQm
+	XIO7bSObPe2k801rvtpIuPYLJlyxO1uA5qz3wGR9RxjUk5QiaSooPCu+bRljqjoj4gpCNy
+	1CQ5HNfsohVL3zz24cdHU8M9Z0UxfVteYMSk3eBIuxXEx82MEC2Y8TanqKFHDYiPBdmbgz
+	eMZQJPlbsgciUEVO6NbMgxqjKe4crCjpUGLOv7jPMBbF/q/29KP9kkNkoQ8STcBGrJVZqE
+	f5l2/CgxyaKkpTseP9Y+nMvdOeXevR6iCC1bIRaCYEWhOAXOFHgwTt5Y+MT+5g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779982957;
+	s=2020e; t=1779982964;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=P92cwmICW7XddJY+iMJcvZ9lc5RFe5xb/yx8TGv/6yw=;
-	b=vRMp24H6T3M8QxaTEpBLPDxKzlkc2/L5zu6JSSjecAjnyVkA5vhiFuw6jfZ61Sb7vlVu61
-	ifoHhEeU8FE+2vBw==
+	bh=2Z/vIg9LVX8/DLgPonJDlTDUj6Wxqd64AUvq7JbaCko=;
+	b=xk91rWWipOXb2hEVyySYF1KGMAsRdjm5IsyOf1EiYs6Zl26sTjEyhRdScNQ4JVVRID676k
+	zoO1NuSYo9bftACQ==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 052/120] x86/microcode/intel: Explain CPUID parser APIs unavailability
-Date: Thu, 28 May 2026 17:38:14 +0200
-Message-ID: <20260528153923.403473-53-darwi@linutronix.de>
+Subject: [PATCH v7 053/120] x86/mm/pti: Use standard CPUID(0x1) types
+Date: Thu, 28 May 2026 17:38:15 +0200
+Message-ID: <20260528153923.403473-54-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,31 +66,39 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-intel_cpuid_vfm() is defined so that it can be used before cpuinfo_x86
-structures are populated.
+Use standard CPUID(0x1) types from x86-cpuid-db instead of a manual bitwise
+operation.
 
-Explain why it should not use the CPUID parser APIs as well.
+Note, keep issuing a direct CPUID query since disabling a feature bit like
+X86_FEATURE_PCID will disable its backing cached CPUID bit in the future.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/microcode/intel.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/mm/pti.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index 18d2eff7a4b7..a3d0f8197d4d 100644
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -123,8 +123,8 @@ static inline unsigned int exttable_size(struct extended_sigtable *et)
+diff --git a/arch/x86/mm/pti.c b/arch/x86/mm/pti.c
+index 598f553cc871..1f0a5e84cdca 100644
+--- a/arch/x86/mm/pti.c
++++ b/arch/x86/mm/pti.c
+@@ -631,13 +631,16 @@ void __init pti_init(void)
+ 	pr_info("enabled\n");
  
- 
- /*
-- * Use CPUID to generate a "vfm" value. Useful before cpuinfo_x86
-- * structures are populated.
-+ * Use a direct CPUID query to generate a "vfm" value. To be used before
-+ * the CPUID parser is initialized; e.g. head's load_ucode_bsp() stage.
-  */
- static u32 intel_cpuid_vfm(void)
- {
+ #ifdef CONFIG_X86_32
++	struct leaf_0x1_0 l1;
++
+ 	/*
+ 	 * We check for X86_FEATURE_PCID here. But the init-code will
+ 	 * clear the feature flag on 32 bit because the feature is not
+ 	 * supported on 32 bit anyway. To print the warning we need to
+ 	 * check with cpuid directly again.
+ 	 */
+-	if (cpuid_ecx(0x1) & BIT(17)) {
++	cpuid_read(0x1, &l1);
++	if (l1.pcid) {
+ 		/* Use printk to work around pr_fmt() */
+ 		printk(KERN_WARNING "\n");
+ 		printk(KERN_WARNING "************************************************************\n");
 -- 
 2.54.0
 
