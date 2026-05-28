@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DFD43637C
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6D7438FF5
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779982959; cv=none; b=aJjlmRY9zGm+erxHqhIj7gAerC9XvOfccwrMDle2pgI7nmiKmdHRZA8lk8G7riNkENInTGxxUPK9HmLa9Jd6fX++2HrnYtBWFdJjtKmaDbXgAYnt5eXJdiwia7HiAz1GuxQ8moQL7AjkJUnzurhpt4seIHulKph6B8AZ7WQoCbc=
+	t=1779982967; cv=none; b=Up3BrqZPUSLWYueo5EkfSJThlA3Y3AKclnz+uskvASoj9Rg9melw3g6hg5NOg8lMve0BwNhe/jKP8pZgYxSLEuRdXGzp7mLEQ24DE0qUI6UtoFGV16rA1dTHoToB8lLfppYSoLYANzdEWAVWrGz/xYNcW7gUyYs6GPRB+txESsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779982959; c=relaxed/simple;
-	bh=UmIuUJT0nMgKKbt+ogQzcEA4UuBVmDeZtClx90JlwHg=;
+	s=arc-20240116; t=1779982967; c=relaxed/simple;
+	bh=47zD+8J/8CbmBWJ5KTw468g0/eK/SOXKQkm9KaesEPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xt8GeDki3j41rnDjxqIyWOYtbCM9Cb3NelxHdIKf8yV1JyGUbG8dM4QFo6T7K3+Vw1n35THWKlrgfO2ioQDGnqCC0wB3/CYFNbx2kbI/a94Efw1naWTi8l5i1crP79NTtnYYcC99uKgjDdTGF3nPSUCBfGIHKL4Om3c3cJFldH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=wr37eegH; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=5rPom+43; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=JAcPvoT/eKA9VF8zNSeVArIpYG89HKe6ZIprGS6YHNQxV3sizYjLnaQe1TiCOiVrolkj35+PR3X12kdvbNEFFP5fjE2JHcGo8geURmBOPvJoRu2Vjw6gcfW92ADn0YEEcuDWGCkd1jjn0AmRKaNihiipCLl1Rx7CV2YxHVkjJ/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=uY24mQ4a; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=vRMp24H6; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wr37eegH";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="5rPom+43"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="uY24mQ4a";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="vRMp24H6"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779982953;
+	s=2020; t=1779982957;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=KojHsUmnaKlAnVKLT+0v3BUrTmPahlzMHsR5eizc+bo=;
-	b=wr37eegHVfXp2lq3ICPplXn0WQEUpOdroNOhoRZA2nCH9UFTgNrnj+/MxI/SU/baK1Rv+n
-	cWRyProtK7anwrpIz6b9zeHNIL8FTiDDyGfeWWT8nNa9MxQ7xxkiw4zcsShwf6RHPNklhi
-	hsnS+Q0VMY/aN0RcFR8+8lV3GrNoSQI2ELVscfnQoDlU0CYKhHOE5qOIvbSOvH9JJZ+UBh
-	ajMRY4gpdYr9l4bWt95wTgSeF/AnR8tkosTtm1DjcPLRsrutmlfwtLV7DWYL7aXSe0FSr3
-	KSTtXtGF5HyrCl62fBessMBz+lukVwhzXtVfG0iTLP4tGGn7P+e+FzXCG2dJJQ==
+	bh=P92cwmICW7XddJY+iMJcvZ9lc5RFe5xb/yx8TGv/6yw=;
+	b=uY24mQ4aV2aHGOqkdVwxZTb14L7H5jb7WuFNRXVfh6Xbo2PLKmgl363gS8DHWKARUDuqva
+	tn2a3EhG6vKWNAq+SECOVl4D10xxQ+sjqaHgHMYvKnStFcm10UB0E7edpGDTRq0ewRS6oP
+	hh8mAkMg8mbTspTDH6OjmMZ1cFkBB4mlGhjN6iSFYV7k/XpvkTdF4UDSD3/2R8746B4H1E
+	0wLJkLxVtR/F+m+BytXKRBA1wdf9/N8bo+dyNbj90evFwR+eFrmrWNuTyX1jhTXQX3rRmt
+	we1bFPq3X0wrzKeMqGJ4FD+Bkpj6EB0+oxTSnpnZ9wVgC2i88L+TG3Fl8TXFjw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779982953;
+	s=2020e; t=1779982957;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=KojHsUmnaKlAnVKLT+0v3BUrTmPahlzMHsR5eizc+bo=;
-	b=5rPom+431AlLnuEmw1tIp4YKVzatpXFNlvW7IHFD1HIyQ/zNO/B7PFsKhI6o4Of5/CVW8n
-	153iRPvFTvi9QCCw==
+	bh=P92cwmICW7XddJY+iMJcvZ9lc5RFe5xb/yx8TGv/6yw=;
+	b=vRMp24H6T3M8QxaTEpBLPDxKzlkc2/L5zu6JSSjecAjnyVkA5vhiFuw6jfZ61Sb7vlVu61
+	ifoHhEeU8FE+2vBw==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 051/120] x86/microcode/amd: rdrand: Use standard CPUID(0x1) types
-Date: Thu, 28 May 2026 17:38:13 +0200
-Message-ID: <20260528153923.403473-52-darwi@linutronix.de>
+Subject: [PATCH v7 052/120] x86/microcode/intel: Explain CPUID parser APIs unavailability
+Date: Thu, 28 May 2026 17:38:14 +0200
+Message-ID: <20260528153923.403473-53-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,52 +66,31 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use standard CPUID(0x1) types from x86-cpuid-db instead of doing manual
-bitwise operations.
+intel_cpuid_vfm() is defined so that it can be used before cpuinfo_x86
+structures are populated.
 
-Keep using a direct CPUID query, instead of the CPUID parser API.  At a
-later step, clearing a feature bit like X86_FEATURE_RDRAND will also clear
-its cached backing CPUID bit, while the code clearly mentions that it wants
-to query the CPUID state regardless of the X86_FEATURE_RDRAND bit state.
+Explain why it should not use the CPUID parser APIs as well.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/amd.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/microcode/intel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index 0e077a4f2646..5f885fafa238 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -807,6 +807,8 @@ early_param("rdrand", rdrand_cmdline);
+diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
+index 18d2eff7a4b7..a3d0f8197d4d 100644
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -123,8 +123,8 @@ static inline unsigned int exttable_size(struct extended_sigtable *et)
  
- static void clear_rdrand_cpuid_bit(struct cpuinfo_x86 *c)
+ 
+ /*
+- * Use CPUID to generate a "vfm" value. Useful before cpuinfo_x86
+- * structures are populated.
++ * Use a direct CPUID query to generate a "vfm" value. To be used before
++ * the CPUID parser is initialized; e.g. head's load_ucode_bsp() stage.
+  */
+ static u32 intel_cpuid_vfm(void)
  {
-+	struct leaf_0x1_0 l1;
-+
- 	/*
- 	 * Saving of the MSR used to hide the RDRAND support during
- 	 * suspend/resume is done by arch/x86/power/cpu.c, which is
-@@ -819,7 +821,8 @@ static void clear_rdrand_cpuid_bit(struct cpuinfo_x86 *c)
- 	 * The self-test can clear X86_FEATURE_RDRAND, so check for
- 	 * RDRAND support using the CPUID function directly.
- 	 */
--	if (!(cpuid_ecx(1) & BIT(30)) || rdrand_force)
-+	cpuid_read(0x1, &l1);
-+	if (!l1.rdrand || rdrand_force)
- 		return;
- 
- 	msr_clear_bit(MSR_AMD64_CPUID_FN_1, 62);
-@@ -828,7 +831,8 @@ static void clear_rdrand_cpuid_bit(struct cpuinfo_x86 *c)
- 	 * Verify that the CPUID change has occurred in case the kernel is
- 	 * running virtualized and the hypervisor doesn't support the MSR.
- 	 */
--	if (cpuid_ecx(1) & BIT(30)) {
-+	cpuid_read(0x1, &l1);
-+	if (l1.rdrand) {
- 		pr_info_once("BIOS may not properly restore RDRAND after suspend, but hypervisor does not support hiding RDRAND via CPUID.\n");
- 		return;
- 	}
 -- 
 2.54.0
 
