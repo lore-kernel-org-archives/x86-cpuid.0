@@ -1,44 +1,53 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA66407CCB
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 18:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428662F7F19
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 21:25:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779991392; cv=none; b=TE3LO7RZyYTzO1j9u/U0KwLbfAVlFjMigRSZskFGlL/YINa8eCQ/d96eYtjr2tjJx2wnaf4mBaH07gqMPdtwycaxYi55RMFwN4JfW93J/Zpy7gSjT+GpwLMNcBzye94xTJyI5Tla2HmRMRsVpMKOUI5FGKY3uaqrIp9kBTqfvmM=
+	t=1780003508; cv=none; b=DdXRxb0L0W+fePECSrMX8jlfHB6bIT1c1YtkYdhOfFkB/O66ncrEV1pdzoKIrfwoA7p5LN5NK/53eMa7K+plQfUhIs6JkH+4eeqNVu/6yYNiKjhNcJhtPA6XQuyvvEqtJjFXaJ8uVuwihLwJffncbZhadRkaDcECQD1VOTQflkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779991392; c=relaxed/simple;
-	bh=DuqsX+8pDENWUkvb/dIdnSxH52br8K12JHLM+O3uXRo=;
+	s=arc-20240116; t=1780003508; c=relaxed/simple;
+	bh=A1Y+gVcrnnBR2j7LGnmkDeSXS4+wYv/zCq0bAXwE5lo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U8+BNqsvkwM7LXgnwv4hTEhcejuKk6TlUAcIycp8Wq/NMCQW0ULmMn7/LYijJrNK8SKqofU04y//gUOrs/X76jM31KaUIJcl4vJOOU/TPXUNVRrNV04dCw5TfHdehB2UahxfsDBEUa+u5xdyrR/mgAfCl53pIyWfLsBC3ULtYB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=PdIB9v/W; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=KZGh+/Gq; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=t7/UmOQQKAokFgIe2lxW3ngZDIbZ1gcAZ6KmAzBo+gbxRNTJ7qThy80v5xq5ZW1NbZTQjUNZE3QthkN9gs5QvmDqiseuUJ7bjhScZe7nHK3+UleAAJqsb2FL++6FDzMEJYNnEfT7lXhRBBadlXXf9YlHruBpiOzer5TQ1BM4v+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=UJsA5GO3; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="PdIB9v/W";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="KZGh+/Gq"
-Date: Thu, 28 May 2026 20:03:07 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779991389;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vlj6Vp9zTnMRBOhgV4xJ3+1H4A8l4fzM0zW8lGthw2A=;
-	b=PdIB9v/W2n7QJu5HI5gKcEJ4VsXJhaq3yOGIUSgFAapBMw9n1eaLWdyQxzdEPOxpIwvJtL
-	+0sXILaTqMNdWJapND2dzpkAamU+pFK6ABjxLXF0kULawzg7NqeSRcmeZphtRh5Ep/hJC+
-	Uh9UERMQwicnW8Y0xxeMPP3cc4eOt5cldd++RqVzxWNAbwRNjoOAKZqeQCFzgnNR+BAiP7
-	8bFcZtAyv73YiDTyAOI98rBsw2+1WPDi8m+nQqHqMzU2xgoIKbduxiBHukNn6h0kqxa2Eo
-	DyyZ43oIz/kJWYPPZnYMkb5x+pkbWSoJ6nuwgVDdUxvdgImvYimNVMSHatd7Bg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779991389;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vlj6Vp9zTnMRBOhgV4xJ3+1H4A8l4fzM0zW8lGthw2A=;
-	b=KZGh+/GqAUKlV+aEwD+ZnxEgSBAvASSn20kB5ndyByu/XdPhsX2lMW9BmJoXGiWg8N/+q6
-	SItb9XuJJSGVImAg==
-From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Borislav Petkov <bp@alien8.de>
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="UJsA5GO3"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 2963D40E0031;
+	Thu, 28 May 2026 21:24:58 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id NF9KQBMIGBxr; Thu, 28 May 2026 21:24:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1780003488; bh=22ZjzXdHn1TB9USBjsRxPNHs/4yJVa88/+pGaTBhTeE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UJsA5GO3ADd6NlDYCSzbOiVmMU4EnujGVLpRalHo/DyWs/4jczFhpNroHcv9uqG4y
+	 YXrb+Md2sGPd4KsNHqZ4v4fvHjoe3L8CoYkTbN0rtAv2Gw98KoeE8o7hpo8yZdnBpu
+	 kUkVO0q4+2dDrHdRN8vtqDBLiWBckUx4wL1MVsCDCIYUrHUohkHOOWP68fXblrNeKV
+	 ssUMu/Dp8/cFs+mxr9fU5COhl3LbcR1ccvOB/vqbzneGXnyxw5L53ptfvI5T08wHsK
+	 JDh6JFK/TiK0yI/yH5NcCx1IREPGkOD81t2kgcQo8LCvog/fZ0axWODeWG3EFkoDWl
+	 gnUTxg6vmrqTdr6RVXQPXVbB/tYLhz7KfbHZpfJZ10TRHJorWFyHqMx/HkxtPb+cMr
+	 43ykCNV760d4Il1zppWRVJOa1lD2cFxpv1qqjecOjMgDugZMz+BhAKqoCUBabOpr+b
+	 +pGjEh5NIlwH0/n7DBpJQOK36hzq5rjvKVHqnI3TSAR3DDJ+AeYsJUupvyYRaNX7tQ
+	 4BUb1SqELxr8BqrMHVDdk0nwW76hZP2Fuu99h1uLN+1aObDyLPrdq06uW9/UoL2bhY
+	 MEQQj6SSjGAn0bE2IGesaeJ9j0EYyB7vEnjTvvqPgWFbA3hnIMAedkMDnU18NhNw3M
+	 vC44nx/UIMwojkd9fl0mRrL4=
+Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00:b8a3:f58e:8829:9ca6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id A364240E0140;
+	Thu, 28 May 2026 21:24:34 +0000 (UTC)
+Date: Thu, 28 May 2026 14:24:25 -0700
+From: Borislav Petkov <bp@alien8.de>
+To: "Ahmed S. Darwish" <darwi@linutronix.de>
 Cc: Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -51,35 +60,47 @@ Cc: Dave Hansen <dave.hansen@linux.intel.com>,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v7 007/120] x86/cpu: centaur/zhaoxin: Rescan
  CPUID(0xc0000001) after MSR writes
-Message-ID: <ahiDW3-ZYZ9rIbUP@lx-t490>
+Message-ID: <20260528212425.GDahiyiX84F85kpbhW@fat_crate.local>
 References: <20260528153923.403473-1-darwi@linutronix.de>
  <20260528153923.403473-8-darwi@linutronix.de>
  <20260528164945.GCahhyKYNsDo3upTKT@fat_crate.local>
  <ahh8aBYqA2i0PFv8@lx-t490>
+ <ahiDW3-ZYZ9rIbUP@lx-t490>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ahh8aBYqA2i0PFv8@lx-t490>
+In-Reply-To: <ahiDW3-ZYZ9rIbUP@lx-t490>
 
-On Thu, 28 May 2026, Ahmed S. Darwish wrote:
->
-> The idea was to have these refresh hooks in place so that by the time
-> CPUID(0xc0000001) is parsed, everything is correct without an invalid
-> intermediate state.
->
-> I guess I could've merged it with:
->
->     20	x86/cpuid: Parse Transmeta and Centaur extended ranges
->
-> But that one was already too big for that.
->
+On Thu, May 28, 2026 at 08:03:07PM +0200, Ahmed S. Darwish wrote:
+> On Thu, 28 May 2026, Ahmed S. Darwish wrote:
+> >
+> > The idea was to have these refresh hooks in place so that by the time
+> > CPUID(0xc0000001) is parsed, everything is correct without an invalid
+> > intermediate state.
+> >
+> > I guess I could've merged it with:
+> >
+> >     20	x86/cpuid: Parse Transmeta and Centaur extended ranges
+> >
+> > But that one was already too big for that.
+> >
+> 
+> Duh, I spoke too fast..  There is no risk of invalid intermediate states
+> as long as CPUID(0xc0000001) is not yet accessed through the parser API.
+> 
+> I'll just move this refresh patch directly after patch 20.
 
-Duh, I spoke too fast..  There is no risk of invalid intermediate states
-as long as CPUID(0xc0000001) is not yet accessed through the parser API.
+Yap.
 
-I'll just move this refresh patch directly after patch 20.
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
