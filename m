@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A89043DA20
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A683FE664
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779982991; cv=none; b=GWjA4LTvYn6LW2nRCj1pjrC4TZfAWIAwWJNvYTTPZYOIK4rthJsLwE00tc/FpiEtPOSEV4IDAHXqFNgE23/i4VcaSmXtf0HQATbzB2CTMNJxUKWm7Rf+wrwK4YcYzKo79l4ggtFehYGZjuXDDnNeA3m1EQ4bOX1g88MCmmsID08=
+	t=1779982994; cv=none; b=l73ixL73PfxEOEeVaPzCMgg7k+6tORI3fZCrFDpQoUoMS+xyQ9bG2Z5+gPgxlm3eKMQZ5/Qba9ZX/xGT7/vDvxatg3l7id+dt0HWCcs9610AwcujUde/h/LTd8xPy59RdxRmskpeWwjf9YZqjmTXyjKvDb1Z+KyLP6eDfaReFFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779982991; c=relaxed/simple;
-	bh=uhJjxP2ljnilFAbPDK/cNwgzDiQTgwEof3SscxyDo8c=;
+	s=arc-20240116; t=1779982994; c=relaxed/simple;
+	bh=iVDWm1TtnXk/T6tJCLOV8wgq9OCpsSx5iq7QQh1/eNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtde8QJFoRV4VaeHIjx6xzXCyT+VpPOrw38FViwlD+JCU4JH2z0x2CYMtXiEWI8O2E1NrWeOg/RdI3qHNFUXwIelv2PlvVLZ7dCjjwjth1hMECEVF1UYsKwHmB4D5QOyJUlywSCxX8DGMc06OSBBqkVD9wmApiY/igaaG4I5qR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=cCUBlJtO; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=BGWx+l6O; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=ZejCSxumgWSmkK3IohZMsNjUkMOaBl28jlIOPeUJL8h8VYNXsybpkneeJLGYORkPJQRLafkSPXkW61S/dW9dn2Nrac57QaTQG7snoXZKpDVhBM60IZGTQts9pwhonUswopdWiGC3dXNwkGY4o3Ts45T16iP/KE1GbrN2BikOkqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=iMhQvazS; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Wg6s7nFz; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="cCUBlJtO";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="BGWx+l6O"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="iMhQvazS";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Wg6s7nFz"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779982985;
+	s=2020; t=1779982988;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=CRel2xHP5UT8l6ZG5h7n1bmUYlPE1sIeazfmiafXKJE=;
-	b=cCUBlJtOLrtstwgj0LuEtJPaoCXPGtJsSOUQc0PbwUUd4IFJmE0d8iG9/d/d1EHEfm/Aus
-	R42wjwnZxraoYs7slRChTXRXJSV8IZ4gfZ5daVuQ4gDA4bW5wT/v91/vl1X0G0A0phN7kn
-	cv5mJ/j39d/8tZFLHoHVKMFaiasBGt+DOSEDjDLtye0rwat0vY6DOc922N/flITh9+hnSJ
-	c8KgdSO6vjMHYXts4Da8hHKKpG+3tWT9NkBbYJfUcH7aOLd6pvLqp9YF/VWy3GTCjeRCtK
-	scQQuHvHGtgJDg3gk6Q86qu1DS6auMakj22DYeS0cNcML/H4j7EwPn9f7AYSRQ==
+	bh=O945PT5mgFGGsD+3CsmT7+wcn/pRG5zNHz1p7UPjKAY=;
+	b=iMhQvazSLdF5xNkc4yLYjThhfhcvUy6fxxpC4R5FlV2orFPCew+zgbaMD4VDQmFYskmFyD
+	T22fdtcyLJKfpp5/oaPFTeSe4z74mQXpWVm8xqmgErHg12SM2/Jo4rLBPBq5OZUKH6taHk
+	ADP5yOznoOpDYHAnIsRMsBpOdKZGBEDb7kWrRL00yuOqcnRXJTkS4LYd6/q5+fhiTg4U5j
+	Y6b6fOVfFY7JPh7U1E9ba281dJOJeMPjvgGAt4t+Qq7mJvB1+UmgfD6sLwz4IRaDuOLARc
+	M0eH4YdazlW6bCsyNpUuvKZ6gjcNnoyjKY+Ggb1YrGzoaUaRJ+1dfRJxrcLeDQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779982985;
+	s=2020e; t=1779982988;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=CRel2xHP5UT8l6ZG5h7n1bmUYlPE1sIeazfmiafXKJE=;
-	b=BGWx+l6OdWI6VHo7NEmXHaD3Q6vgD4L6gMLgOZ3+HEtdm9jDMFnytVe9gpL8Iw/Pz8CDNI
-	TuptOwnqiE/S63BQ==
+	bh=O945PT5mgFGGsD+3CsmT7+wcn/pRG5zNHz1p7UPjKAY=;
+	b=Wg6s7nFzZOxZxDLnYPTiVyTB6poS8vkGGsQb6uBTOlsq3fmN6g2Cou6G780w+UNau9OBvh
+	kwgloChiRnJPBZBA==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 059/120] x86/cpuid: Parse CPUID(0x5)
-Date: Thu, 28 May 2026 17:38:21 +0200
-Message-ID: <20260528153923.403473-60-darwi@linutronix.de>
+Subject: [PATCH v7 060/120] x86/acpi/cstate: Remove superfluous retval logic
+Date: Thu, 28 May 2026 17:38:22 +0200
+Message-ID: <20260528153923.403473-61-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,73 +66,61 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Parse CPUID(0x5), CPUID_LEAF_MWAIT, so that its call sites can be converted
-to the CPUID API next.
-
-Introduce cpuid_mwait_n_substates() since its logic is required by multiple
-call sits.
+Just return the error or success state directly.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/include/asm/cpuid/api.h   | 19 +++++++++++++++++++
- arch/x86/include/asm/cpuid/types.h |  1 +
- arch/x86/kernel/cpu/cpuid_parser.h |  1 +
- 3 files changed, 21 insertions(+)
+ arch/x86/kernel/acpi/cstate.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
-index 611ee8596115..540f886a61cd 100644
---- a/arch/x86/include/asm/cpuid/api.h
-+++ b/arch/x86/include/asm/cpuid/api.h
-@@ -493,6 +493,25 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
- 	     _ptr < &((const union leaf_0x2_regs *)(_regs))->desc[16] && (_desc = &cpuid_0x2_table[*_ptr]);\
- 	     _ptr++)
+diff --git a/arch/x86/kernel/acpi/cstate.c b/arch/x86/kernel/acpi/cstate.c
+index 0281703da5e2..f6bd7214fec4 100644
+--- a/arch/x86/kernel/acpi/cstate.c
++++ b/arch/x86/kernel/acpi/cstate.c
+@@ -124,7 +124,6 @@ static short mwait_supported[ACPI_PROCESSOR_MAX_POWER];
+ static long acpi_processor_ffh_cstate_probe_cpu(void *_cx)
+ {
+ 	struct acpi_processor_cx *cx = _cx;
+-	long retval;
+ 	unsigned int eax, ebx, ecx, edx;
+ 	unsigned int edx_part;
+ 	unsigned int cstate_type; /* C-state type and not ACPI C-state type */
+@@ -138,21 +137,16 @@ static long acpi_processor_ffh_cstate_probe_cpu(void *_cx)
+ 	edx_part = edx >> (cstate_type * MWAIT_SUBSTATE_SIZE);
+ 	num_cstate_subtype = edx_part & MWAIT_SUBSTATE_MASK;
  
-+/*
-+ * CPUID(0x5)
-+ */
+-	retval = 0;
+ 	/* If the HW does not support any sub-states in this C-state */
+ 	if (num_cstate_subtype == 0) {
+ 		pr_warn(FW_BUG "ACPI MWAIT C-state 0x%x not supported by HW (0x%x)\n",
+ 				cx->address, edx_part);
+-		retval = -1;
+-		goto out;
++		return -1;
+ 	}
+ 
+ 	/* mwait ecx extensions INTERRUPT_BREAK should be supported for C2/C3 */
+-	if (!(ecx & CPUID5_ECX_EXTENSIONS_SUPPORTED) ||
+-	    !(ecx & CPUID5_ECX_INTERRUPT_BREAK)) {
+-		retval = -1;
+-		goto out;
+-	}
++	if (!(ecx & CPUID5_ECX_EXTENSIONS_SUPPORTED) || !(ecx & CPUID5_ECX_INTERRUPT_BREAK))
++		return -1;
+ 
+ 	if (!mwait_supported[cstate_type]) {
+ 		mwait_supported[cstate_type] = 1;
+@@ -163,8 +157,8 @@ static long acpi_processor_ffh_cstate_probe_cpu(void *_cx)
+ 	snprintf(cx->desc,
+ 			ACPI_CX_DESC_LEN, "ACPI FFH MWAIT 0x%x",
+ 			cx->address);
+-out:
+-	return retval;
 +
-+static inline unsigned int cpuid_mwait_n_substates(const struct leaf_0x5_0 *l5, unsigned int cstate)
-+{
-+	switch (cstate) {
-+	case 0:		return l5->n_c0_substates;
-+	case 1:		return l5->n_c1_substates;
-+	case 2:		return l5->n_c2_substates;
-+	case 3:		return l5->n_c3_substates;
-+	case 4:		return l5->n_c4_substates;
-+	case 5:		return l5->n_c5_substates;
-+	case 6:		return l5->n_c6_substates;
-+	case 7:		return l5->n_c7_substates;
-+	default:	return 0;
-+	}
-+}
-+
- /*
-  * CPUID(0x80000006)
-  */
-diff --git a/arch/x86/include/asm/cpuid/types.h b/arch/x86/include/asm/cpuid/types.h
-index f50e54bfb514..50156e9883a3 100644
---- a/arch/x86/include/asm/cpuid/types.h
-+++ b/arch/x86/include/asm/cpuid/types.h
-@@ -212,6 +212,7 @@ struct cpuid_leaves {
- 	CPUID_LEAF   (	0x1,		0  );
- 	CPUID_LEAF   (  0x2,		0  );
- 	CPUID_LEAF_N (  0x4,		8  );
-+	CPUID_LEAF   (	0x5,		0  );
- 	CPUID_LEAF   (	0x16,		0  );
- 	CPUID_LEAF   (  0x80000000,	0  );
- 	CPUID_LEAF   (  0x80000002,	0  );
-diff --git a/arch/x86/kernel/cpu/cpuid_parser.h b/arch/x86/kernel/cpu/cpuid_parser.h
-index ab391de03a92..3a60dad4e861 100644
---- a/arch/x86/kernel/cpu/cpuid_parser.h
-+++ b/arch/x86/kernel/cpu/cpuid_parser.h
-@@ -146,6 +146,7 @@ struct cpuid_parse_entry {
- 	/*			Leaf		Subleaf		Reader function */		\
- 	CPUID_PARSE_ENTRY   (	0x2,		0,		0x2			),	\
- 	CPUID_PARSE_ENTRY_N (	0x4,				deterministic_cache	),	\
-+	CPUID_PARSE_ENTRY   (	0x5,		0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x16,		0,		generic			),	\
- 	CPUID_PARSE_ENTRY   (	0x80000000,	0,		0x80000000		),	\
- 	CPUID_PARSE_ENTRY   (	0x80000002,	0,		generic			),	\
++	return 0;
+ }
+ 
+ int acpi_processor_ffh_cstate_probe(unsigned int cpu,
 -- 
 2.54.0
 
