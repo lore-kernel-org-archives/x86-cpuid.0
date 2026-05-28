@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD51F4657EA
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE91F4534B7
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779983048; cv=none; b=KGBXJ0aulwJJAReUYUFilvVGvMRDc0HdhHsaeY4Dj5mtMyeLZfoUVmIfEJAmL0ORYs3eAbZc42MsMVNP41BnuMU7uX3YFncef98K/rrlinn8EOYlx6sCsXQEyFhi4tmJ+VDFYFb6n7b59KliHtVwUCQ1+yv6G0htuGc29bBUijI=
+	t=1779983049; cv=none; b=IFEQC04gZGNNXpZy9hbZrgRL8Jfq/+1EcdbBMc193Q0EQWZMuX6VTQhkad0f4aSatvFUEwh2nL/EqFiCZVvnOznhVKy5YB9jKMt/EA3kDO0mGxTu5cQCsxWV53vw4cpYnM/voKiXteHmCXRukKlWLSPHP2OLs1f5fm4PrsQDya0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779983048; c=relaxed/simple;
-	bh=Cqmkc6ziRX8vTg6v0K8RgdcbLnAEsdHv9VQ25MHatBQ=;
+	s=arc-20240116; t=1779983049; c=relaxed/simple;
+	bh=O3i2oif+oGGamDWEXbp1yTDyQaSEUs1kLrOWHirpsQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPSocUvswcwWqcl4uqkmdR09xqMIgk59PtS0LWQCZk69LOAjGMmrNPllRNRQqzDaQ90ikI1JK9uQmyShI3OsDx3qdZs7u9d+h9HYD0WilOr5BqNMwHCJj/pkgUHip9+Qw3y2y4SPKRr5nI970NwN8pt8dBCwYk8gjj0yzci7hGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=S5VbDWP4; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=0sVDdLEe; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=sC6BL/4eXOMRwEriapW4NzdWKLqTrKNe/sG6v84z6GZVpMGcP+Savm3Kjo+FqUfs+MNAc2OAEJ0UoxFMP1mAI9Bwsv0ZHoz3amOW4C1phUbv8GdAUgBIBNkYjpl+8YCnvO32H0sqk2vcpvCSCmJFg30isjN8odg6wH3lNiU3hGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=tRRVBJ+h; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=SHViSYEb; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="S5VbDWP4";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="0sVDdLEe"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="tRRVBJ+h";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="SHViSYEb"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779983043;
+	s=2020; t=1779983046;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=io8uJI5ZUXWYShYYxjsQoGaewBoR08MQe30r4f4klSQ=;
-	b=S5VbDWP47fs4JaqE+zl0ttQ7l2/HCK5TmjNtsT47W2vufME6nl+dH95XTeECPTJUMYWVGI
-	lGnRHmuOT7NAEiWDfiN1/GJd/f/wpPQKTLkZg3Uvry9x4opT1wmvz6imcN9FxtrlY25HX8
-	vpBRRDoGC4cky5ExkX+1Rrf278uQIoro0sTvW7FXXfxlAUgA20ySXUtmworcY5ihhgsECb
-	ngmei1FH0E3Ifl8+P9ZHpzN6Cw1xefGQXwSZal14CVvUjXd5uyUD91/O5GQY6+vcP7dP86
-	fbEPzm7Ra6NR9HWNS2OSHmzevUfugHlC0jBHndMZIH/TFgfjX3IcKJNJ3fcGMA==
+	bh=WkEC6lf3SUuIXoXlnT9WA5c9bDEzPLRW/frQJYtnm5A=;
+	b=tRRVBJ+hjFxbIidLHJnQvMRjWJ9SqmeReUlEhmQHkVW9QPSc24zYfXvPpSt5r0GTQ+CDAg
+	7ZYnLzDfts80jXSVIZgA5nnMGncuvhzPmpb8t0EEA6yUi+PqWoMaakPwIxpes9CmtjBFfz
+	0OCu2QVIWQJUYCyviqtOq9sepgmRvAnvfna25cEIyCXo6gTF0slB4b0AW5oVh9SWtREBbr
+	qNmV3xBfBI52KmcOuVpOY/wcQMXXTCSpyDHkg+XENptuoceE7BYawqqHvXWHBH/PsyxZ4I
+	NqrQ1xsiimOioVll0QI9ixZ4l1oCFDMCz67NU6lPPa4ArTusuILTI8B83DjNkQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779983043;
+	s=2020e; t=1779983046;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=io8uJI5ZUXWYShYYxjsQoGaewBoR08MQe30r4f4klSQ=;
-	b=0sVDdLEeA7h58HjjNT7bt+PKlNahdpD6bl5wh/dHuf/3LGF7WAtVO98fNQgc/szAKBcZYN
-	xddHVb8YUNErN+CA==
+	bh=WkEC6lf3SUuIXoXlnT9WA5c9bDEzPLRW/frQJYtnm5A=;
+	b=SHViSYEbFLVLTzv0cnSsE+I5LX/zEenSpGacJf/CEkrqXf/JzNwM9x262t7ExqpAeMNxN9
+	gsWfTydzKoBH0VAA==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 077/120] x86/sgx: Use parsed CPUID(0x12)
-Date: Thu, 28 May 2026 17:38:39 +0200
-Message-ID: <20260528153923.403473-78-darwi@linutronix.de>
+Subject: [PATCH v7 078/120] KVM: x86: Use parsed CPUID(0x12)
+Date: Thu, 28 May 2026 17:38:40 +0200
+Message-ID: <20260528153923.403473-79-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,84 +66,55 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use parsed CPUID(0x12) instead of doing direct CPUID queries and manually
-extracting the fields with bitwise operations.
+For KVM's SGX ECREATE intercept logic, use parsed CPUID(0x12).0 and
+CPUID(0x12).1 instead of issuing direct CPUID queries.
 
-Remove the subleaf's SGX_CPUID_EPC_INVALID type check since this is already
-done by the parser's CPUID(0x12).n read function.  cpuid_subleaf_n() just
-returns NULL in that case.
-
-Rework sgx_calc_section_metric() to build-up the SGX metric directly from
-the passed fields.  There is no need for extracting them with GENMASK
-operations as this is already handled by the C99 bitfields.
+This centralizes CPUID parsing and cached access across the kernel.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/sgx/main.c | 29 +++++++++++++----------------
- 1 file changed, 13 insertions(+), 16 deletions(-)
+ arch/x86/kvm/vmx/sgx.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
-index 4505f808af5e..071f034f8b2c 100644
---- a/arch/x86/kernel/cpu/sgx/main.c
-+++ b/arch/x86/kernel/cpu/sgx/main.c
-@@ -742,14 +742,12 @@ int arch_memory_failure(unsigned long pfn, int flags)
- }
- 
- /*
-- * A section metric is concatenated in a way that @low bits 12-31 define the
-- * bits 12-31 of the metric and @high bits 0-19 define the bits 32-51 of the
-- * metric.
-+ * A section metric is concatenated in a way that @low bits define the bits
-+ * 12-31 of the metric and @high bits define the bits 32-51 of the metric.
+diff --git a/arch/x86/kvm/vmx/sgx.c b/arch/x86/kvm/vmx/sgx.c
+index 29a1f8e3be60..3f381f0f2395 100644
+--- a/arch/x86/kvm/vmx/sgx.c
++++ b/arch/x86/kvm/vmx/sgx.c
+@@ -440,8 +440,12 @@ void vcpu_setup_sgx_lepubkeyhash(struct kvm_vcpu *vcpu)
   */
--static inline u64 __init sgx_calc_section_metric(u64 low, u64 high)
-+static inline u64 __init sgx_calc_section_metric(u32 low, u32 high)
+ static bool sgx_intercept_encls_ecreate(struct kvm_vcpu *vcpu)
  {
--	return (low & GENMASK_ULL(31, 12)) +
--	       ((high & GENMASK_ULL(19, 0)) << 32);
-+	return ((u64)high << 32) | (low << 12);
- }
++	const struct cpuid_regs *sl0 = cpuid_subleaf_raw(&boot_cpu_data, 0x12, 0);
++	const struct cpuid_regs *sl1 = cpuid_subleaf_raw(&boot_cpu_data, 0x12, 1);
+ 	struct kvm_cpuid_entry2 *guest_cpuid;
+-	u32 eax, ebx, ecx, edx;
++
++	if (!sl0 || !sl1)
++		return true;
  
- #ifdef CONFIG_NUMA
-@@ -796,29 +794,28 @@ static void __init arch_update_sysfs_visibility(int nid) {}
+ 	if (!vcpu->kvm->arch.sgx_provisioning_allowed)
+ 		return true;
+@@ -450,17 +454,15 @@ static bool sgx_intercept_encls_ecreate(struct kvm_vcpu *vcpu)
+ 	if (!guest_cpuid)
+ 		return true;
  
- static bool __init sgx_page_cache_init(void)
- {
--	u32 eax, ebx, ecx, edx, type;
-+	const struct leaf_0x12_n *sl;
- 	u64 pa, size;
- 	int nid;
--	int i;
+-	cpuid_count(0x12, 0, &eax, &ebx, &ecx, &edx);
+-	if (guest_cpuid->ebx != ebx || guest_cpuid->edx != edx)
++	if (guest_cpuid->ebx != sl0->ebx || guest_cpuid->edx != sl0->edx)
+ 		return true;
  
- 	sgx_numa_nodes = kmalloc_objs(*sgx_numa_nodes, num_possible_nodes());
- 	if (!sgx_numa_nodes)
- 		return false;
+ 	guest_cpuid = kvm_find_cpuid_entry_index(vcpu, 0x12, 1);
+ 	if (!guest_cpuid)
+ 		return true;
  
--	for (i = 0; i < ARRAY_SIZE(sgx_epc_sections); i++) {
--		cpuid_count(SGX_CPUID, i + SGX_CPUID_EPC, &eax, &ebx, &ecx, &edx);
-+	for (int i = 0; i < ARRAY_SIZE(sgx_epc_sections); i++) {
-+		u32 subleaf = SGX_CPUID_EPC + i;
+-	cpuid_count(0x12, 1, &eax, &ebx, &ecx, &edx);
+-	if (guest_cpuid->eax != eax || guest_cpuid->ebx != ebx ||
+-	    guest_cpuid->ecx != ecx || guest_cpuid->edx != edx)
++	if (guest_cpuid->eax != sl1->eax || guest_cpuid->ebx != sl1->ebx ||
++	    guest_cpuid->ecx != sl1->ecx || guest_cpuid->edx != sl1->edx)
+ 		return true;
  
--		type = eax & SGX_CPUID_EPC_MASK;
--		if (type == SGX_CPUID_EPC_INVALID)
-+		sl = cpuid_subleaf_n(&boot_cpu_data, 0x12, subleaf);
-+		if (!sl)
- 			break;
- 
--		if (type != SGX_CPUID_EPC_SECTION) {
--			pr_err_once("Unknown EPC section type: %u\n", type);
-+		if (sl->subleaf_type != SGX_CPUID_EPC_SECTION) {
-+			pr_err_once("Unknown EPC section type: %u\n", sl->subleaf_type);
- 			break;
- 		}
- 
--		pa   = sgx_calc_section_metric(eax, ebx);
--		size = sgx_calc_section_metric(ecx, edx);
-+		pa   = sgx_calc_section_metric(sl->epc_sec_base_addr_0, sl->epc_sec_base_addr_1);
-+		size = sgx_calc_section_metric(sl->epc_sec_size_0, sl->epc_sec_size_1);
- 
- 		pr_info("EPC section 0x%llx-0x%llx\n", pa, pa + size - 1);
- 
+ 	return false;
 -- 
 2.54.0
 
