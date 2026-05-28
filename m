@@ -1,44 +1,44 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704473FBB47
-	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AE5428841
+	for <x86-cpuid@lists.linux.dev>; Thu, 28 May 2026 15:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779982938; cv=none; b=tfj8zZKv+cl4GEaRoLUGutwdiAKqqYfnnALLZ0sRcqTrsiMWRBgdx/HyzyN2/5Pp+PnKy9NTfSsGX/VzqRaVegGC/P82RzWsRtPtzU1ch2ZuxoerrOTT8sfj/kvVDr0KU9ah2Z4VvBB4GqveAHrKHGN5T2N1T19MBvXx8bFWGPQ=
+	t=1779982942; cv=none; b=A1PerrSfKRQoOwumxgtIDQJwpnqAyUQwp5j+Y6oJ+uIxrmMCEOZJ2UbrdDMX+1U+L7YF0uAYNMFV8J9uGpX7CwAF1m3dqCK754WVhhH3Vvdd0r5c0C4PTj1uepYEQHbTT0N6EDINSIBy5+M6/ekdOjxvNx22vG3z7dtdktL8PrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779982938; c=relaxed/simple;
-	bh=F9nXpe25/9NhA1dhT8lwC4lrSqRwHg/IDSwUoluZTpQ=;
+	s=arc-20240116; t=1779982942; c=relaxed/simple;
+	bh=f9/sxAse2Ljjii9UG6fNUelSBBwUXFLcb+EWyBounsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r6LU1wCkqyqzg9XfvJ37ZoUnLpd4NindFt1JNOkvhpPo6cRPvozAFMVm2B0AABhusYoIz4bQb8PPjJpEuuk42JHu3JhyTaxrQB8Mk8wwUdJtnLn4RCq/v2a9G/HhkJN2xh+wuPoUfviB+gCo7/PLvcgugktVcb4TUJeMqLslqKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=4oN+/W0X; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=6y02XxQT; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=UzvLAlc/Tyr5bEtvkU59hCZFc9vJW+2X/zHan3hj7OL8jOunZJCJQut3SySTv2pJlKcqUExbxQIu3w0OaPQbKJd0HCaswKiG6Rq+FCAV5Y/mH3MbNxpNXizE7BkrQ7XXQwzWf+ag4Ky+rFUFD3oOnea/YSoDRyj7tmw/Yyxw3bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=HYzICl6v; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=N+jDQjd4; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="4oN+/W0X";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="6y02XxQT"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="HYzICl6v";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="N+jDQjd4"
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1779982928;
+	s=2020; t=1779982932;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=KjQE8S6M58khNUKdSRbVbD9yQ5dHzjnErXIrgDoGlec=;
-	b=4oN+/W0X/qA9J/mp6x+XyNpEAw2D/5iquVVy7umwGXByra1eM/JnwoQ0MhrNloL0kC/lej
-	dZKymJlGhjw9Z5j9WMsK0AVTSB12nx912XUMsYIJ5bSSNcKGrbn/AyiFdYtgb9AffsOK/h
-	L+6QzcTGNiNIF7pUSv1j7i6s9QgOhCzfqgqQpfijEa21kB35Q76QgWJkmyFLfbATz5+O6S
-	mT+URg3JmIlN1tjrmnbxR5EtKSMe6Qq1XVWAtgChkmebqQfR4GLxS0wIhs69hpkaJByQ1C
-	byeNwDbjlKo6YiMmECLYO/556G9KMWYH8/Ggdh7FKY+Lo8VjLecv7U/xI1PGsg==
+	bh=8vPV5cBhASNOsauOImhCjtz8dudxfhPoXcQ1YNmmcyE=;
+	b=HYzICl6v1jwQUQoj4u5o01Sdxoe+DbN45gC9iqEwQlYxKvJ9H1KZHafsIIT11rFjzYe3Ec
+	cM31Kl4pw9haS8OdOlFfvI7nIml5E1ZM5DpA76QY9tIg4dHCOuYWSSOBqQTsXNi76IBs2a
+	1oOIVCm/e+40Vv6F45bK5ZtR1jb112s4zgIP+Cbfb7qw6RgStX2hgZvEpxEEzcC1t9Icxg
+	rkknIT2yDPGG4/wCeEAbQnO38DgxfFIburr1znjrsoA8pC3YXfGpVtFP0LvfywLNR4IHhK
+	gd3Ywa4RbHGogcAzhyvHIXWkPaSZfKcyk1tLMVDMFwnpfhAs6GIs+jiGBJPolw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1779982928;
+	s=2020e; t=1779982932;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=KjQE8S6M58khNUKdSRbVbD9yQ5dHzjnErXIrgDoGlec=;
-	b=6y02XxQTdHgvoe0fwLwIJZK/r9gyf/DBDoQy4fDFmhgSSRgkPNkdZO/eGHWy+ld9Nw3BpL
-	kY0pmxx+lgfMABCQ==
+	bh=8vPV5cBhASNOsauOImhCjtz8dudxfhPoXcQ1YNmmcyE=;
+	b=N+jDQjd4Iwvt4LxJcTyXyt84MXNf5ipEJ/xJiWG9uhlvtecyNOK9Nevx8yfMi7cS4r+L/j
+	uIZE/eIX6pLyxYAg==
 To: Borislav Petkov <bp@alien8.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>
@@ -53,9 +53,9 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	x86-cpuid@lists.linux.dev,
 	LKML <linux-kernel@vger.kernel.org>,
 	"Ahmed S. Darwish" <darwi@linutronix.de>
-Subject: [PATCH v7 044/120] x86/cpu/centaur: Use parsed CPUID(0x80000005)
-Date: Thu, 28 May 2026 17:38:06 +0200
-Message-ID: <20260528153923.403473-45-darwi@linutronix.de>
+Subject: [PATCH v7 045/120] x86/cpu: Use parsed CPUID(0x80000008)
+Date: Thu, 28 May 2026 17:38:07 +0200
+Message-ID: <20260528153923.403473-46-darwi@linutronix.de>
 In-Reply-To: <20260528153923.403473-1-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
 Precedence: bulk
@@ -66,49 +66,44 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use parsed CPUID(0x80000005) instead of issuing a CPUID query and doing
-ugly bitwise operations.
+Use parsed CPUID(0x80000008) instead of issuing a direct CPUID query and
+doing ugly bitwise operations.
 
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 ---
- arch/x86/kernel/cpu/centaur.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/common.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/centaur.c b/arch/x86/kernel/cpu/centaur.c
-index 5f09bce3aaa7..895cf00919d3 100644
---- a/arch/x86/kernel/cpu/centaur.c
-+++ b/arch/x86/kernel/cpu/centaur.c
-@@ -107,11 +107,11 @@ static void early_init_centaur(struct cpuinfo_x86 *c)
- static void init_centaur(struct cpuinfo_x86 *c)
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index d8e46eb0f5c5..d78063e4e665 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1102,10 +1102,9 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
+ 
+ void get_cpu_address_sizes(struct cpuinfo_x86 *c)
  {
- #ifdef CONFIG_X86_32
--	char *name;
-+	const struct leaf_0x80000005_0 *el5 = cpuid_leaf(c, 0x80000005);
-+	u32  lo, hi, newlo;
- 	u32  fcr_set = 0;
- 	u32  fcr_clr = 0;
--	u32  lo, hi, newlo;
--	u32  aa, bb, cc, dd;
-+	char *name;
- #endif
- 	early_init_centaur(c);
- 	init_intel_cacheinfo(c);
-@@ -181,13 +181,8 @@ static void init_centaur(struct cpuinfo_x86 *c)
- 		/* Set 3DNow! on Winchip 2 and above. */
- 		if (c->x86_model >= 8)
- 			set_cpu_cap(c, X86_FEATURE_3DNOW);
--		/* See if we can find out some more. */
--		if (cpuid_eax(0x80000000) >= 0x80000005) {
--			/* Yes, we can. */
--			cpuid(0x80000005, &aa, &bb, &cc, &dd);
--			/* Add L1 data and code cache sizes. */
--			c->x86_cache_size = (cc>>24)+(dd>>24);
--		}
-+		if (el5)
-+			c->x86_cache_size = el5->l1_dcache_size_kb + el5->l1_icache_size_kb;
- 		sprintf(c->x86_model_id, "WinChip %s", name);
- 	}
- #endif
+-	u32 eax, ebx, ecx, edx;
++	const struct leaf_0x80000008_0 *el8 = cpuid_leaf(c, 0x80000008);
+ 
+-	if (!cpu_has(c, X86_FEATURE_CPUID) ||
+-	    (c->extended_cpuid_level < 0x80000008)) {
++	if (!cpu_has(c, X86_FEATURE_CPUID) || !el8) {
+ 		if (IS_ENABLED(CONFIG_X86_64)) {
+ 			c->x86_clflush_size = 64;
+ 			c->x86_phys_bits = 36;
+@@ -1120,10 +1119,8 @@ void get_cpu_address_sizes(struct cpuinfo_x86 *c)
+ 				c->x86_phys_bits = 36;
+ 		}
+ 	} else {
+-		cpuid(0x80000008, &eax, &ebx, &ecx, &edx);
+-
+-		c->x86_virt_bits = (eax >> 8) & 0xff;
+-		c->x86_phys_bits = eax & 0xff;
++		c->x86_virt_bits = el8->virt_addr_bits;
++		c->x86_phys_bits = el8->phys_addr_bits;
+ 
+ 		/* Provide a sane default if not enumerated: */
+ 		if (!c->x86_clflush_size)
 -- 
 2.54.0
 
