@@ -1,44 +1,42 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A200379C43
-	for <x86-cpuid@lists.linux.dev>; Tue,  2 Jun 2026 20:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266583A4F5E
+	for <x86-cpuid@lists.linux.dev>; Tue,  2 Jun 2026 21:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780432574; cv=none; b=hCw1QfIm6DUTK7DwluUjyzY8Ta9X0FfkzbxpsblGyYkXs6BGQyq+4i9Zqn92g93ojDv1Y2/GHwv2W1nnVwsU+q7kT2ML3fwZwX4GlbOUrKyVb0i+LT5EkzeHZNjsg9xEf1tUOIPRX1dz4exTLLJm4PQZkF+VKq4VKyoFcUT9YAg=
+	t=1780434911; cv=none; b=bQfQZ+CCHnxVUf7BjC5WEmGRMseXQ7sjfqF2E9ZA9a3n5sRfsbWnBenj04Qo0SOYEKZS31HXSfLPcPIBIQMlLiIlOkYLQtxzBDd5sN9vRp26o/gtIziYy/J17XoUppTq2+oweQNbW/P3j7yvRJ9+ubJEpNJVl44it41VabPgrTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780432574; c=relaxed/simple;
-	bh=e76iSRU93jvofF6PlkUB74YoeaGjdwgCc41EqZIkhJk=;
+	s=arc-20240116; t=1780434911; c=relaxed/simple;
+	bh=oREw9lSMN+aM31CNSJQ6alDPTVZxkDVS/WCuQ2tZZww=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WD1tTZOwGjUBnOT4hFL2vFrjeLTzYIARFbrCeh5ddd7PAuwUB/J5Htj9DAbHU0X72Bddr97JuVxoqV8NKb3VUmiy7n8jNfXsyWQqm9RBhJfNp7jppTHwJmHGk9iHWrHsCMixe4ihjwo3zTVZr63LY7axVcKSkeib8xa/xQBcREI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=LHkX1FfI; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=dX5nU65P; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=DVb3Crsx5WyZEhPm2x8N70TXwfqWqdSO3SDv8rzmR0SypJJH9yLJsYH17G43YeNV3Rb+qpE8UgMkLvIkyaHel4+YLsA2EicatIHJTYOK1ZFWjlLwNCOUjOaWqumRwgq2nM7ePRUYzxaQKqgSTh71Ogv9YGvwQvg2kHDCaka6muQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=0amPntOw; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=/XRBRTIf; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="LHkX1FfI";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="dX5nU65P"
-Date: Tue, 2 Jun 2026 22:36:09 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="0amPntOw";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="/XRBRTIf"
+Date: Tue, 2 Jun 2026 23:15:06 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1780432571;
+	s=2020; t=1780434907;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=7utZFboU00HrF0aYWO3k0BY57up7/Pvp8NOTPZoQwD8=;
-	b=LHkX1FfI2uf+uen+z70iyHLWZa9IBmVBmyV+QuwcjkO0NrJKFRe2jkHhtlHr3FSllfmKJT
-	TygBbzFsCQvu1nsoylXuC/2ZFBUsw7Skvo0FNAp8MwYTQSj4056ENoObMP+3Tv0epAA/9d
-	BIlXk9nsVPki1GYmX0YXg+6cLmoiVbIVCv4wA5kNZFeq1DwOCHmfmxErbNDRm/PjQroRpC
-	QSpmERqd1pLA+ZwmKHjgoIzUc8ULes3umyf8JCKX7oJBNKBw3zNE1CSlCvKUX4RfsBAVky
-	IqE1IW6EBb5we2h0Ky14/mSSH9GHElhJstf7bMz3DApltcMntRI39htDsAhB8A==
+	bh=LxMaBZow2gqnGn2mNw4mw6UoKoWdH3ee6SZcj5+WOX4=;
+	b=0amPntOwcHWUJQZyuYwKRUOCqPYlT/8xnKZ9rkYMjMIqJspfLxO2S3lbkrs2cJbzDddO9p
+	QhvkUuBpeLWovK9XAhkFA3UH2G0CjB1timVaEz2x9BcDP3C1fSexHEqW5VOPptvLCW2+F1
+	gvB04DwmrxwlZstadAHv59EkW84c9whGZ9epgqfWzQcuvWaF6ThfCgZnsp2ypSLsWYuyaE
+	4TNkJMgWVrPlKIgLQbCdaQmny4FmIfeTxWLg/pErMA3WY1+gyKJTi3bHEekFgHvFpBXiHZ
+	As9xUQAk2p4Lw2366AkHos2RvK+pTRCRBTKLlQ5Zb3G1s1WCRf2S5Wqpgb8jJw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1780432571;
+	s=2020e; t=1780434907;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=7utZFboU00HrF0aYWO3k0BY57up7/Pvp8NOTPZoQwD8=;
-	b=dX5nU65PwSZwVMLuRBQYeWfderpHvqYZzwNdFXqAxj2dzwkt9vfZlThwppz3QpYWQD2reQ
-	XsnFNJYaHM5HTVBw==
+	bh=LxMaBZow2gqnGn2mNw4mw6UoKoWdH3ee6SZcj5+WOX4=;
+	b=/XRBRTIf4fv7Llzc/96ehL1YHw/3xBGwYoVQkAFUBcKf6CZmhEvTqDfVjg5RRTC+Tu9Bb3
+	1wFyP/1T3s5KCZCA==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
 To: Borislav Petkov <bp@alien8.de>
 Cc: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
@@ -52,7 +50,7 @@ Cc: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v7 004/120] x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
-Message-ID: <ah8-uSSdb1KcLByV@lx-t490>
+Message-ID: <ah9H2hxkMPMeuF-o@lx-t490>
 References: <20260528153923.403473-1-darwi@linutronix.de>
  <20260528153923.403473-5-darwi@linutronix.de>
  <ah2WBnBkz8KQrph0@wieczorr-mobl1.localdomain>
@@ -69,9 +67,8 @@ List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20260602174746.GJah8XQvEJo9UKru1l@fat_crate.local>
 
 On Tue, 02 Jun 2026, Borislav Petkov wrote:
@@ -83,20 +80,23 @@ On Tue, 02 Jun 2026, Borislav Petkov wrote:
 > I wouldn't want for 7.2 to release with those typos in a user-visible header.
 > I mean, there's time until 7.2 releases but it would be good to send a fixed
 > and complete pull request to Linus already in 2-3 weeks time.
->
 
-I've just pushed a new x86-cpuid-db release.¹  It contains Maciej's patch
-plus some minor fixes.
+I've pushed an x86-cpuid-db release about an hour after receiving Maciej's
+patch.  And that was mostly because of adding more fixes in the same spirit
+as Maciej's findings.
 
-Here are the release artifacts from the x86-cpuid-db's CI:
+So I would suggest a "wait and see" approach.  I don't think that the
+frequency of adding new bits or fixes to the database will be that high.
 
-https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/jobs/14661106966/artifacts/download
-https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/jobs/14661106968/artifacts/download
+There is also a git-describe tag on top of leaf_types.h and kcpuid.csv.
+The idea was to encourage people that submitted kernel patches touching
+these files are either from a pushed x86-cpuid-db release or at least from
+its tip branch.
 
-The former is kcpuid's CSV and the latter is <asm/cpuid/leaf_types.h>.
-@Maciej, tip:x86/cpu kernel patches can be generated from those.
+I'm definitely biased here, but I'm optimistic that this can smoothly work
+out.  In the end, the x86 maintainers still hold all the keys here, in the
+sense that there is no risk of slowing down anything, especially in
+emergency cases (say a new HW vulnerability.)
 
-¹ https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/blob/v3.1/CHANGELOG.rst
-
-Thanks,
+Thanks!
 Ahmed
