@@ -1,39 +1,43 @@
-Received: from mail-106118.protonmail.ch (mail-106118.protonmail.ch [79.135.106.118])
+Received: from mail-244122.protonmail.ch (mail-244122.protonmail.ch [109.224.244.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E73B43E9E0
-	for <x86-cpuid@lists.linux.dev>; Wed,  3 Jun 2026 17:10:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798C33EF0DC
+	for <x86-cpuid@lists.linux.dev>; Wed,  3 Jun 2026 17:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780506654; cv=none; b=OvcDYiql9cNQIvEAq0qDoqENufWGhYw4v58Ydp17G7oPgXLV5W7FoVKbztFNTX5QQExmRr3rvFC49t40kl+sqxBVWSc9FS5aE3CLJCdjgKx4qIg+t9CSqf4hLmM2ZOHxpTG57J4x553f3AzVjj6WzPQf4FAVkp8FIaP7XDGghZ4=
+	t=1780506659; cv=none; b=mLRytrqULZEFXl0jVDBA1orEBPPKRcenJFI9lrkCcDEK1MPY+suOY4KmAw847djVUjBC1dHLyUBl6SaWyJNXaTXaxs9Kwcme/A5tQHkAuamD4gzkwM7H7WWfPZZD6XuzT9VlXnsM1+WyWcwElR89qsJpX8yCd62wRok64jEKCMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780506654; c=relaxed/simple;
-	bh=zckHlS7vRoeSg8jPL2VvtcAVZZYNhAz2y+5iFN/P9y0=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=Smoh4EJXzN3L9rxvmunTYUjcVdMYAvxYkX4SF6GC5U9lzK2qmjKolaEEkhnX3HTVP/bfqZoy93j0jchhu2/UCDpYetrYUbCl/KcifntHq/Jb0eqtkBbBNzniMPE4Uf3tTvl24r0qwl5vKxk3npGlHbUsWsv4Zw4Bz99TJ50yJOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=A7dXMD5C; arc=none smtp.client-ip=79.135.106.118
+	s=arc-20240116; t=1780506659; c=relaxed/simple;
+	bh=LUOBYd4ORFeevaOtH4lY37Yfvcul1Ro63bhTSHnvaeA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nLf7PpWuJVRYEApVI6h6Vx8Q7FdeSAOljygw2UAGeRBZAzzp6nPx5xVpfHup97EgZoZX3MQBtqtPXzBN7jKFhD2stqtFOcR6t/xjnhqkTDk333+fNgOCzde+ypo9ptxzH2YnFD425YK8+EAk47dGJLEICW0dQJTCHowkrro6g8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=BLNK/apa; arc=none smtp.client-ip=109.224.244.122
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="A7dXMD5C"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="BLNK/apa"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1780506648; x=1780765848;
-	bh=u1eIQGVywyM45NHMpkmC9PbJXyIvG4/+zrKR3CULm5I=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=A7dXMD5CO/gfePV7X1vBvCxuFWTcSrPofD95GNenvbOcVLRbZZzos/6qor2Qq94V2
-	 cXxsxefHjNe5wSMVGojsfG0+vc27U4hPnvFMxZNUiQdYWIIvr/kcwdrXzd8oFoGe9H
-	 K+WqWQ1JdsbLFs9A9QrCYbbQKVYbFHB/z0GLNnqxx4VTbXxwhtEqaYDNnB77i4/oo/
-	 Itc1UKYdzCNJj4c3BrZXdDPLTiB0vGWgydAuyDkBfh8gfp7HLy2EFPz1zvZcqbOrEw
-	 05NM2uwFWlu7Bb6JJjMa3zvVgJKGTvZzKlsUVdxZRh7zYiaiud/iENqhmU/FGPgGTP
-	 3qRZG6CN/5xNw==
-Date: Wed, 03 Jun 2026 17:10:39 +0000
+	s=protonmail3; t=1780506654; x=1780765854;
+	bh=4ungl5PVoOZETiiyungpsiTQW+V5hgoQ3LbM7ojo0Ww=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=BLNK/apaeAPHgrzQHwxv2pglq1HT8jQT9oq4JWgJ93iUhXYajnLaGMIw+ZrmHlMWa
+	 GfdR4EinF4yBiPhDW83oH/69sNgeyo4yJnfgwA8L7QtVkMYi9G/yt+K7aIlB2fYYOj
+	 bLeKw6UpsUz7huqCrdGr9QHsDrOZEtMD9dt+U9jZjP6ly2gmfOpS5Kb9xEpj2oAttU
+	 cLiSoeFXGUMLBosInkMf1d05uEPJtOhXtUgu6sjX/v21p5xoM6dT6uQ8a3hpgsIKcC
+	 1oubNHvT0ZIexv2puFIu1nbW5Osqw3OyxMOcxOdrizbQl3K/hwC37LEc0JGN5jdD9P
+	 ZLqJU6dRRQ7Jg==
+Date: Wed, 03 Jun 2026 17:10:49 +0000
 To: mingo@redhat.com, dave.hansen@linux.intel.com, bp@alien8.de
 From: Maciej Wieczor-Retman <m.wieczorretman@pm.me>
 Cc: hpa@zytor.com, darwi@linutronix.de, tglx@kernel.org, sohil.mehta@intel.com, andrew.cooper3@citrix.com, linux-kernel@vger.kernel.org, x86@kernel.org, m.wieczorretman@pm.me, john.ogness@linutronix.de, ludloff@gmail.com, maciej.wieczor-retman@intel.com, x86-cpuid@lists.linux.dev
-Subject: [PATCH v2 0/2] x86/cpuid: kcpuid: v3.1 x86-cpuid-db update with fixes
-Message-ID: <cover.1780506200.git.m.wieczorretman@pm.me>
+Subject: [PATCH v2 1/2] tools/x86/kcpuid: Update bitfields to x86-cpuid-db v3.1
+Message-ID: <cbe9ff395b3269e112ff7ca414d726ffd7bf0787.1780506200.git.m.wieczorretman@pm.me>
+In-Reply-To: <cover.1780506200.git.m.wieczorretman@pm.me>
+References: <cover.1780506200.git.m.wieczorretman@pm.me>
 Feedback-ID: 164464600:user:proton
-X-Pm-Message-ID: 4ab626c037a8d797ea6f145d93849d044006df34
+X-Pm-Message-ID: df0ea5f732669fd70db4f1f1f687deb11bcefcc1
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -43,26 +47,344 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Update asm/include/leaf_types.h and kcpuid's CSV file to the latest
-x86-cpuid-db release [1].
+From: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
 
-Changes consist of typo fixes and making formatting of entries
-consistent with each other.
+Update kcpuid's CSV file to version 3.1, as generated by x86-cpuid-db.
 
-[1] https://gitlab.com/x86-cpuid.org/x86-cpuid-db
+Summary of the v3.1 changes:
 
-Changelog v2:
-- Reformat the patches according to Ahmed's instructions. No code
-  changes overall.
+* Fix a few typos that were found during the kernel CPUID data model
+  review. Also include fixes found using an LLM agent review.
 
-Maciej Wieczor-Retman (2):
-  tools/x86/kcpuid: Update bitfields to x86-cpuid-db v3.1
-  x86/cpuid: Update bitfields to x86-cpuid-db v3.1
+* Rename thrd_director_nclasses to hw_feedback_nclasses as it's the
+  name used in Intel SDM.
 
- arch/x86/include/asm/cpuid/leaf_types.h | 62 ++++++++++++-------------
- tools/arch/x86/kcpuid/cpuid.csv         | 52 ++++++++++-----------
- 2 files changed, 57 insertions(+), 57 deletions(-)
+Link: https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/blob/v3.1/CHANGELOG.r=
+st
+Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+---
+ tools/arch/x86/kcpuid/cpuid.csv | 52 ++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
+diff --git a/tools/arch/x86/kcpuid/cpuid.csv b/tools/arch/x86/kcpuid/cpuid.=
+csv
+index 9f5155c825ca..45a876d3519f 100644
+--- a/tools/arch/x86/kcpuid/cpuid.csv
++++ b/tools/arch/x86/kcpuid/cpuid.csv
+@@ -1,5 +1,5 @@
+ # SPDX-License-Identifier: CC0-1.0
+-# Generator: x86-cpuid-db v3.0
++# Generator: x86-cpuid-db v3.1
+=20
+ #
+ # Auto-generated file.
+@@ -177,7 +177,7 @@
+        0x6,         0,  ebx,     3:0,    n_therm_thresholds     , Digital =
+thermometer thresholds
+        0x6,         0,  ecx,       0,    aperfmperf             , MPERF/AP=
+ERF MSRs (effective frequency interface)
+        0x6,         0,  ecx,       3,    epb                    , IA32_ENE=
+RGY_PERF_BIAS MSR
+-       0x6,         0,  ecx,    15:8,    thrd_director_nclasses , Number o=
+f classes, Intel thread director
++       0x6,         0,  ecx,    15:8,    hw_feedback_nclasses   , Number o=
+f Intel Thread Director classes
+        0x6,         0,  edx,       0,    perfcap_reporting      , Performa=
+nce capability reporting
+        0x6,         0,  edx,       1,    encap_reporting        , Energy e=
+fficiency capability reporting
+        0x6,         0,  edx,    11:8,    feedback_sz            , Feedback=
+ interface structure size, in 4K pages
+@@ -247,10 +247,10 @@
+        0x7,         0,  edx,       1,    sgx_keys               , Intel SG=
+X attestation services
+        0x7,         0,  edx,       2,    avx512_4vnniw          , AVX-512 =
+neural network instructions
+        0x7,         0,  edx,       3,    avx512_4fmaps          , AVX-512 =
+multiply accumulation single precision
+-       0x7,         0,  edx,       4,    fsrm                   , Fast sho=
+rt REP MOV
++       0x7,         0,  edx,       4,    fsrm                   , Fast sho=
+rt REP MOVSB
+        0x7,         0,  edx,       5,    uintr                  , User int=
+errupts
+        0x7,         0,  edx,       8,    avx512_vp2intersect    , VP2INTER=
+SECT{D,Q} instructions
+-       0x7,         0,  edx,       9,    srdbs_ctrl             , SRBDS mi=
+tigation MSR
++       0x7,         0,  edx,       9,    srbds_ctrl             , SRBDS mi=
+tigation MSR
+        0x7,         0,  edx,      10,    md_clear               , VERW MD_=
+CLEAR microcode
+        0x7,         0,  edx,      11,    rtm_always_abort       , XBEGIN (=
+RTM transaction) always aborts
+        0x7,         0,  edx,      13,    tsx_force_abort        , MSR TSX_=
+FORCE_ABORT, RTM_ABORT bit
+@@ -296,8 +296,8 @@
+        0x7,         2,  edx,       0,    intel_psfd             , Intel pr=
+edictive store forward disable
+        0x7,         2,  edx,       1,    ipred_ctrl             , MSR bits=
+ IA32_SPEC_CTRL.IPRED_DIS_{U,S}
+        0x7,         2,  edx,       2,    rrsba_ctrl             , MSR bits=
+ IA32_SPEC_CTRL.RRSBA_DIS_{U,S}
+-       0x7,         2,  edx,       3,    ddp_ctrl               , MSR bit =
+ IA32_SPEC_CTRL.DDPD_U
+-       0x7,         2,  edx,       4,    bhi_ctrl               , MSR bit =
+ IA32_SPEC_CTRL.BHI_DIS_S
++       0x7,         2,  edx,       3,    ddp_ctrl               , MSR bit =
+IA32_SPEC_CTRL.DDPD_U
++       0x7,         2,  edx,       4,    bhi_ctrl               , MSR bit =
+IA32_SPEC_CTRL.BHI_DIS_S
+        0x7,         2,  edx,       5,    mcdt_no                , MCDT mit=
+igation not needed
+        0x7,         2,  edx,       6,    uclock_disable         , UC-lock =
+disable
+=20
+@@ -368,7 +368,7 @@
+        0xd,         1,  ecx,       8,    xss_pt                 , PT state
+        0xd,         1,  ecx,      10,    xss_pasid              , PASID st=
+ate
+        0xd,         1,  ecx,      11,    xss_cet_u              , CET user=
+ state
+-       0xd,         1,  ecx,      12,    xss_cet_p              , CET supe=
+rvisor state
++       0xd,         1,  ecx,      12,    xss_cet_s              , CET supe=
+rvisor state
+        0xd,         1,  ecx,      13,    xss_hdc                , HDC stat=
+e
+        0xd,         1,  ecx,      14,    xss_uintr              , UINTR st=
+ate
+        0xd,         1,  ecx,      15,    xss_lbr                , LBR stat=
+e
+@@ -433,7 +433,7 @@
+       0x12,         1,  eax,       7,    secs_attr_kss          , Key Sepa=
+ration and Sharing
+       0x12,         1,  eax,      10,    secs_attr_aexnotify    , Enclave =
+threads: AEX notifications
+       0x12,         1,  ecx,       0,    xfrm_x87               , Enclave =
+XFRM.X87
+-      0x12,         1,  ecx,       1,    xfrm_sse               , Enclave =
+XFRM.SEE
++      0x12,         1,  ecx,       1,    xfrm_sse               , Enclave =
+XFRM.SSE
+       0x12,         1,  ecx,       2,    xfrm_avx               , Enclave =
+XFRM.AVX
+       0x12,         1,  ecx,       3,    xfrm_mpx_bndregs       , Enclave =
+XFRM.BNDREGS (MPX BND0-BND3 registers)
+       0x12,         1,  ecx,       4,    xfrm_mpx_bndcsr        , Enclave =
+XFRM.BNDCSR (MPX BNDCFGU/BNDSTATUS registers)
+@@ -466,9 +466,9 @@
+       0x14,         0,  ecx,       0,    topa_output            , ToPA out=
+put scheme
+       0x14,         0,  ecx,       1,    topa_multiple_entries  , ToPA tab=
+les can hold multiple entries
+       0x14,         0,  ecx,       2,    single_range_output    , Single-r=
+ange output
+-      0x14,         0,  ecx,       3,    trance_transport_output, Trace Tr=
+ansport subsystem output
++      0x14,         0,  ecx,       3,    trace_transport_output , Trace Tr=
+ansport subsystem output
+       0x14,         0,  ecx,      31,    ip_payloads_lip        , IP paylo=
+ads have LIP values (CS base included)
+-      0x14,         1,  eax,     2:0,    num_address_ranges     , Number o=
+f configurable Address Ranges
++      0x14,         1,  eax,     2:0,    num_address_ranges     , Number o=
+f configurable address ranges
+       0x14,         1,  eax,   31:16,    mtc_periods_bmp        , MTC peri=
+od encodings bitmap
+       0x14,         1,  ebx,    15:0,    cycle_thresholds_bmp   , Cycle Th=
+reshold encodings bitmap
+       0x14,         1,  ebx,   31:16,    psb_periods_bmp        , Configur=
+able PSB frequency encodings bitmap
+@@ -494,7 +494,7 @@
+       0x17,         0,  ebx,    15:0,    soc_vendor_id          , SoC vend=
+or ID
+       0x17,         0,  ebx,      16,    is_vendor_scheme       , Assigned=
+ by industry enumeration scheme (not Intel)
+       0x17,         0,  ecx,    31:0,    soc_proj_id            , SoC proj=
+ect ID, assigned by vendor
+-      0x17,         0,  edx,    31:0,    soc_stepping_id        , Soc proj=
+ect stepping ID, assigned by vendor
++      0x17,         0,  edx,    31:0,    soc_stepping_id        , SoC proj=
+ect stepping ID, assigned by vendor
+       0x17,       3:1,  eax,    31:0,    vendor_brand_a         , Vendor B=
+rand ID string, bytes subleaf_nr * (0 -> 3)
+       0x17,       3:1,  ebx,    31:0,    vendor_brand_b         , Vendor B=
+rand ID string, bytes subleaf_nr * (4 -> 7)
+       0x17,       3:1,  ecx,    31:0,    vendor_brand_c         , Vendor B=
+rand ID string, bytes subleaf_nr * (8 -> 11)
+@@ -514,12 +514,12 @@
+       0x18,      31:0,  edx,     4:0,    tlb_type               , Translat=
+ion cache type (TLB type)
+       0x18,      31:0,  edx,     7:5,    tlb_cache_level        , Translat=
+ion cache level (1-based)
+       0x18,      31:0,  edx,       8,    is_fully_associative   , Fully-as=
+sociative
+-      0x18,      31:0,  edx,   25:14,    tlb_max_addressible_ids, Max numb=
+er of addressable IDs - 1
++      0x18,      31:0,  edx,   25:14,    tlb_max_addressable_ids, Max numb=
+er of addressable IDs - 1
+=20
+ # Leaf 19H
+ # Intel key locker
+=20
+-      0x19,         0,  eax,       0,    kl_cpl0_only           , CPL0-onl=
+y key Locker restriction
++      0x19,         0,  eax,       0,    kl_cpl0_only           , CPL0-onl=
+y key locker restriction
+       0x19,         0,  eax,       1,    kl_no_encrypt          , No-encry=
+pt key locker restriction
+       0x19,         0,  eax,       2,    kl_no_decrypt          , No-decry=
+pt key locker restriction
+       0x19,         0,  ebx,       0,    aes_keylocker          , AES key =
+locker instructions
+@@ -546,7 +546,7 @@
+ # Intel LBR (Last Branch Record)
+=20
+       0x1c,         0,  eax,     7:0,    lbr_depth_mask         , Max LBR =
+stack depth bitmask
+-      0x1c,         0,  eax,      30,    lbr_deep_c_reset       , LBRs may=
+be cleared on MWAIT C-state > C1
++      0x1c,         0,  eax,      30,    lbr_deep_c_reset       , LBRs may=
+ be cleared on MWAIT C-state > C1
+       0x1c,         0,  eax,      31,    lbr_ip_is_lip          , LBR IP c=
+ontain Last IP (otherwise effective IP)
+       0x1c,         0,  ebx,       0,    lbr_cpl                , CPL filt=
+ering
+       0x1c,         0,  ebx,       1,    lbr_branch_filter      , Branch f=
+iltering
+@@ -591,8 +591,8 @@
+ # Intel TD (Trust Domain)
+=20
+       0x21,         0,  ebx,    31:0,    tdx_vendorid_0         , TDX vend=
+or ID string bytes 0 - 3
+-      0x21,         0,  ecx,    31:0,    tdx_vendorid_2         , CPU vend=
+or ID string bytes 8 - 11
+-      0x21,         0,  edx,    31:0,    tdx_vendorid_1         , CPU vend=
+or ID string bytes 4 - 7
++      0x21,         0,  ecx,    31:0,    tdx_vendorid_2         , TDX vend=
+or ID string bytes 8 - 11
++      0x21,         0,  edx,    31:0,    tdx_vendorid_1         , TDX vend=
+or ID string bytes 4 - 7
+=20
+ # Leaf 23H
+ # Intel Architectural Performance Monitoring Extended (ArchPerfmonExt)
+@@ -857,7 +857,7 @@
+ 0x8000000a,         0,  edx,       1,    lbrv                   , LBR virt=
+ualization
+ 0x8000000a,         0,  edx,       2,    svm_lock               , SVM lock
+ 0x8000000a,         0,  edx,       3,    nrip_save              , NRIP sav=
+e support on #VMEXIT
+-0x8000000a,         0,  edx,       4,    tsc_scale              , MSR base=
+d TSC rate control
++0x8000000a,         0,  edx,       4,    tsc_scale              , MSR-base=
+d TSC rate control
+ 0x8000000a,         0,  edx,       5,    vmcb_clean             , VMCB cle=
+an bits support
+ 0x8000000a,         0,  edx,       6,    flushbyasid            , Flush by=
+ ASID + Extended VMCB TLB_Control
+ 0x8000000a,         0,  edx,       7,    decodeassists          , Decode A=
+ssists support
+@@ -895,7 +895,7 @@
+=20
+ 0x8000001a,         0,  eax,       0,    fp_128                 , Internal=
+ FP/SIMD exec data path is 128-bits wide
+ 0x8000001a,         0,  eax,       1,    movu_preferred         , SSE: MOV=
+U* better than MOVL*/MOVH*
+-0x8000001a,         0,  eax,       2,    fp_256                 , internal=
+ FP/SSE exec data path is 256-bits wide
++0x8000001a,         0,  eax,       2,    fp_256                 , Internal=
+ FP/SSE exec data path is 256-bits wide
+=20
+ # Leaf 8000001BH
+ # AMD IBS (Instruction-Based Sampling)
+@@ -917,7 +917,7 @@
+ # AMD LWP (Lightweight Profiling)
+=20
+ 0x8000001c,         0,  eax,       0,    os_lwp_avail           , OS: LWP =
+is available to application programs
+-0x8000001c,         0,  eax,       1,    os_lpwval              , OS: LWPV=
+AL instruction
++0x8000001c,         0,  eax,       1,    os_lwpval              , OS: LWPV=
+AL instruction
+ 0x8000001c,         0,  eax,       2,    os_lwp_ire             , OS: Inst=
+ructions Retired Event
+ 0x8000001c,         0,  eax,       3,    os_lwp_bre             , OS: Bran=
+ch Retired Event
+ 0x8000001c,         0,  eax,       4,    os_lwp_dme             , OS: Dcac=
+he Miss Event
+@@ -934,13 +934,13 @@
+ 0x8000001c,         0,  ecx,       5,    lwp_data_addr          , Cache mi=
+ss events report data cache address
+ 0x8000001c,         0,  ecx,     8:6,    lwp_latency_rnd        , Cache la=
+tency rounding amount
+ 0x8000001c,         0,  ecx,    15:9,    lwp_version            , LWP vers=
+ion
+-0x8000001c,         0,  ecx,   23:16,    lwp_buf_min_sz         , LWP even=
+t ring buffer min size, 32 event records units
++0x8000001c,         0,  ecx,   23:16,    lwp_buf_min_sz         , LWP even=
+t ring buffer min size, 32 event record units
+ 0x8000001c,         0,  ecx,      28,    lwp_branch_predict     , Branches=
+ Retired events can be filtered
+ 0x8000001c,         0,  ecx,      29,    lwp_ip_filtering       , IP filte=
+ring (IPI, IPF, BaseIP, and LimitIP @ LWPCP)
+ 0x8000001c,         0,  ecx,      30,    lwp_cache_levels       , Cache-re=
+lated events: filter by cache level
+ 0x8000001c,         0,  ecx,      31,    lwp_cache_latency      , Cache-re=
+lated events: filter by latency
+ 0x8000001c,         0,  edx,       0,    hw_lwp_avail           , HW: LWP =
+available
+-0x8000001c,         0,  edx,       1,    hw_lpwval              , HW: LWPV=
+AL available
++0x8000001c,         0,  edx,       1,    hw_lwpval              , HW: LWPV=
+AL available
+ 0x8000001c,         0,  edx,       2,    hw_lwp_ire             , HW: Inst=
+ructions Retired Event
+ 0x8000001c,         0,  edx,       3,    hw_lwp_bre             , HW: Bran=
+ch Retired Event
+ 0x8000001c,         0,  edx,       4,    hw_lwp_dme             , HW: Dcac=
+he Miss Event
+@@ -1040,8 +1040,8 @@
+ 0x80000021,         0,  eax,       7,    upper_addr_ignore      , EFER MSR=
+ Upper Address Ignore
+ 0x80000021,         0,  eax,       8,    autoibrs               , EFER MSR=
+ Automatic IBRS
+ 0x80000021,         0,  eax,       9,    no_smm_ctl_msr         , SMM_CTL =
+MSR not available
+-0x80000021,         0,  eax,      10,    fsrs                   , Fast Sho=
+rt Rep STOSB
+-0x80000021,         0,  eax,      11,    fsrc                   , Fast Sho=
+rt Rep CMPSB
++0x80000021,         0,  eax,      10,    fsrs                   , Fast Sho=
+rt REP STOSB
++0x80000021,         0,  eax,      11,    fsrc                   , Fast Sho=
+rt REP CMPSB
+ 0x80000021,         0,  eax,      13,    prefetch_ctl_msr       , Prefetch=
+ control MSR
+ 0x80000021,         0,  eax,      16,    opcode_reclaim         , Reserves=
+ opcode space
+ 0x80000021,         0,  eax,      17,    user_cpuid_disable     , #GP when=
+ executing CPUID at CPL > 0
+@@ -1093,9 +1093,9 @@
+ # Maximum Transmeta leaf + CPU vendor string
+=20
+ 0x80860000,         0,  eax,    31:0,    max_tra_leaf           , Maximum =
+Transmeta leaf
+-0x80860000,         0,  ebx,    31:0,    cpu_vendorid_0         , Transmet=
+a Vendor ID string bytes 0 - 3
+-0x80860000,         0,  ecx,    31:0,    cpu_vendorid_2         , Transmet=
+a Vendor ID string bytes 8 - 11
+-0x80860000,         0,  edx,    31:0,    cpu_vendorid_1         , Transmet=
+a Vendor ID string bytes 4 - 7
++0x80860000,         0,  ebx,    31:0,    cpu_vendorid_0         , Transmet=
+a vendor ID string bytes 0 - 3
++0x80860000,         0,  ecx,    31:0,    cpu_vendorid_2         , Transmet=
+a vendor ID string bytes 8 - 11
++0x80860000,         0,  edx,    31:0,    cpu_vendorid_1         , Transmet=
+a vendor ID string bytes 4 - 7
+=20
+ # Leaf 80860001H
+ # Transmeta extended CPU features
 --=20
 2.54.0
 
