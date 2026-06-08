@@ -1,55 +1,66 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61838218845
-	for <x86-cpuid@lists.linux.dev>; Mon,  8 Jun 2026 06:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D7832B11D
+	for <x86-cpuid@lists.linux.dev>; Mon,  8 Jun 2026 06:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780900487; cv=none; b=J2ujPpERXorjlCwyZ2aqVR4GdMOT8VDt5E2C7f9q3OFPXS0n2CePZfheoYXZqNYpJalYsUaN6AwV4vhB0mxpROAR73978OushrZT83w2frSVSBMYfDo+FOSTuTKfQEyDYv6YOhOvSk7YFql8NJOKHccFsAOotwrSHLmiLSy4Xfg=
+	t=1780900776; cv=none; b=ExvPTWdhC4PDMfhMUsEVhnILO+C7NsoO3t307NoKMRmHY2IyQlxK1rJG2RhOQDS26Nen+gWOt98JLRtCGJW5eD4INOwnKOaiRBy/V3jRu7sXvGgQEIG6mBbW+noX9hhPKh7j19H0smHeAnqCEdnz6u+1NRwOOTADAmY7dLEWaqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780900487; c=relaxed/simple;
-	bh=CVpNgDlR1iqrZZeLrmqh3/tWy2NYW+zLujFcMAPB2qo=;
+	s=arc-20240116; t=1780900776; c=relaxed/simple;
+	bh=Glbienq7OB1yv1tWm9EG78YSwwzuPbUiIwxXEUvGvWI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BklOgKegrAIi8G3sohbvp4KBDfGeLFLRd3RLi/MnZstuwDhAlU9GRnaXYkfIqyuNgQCKCYgh4CaC3YhhRRaJw/nt74HM8anPIaVYIcVCO3LH/C4uS4gtPvfEU81SHqfRoSTcw1jjoPl3646+Op7+i+O0hwyrIKsPpyqwepOU5Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=XUDhiDy5; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ZJZQBbYV; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=UuJu2hGfO44998aP27RrllWW1WoXBrUh2o/3W/6zicfCzDJaQ5/hoCEslYpmnPjh2HQlD+soi2T8uSp3mJVU+8WlZ1WoYnNc93k/EJ7Vj/Mn4Y0tCbk2G/FljIUEAwiGEwyjK9XkM0qX9rtJClaxGjBqKIC3ZsIFWhUGK9NOMBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ANLhgeOr; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Y/vjgTbb; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="XUDhiDy5";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ZJZQBbYV"
-Date: Mon, 8 Jun 2026 08:34:36 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ANLhgeOr";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Y/vjgTbb"
+Date: Mon, 8 Jun 2026 08:39:32 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1780900479;
+	s=2020; t=1780900774;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j+g8mO2/cXQMIjBxyMRUoQMHAD9iy3Sp8+zVN/wxSBA=;
-	b=XUDhiDy5gAuyr8lkRz8w7xukcbgJXlL/Rr+C5ihHW3we07ThmKIxVmaFhvZM/RBy4sPi6d
-	nQbXf5vEZb8U2KOqmKnioWcrgWpqbgZu5pK+Qic/0PtDQVhb5DeknUIZ646aP9upWZ222q
-	qSdGv5ujpp4/kLarnBF/t/LwDBPiYJIDSUlTEZIN9JZOxp7IWECrpYEiGDC7b1lhwncR/G
-	i69u2ek2Ri5oM7tNCjzvOgr2lHPeAdPNYEGVk0qliOfNCOJRnt0CSFZjbx0ziKfhBKKZUy
-	5wfQet59yCcxVT071KDcQrWltDQQ//TcSpaTnYzsDAmzPTkvpn88kDw7pu4E8Q==
+	bh=Glbienq7OB1yv1tWm9EG78YSwwzuPbUiIwxXEUvGvWI=;
+	b=ANLhgeOrMuNZ6IZA2i4/itSMDwblxu1Xigpy8I4SA2jA5Nk5fI58+3GYi4l+GLTy5syJ+e
+	OqDVWmI2IozwPBJh6Iu6Fmf764yi2R5lR+1/DoZsE1rlAVnkD5jPaYIqp8qb+a9sOipoIi
+	fRP1JdDWxzVQZ7iQwF73p/jLBOA7A5GfYQbiHjGHucb0iveDEzhy9DvuSZxhODyw1nWG/6
+	Ul5C33gvU6CA4vtxjyIPzAo+sjbj9DuHKYJt28Ou9uZwu1/INtfZWlp2LjBmkdZiMo+J05
+	XE/EaZkwaOH0/j1XlPIsjcPCo+07Xg95xpDURsYXXm0Ymx0UW7oLcLIw1Sh90w==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1780900479;
+	s=2020e; t=1780900774;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j+g8mO2/cXQMIjBxyMRUoQMHAD9iy3Sp8+zVN/wxSBA=;
-	b=ZJZQBbYVbYuC3suM6wIMcz/n1ZnuDB5mk+0G7DEqR5fCmz9SI9sEHPIKvghG3OOe0H8Sma
-	3h708FcSRJ4ZEDBw==
+	bh=Glbienq7OB1yv1tWm9EG78YSwwzuPbUiIwxXEUvGvWI=;
+	b=Y/vjgTbbn67A9R417hPVhMCX7vUE30TbKdSiHNsWIPc4s8lKU2s9cFGeLhGI2/H69VXLam
+	LyVY0ddTw/ASO4Bw==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Ingo Molnar <mingo@kernel.org>
-Cc: Maciej Wieczor-Retman <m.wieczorretman@pm.me>, mingo@redhat.com,
-	dave.hansen@linux.intel.com, bp@alien8.de, hpa@zytor.com,
-	tglx@kernel.org, sohil.mehta@intel.com, andrew.cooper3@citrix.com,
-	linux-kernel@vger.kernel.org, x86@kernel.org,
-	john.ogness@linutronix.de, ludloff@gmail.com,
-	maciej.wieczor-retman@intel.com, x86-cpuid@lists.linux.dev
-Subject: Re: [PATCH v2 2/2] x86/cpuid: Update bitfields to x86-cpuid-db v3.1
-Message-ID: <aiZifD6RY4eTUimw@lx-t490>
-References: <cover.1780506200.git.m.wieczorretman@pm.me>
- <9653d8690ec7093c8190b12d1fa8c689c4da50fe.1780506200.git.m.wieczorretman@pm.me>
- <aiEsJPkuEaRPcwdN@gmail.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Christian Ludloff <ludloff@gmail.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v7 004/120] x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
+Message-ID: <aiZjpPCTsz4m-1O3@lx-t490>
+References: <ah2WBnBkz8KQrph0@wieczorr-mobl1.localdomain>
+ <20260601194150.GDah3gfjoIZIByCa3d@fat_crate.local>
+ <ah3jPMYIxC1vsUUB@lx-t490>
+ <20260601203452.GAah3s7FevsRDFT7rF@fat_crate.local>
+ <ah34pi6j5HSMJdrL@lx-t490>
+ <20260601225306.GDah4NUvJwaqQem4VQ@fat_crate.local>
+ <ah7_wPJ8_FGLOwZd@wieczorr-mobl1.localdomain>
+ <20260602174746.GJah8XQvEJo9UKru1l@fat_crate.local>
+ <ah9H2hxkMPMeuF-o@lx-t490>
+ <20260603003129.GCah914Tc9sEpO4Nxl@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -58,52 +69,20 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aiEsJPkuEaRPcwdN@gmail.com>
+In-Reply-To: <20260603003129.GCah914Tc9sEpO4Nxl@fat_crate.local>
 
-On Thu, 04 Jun 2026, Ingo Molnar wrote:
+On Tue, 02 Jun 2026, Borislav Petkov wrote:
 >
-> * Maciej Wieczor-Retman <m.wieczorretman@pm.me> wrote:
-> >
-> > Update leaf_types.h to version 3.1, as generated by x86-cpuid-db.
-> >
->
-> The following detail from the first submission got lost:
->
-> > @@ -246,7 +246,7 @@ struct leaf_0x6_0 {
-> > -		thrd_director_nclasses		:  8, // Number of classes, Intel thread director
-> > +		hw_feedback_nclasses		:  8, // Number of Intel Thread Director classes
-> >
-> > Note, for CPUID(0x6) thrd_director_nclasses, it was written this way
-> > because the project does not support bitfields names with more letters.
->
-> What does this mean exactly, is there a string length limit on the
-> field name in 'struct leaf_0x6_0'? What is the limit?
->
+> My only goal is to have an official release with all known issues addressed
 
-Sorry, I should've made that more clear in the x86-cpuid-db release notes.
-Yes, there is a limit on field name lenghts so that the C headers formatted
-output is aligned and human readable.  It's an implementation detail.
+I guess that's everyone's goal :)
 
-After Maciej's patch:
+> and not release something which is clearly wrong and luserspace starts
+> depending on it and then we'll have to support it forever.
 
-    https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/commit/a7af01507814
+You mentioned that several times.
 
-I searched for more typos, grammatical mistakes, etc. and fixed some:
-
-    https://gitlab.com/x86-cpuid.org/x86-cpuid-db/-/commit/41380ff73e60
-
-Fixing thrd_director_nclasses name would exceed the project's field limit
-(23 characters), so I checked the manuals, and hw_feedback_nclasses was a
-better name anyway, and thus used it.
-
-That's the whole rationale.
-
-I guess this can be appened to the kernel patch changelog:
-
-  Note, for CPUID(0x6) the "thrd_director_nclasses" field is replaced with
-  "hw_feedback_nclasses" in this x86-cpuid-db release.  Fixing the typo of
-  the former would exceed the project's bitfield names chracter limit, and
-  the latter name is more descriptive.  See [link to x86-cpuid-db commit.]
+How can userspace depend on an internal x86 kernel header?
 
 Thanks,
 Ahmed
