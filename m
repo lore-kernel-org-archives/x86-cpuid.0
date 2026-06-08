@@ -1,138 +1,97 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B053AA4E7
-	for <x86-cpuid@lists.linux.dev>; Mon,  8 Jun 2026 21:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780954237; cv=pass; b=dLpuAr02ppz6JMTKZZvSfEokulfR7KB+MTw/7p7gL7WRDwUfzl56JfK46PuYisktrDDghKnlOY0gHLEcANz0V6ATI8l+Jlt2/SVSnoTUU0J/UBtmqoscdGJJPO6+CI9enetHa5rGv06TU9LKTSh9QdUZmXAVFxZWd1YI/s3Eeq0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780954237; c=relaxed/simple;
-	bh=pGgamx0vc9Nt8kByLLQTtwPyCNg57l+MWExV3F+UB1A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MAHm9QGTjjRMiAiIXLzhaQ13e8PbaeV9ANlpLPMnMN1EXtHmaFEk2dxQlEiMPAHNBWgB8ZG0Dda5YQ7nlr42//t9WNJstXxrraNQH4sTinZsu2VaPY8MW3rW95wyZyxUycCWkh8NvBd9G3merwEhCs8mip8sbY2k7cDzpxgP0IE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gxs9HRQP; arc=pass smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC323403FD
+	for <x86-cpuid@lists.linux.dev>; Mon,  8 Jun 2026 23:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780959924; cv=none; b=UXxmbb/AT9C6PaY2QkuwxD1O2w1N9P9iQNjnWWN5TTPctQUXEB9olPkOeJe2HAissdu6JZHe/GJsUlG1fi/bDKgZtCpYcG+3TKNDOUCEOEB4l9f5I+xg89m/TebRPmeBh+nGQrd4+15Uo6EfRHlBxBKP9dAGhCT6ybYe5SCfN1g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780959924; c=relaxed/simple;
+	bh=GhornehyKCe+ST+dczZSebNd1Hq8FHLaW6L936onfEU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BxyjQNAnF6pff1HgBePhq8Ea6X75p6LascUKmxnS9LMnLbBwA7Pc860TIwarc2PY5X05XaTVJC3gqBAeEMe2ypHXUj504ooCiwxfyFh8LJq82Ml2q7BOWHrYxXKhGwZb+UGGiH/qgRzOEpLCgM8ay8HehVGYNUMDCyurUQWcGZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=fail (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=e5VswHbT reason="signature verification failed"; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gxs9HRQP"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-68bd9fce347so8593458a12.2
-        for <x86-cpuid@lists.linux.dev>; Mon, 08 Jun 2026 14:30:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780954234; cv=none;
-        d=google.com; s=arc-20240605;
-        b=i1jD18q+kg/YUwExNIAK1SUDrWNCdTNBEEYb4DJ5snQQjuU8QW7/cWaCzE2ZoyLh9F
-         urXVLs5BSqmov0Ahf7ckqntXJ5PW/aU38ePqAFY7eQfuLdvgMJ5egt8u9qbUPlAP3+JN
-         rJkgbGE9aU8hBLJUPM7LyTHUfLmhphsyDh+prbi4hjDDK+GKPHL+6INBdPFaYitTTFQp
-         r2WTeUR4wKmbetTs/jFvosf/8LsAyX0nvexXR9IMTCijYiucbU8iUWwmPFnvXek7jFjq
-         LGFCpUtWb+AGL+ERT2Z5wq7bPfSoG1K9AMBq/qzMxGY2l0kw3wsO+cncDDPQZpERf4/L
-         VAmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:dkim-signature;
-        bh=pGgamx0vc9Nt8kByLLQTtwPyCNg57l+MWExV3F+UB1A=;
-        fh=yfblrFFtaRoWyP3PFgcaozshRHlbhJFBJHzXDmT/DOE=;
-        b=cSd0qsQGuV7QhG/z6CwdV0OFVDkymfyvzyBFkQ/fz4HNb4kjt0tqDcutp+wrIgRKU4
-         o92JTsNAWy+kwbfIXpPLV3rSEk5SBsXcSszGH2Hziy0mK6VPf/UULLmLWWjhN69mMSpP
-         0V2oEZP0oBUGXWMxXehNcQSAbubPGmAbCQ2XDgtIIj4Fyqb72HdJH2wsJRewROE+Jqlw
-         DVB1J3/U8KQDLhV/K3dIbSSa+hthw4hsS9/knfftrwQkmnm7VNfxAHuEeLLBqDFsn/+H
-         yQHJU/f/oHOpOGNOHfgtIo1kNHX/hXDITFbG9xYV4054XxpyE6Z1EVxzOYeQe9J7Kul/
-         JT7Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780954234; x=1781559034; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pGgamx0vc9Nt8kByLLQTtwPyCNg57l+MWExV3F+UB1A=;
-        b=gxs9HRQPkKFwCt6HwNxofwmC5ODU/XxlQiB2DrSWG7U9YOVty6/8Wzo1aCbWjnkq9Q
-         2VKk8XUUww2k5fKuPfK1+3hnlnMjiNz42HZpFbOXFIp9r+xpiIlFKZWlvIpliuYStfD4
-         21XZHMJkBfh7Gr6Hv30vIswUgJ5xSHCXsVNlAxyikky0srtJt1r5U/1dt0WlGkz/CiNG
-         I8dccFNsNETZnFVc19AM652kS57gMlLTLc4b1aXCu/wvdjIFrarrQM8mTj+diDGhWDvr
-         Kuy/Rg/xuYQg6TYyxU2Zlx1+bRHsoWGeAQiNW29huWgm4i2G7xt/UvSSic1nEGlzU1OY
-         7lzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780954234; x=1781559034;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pGgamx0vc9Nt8kByLLQTtwPyCNg57l+MWExV3F+UB1A=;
-        b=PES207UIRNz6BQTyzBEgmjShTJMpk0OOQo+7gQRI10difI2SS6gf7uJa1rpv70kNkY
-         P8Xl8k6vdr6d7kxNcYoMCAh+5i1pSnAZ4RT4fJicR1fm0fGDbCHbtiG8N9QiHrcvui8u
-         sHQwqw/8hQ1Q6J8XymeDeXByBexBUtTwZhRHp64m9jdia9hIHnHKM1LN04CRH1Z0Y/dU
-         juw1nP3CB05zo5weFXlqBGAtwEpAOcHpE17wf+gDIvpOHGIL4MpuEvjPRJgUMkgqZty6
-         WdOcNu+oRY6FNn3qSOD7DeiS+r0c7KctccN9sDASTQ/x8xE/83OcY+yrjq0dvOW/wkFT
-         JH3A==
-X-Forwarded-Encrypted: i=1; AFNElJ8j71K2NEKcCpKPkGdmWmhy+0DIyRVPfIhxkm0IX39DlsvSruz3DM0PhuBFpBCRbPDcgJQ8EIttHeY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwA7107g3C40e89A86oGG9NMHdWIfe6ExQbJO6q/Nup4yHlrcbR
-	j7ru010sB33CjqjECOcBxyTUFx034Y6T15NHtvWMZYV58c6ruOI2lHQExP1etkct0V450A56jZ/
-	yN9PD1w24y92mLXsXfXv6KBh29c3bAVg=
-X-Gm-Gg: Acq92OHuhBvDK7V0g9qIaMcyd4v1L5sgjwjHUN/Y7I3nry5zC9UaDBOeoFzNhyReRid
-	bZwKMOOapb156OZHI24rwb3znhNluwXVVeKwdNmQnOCbw6mvoctF21fl+4Osclu3lkmsKVA2e6j
-	wGzmpHwZCsXc5nO0wMLL6r48O2WCsY4a7GIc2UpF3pLqd35CyBrm12Z06VyeTxtIBvtXUJ/2FN1
-	PE3N86vNt+1HrLiHNe9MIXgu9fqbq/3ti03NO0qWPQvDWR+QWBdCdDMeF9mj5QKpp9IZClUub3l
-	JHZoPNjPQyVHHEpbeOcSw3FJzB0MwNsoIgIKJBjCUMxh91y6CzA=
-X-Received: by 2002:a05:6402:ea2:b0:68d:92cf:52f4 with SMTP id
- 4fb4d7f45d1cf-68fa4c0931dmr5570242a12.5.1780954234029; Mon, 08 Jun 2026
- 14:30:34 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="e5VswHbT"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id D355A40E015B;
+	Mon,  8 Jun 2026 23:05:19 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=fail (4096-bit key)
+	reason="fail (body has been altered)" header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id f7tadakHsK10; Mon,  8 Jun 2026 23:05:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1780959909; bh=h3bG+5lwBw5yD3JqeTjFEPFaJltMsCwaDLu4Be+hx4o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=e5VswHbT5/F8DJDzVugwbmRVwc7KZ+XhItmgJOxqfbfuYn8X4vPYyXAov3n7xwCdB
+	 /W9t15QTKixGIKovEEdsp4vMVVz+gy1MnUdmovyatauEqhEUSmp4gZv56Sy5gGzspM
+	 XtnNhDGukprj/P8/7XuHQvxjU7fGNBLtGwt9YsO8J/QPigJ4bjNhtKp+ukpVKGNTcS
+	 LvTHRL500rBSK9B+yWvhNynEV073qj6OFUhCqWS2savj4rDrG4lmGRumbg2zFUkOWv
+	 cu32ZTsV4IQu4oFLe2j0MY8bqsOQFBigNtVkmRXVjBGNw06PIf51Xp2pI3Nux1yL2x
+	 u8S68f1DMOI2IlUqjJEYt9hz8SrRzOS5vwwhMOqv7BcDgMp0wT5QpSighIn1wpTvwE
+	 r1n07KcBPi+f/Rbi5kiEgwjICw4QXc8eC5lZE29E7aneULO137S/JGwL+i9GX924Uk
+	 N0aEuJYqrptPeFaEz9OhAjLUvKvw5n5IBVrHGmtqCBvcAhGDSx1NVawQoA9pBhAX7G
+	 X3efdgyixIJq7ayQ3fWu1RgXvRtuRcsbX1B8+Tx+ouxQlMyoVWLlXEUEcK/IuUikoo
+	 Tp0iAgjpMhYhgNLlxR1ZeQ8wyq6XScvY7p77YOtiwdEH4pA6Ho0QK5XtAQ9fobrwqf
+	 rfP8pcLbq2i1s2FBpm1CJXa8=
+Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::42])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 3540440E01A8;
+	Mon,  8 Jun 2026 23:04:56 +0000 (UTC)
+Date: Mon, 8 Jun 2026 16:04:53 -0700
+From: Borislav Petkov <bp@alien8.de>
+To: Christian Ludloff <ludloff@gmail.com>
+Cc: "Ahmed S. Darwish" <darwi@linutronix.de>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
+	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v7 004/120] x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
+Message-ID: <20260608230453.GFaidKlWGicZCGjSmN@fat_crate.local>
+References: <20260601203452.GAah3s7FevsRDFT7rF@fat_crate.local>
+ <ah34pi6j5HSMJdrL@lx-t490>
+ <20260601225306.GDah4NUvJwaqQem4VQ@fat_crate.local>
+ <ah7_wPJ8_FGLOwZd@wieczorr-mobl1.localdomain>
+ <20260602174746.GJah8XQvEJo9UKru1l@fat_crate.local>
+ <ah9H2hxkMPMeuF-o@lx-t490>
+ <20260603003129.GCah914Tc9sEpO4Nxl@fat_crate.local>
+ <aiZjpPCTsz4m-1O3@lx-t490>
+ <20260608144920.GBaibWcLl3BUAPL8XW@fat_crate.local>
+ <CAKSQd8W5060knJMy1eQeNCWzAo-A8V3bLqgdRZBgKc-QYT6E5A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260601194150.GDah3gfjoIZIByCa3d@fat_crate.local>
- <ah3jPMYIxC1vsUUB@lx-t490> <20260601203452.GAah3s7FevsRDFT7rF@fat_crate.local>
- <ah34pi6j5HSMJdrL@lx-t490> <20260601225306.GDah4NUvJwaqQem4VQ@fat_crate.local>
- <ah7_wPJ8_FGLOwZd@wieczorr-mobl1.localdomain> <20260602174746.GJah8XQvEJo9UKru1l@fat_crate.local>
- <ah9H2hxkMPMeuF-o@lx-t490> <20260603003129.GCah914Tc9sEpO4Nxl@fat_crate.local>
- <aiZjpPCTsz4m-1O3@lx-t490> <20260608144920.GBaibWcLl3BUAPL8XW@fat_crate.local>
-In-Reply-To: <20260608144920.GBaibWcLl3BUAPL8XW@fat_crate.local>
-Reply-To: ludloff@gmail.com
-From: Christian Ludloff <ludloff@gmail.com>
-Date: Mon, 8 Jun 2026 14:30:22 -0700
-X-Gm-Features: AVVi8CdaqxkQtFKWF5n6BsX5sRkjYdmemIHQQK8NL_n7t6vkJIw9nmBtQJJe330
-Message-ID: <CAKSQd8W5060knJMy1eQeNCWzAo-A8V3bLqgdRZBgKc-QYT6E5A@mail.gmail.com>
-Subject: Re: [PATCH v7 004/120] x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
-To: Borislav Petkov <bp@alien8.de>
-Cc: "Ahmed S. Darwish" <darwi@linutronix.de>, 
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Ingo Molnar <mingo@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Andrew Cooper <andrew.cooper3@citrix.com>, "H. Peter Anvin" <hpa@zytor.com>, 
-	Sohil Mehta <sohil.mehta@intel.com>, John Ogness <john.ogness@linutronix.de>, x86@kernel.org, 
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKSQd8W5060knJMy1eQeNCWzAo-A8V3bLqgdRZBgKc-QYT6E5A@mail.gmail.com>
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 8, 2026 at 7:49=E2=80=AFAM Borislav Petkov <bp@alien8.de> wrote=
-:
-> What you're doing is a database of *all* CPUID leafs. How long until some=
-one
-> copies or exports the header to something? Or starts generating the heade=
-r
-> from your XML and using it in her/his project?
->
-> And what happens if someone has already started using the headers, you fi=
-x
-> those spelling mistakes, release a new revision and someone updates the
-> generated headers locally and code starts failing to build all of a sudde=
-n?
->
-> What do you do then?
->
-> I think with issues like that which can cause nasty workarounds, we canno=
-t be
-> urgent enough in fixing them.
+On Mon, Jun 08, 2026 at 02:30:22PM -0700, Christian Ludloff wrote:
+> Embrace that chase of completeness and correctness =E2=80=93 "perfect i=
+s
+> the enemy of good".
 
-The database will never be perfect =E2=80=93 it is always in catch-up mode
-in terms of leaves/fields/values that need to be fixed and/or added.
+Oh sure. I'm far from chasing perfect. Except if it is ussues we know abo=
+ut,
+we should expedite them ASAP so that they're addressed quickly.
 
-That much I can tell you with absolute certainty after more than 30
-years of https://www.sandpile.org/x86/cpuid.htm maintenance, and
-yes, being personally responsible for some of the CPUID madness.
+--=20
+Regards/Gruss,
+    Boris.
 
-Embrace that chase of completeness and correctness =E2=80=93 "perfect is
-the enemy of good". Ahmed, can you enable gitlab issue tracking?
-
---
-C.
+https://people.kernel.org/tglx/notes-about-netiquette
