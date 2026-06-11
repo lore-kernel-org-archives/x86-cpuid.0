@@ -1,79 +1,93 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D23F37B01A
-	for <x86-cpuid@lists.linux.dev>; Wed, 10 Jun 2026 19:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774AC3BCD07
+	for <x86-cpuid@lists.linux.dev>; Thu, 11 Jun 2026 09:37:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781121437; cv=none; b=JuyKscOGcE0ntIbXIGn5PGtOUE2OpQB3dvNXqNsZVeC4KZHUoPO/D2JKYPaY1aoqfamErICLNXgoi0TL86HWP1r3msegIGA/Dnz/XfxE8nfSEyWdnylhDOXpz4xKgZnFlN2UtzTv4a8vx/Lr685Y8HicgKGOA1h7o/NkAm9wJjg=
+	t=1781170654; cv=none; b=p0XqaOQNEp/PZurV3nk1d6vh4DqV47i6BtURZeQbMdOX5RBHluXgp3Yg8hgdvRonWmpAWOJjBwuTnooSEbcRaeucWvqb0CpA033qgSjnVINELFlSZRp1AFv99lyNNX9Oal93P49KeCIStHbGcZ5Mj5C3w5fMtuEXninwmo2BbzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781121437; c=relaxed/simple;
-	bh=e6rol5tW24Rty5OFyJ4hH/5TN3B9oOiy28HuOLnN9kA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MkAl2qmTOeLSDwJZTfdvuEhtw7Bg0o1eucrhlighhPQxWO164r06jBvd6u77S5/TpehQRVRueQMdFt/TPBw0Dv48F0i/pGPIhgsGpTAw3wK81aDh1w4WEND1Fu/4K34KUDLmMUfIjg/8gF/fj5OdaF0nNJzt+xMCS9UCd4UJbq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=faP+DIaE; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1781170654; c=relaxed/simple;
+	bh=qNDCZ3s2+BeRVYDQwhkS7VHfE7GSVj/YTmjyxLwGJHo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dfdjvMrUBkParKMIaE5oPYm7hzhq+Rr3FEBQU+gBSCkz6h3aElJSRjKPDWWXN/o68qFuc9EbBL473wJ8S25ZPsHuxCRlzm+BQ4C9pTfNlaBUiLflJjUIkEJOKprZJ7af073rzW/QUVvpDkyI3QMvdE0JDGfabKttcDCGwsmfytc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=og6pU8tB; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="faP+DIaE"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id D5DFC40E0215;
-	Wed, 10 Jun 2026 19:57:12 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id hrRMKsI-YYB2; Wed, 10 Jun 2026 19:57:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1781121421; bh=UbYVgvwYq9mqQpEIlbviRcvdHiRPDQuMjCbeu0l3+ws=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=faP+DIaEFKKgoizs78GqvVTQMKfJdF5RKHEWic8kTiXqDBdF6x+n6c4SPnAAHas8F
-	 ucWtt3fzZfZG7NZGJJELJzCwqCqILpVmKL7Tsa0s26dRUmvIrrMjier3MbjhkfguNV
-	 70/ER45yKAHkEn7LcEXBUfKJ1mrkI4S/SpCrL1KE6IhMdFvgamwulRLxiJ8SROpR5t
-	 iNKeAHja90NURUX39N7VVxMjKAuBtZf0+0vP/U3LclgxK3Mbey8wxbIBgD0m11ehAz
-	 uQa+2wC40TtoXROH4KA/lQXaikD/TCQe9vX86dvQreFb1cHQ59l68QwzrWqDnyk+Uz
-	 MIFWmtnefXwyjsKtg6yk5dOXBJF3mwnL4hedywbG+BReCCAy4mInxqVevQeDJeH0k9
-	 77Z8qS7HsyuoAbXrPC4JJszUCqWX5iIWFnEqzEld2phiz+mFVI/5zwmKhtEjRhvOPO
-	 H39imMlkiqiKVjBw5CoIUo2O0k71R3D4QZlOrhIEwWPJQoqJDoibERxyqfqKJBoXxu
-	 WydbRpg2TRCjhD44A+kS2zQJGTClL01zO/X4+ow4aaFULyMfBGEWjzDjLq7EVz5mLI
-	 l02QSwyKHDKOZtPISnWJU+3kgSKiY0NXC1yZXXnVfvtxx70+f4wTM7rHyq5GMujKuC
-	 ZiR+sT/X0Z6CfpBZe93OeziM=
-Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::1a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 3EB6E40E01B5;
-	Wed, 10 Jun 2026 19:56:48 +0000 (UTC)
-Date: Wed, 10 Jun 2026 12:56:45 -0700
-From: Borislav Petkov <bp@alien8.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="og6pU8tB"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-45ef779c1c2so5345284f8f.1
+        for <x86-cpuid@lists.linux.dev>; Thu, 11 Jun 2026 02:37:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781170652; x=1781775452; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZL5FenLXXncXQuI1FqBjdO6QXMmgEWyCnYxNBYcyD7s=;
+        b=og6pU8tBQvWFGSZIHimKsa7Pt5mMpCCb7t5u7IzxdcjUcqUOWQ9KBdS/+UqCJAap7C
+         mQIiNoevfnlrZcvHabRFrFdo+qC3jzd6Rv6OCod+eOyVFsPMQw0UOBmCiWDdrsnUZ1Ih
+         OvOFQMD1onu2qOYKqxOY4QUDsNuGc8DV89ksTJ3ExOU1aO5SslJelKwNh+G8eyKMU6wN
+         C+4suVrXONadyzwWs3NdCT/73v3CZtLSNzngOOxWbBnb2/TOsY+HxjooOKo0FlBHq4bV
+         yWR4ub1kKaM+BWHc6YgHMJ03R9TANr6cn74Hc7vzd1YJ7Vu7uXzaad0qSX4y6m939lOA
+         hOzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781170652; x=1781775452;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ZL5FenLXXncXQuI1FqBjdO6QXMmgEWyCnYxNBYcyD7s=;
+        b=pwChTDuS/krbo/EUxiqvH3j7QV6SRoDa5Nw3x+4AoSCPcLXZ7N3co70NOdn3+DJAAy
+         UVgqK4WepKnFmCjP+jf9OvmfnqcDAYVTXkMM6A/uJf/wlytkHVGCNfba1Z2NhvmXGXkN
+         FBaEiK3dnYSQLQaTU5QA6IuDkpPLUBCJdaBSokZhEVUc0GdEWkJEANjX/k3Y6l0Ek+2/
+         WU49SZ4sTjKZOL6lSMIwdTFAz7JnRk9gXQdqo7o72kw1mw4Eksr4nfvAny+rrKYyFSvH
+         /v7uO6MpluGYO9yTX0kv9A41coVlzBEcocABt9XKJXY55tAEn8UY9hURa+53OtPGIhEp
+         UorA==
+X-Forwarded-Encrypted: i=1; AFNElJ/HgFmKp8FHLwmcqtJLxlMOkFjKwpU+XvbYUV5XobHofoOPR8jXmadYL3w4oruzrX8GVQhYJsvzsnQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxUnX1t2WXeYJnc+OZlFJQlu2wlxTzlT/+Q22zetl+BPp5G3Zp8
+	4S5kwSDF+kCDCNvEACW4h2MhqiOMXaEFOI3mqXPzRrjCSIv0wbYh6Vnr
+X-Gm-Gg: Acq92OGMwjnlDKcOex5Mm01IBmHYE9ga76l6x4Rz4lBrqQJFgehocPXxlWugf2R3jyt
+	W5qHdPsWoXRdboCdNMlzIWIKV4cTKhzs0ssyvdyk64dEAx+6j0l6USWvys/J7gX6A9/dt//gC4l
+	jpPoayBFlL4cHIx/HalQ2aJhMtSo+EwWLIE3W1Egm3KKrgYjCtOGhY/M3378zM+jM3Tyw28ZOfI
+	MZ7VCU37Ndg7bb8sgKs/6r6DOJCGrQoKIdS0DQSxeLs+1GBAHZ8dbpYchjqIBDjKntsn4vqb1np
+	61fuTk9D4r7lZ/NUDYJaA3ycg7qE2PdGtIkR2nCZPygM0ZnVXrumV2e4SlafSHyLDJMkdXTt8h4
+	+8KstWmjX6NRb0m+iFkURXF59QvtgyUqZuERB9s4/uwOLMWxKRdnQQeXjN9cEHu8N3g363kXhlu
+	2htRkN66Dy26j2Y4RyqZyYuKg/61Ow7+bqeMQNGkJvMgHH8Hd3xGTnJBR8kVhU3y2+FrllrAo=
+X-Received: by 2002:a05:6000:4013:b0:45e:fa7b:a7cf with SMTP id ffacd0b85a97d-4606747756fmr2716997f8f.2.1781170651827;
+        Thu, 11 Jun 2026 02:37:31 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46028a6dcbdsm66962567f8f.7.2026.06.11.02.37.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2026 02:37:31 -0700 (PDT)
+Date: Thu, 11 Jun 2026 10:37:27 +0100
+From: David Laight <david.laight.linux@gmail.com>
 To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Christian Ludloff <ludloff@gmail.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>, Dave Hansen
+ <dave.hansen@linux.intel.com>, Ingo Molnar <mingo@redhat.com>, Thomas
+ Gleixner <tglx@linutronix.de>, Andrew Cooper <andrew.cooper3@citrix.com>,
+ "H. Peter Anvin" <hpa@zytor.com>, Christian Ludloff <ludloff@gmail.com>,
+ Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>, Sohil Mehta
+ <sohil.mehta@intel.com>, John Ogness <john.ogness@linutronix.de>,
+ x86@kernel.org, x86-cpuid@lists.linux.dev, LKML
+ <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v7 015/120] x86/cpu: Use parsed CPUID(0x80000002) to
  CPUID(0x80000004)
-Message-ID: <20260610195645.GCainBfRA0gqiR7mhs@fat_crate.local>
+Message-ID: <20260611103727.04329c2a@pumpkin>
+In-Reply-To: <20260528153923.403473-16-darwi@linutronix.de>
 References: <20260528153923.403473-1-darwi@linutronix.de>
- <20260528153923.403473-16-darwi@linutronix.de>
+	<20260528153923.403473-16-darwi@linutronix.de>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260528153923.403473-16-darwi@linutronix.de>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 28, 2026 at 05:37:37PM +0200, Ahmed S. Darwish wrote:
+On Thu, 28 May 2026 17:37:37 +0200
+"Ahmed S. Darwish" <darwi@linutronix.de> wrote:
+
 > For CPU brand string enumeration, use parsed CPUID(0x80000002) to
 > CPUID(0x80000004) instead of invoking direct CPUID queries.
 > 
@@ -109,16 +123,16 @@ On Thu, May 28, 2026 at 05:37:37PM +0200, Ahmed S. Darwish wrote:
 > +	*(struct leaf_0x80000002_0 *)&c->x86_model_id[0]  = *l2;
 > +	*(struct leaf_0x80000003_0 *)&c->x86_model_id[16] = *l3;
 > +	*(struct leaf_0x80000004_0 *)&c->x86_model_id[32] = *l4;
+
+Those assignment are nasty.
+You could probably use an anon union to do:
+	c->x86_model_id_leaf_2 = *l2;
+
+-- David
+
+
 > +
 >  	c->x86_model_id[48] = 0;
 >  
 >  	/* Trim whitespace */
-> -- 
 
-Please merge this one with the previous patch.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
