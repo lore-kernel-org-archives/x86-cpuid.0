@@ -1,102 +1,114 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C353793D0
-	for <x86-cpuid@lists.linux.dev>; Fri, 12 Jun 2026 19:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FA9340283
+	for <x86-cpuid@lists.linux.dev>; Fri, 12 Jun 2026 19:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781292121; cv=none; b=NxXMz4RnaO4G2q5Pfc7qalMn3Dtdwd+ghvUFU0iQDLRiQLLqAWnwakt9PHCIWsDdW0To+TCardB/2Mocyco9FkVhFnnYNvQ+PYv/BWGXW9WzMMGc/GyQu1F9GBSpOVf4m4/dz8tNmTsVPpGFA0+1oO3oNBX9UeGXJkHtmWqLNDM=
+	t=1781293784; cv=none; b=DfLY3z/XD/AA1AEvz6lJXbbn8YXBfYjMGUD5OuB0QGOO1fBrbSBLgxabXv5+vvv7V/2OUDCJabePosCYpjyJkaoFoVRgLAtpMk1lnVti4u1n2sNFGcubPbvqAzMrVyz5O2dGudqueBd6DuXLpevewoHWHGq9g2hPYuGk6EsfmmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781292121; c=relaxed/simple;
-	bh=PEYLIoTbP4eQaB/6oez341ShqzvcKknMPLUQfppPmuE=;
+	s=arc-20240116; t=1781293784; c=relaxed/simple;
+	bh=qYJflftZ3EivyYqZho1ThRM9HY/MIMtuCD//B1q6pHE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lr97cLr4a4cRPG3qyntLuZMqwn5ilHmy1FY7XTfO2+f5RqN1M5L63GhAmZT4DyBID+oUSjc86RYtfqv6vJZhZx+BMrL8gx9GPfC1aule2dZf1kDFUMJZA5RQYk7CibaOPlp2ujEDStkRSTju2102io8K603MVIjyLqzXS2K/2yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ziigzf0/; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=9RtRaENj; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=eMbF+1eqG2UrhdhsPuMS5IGjQjFnFIgNZR3TpL3HN/4Zueyt7d911vl1L6NaFjY0ycDmYFp4h73RZGmbOgDbMRM7yBnVSRfUFE4Vy1NcI/462AZ5YzDgpaugEQFVulv7qlGrua5RPr2HIM8/CoZ+lc7PTvIY9oLXbB6NAp85/tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=jvbrHiv3; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=B/hiHLRN; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ziigzf0/";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="9RtRaENj"
-Date: Fri, 12 Jun 2026 21:21:56 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="jvbrHiv3";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="B/hiHLRN"
+Date: Fri, 12 Jun 2026 21:49:39 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1781292118;
+	s=2020; t=1781293781;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=PEYLIoTbP4eQaB/6oez341ShqzvcKknMPLUQfppPmuE=;
-	b=ziigzf0/e91+5bffGZTXwYAn5iH2sySSoQUGD/Msp3ueVPZb9uMBJCMbYEdNfx8cEpSdeE
-	TVDqfW/BV7Fg3OxWhf7i0lk+Dbe3VN4rZ4eut689jVuF5OAmMmmfcVFflPkbEQRZWmsmOR
-	lGvrIHojeRGwEyOa48/kz/XoYQ4KtJyFtVMHpI/fIdUKkRnS6ob7qMuIkMzTjQ4odLOd29
-	/8zddNpXxr4TeECIAoQyDHTWCQBNcYDtU/bX5xKErx3ytL39uD4Wr19B+eaGea8VYuTNdd
-	YFd/RnZ2wyb5O5gAHSZaX6ZZhvD5VdreComjMuKSPwjiaGFaKQEb+er6/4smeQ==
+	bh=KRZP+ozIw69VncZ2fMCTJjs9aMiEyd9/078n5whlJLA=;
+	b=jvbrHiv3tm0hGNecY+tGLqcfwTKHeVCL5tu8Zan3YNeIY25JlLYzpd7Q2GJYpdMnAU6uq5
+	4QuVbgc5T9K4YMS7x3cJyubqh/CrG7EHx/FmrOyr5vHW74slAFOIuONJtt5KySvWhz9bQz
+	9ENZadO0dRypxy8FpqimJeXcBLeG1cB796CZI8SBbbf49MYqC8+/JRzDXe8lfBuJa7OxX/
+	krOhiGetk/Qlgk27tNpb35TgLU+/I4Tcpueynw5CVdY42Xui2Nicd5QwFLHa4c455h0406
+	lUq2hJNt8q7aKC5Lmh4BcXNx/6ZQGY3W6WbEcUeYE8BAJw0u+/We0/PiA4maIQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1781292118;
+	s=2020e; t=1781293781;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=PEYLIoTbP4eQaB/6oez341ShqzvcKknMPLUQfppPmuE=;
-	b=9RtRaENjKq3wIW+Hrm8dDpI7H/5/3R/hPjiYO4A6oJg+CzQRZ3lZS+qw9kKhEE/gJHtmGd
-	6ETfJmhPMuCBIdBg==
+	bh=KRZP+ozIw69VncZ2fMCTJjs9aMiEyd9/078n5whlJLA=;
+	b=B/hiHLRNWp3txzTWOwN1Uxnu/hhLmqcLTw8mOeOiU+xJIbp6jlI4bw0csruRX56Gp5SWVh
+	gWbkV2H0yipUW7Bg==
 From: "Ahmed S. Darwish" <darwi@linutronix.de>
-To: Christian Ludloff <ludloff@gmail.com>
-Cc: Borislav Petkov <bp@alien8.de>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+To: Borislav Petkov <bp@alien8.de>
+Cc: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
+	Christian Ludloff <ludloff@gmail.com>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 004/120] x86/cpuid: Introduce <asm/cpuid/leaf_types.h>
-Message-ID: <aixcVIHNGx-0OAc8@lx-t490>
-References: <20260601203452.GAah3s7FevsRDFT7rF@fat_crate.local>
- <ah34pi6j5HSMJdrL@lx-t490>
- <20260601225306.GDah4NUvJwaqQem4VQ@fat_crate.local>
- <ah7_wPJ8_FGLOwZd@wieczorr-mobl1.localdomain>
- <20260602174746.GJah8XQvEJo9UKru1l@fat_crate.local>
- <ah9H2hxkMPMeuF-o@lx-t490>
- <20260603003129.GCah914Tc9sEpO4Nxl@fat_crate.local>
- <aiZjpPCTsz4m-1O3@lx-t490>
- <20260608144920.GBaibWcLl3BUAPL8XW@fat_crate.local>
- <CAKSQd8W5060knJMy1eQeNCWzAo-A8V3bLqgdRZBgKc-QYT6E5A@mail.gmail.com>
+Subject: Re: [PATCH v7 013/120] x86/cpu: Use parsed CPUID(0x80000000)
+Message-ID: <aixi07o7c3s7EOaX@lx-t490>
+References: <20260528153923.403473-1-darwi@linutronix.de>
+ <20260528153923.403473-14-darwi@linutronix.de>
+ <ah2-WUDXHFfrDLaB@wieczorr-mobl1.localdomain>
+ <20260602012205.GEah4wPes4qegK9T9K@fat_crate.local>
+ <ah7ahOrmPfhX_7bT@lx-t490>
+ <20260602171009.GHah8OcUVV9whwCfqi@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKSQd8W5060knJMy1eQeNCWzAo-A8V3bLqgdRZBgKc-QYT6E5A@mail.gmail.com>
+In-Reply-To: <20260602171009.GHah8OcUVV9whwCfqi@fat_crate.local>
 
-On Mon, 08 Jun 2026, Christian Ludloff wrote:
+On Tue, 02 Jun 2026, Borislav Petkov wrote:
 >
-> On Mon, Jun 8, 2026, Borislav Petkov wrote:
-> >
-> > I think with issues like that which can cause nasty workarounds, we
-> > cannot be urgent enough in fixing them.
-> >
+> So I went forward to look a bit... the whole point of that code in
+> microcode_check() is to rescan the *full* CPUID leafage into a separate copy
+> of cpuinfo_x86.cpuid.
 >
-> The database will never be perfect – it is always in catch-up mode
-> in terms of leaves/fields/values that need to be fixed and/or added.
+> And then compare the old and the new one and see whether microcode changed
+> anything.
 >
-> That much I can tell you with absolute certainty after more than 30
-> years of https://www.sandpile.org/x86/cpuid.htm maintenance, and
-> yes, being personally responsible for some of the CPUID madness.
->
-> Embrace that chase of completeness and correctness – "perfect is
-> the enemy of good".
+> I see you're doing something in patch 106 and I'll know much better when I get
+> to it but my gut feeling right now tells me, you should leave that code alone
+> and do it separately, ontop, when we start removing ->x86_capability.
 
-Amen to that :)
+Patch #16:
 
-> Ahmed, can you enable gitlab issue tracking?
+    x86/cpuid: Split parser tables and add vendor-qualified parsing
+    https://lore.kernel.org/lkml/20260528153923.403473-17-darwi@linutronix.de
 
-Yup, I've enabled it now.
+initializes the CPUID table at get_cpu_caps() through cpuid_scan_cpu().
+
+I'll just move the group CPUID(0x8000*) patches after that patch, and
+everything should be handled nicely.
+
+>
+> AFAICT, the CPUID parser can simply do:
+>
+>         struct cpuid_table *table = &second_copy.cpuid;
+>
+>         cpuid_fill_table(table, cpuid_parse_entries, nr_entries);
+>
+> and fill the table. Then we'll need to go over that table and compare it with
+> the existing one. I guess adding a __cmp_range() or so in the same manner like
+> you do iterate over ranges right now.
+>
+> Something along those lines I guess...
+>
+
+As you hinted at, this is indeed dealt with by the end of the series.  I
+actually tested it back then to make sure the before/after microcode
+comparisons are still working.
+
+So, I fully agree, let's postpone this until we reach there.
 
 Thanks,
 Ahmed
