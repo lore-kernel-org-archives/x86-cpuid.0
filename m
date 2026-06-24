@@ -1,51 +1,51 @@
 Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CDA2E3FE
-	for <x86-cpuid@lists.linux.dev>; Fri, 19 Jun 2026 03:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AA53E5578
+	for <x86-cpuid@lists.linux.dev>; Wed, 24 Jun 2026 21:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781838158; cv=none; b=iPTTEenjpwJllOUR3kTisBR4ZbUiGZhntgMi7u+aMdyCoKNLQGwbJKIhzTWuZJ56ClMTc6edSgHPGCrqFPlVAx1P6LAoZn+YYn4tdrHUuTkXxUpR1nPBxu1CMS22p2sQdG09xzqltpxIMMtqj7f3f8tnE7Pj0JbB5/N1jmbQyRE=
+	t=1782335062; cv=none; b=jE2wgkcpUCrdS3edSbxRkMh7Z4q1R/lkI6hcZBbJ3IWKIpWGNtD4jhNv0pUnLhl8KbhmCDA4SNyspu3YREU6RPTPT4gF6uQOqzZlt+sKPWBTDCw7o+QuERZQRawGfuiiXy6+fa8Iqhw8hdYBEAuo3cCddAfR+vO/5MwDmI7bkgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781838158; c=relaxed/simple;
-	bh=u9DCmG373bN3b7tvO3y8U7KkABirHpI8FslG0Pcth2U=;
+	s=arc-20240116; t=1782335062; c=relaxed/simple;
+	bh=BJYapou6Cm42fC0P/8gksKo93ZSzRFKuuynhBa/JA7o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SMD121qY3tLOaipmVpaciotW5yFx8SQxdDQsldPEqrE97KCaMiWnPl1WscPGKJ+d7sQv9HDlFm/UQ68jpnykplSUfTlLUCFZVxsRBrh1QE51olBWZAhMFBh/Us0F5HVjKFbux5JP+LtqZFQRVCjRQhhEm8aX2k6EpgfI1s45NHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=HY3Y5ecX; arc=none smtp.client-ip=65.109.113.108
+	 Content-Type:Content-Disposition:In-Reply-To; b=aVY2kNaYGperEKjeSZ9fta1EjUo3PZa1egDPfjBr1xQYLkqHUTxFTbeBPZaO43OwKjl2uYsKBX17X4HMzLqy8mbFHtwJTmjc5Q9MEuKq3myKAHBWSfYlmkKdgWgmVTvr8L+4xyde0m4YHYE/TH8xVS/8ScYwwAByxR1QygrtmdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=P/J5zxKe; arc=none smtp.client-ip=65.109.113.108
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="HY3Y5ecX"
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="P/J5zxKe"
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 200F740E01D2;
-	Fri, 19 Jun 2026 03:02:34 +0000 (UTC)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 3E80040E0031;
+	Wed, 24 Jun 2026 21:04:16 +0000 (UTC)
 X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
 Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
 	header.d=alien8.de
 Received: from mail.alien8.de ([127.0.0.1])
 	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 3kF1xx1Pgp-j; Fri, 19 Jun 2026 03:02:24 +0000 (UTC)
+	with ESMTP id EepG-sW4FMPy; Wed, 24 Jun 2026 21:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1781838144; bh=V3xY2zZP0uawT1VCUDkx0V50xx4mnnmKkd4dQ5e1Ags=;
+	t=1782335046; bh=tHqShpliqNMUN36u3T9KE+80EurkGfAAkSPwTihJ05U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HY3Y5ecXFTUBvogEmo5ZxkoLvz44usyujWlihZlHKNneQDPTczkQCxOtQ+BKyrf/D
-	 7xDBO1fvP+43im9QypeF93mt0wv4gUWlWHInbj3Y2pVSPP0lyfPiVpafdEp3AKMhFq
-	 kQFXpwFB4FK/SHn5rDVAip4hsFjvVgqTY84Hltm4ELb9AhvFi6D9gkFD/1gtJCLsGD
-	 jzTdm0fnX6Yk9oJuVzfpXZqLwE2FTzAjc+VxHe9WwtEHkDH7INNA/Q+gM2FjjHq+VA
-	 FbvbSlVeL02mCO/v/9IpJ0zygSMcWLWpeJhg3ACL2OsDpqapPmX8Vi63cPQsoQY2iR
-	 d4O9a7g9l49NmsS0a/ZulJQJ0JVUC6NWlLSLaXEMB8LkvI8wi16NZmsJoT6efOn/yY
-	 HZEiy3ET/vI2RteEGJxOvTqR++ltNC8AYhLVAZSP5Iw3B0hdTBKfz9wlDWQrMdE6pg
-	 5KBWSEhcvY1rvEvy0c6oq5V8B7rfkcSJDITQPZAOsw52cqlu8faW0JD1NnxkImoJm6
-	 3InOJ3MjhNLCusqCPUs7U1X79s0MCAiszcpvKOlG1gaqvexQxdgRnUqoyddwRpQm7X
-	 7m/eRoSn4Y1n78Iq88F9MgtewyCbMuMA1TDK3OHSuBSgc6AewIB8lttAitE5MdkTK3
-	 9bUZv3PJn0mpXLzgbLfKDt/M=
+	b=P/J5zxKe70xdTwHm52lAipdH30AUw1mSPLVYJBHGoq5VlkdC05u8EyZHDuGsFtjOL
+	 2KsQVWFCbXgGdMHnswOpGONyM2Dp8v4jAP85Jr+3vjNOIA2sg0ia872dZa/Yd5AJL7
+	 S1Go/4MEKmfqSCQQHv6k/r2bAyaibRQ4zOjAc1lglTb6jNBu+1dUrXD2wkTFX9fm5r
+	 U1KlzA1iQhn2DP5WK4rI1ekw/Sd58AQ3l+y5PzfZCS0Y18/C521qlWzeCzuFd9QFYb
+	 St/eMEuKgcSz0kzQn6nNQygdAbdzU5XuC1kQrkKFE/v6fl88NqOzOjFhjJpbSI/RZJ
+	 QqLvdOZxD4EsJa1YmsqDtiJeyVBlWv2CRnHqpk9FJdHo+NiTde9Tf2Nxg1EI/rlePN
+	 gPHwnFQDPslUXNiqvPe5yRJA1gqX/ntH41gMCLvgF/XeVhFaKPsm1PlLY76IcFcWXf
+	 9Y1f4a7kYdEn+oMTSsFLELmhCntVI8Fl/Xtuf0wCKlWv0FmeNaNA7lCsksdxdzVNMT
+	 DoGdhD0zHCKSF+6K8l+h94PA+oTIifSYxmfwHN3nLuKHIiYXJ70vp/w7mHOamNj7fS
+	 DX8cz1LpLrPF+CFDPjQU8EcYPsiVXyfxfyZFmWSOcGHczh4UMV2PGZuroAqyJKazyX
+	 hMpxxa0SfGYn0+4YhILQmjSc=
 Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::1a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
 	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 671C340E016A;
-	Fri, 19 Jun 2026 03:02:10 +0000 (UTC)
-Date: Thu, 18 Jun 2026 20:02:07 -0700
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 8F5ED40E00BF;
+	Wed, 24 Jun 2026 21:03:52 +0000 (UTC)
+Date: Wed, 24 Jun 2026 14:03:49 -0700
 From: Borislav Petkov <bp@alien8.de>
 To: "Ahmed S. Darwish" <darwi@linutronix.de>
 Cc: Dave Hansen <dave.hansen@linux.intel.com>,
@@ -58,12 +58,10 @@ Cc: Dave Hansen <dave.hansen@linux.intel.com>,
 	Sohil Mehta <sohil.mehta@intel.com>,
 	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
 	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 018/120] x86/cpuid: Parse CPUID(0x16)
-Message-ID: <20260619030207.GDajSxL29eXbooYEC4@fat_crate.local>
+Subject: Re: [PATCH v7 019/120] x86/tsc: Use parsed CPUID(0x16)
+Message-ID: <20260624210349.GAajxGNdznHttMxHme@fat_crate.local>
 References: <20260528153923.403473-1-darwi@linutronix.de>
- <20260528153923.403473-19-darwi@linutronix.de>
- <20260618185231.GCajQ-b8VSy19-y6xZ@fat_crate.local>
- <ajRI0lYAA9_rf51l@lx-t490>
+ <20260528153923.403473-20-darwi@linutronix.de>
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
@@ -72,77 +70,46 @@ List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ajRI0lYAA9_rf51l@lx-t490>
+In-Reply-To: <20260528153923.403473-20-darwi@linutronix.de>
 
-On Thu, Jun 18, 2026 at 09:36:50PM +0200, Ahmed S. Darwish wrote:
-> The confusion stems from naming the vendor tags table with an _ENTRIES
-> suffix, just like EARLY and COMMON.
-> 
-> I'll find a better name for it.  I guess CPUID_VENDOR_TAGS should work.
+On Thu, May 28, 2026 at 05:37:41PM +0200, Ahmed S. Darwish wrote:
+> @@ -738,19 +734,9 @@ unsigned long native_calibrate_tsc(void)
+>  
+>  static unsigned long cpu_khz_from_cpuid(void)
+>  {
+> -	unsigned int eax_base_mhz, ebx_max_mhz, ecx_bus_mhz, edx;
+> -
+> -	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
+> -		return 0;
+> -
+> -	if (boot_cpu_data.cpuid_level < CPUID_LEAF_FREQ)
+> -		return 0;
+> -
+> -	eax_base_mhz = ebx_max_mhz = ecx_bus_mhz = edx = 0;
+> -
+> -	cpuid(CPUID_LEAF_FREQ, &eax_base_mhz, &ebx_max_mhz, &ecx_bus_mhz, &edx);
+> +	const struct leaf_0x16_0 *l16 = cpuid_leaf(&boot_cpu_data, 0x16);
+>  
+> -	return eax_base_mhz * 1000;
+> +	return l16 ? (l16->cpu_base_mhz * 1000) : 0;
 
-Well, this parser clearly needs a lot more documentation.
+Ok, this looks like a vendor check which you're replacing with the *l16 leaf
+pointer check.
 
-/*      
- * CPUID leaf vendor table:
- */
+So, instead of doing those vendor-specific thing and then having to update the
+parser everytime a vendor implements a leaf, what you can do is check whether
+the leaf is supported. If so, you can return NULL in cpuid_leaf() and thus
+denote that the current vendor the kernel is running on, doesn't implement the
+leaf.
 
-struct cpuid_vendor_entry {
-        unsigned int    leaf;
-        u8              vendors[X86_VENDOR_NUM];
-        u8              nvendors;
-};
+And you can detect which leafs the vendor implements by looking at max
+supported leaf.
 
-that reads like a CPUID leaf to me.
+And then you don't need any special vendor handling.
 
-Btw, for some reason you have
+Btw, pls merge this patch with the previous one.
 
-/*
- * Comment...
- */
-
-static ... thing
-
-with an empty line between the comment and the thing. Zap all those empty
-lines pls.
-
-In any case, this cpuid_vendor_entries is a mapping between which CPUID leafs
-belong to which vendors.
-
-So call it
-
-cpuid_leaf_vendor_map
-
-or so and explain above it what that is and how that is supposed to be used.
-
-The aspect of saving yourself vendor checks is most prominent one so put it
-there.
-
-However, that vendor thing is problematic. If a vendor implements a leaf that
-belongs to another vendor, that table will have to be updated.
-
-So make sure you document this fact very clearly so that people can find their
-way here when they extend the parser.
-
-And so on.
-
-But to come back to the original thing you're trying to solve: why are you
-even trying to remove vendor checks? What vendor checks where?
-
-The agreement with CPUID leaves is that, IF you're a second vendor
-implementing the CPUID leaf of the vendor to which it belongs to, then you
-better implement it exactly the same.
-
-IOW, if AMD implements Intel leaves in the base range, then we make sure we
-implement them exactly this way.
-
-If not, those CPUID leafs return zeros.
-
-So what vendor checks exactly are we fixing here?
-
-Even without that, code reading CPUID leafs on a machine which doesn't
-implement them, should get all 0s and all fine.
-
-So what is going on here?
+Thx.
 
 -- 
 Regards/Gruss,
