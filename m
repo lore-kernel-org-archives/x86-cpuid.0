@@ -1,107 +1,120 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637C32641FC
-	for <x86-cpuid@lists.linux.dev>; Fri, 10 Jul 2026 05:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0173346A61E
+	for <x86-cpuid@lists.linux.dev>; Tue, 21 Jul 2026 17:32:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783659714; cv=none; b=qMUGRael1fLp9JXZrAoODwqe/DA3IOLqlPnu7bqG9W16hd2cQVq4er02Yu/2cwCfraL/bI2LETqzWmA9GWupAsUh8bFmwkPyk79Rd8qNN5aKlCI+wMZig3w9kmD5ML1iCzNAYp+LqXQmkFTtZkT63vXPnVJiRaSk6sUIue7LX8A=
+	t=1784655137; cv=none; b=UMymjc73c34fLXkhh13saA6TQOvbxfQbCipRJLtb1n+ZTQH2/Cri7Rp+nLiyigPKtqDUNlyIxxBA+PAGkArgRx/v4kOHjfev9XIFahcpOUIqEsa3E4ENjs7YfP5Hl6iPrOWSnXoYPVxtgE/SusfeBta9pY6vQuDZ/gvH9Wroj20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783659714; c=relaxed/simple;
-	bh=VzQzKgw2OdV1x3SrK6PzLyUlRNsndUFdWAn5w6nQN6Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uVJ5ZhAbANUuwy0DBVfM1rWfTwcZCB93ChvlKekHBCif7Db+I06BVnVS1y7f0UF8xu/AOrYVvuxwL2fQEZwRSD1qjlGUTUdBIYwjGmVJH5GQ7awQQHaRj7Ypr3+qPwkIp1MpQAFrRPIxejRJ16LfcVEem2TxNyxMBKmAu2hNSfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=G2GEIShO; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1784655137; c=relaxed/simple;
+	bh=RD0z+MyG3N6GXHAObHDQppz8VM89ey7+cChkr9EFtzU=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=PVLAzrfESPU0fvYkqVk/aebXseBv43YMq+odz9ar+QccqmdDl/Bo9nZBQTaLg59/M5LNWPUsh/wgeoGMos80R9cnCAK8ec5cxCmiuTXP/uOHuOLq0UnPVQFGWcB5+FIpfFZi5taCfxvwH+CzCsZlv7hUqvbLuV0ovN/9+SY814U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DmT3+es6; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="G2GEIShO"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 3A0B940E00C0;
-	Fri, 10 Jul 2026 05:01:50 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 3f7J3h--g9qi; Fri, 10 Jul 2026 05:01:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1783659686; bh=VCPIdlKMqhzcnqrbMe7zskldx8s5NBH6+OL32IlNz7I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=G2GEIShOp7zB1KByZk0iuEpV2R8xKrHtQkIqi3GkEIHoFSd/5VbdXspbanwdRZJhr
-	 3XqjLhcZEaxDP1IgRP9lw2v+3OGjYtpiEU1JAC1bMVNJkdQPvl2jlpHvggaj0Ztz8y
-	 2Ca7nqv8wHhxP5kS4H3cMcv3ixJEOxxIZY3s8mMkhpX03t0RdUh1cYHQzj13YUywV5
-	 Rjsv4QwtNVuHYfe9mFZ43PNOzAdS5qd7zOsrFvCsZaA/X4HKsYAA9gD7pbdQBF6IIg
-	 r4kXdjVlCL3zdJp63iDRQ+as8YMagEeSExtKYxNnr+uJJq+z/UJtz1nd4A7FD9QsAf
-	 +3b2DU9gvN2nHty5YsLmcyEeels40+R3EYeGEv4dwPb9kvj/G7W+Mr2xVigpE5aQVG
-	 L6cy7l5dla9UcLICkcdk8rjE6HBLzFjGRyz+fKPbK11rl/tXvhI8VfCbDmq9+E49VA
-	 5OEhv7qr4uwu3YCezopVZnASkW9V6ISW0lAwphZ9l8npAENd66y8BeSpnnO4tJm7F2
-	 Cxi1DlRgX+JVd//0cERPxVc7sbntA0bhLqtBne4Yfs3lq0HULnN1L8yQRo7DnjBCqr
-	 CqzWYNbErI1RjTF9HX8J/ALaY8L98DQrBSZLoTqYyPMtzybhZ7Qm7aq7RisU2ZYaTl
-	 2Emw6zAfvZpjYcQFZOB/iNrs=
-Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::3a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1ADAD40E02B3;
-	Fri, 10 Jul 2026 05:01:12 +0000 (UTC)
-Date: Thu, 9 Jul 2026 22:01:09 -0700
-From: Borislav Petkov <bp@alien8.de>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Christian Ludloff <ludloff@gmail.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	John Ogness <john.ogness@linutronix.de>, x86@kernel.org,
-	x86-cpuid@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 025/120] x86/cpuid: Parse CPUID(0x2)
-Message-ID: <20260710050109.GBalB8lYXKUTBkef85@fat_crate.local>
-References: <20260528153923.403473-1-darwi@linutronix.de>
- <20260528153923.403473-26-darwi@linutronix.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DmT3+es6"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-ca12086c06eso9667827a12.0
+        for <x86-cpuid@lists.linux.dev>; Tue, 21 Jul 2026 10:32:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784655135; x=1785259935; darn=lists.linux.dev;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ifsb14vt7S886sWfez5ztBNhWipPdlLa5blNsl2SPgc=;
+        b=DmT3+es6SwYFqWq8wqTzWqsBlZVMqDt7WynU84s8zJO0460tYq8a9DZFOoclOo9kdS
+         njbH1w3MToDKl30ybVc2d7LbM3tqneplUzCRtYzlM1pr/75mICNzab9td8kNhlj6jkSh
+         X1Z/aKGYoUzPp96tHdY1AsYs/pxr9YSf3bLnswFHvZagRbTkHCUWAkjsVzfZTstdd08Q
+         5GMF539UnHXYWp7yT2Et77POCMKY4eT7dWiPv5FGxJXKQVKxlGLc7FeD41crqCwp2G6l
+         ttInJI3d8jMjDyX2aFEVHw0xnkR2kecSiEaiFt+I2iqv02H/lAyaTZGSEpTI5eFCaiWS
+         umOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784655135; x=1785259935;
+        h=message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ifsb14vt7S886sWfez5ztBNhWipPdlLa5blNsl2SPgc=;
+        b=YEWqB5S9jdaeramvYX5JaGTvlmLjwRiSPu9ZCYMsCF5IIkD0bOTalFOqg6G1VnVMQd
+         RoXZa+Z7RuNBmfY6YddPJ9ER9c4SVIC7rEgGX1ejlCHnqGOauB3DyL88t0t/ENP9M5Ln
+         7W7JimEaBxmnkEGi/ePDWjGs+Lohu/NQrCowya7wD3XuIcSG2LcERu2Pd1iL5DdNGPCX
+         Fe+LdaCYkV4eCOBxrflUu00iWXMsrXwBXYKp4BU8gYRESR9MgOdi5LxvFwYAAYYFXH2e
+         WJtH/YC4Y+7e/lPRmLcRakoaPY2T+0cXUnxqkWc3jll29fiITvHgMxCUciNeMdndNXU8
+         +3ZQ==
+X-Gm-Message-State: AOJu0Ywa22CipCXIm32i+H58gN7qNOYRxn2hBaovUc9XtIQ/XzD9Gg4T
+	DyQpzi+0Utk2ayGKJnDm1tiswH+sbpWEfHNm2AKc+SBzqOaHcFoue7xuvx2h1Q==
+X-Gm-Gg: AR+sD10vA8vFYDbK6VJ+wq4C4L5rTTab5eIankgjqWgpgm7wLwkXhDeXKGNbzEonzu3
+	U1c+QgAQfw5kK4WsGWihdLRHmBsgVGSoLaKVX7SZ/Og+kAMivViFy8Gos1nAlLYNsmDVF0lfagW
+	22fPeexAd04lVrx7P1QhrFLwCm2d5/4qqY48QWo3YJNORFQFGBfhCjIk7DzV2mC7CL5TgKAkznQ
+	ifl9XSGM31BnHcR109qTWrhtVqoAYYFBTxeC+HODyUpkk8D42o8ASvdcGoKDN8WHP/J416/XQUv
+	Sc7SFdv5I2tjIXGRKAakKPejAGyWu6wwOET3scTTePNOiA3vlUklBfEKqP6a4VYC8vzitRTkTl4
+	4PN+iJYTOvXRsDn9NmvJ77XIijIZwj0NAqPtuUXADBEhAaoPXBjJfIPdQxP+1Pud2hbTt01sLjo
+	k0fad29gyAgQXOs0iUizsEGQusTZT1eT1CP+1FdiIRVFNagZph2jSPTAFJmTNHfIDTlg==
+X-Received: by 2002:a05:6a21:7111:b0:3bf:6c08:fb93 with SMTP id adf61e73a8af0-3c3ada33bf3mr20413439637.53.1784655135087;
+        Tue, 21 Jul 2026 10:32:15 -0700 (PDT)
+Received: from localhost.localdomain ([106.51.210.74])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147dc193f8sm2096043eec.1.2026.07.21.10.32.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2026 10:32:14 -0700 (PDT)
+From: Tanish Desai <tanishdesai37@gmail.com>
+To: x86-cpuid@lists.linux.dev
+Cc: leonardi@redhat.com,
+	darwi@linutronix.de,
+	Tanish Desai <tanishdesai37@gmail.com>
+Subject: [PATCH] db: add Hyper-V leaf 0x40000001
+Date: Tue, 21 Jul 2026 23:01:59 +0530
+Message-Id: <20260721173159.46494-1-tanishdesai37@gmail.com>
+X-Mailer: git-send-email 2.15.0
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260528153923.403473-26-darwi@linutronix.de>
 
-On Thu, May 28, 2026 at 05:37:47PM +0200, Ahmed S. Darwish wrote:
-> Parse CPUID(0x2).
-> 
-> Query it only for Intel, Centaur, and Zhaoxin, given that
+This patch adds CPUID.40000001:EAX, the vendor-neutral Hyper-V
+interface signature ("Hv#1"). It is used by COCONUT SVSM for
+Hyper-V host detection before enabling Hyper-V specific paths.
 
-"... because that information is only used in init_intel_cacheinfo() on those
-vendors."
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+Link: https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/feature-discovery
+---
+ db/xml/leaf_40000001.xml | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+ create mode 100644 db/xml/leaf_40000001.xml
 
-That's it. Short and human-readable.
-
-> 
->     kernel/cpu/cacheinfo.c :: init_intel_cacheinfo()
-> 
-> is called by:
-> 
->     kernel/cpu/intel.c		cpu_dev.c_x86_vendor = X86_VENDOR_INTEL
->     kernel/cpu/centaur.c	cpu_dev.c_x86_vendor = X86_VENDOR_CENTAUR
->     kernel/cpu/zhaoxin.c	cpu_dev.c_x86_vendor = X86_VENDOR_ZHAOXIN
-> 
-> At the CPUID tables, keep CPUID(0x2) marked as invalid if the whole leaf,
-> or all of its output registers separately, were malformed.
-
-Please, do not talk about *what* the patch is doing in the commit message
-- that should be obvious from the diff itself. Rather, concentrate on the
-*why* it needs to be done and why your patch exists.
-
-Thx.
-
+diff --git a/db/xml/leaf_40000001.xml b/db/xml/leaf_40000001.xml
+new file mode 100644
+index 0000000..c37bb90
+--- /dev/null
++++ b/db/xml/leaf_40000001.xml
+@@ -0,0 +1,29 @@
++<!--
++*** SPDX-FileCopyrightText: 2026 Linutronix GmbH
++*** SPDX-License-Identifier: GPL-2.0-only
++-->
++<leaf id="0x40000001">
++  <desc>Hypervisor interface signature</desc>
++  <text>
++    Vendor-neutral hypervisor interface identification.  This determines the
++    semantics of leaves 0x40000002 through 0x400000ff.  Software should base
++    compatibility decisions on this signature rather than the vendor ID from
++    leaf 0x40000000.
++  </text>
++  <hypervisors>
++    <hypervisor>Hyperv</hypervisor>
++  </hypervisors>
++  <subleaf id="0">
++    <eax>
++      <bit0  len="32" id="hyp_interface"           desc="Hypervisor interface signature">
++        <text>
++          Hypervisors conforming to the Microsoft hypervisor interface return
++          the ASCII signature "Hv#1" (0x31237648) in this field.
++        </text>
++        <values>
++          <value      id="0x31237648"              desc="Hv#1" />
++        </values>
++      </bit0>
++    </eax>
++  </subleaf>
++</leaf>
 -- 
-Regards/Gruss,
-    Boris.
+2.15.0
 
-https://people.kernel.org/tglx/notes-about-netiquette
