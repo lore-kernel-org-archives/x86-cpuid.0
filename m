@@ -1,131 +1,140 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f35.google.com (mail-ed2-f35.google.com [74.125.228.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD849412C12
-	for <x86-cpuid@lists.linux.dev>; Wed, 19 Aug 2026 08:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787128218; cv=none; b=o7tuQIIElK8xZzTAqcrbrfmXFfyl2Xv5ZjYVtV8sqwoBL9EGSc3k7vEr0NJXZiE58anKiB/Uf4fP9m+u6l45B7EZwBhkYDA+9Uz5CZY9KoHwsJ5B7Z7N8qF+GgOCEgYoixYSe7GalWT8DeAH2l0m2T0djUGV0tvLFO9Lah12tSM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787128218; c=relaxed/simple;
-	bh=uWKfkVzVaoNnuZy6L0lMEDnZ5gK+SPssk/IZ+Vr0I+k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=Fz8cIJCkyfNs61reOqEhHBj7lh4eqLOOVpu023YwegWlNrjH6YM8EJgnaccZOuphSSErKNz7SivXhaH27DB63Jm1AAPkYkbgodBH0ehxBtRMze/5K+68d+cuiWRsmLKgbxmR+tboxHM0+WzFheecmErL26taZSgyfSxci7BaHyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SfeL4ZWr; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204664FC8EF
+	for <x86-cpuid@lists.linux.dev>; Mon, 21 Sep 2026 18:37:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.99
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790015835; cv=pass; b=ks9lDZDTpvdFKQRlrZKdA7k4ygM0NF9DGLh9b7OArzwNe9l1950icrYfBn1zP5MscMrIsuo2/Op76tmzhLfba217xR7LeEY4CQFnxtVALjdn60xgKpg9BP0lw6N59UAfhzmSmuBhTd44XC3oAUG2Ss6XR+s+c9LMrij1BYdLfoE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790015835; c=relaxed/simple;
+	bh=/UwEhuRdNe3bBwEXnnITz3ioli/gSo/Xo8Gbi2dTHhM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=ZkCcZONd+y4WRxAO/0W05UW2+PZZ7YFQS9mKhYlyabINRncQT+Ack10HYhhEKUIpYbI+f3U0FEcIE2ug7KUbI1pdPrZ37/35dWr3P9uDM5zkjyQW8SDQZbqo387DCoE1yYeY9hEqul2sXd29JZS86OQJTGn4336boBk3jKf8r5Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XiAIudxt; arc=pass smtp.client-ip=74.125.228.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SfeL4ZWr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1787128215;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uWKfkVzVaoNnuZy6L0lMEDnZ5gK+SPssk/IZ+Vr0I+k=;
-	b=SfeL4ZWrSKwCx1ZWQIcVdQwDJOm//FVqY6y0kch4bfbQVjqORFR8Ab+YZlakEP3fgUnims
-	7JEx+yzR1N+rjeWv3BCSI6w56tMQKiRgAIXyTS/sEgVTVkWxZBTEtULi4PWTtg0EKMTXsm
-	xDGVcIw61sO8vanxUPQdcwv4QAd5MnM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-3dzulYNuOJyhgafpm4k9NA-1; Wed, 19 Aug 2026 04:30:09 -0400
-X-MC-Unique: 3dzulYNuOJyhgafpm4k9NA-1
-X-Mimecast-MFC-AGG-ID: 3dzulYNuOJyhgafpm4k9NA_1787128208
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-47f6db77430so396071f8f.0
-        for <x86-cpuid@lists.linux.dev>; Wed, 19 Aug 2026 01:30:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XiAIudxt"
+Received: by mail-ed2-f35.google.com with SMTP id 4fb4d7f45d1cf-6aa1d00daaaso5732376a12.1
+        for <x86-cpuid@lists.linux.dev>; Mon, 21 Sep 2026 11:37:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790015831; cv=none;
+        d=google.com; s=arc-20260327;
+        b=kW2Tg5a1vfXTnaxCgrOWKw1hHUynjEqrsD6RAHfpl+xozkhGprSsYGtL/4ftkL/BvL
+         Y9n9+DP2tSrFa5BkeP4om8C7Xp44sYjre77sMc+5u1eTlLVN7KZC/JJj4GN15CeUdeeV
+         RT/SKhtPiVyZ5sKcqAmNxsut7oy3rtOpICmlNnmggDhG/DBtscpEUpipLregHPJKlPTY
+         b1pVWshksFVFShoOXNdeBtVP9Bw3u4sqVxomefFs/LJPksx5yJeY63Sc+iwPwWumhq7K
+         K10JobmGzRfsa2E/VYsVF1D6C5Jc2r16p9isvhxrgHPshFH3d390QsUSa+e9WyDvqLok
+         4f+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:mime-version:dkim-signature;
+        bh=/UwEhuRdNe3bBwEXnnITz3ioli/gSo/Xo8Gbi2dTHhM=;
+        fh=PH6v89vsTo0txqGyqCGnK9BwbZObRa1QOan1GOIkNAQ=;
+        b=kS6p2gd14iuIwkOkcnAOTzZ7p2foVP4Piw+TfZvmZCRwsfy+fu+ex/lJMhHbPLn4DE
+         mVZXmVC5099cxxLTta+pe8ZKe0T8ntys+/VhT2uEaa44q+rYsZ/fdzS/gogZZ70jV4Bt
+         xBPpC1J7PK8a2jp8Steyv2ryyTpRx0x571hJpHvnUFRlhOTh+nKJAy/YNkQ/w1V2omlu
+         jbrYIM4QNEriRxNpZwMNzBGEcKsZYkk254eIrTUHkgmhEryw/REiX1OBJ+dI2m0w3v92
+         7r9ggCUe4OfovmJULmzhMnNly9KZCH53Fz7e8JbdLmpbXMS4qupBRc6A7N1kClDCm9g9
+         vgUQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790015831; x=1790620631; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=/UwEhuRdNe3bBwEXnnITz3ioli/gSo/Xo8Gbi2dTHhM=;
+        b=XiAIudxtZbby5n/k+SrrJeQow/zp5FwqbU0tA91dbxQNS9Zf/lp6tf5WWDITGO4+2n
+         BhNGXT2aXS1UWlNLAbCT2IaKpQ+2cQWx68V4R2SxeQ7TXE71UCJI2Y66UDieR4P+RiTD
+         iHRzV8w3MgbXgHPRTel+jaml6jzULgxh2WDYoxw/ttI7LUVOsf7Opx9GjKBK9N2WYHD+
+         A9wgwhGQme0loDmFIYlH8lXL8QIoB0s8f8CezYE+RqSYtOKuQrmeWVKoi80QKs3HkU07
+         Ui8DZw0bsyV4OAlBV84dXsniVnebMpslTiWma6LoGihRmEhFtNIT3fw6+x1YxyjS+3De
+         9YOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787128208; x=1787733008;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uWKfkVzVaoNnuZy6L0lMEDnZ5gK+SPssk/IZ+Vr0I+k=;
-        b=c/S6/vEXorKjyHHKTCZqRCVso5uJZbyTh/lOnrxpUICtaFxzTD6O/uFEMvRJwQHcBq
-         Z65+PTo0r0EM5W+sx2h/ml2M3dCrmfj/NBe6WOVt5VETGB3zMW341Sx5KxDv+HOz/ma+
-         uVOOiY2LzCQTdlzuJ5vKfuRe7vNjCKDIQOJdFyNG19tNF9yE6sRW6Sq4tBNNqTpFXpSe
-         UFn5wjYMgM9r+Q3i9ZC9jBIv030QY3lRKSWsAt/9SYcIvEILPUzs1GB6XFMmKD64Du/7
-         QkmwInOGHxTPdy4hHArwRKQE9y9XB4WQtY8hKIcro8HHsCLYFGDw9HsVPuW/EbI777Ny
-         pngw==
-X-Forwarded-Encrypted: i=1; AHgh+RrivkCbcXDNfyFmcfJ7uPgmXPT+x28gYFWq8xqQ+b6/NC9QgGXC/7MWnvCkEhpolUPuFl5QjDZYuwQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQ13/+Q0zkzD+uQce2KPMqoCRZN62YJtDhQwtHUEJoR3TbFaUM
-	yovWoOJpOC147zyipCmaYe3+nDhEK8uCY4lIpBZ7pbgIGpY0GUtvNVvH0PJy79hMnC3Z3WqeUDa
-	vYt/nURak1a/lDMtCbyGsKPicdp959FK8is7V1TIwn24xl62ZkP5fBx7UAwgkKomp7qv1MQ==
-X-Gm-Gg: AR+sD108q10FjLAdWPXsfI40WWfE4LI8smMcDCwv9UaIhoAGCBoyEqZAkgfjwLA5rBO
-	4UnsuHoTfmm4j1m1Kw2t/XhDzBb95TlPR9/EZhWP+p3mGhS/Q70iRhjQSMABCeyn6hWbFb2rqY1
-	z/vNAtkdo4U+FRYtcTecMfwjVw8meWULBQqH2GHhqU2nxQhQdRteaboRivGjMxKbMGgOjrbgDJs
-	WTEHxfSd2nwqGlnCnSS7IeYcIqBGzQ+uLfNYoMmbvrbHh066mTDsUmIDxWx5a7oR+7nBSITB8LZ
-	xYrGzH97yjkcKrK/XzLdIzu8RWIqAfsibm3NXEfH4HmuZDAKTr1cAOQThkuADW2e4Xn/h9kkgkV
-	6iIHB1So9SpxluiL6oRjbesawuiSEdpRbIwUbAbU0anBzsPgM2Ik8k3vmxqVgSRdwRrgeQ+XbBM
-	n/60y1nDdc/+k=
-X-Received: by 2002:a05:600c:3e0c:b0:499:4e47:eaf2 with SMTP id 5b1f17b1804b1-499aa1a3e87mr52693275e9.6.1787128207785;
-        Wed, 19 Aug 2026 01:30:07 -0700 (PDT)
-X-Received: by 2002:a05:600c:3e0c:b0:499:4e47:eaf2 with SMTP id 5b1f17b1804b1-499aa1a3e87mr52692465e9.6.1787128207419;
-        Wed, 19 Aug 2026 01:30:07 -0700 (PDT)
-Received: from leonardi-redhat (host-95-233-147-132.retail.telecomitalia.it. [95.233.147.132])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499a9b6ed64sm28457345e9.1.2026.08.19.01.30.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 01:30:06 -0700 (PDT)
-Date: Wed, 19 Aug 2026 10:30:03 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: "Ahmed S. Darwish" <darwi@linutronix.de>
-Cc: Tanish Desai <tanishdesai37@gmail.com>, x86-cpuid@lists.linux.dev, 
-	Joerg Roedel <joro@8bytes.org>
-Subject: Re: [PATCH] db: add Hyper-V leaf 0x40000001
-Message-ID: <aoVlgRjVWzaKTPuo@leonardi-redhat>
-References: <20260721173159.46494-1-tanishdesai37@gmail.com>
- <anW5m3Mb-Puk5hBu@leonardi-redhat>
- <aoSpgOi3VXJuKwVj@lx-t490>
+        d=1e100.net; s=20260707; t=1790015831; x=1790620631;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:reply-to:mime-version:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=/UwEhuRdNe3bBwEXnnITz3ioli/gSo/Xo8Gbi2dTHhM=;
+        b=iMLE15Uy294MjfnfJR84h+EXLIDof0HZSLRGEveKpW/vVZI5ZvCxUJOAcdhOw8RrlP
+         fnVm0eM60wp+Es+VsoBVSQGnSQI7mJkUT2idgW/VtlJ/O9wSQOygZ9oNH/Jv/Vlrj0Ym
+         VOgNK3M6ZOnVfxcpwSylvU4w2oSUnXhi9MA0OKY7UoDwOWkLETjUaBYlzXgiQjfQH6IO
+         IocseAH//0fhSMOYfEMHNQkSkr8yvR1h3M/MO+dAnItjcihWa+A+4L/pCqUrpaPINy13
+         102KtWLTMe6dEJTBUpfwvhcvRdGng8s1k1gi613KM9O3JYXY3K0kzx6F5vcjQOVb+f+t
+         H00Q==
+X-Forwarded-Encrypted: i=1; AKwUvBzF9fkbL9tB84mQ4Y7m8nAxD8LSggjutIb9rMM7wB9qMtSAz6BPSt+PPdoMo0GLSjOyLCgsw/YZUtU=@lists.linux.dev
+X-Gm-Message-State: AFuF++kdEmRQtL2J2T9MfR22/SnHXrVJg9X5uhv/ZyxzaJTjhZDkeCrY
+	bQs/2Znq7h2UPz6w9QYFwwT91XynQDeMY6UatUTwFxEvjobbKbWUKBPtgbFIEH9KTv0zQmK87JX
+	PnZNxP5nrpoadWxd31xVJFRoIuWSIz+A=
+X-Gm-Gg: AYBFou3J9KdU4DeWpR8IJHptFYL7uPCUfF2PFmg2lsxck3NNjrqSsWDRypvtzn6iOY8
+	u8239h0iv23oeda5ksfv+mcNu5v5eRZNkLc9oLevTtJX9BOcwlU3Oms/TFFqth3NgESkgtpmTrJ
+	i6/l0rWEUh4B8j+n8AaGUixk06lEa5BVrSLDkR/y//Ny8jOlgVwhmPmMEaxZc9tkerdFU9AeiUB
+	duKkv709UdbxwCgDtiCS/sxkwlgb5zfhlHOmaCvJfFq3AfxKZIuBn886tuEi6ZgWHnb+uxousSY
+	QgGVZIVqjLTXi9cA/a4LUW7Es9s8hR2S5kh27IeOZcYWSRvwoCGX/eRMWzJSRWpcBVP1atpEqTM
+	coPf0CZ96kw==
+X-Received: by 2002:a05:6402:4009:b0:6aa:97b4:31d1 with SMTP id
+ 4fb4d7f45d1cf-6aa97b432e7mr1749490a12.38.1790015830530; Mon, 21 Sep 2026
+ 11:37:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: x86-cpuid@lists.linux.dev
 List-Id: <x86-cpuid.lists.linux.dev>
 List-Subscribe: <mailto:x86-cpuid+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:x86-cpuid+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <aoSpgOi3VXJuKwVj@lx-t490>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: SfgOSdtxpHH9qbhJrICLB8FhDT5cEUPEts07VKH43VY_1787128208
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+Reply-To: ludloff@gmail.com
+From: Christian Ludloff <ludloff@gmail.com>
+Date: Mon, 21 Sep 2026 20:36:58 +0200
+X-Gm-Features: AcwNN1XLVeCc91wnyYbvordEaS_e6fGgkAMPJk-LkXtdZ5AtBm2rTGn-YIM63Zo
+Message-ID: <CAKSQd8V28WjMcsfh05P5SNfXXvtafBH6fyiyqMzQ9GtU8fQGSA@mail.gmail.com>
+Subject: x86 CPUID mutable return values
+To: Borislav Petkov <bp@alien8.de>, "Ahmed S. Darwish" <darwi@linutronix.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>, Ingo Molnar <mingo@redhat.com>, 
+	Thomas Gleixner <tglx@linutronix.de>, Andrew Cooper <andrew.cooper3@citrix.com>, 
+	"H. Peter Anvin" <hpa@zytor.com>, Sean Christopherson <seanjc@google.com>, David Woodhouse <dwmw2@infradead.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Sohil Mehta <sohil.mehta@intel.com>, 
+	John Ogness <john.ogness@linutronix.de>, x86@kernel.org, x86-cpuid@lists.linux.dev, 
+	LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Ahmed,
+Back in May I wrote...
 
-On Tue, Aug 18, 2026 at 08:50:40PM +0200, Ahmed S. Darwish wrote:
->Hi Luigi,
+> https://lore.kernel.org/lkml/CAKSQd8XM6p7TTVih9fg9fmUAkzNchPCT7B-6qzVuja=
+=3D3hg_u+A@mail.gmail.com/
 >
->On Fri, 07 Aug 2026, Luigi Leonardi wrote:
->>
->> Thanks for the patch, this would be very useful for SVSM!
->>
->
->Sorry for the late response.
->
->Could you point me please to the kernel patch queue in need of this?
->
->So far, no hypervisor leaf callsites are converted. See:
->
->https://msgid.link/20260528153923.403473-1-darwi@linutronix.de
->
->
+> When deciding what the code shall do for mutable CPUID bits,
+> you really want to have an exhaustive list of events that trigger
+> changes =E2=80=93 think Intel SDM vol1 21.1.5 as a starting point; then
+> made exhaustive for all events, for Intel and the other vendors.
 
-Thanks for sharing this link!
+I annotated https://www.sandpile.org/x86/cpuid.htm =E2=80=93 you can
+search for "mutable", to get a little over 70 hits.
 
-SVSM[1] is a firmware used for confidential computing written in rust.
-In this project we consume a rust crate called cpufeature[2] that is
-automatically generated from the x86-cpuid-db, that exports the cpuid
-leaves to rust structures. Our plan is to upstream the conversion script
-once we finalize the crate design.
+I can mark AES and PCLMUL as well... pending confirmation:
 
-In SVSM we do use the HV leaf[3] to detect if the code is running on an
-hyper-v system.
+Q for Intel: is MSR FEATURE_CONFIG 0x13C bit 1 expected
+to affect CPUID 1.ECX.25 and 7.0.ECX.9 and 19.EBX.0/2, or
+just just a subset of them? Also, what about PCLMUL?
 
-Hope that helps!
+Q for AMD: is MSR DE_CFG 0xC001_1029 bit 16 expected to
+affect just CPUID 1.ECX.25/1 and 7.0.ECX.10/9?
 
-Thanks,
-Luigi
+If there are more mutable bits or fields, then please speak up.
 
+Ahmed =E2=80=93 is there a proper way to reflect "mutable" in the db?
 
-[1]https://github.com/coconut-svsm/svsm/
-[2]https://github.com/coconut-svsm/cpufeature/
-[3]https://github.com/coconut-svsm/svsm/blob/ec10d69313742cc337b696a800f6863b12c9f824/kernel/src/cpu/features.rs#L41
+> (Besides on/off bits spread all over the place, microcode loads
+> at runtime come to mind as... uhm... interesting...)
 
+Presumably ucode loads should trigger a full CPUID re-read?
+
+Last but not least, there was the case of the Rise mP6 config
+leaves, i.e. CPUID, abused for applying config settings. Look
+at https://www.sandpile.org/x86/cpuid.htm#leaf_6363_4523h
+for basic information =E2=80=93 it's unclear what effect these had... for
+all we know, it could have been CPUID... affecting... itself...?
+
+Ahmed =E2=80=93 I don't know how you want to reflect that in the db?
+
+--
+C.
